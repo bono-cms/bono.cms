@@ -1,0 +1,51 @@
+<form>
+	<div class="well clearfix">
+		<input type="hidden" name="id" value="<?php echo $block->getId(); ?>" />
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="name" class="form-control" value="<?php echo $block->getName(); ?>" placeholder="<?php $this->show("Block's name"); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?>/>
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<textarea name="content" rows="7" class="form-control" placeholder="<?php $this->show("Block's plain text content"); ?>"><?php echo $block->getContent(); ?></textarea>
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<?php if ($extendedMode): ?>
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Class'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="class" class="form-control" value="<?php echo $block->getClass(); ?>" placeholder="<?php $this->show("Class's name to simplify rendering"); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		<?php else: ?>
+		
+		<input type="hidden" name="class" value="<?php echo $block->getClass(); ?>" />
+		<?php endif; ?>
+		
+	</div>
+	
+	<?php if (isset($editing)): ?>
+	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	
+	<?php else: ?>
+	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+	
+	<?php endif; ?>
+	
+	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+</form>

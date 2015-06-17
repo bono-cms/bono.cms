@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * This file is part of the Bono CMS
+ * 
+ * Copyright (c) 2015 David Yang <daworld.ny@gmail.com>
+ * 
+ * For the full copyright and license information, please view
+ * the license file that was distributed with this source code.
+ */
+
+namespace Shop\Controller;
+
+final class Product extends AbstractShopController
+{
+	/**
+	 * Fetches a product by its associated id
+	 * 
+	 * @param string $id Product id
+	 * @return string
+	 */
+	public function indexAction($id)
+	{
+		// Grab a service
+		$productManager = $this->getShopModule()->getService('productManager');
+		$product = $productManager->fetchById($id);
+
+		// If $product isn't false, then its an entity
+		if ($product !== false) {
+			// Load required plugins for view
+			$this->loadPlugins($productManager->getBreadcrumbs($product));
+
+			return $this->view->render($this->getConfig()->getProductTemplate(), array(
+
+				// Get all recent products we have so far
+				'recent' => $this->getWithRecent($product->getId()),
+
+				// Image bags of current product
+				'images' => $productManager->fetchAllPublishedImagesById($id),
+				'page' => $product,
+				'product' => $product,
+			));
+
+		} else {
+
+			// Returning false will trigger 404 error automatically
+			return false;
+		}
+	}
+
+	/**
+	 * Loads required plugins
+	 * 
+	 * @param array $breadcrumbs
+	 * @return void
+	 */
+	private function loadPlugins(array $breadcrumbs)
+	{
+		$this->loadSitePlugins();
+
+		// Load zoom plugin
+		$this->view->getPluginBag()
+				   ->load(array('zoom'))
+				   ->appendScript($this->getWithAssetPath('/product.images.module.js'));
+
+		// Alter breadcrumbs in view
+		$this->view->getBreadcrumbBag()
+				   ->add($breadcrumbs);
+	}
+
+	/**
+	 * Returns recent products
+	 * 
+	 * @param string $id Current id to be handled
+	 * @return array
+	 */
+	private function getWithRecent($id)
+	{
+		if ($this->getConfig()->getMaxRecentAmount() > 0) {
+			return $this->getShopModule()->getService('recentProduct')->getWithRecent($id);
+
+		} else {
+			// If that functionality is disabled, then dummy empty array is returned
+			return array();
+		}
+	}
+}

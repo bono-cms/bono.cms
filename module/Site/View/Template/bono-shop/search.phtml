@@ -1,0 +1,42 @@
+<div class="container">
+	
+	<?php if (empty($errors)): ?>
+	
+	<div class="page-header">
+		<h3 class="text-muted"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Search results for'); ?> "<?php echo $keyword; ?>" (<?php echo $paginator->getTotalAmount(); ?>)</h3>
+	</div>
+	
+	<?php if (!empty($results)): ?>
+	<div class="row">
+		<ul>
+			<?php foreach ($results as $result): ?>
+			<li>
+				<h3><a href="<?php echo $result->getUrl(); ?>"><?php echo $result->getTitle(); ?></a></h3>
+				<article><?php echo $result->getContent(); ?></article>
+			</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	
+	<?php $this->loadBlock('paginate'); ?>
+	
+	<?php else: ?>
+	
+	<div class="block-center">
+		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No results'); ?></h2>
+	</div>
+	
+	<?php endif; ?>
+	
+	<?php else: ?>
+	
+	<div class="page-header">
+		<?php foreach($errors as $error): ?>
+		<h3 class="text-muted"><i class="glyphicon glyphicon-remove"></i> <?php echo $error; ?></h3>
+		<?php endforeach; ?>
+	</div>
+	
+	<div class="row"></div>
+	
+	<?php endif; ?>
+</div>

@@ -1,0 +1,49 @@
+Planned
+=======
+
+ * Deprecate array configuration
+ * Need to implement slug validator
+ * Instead of raw arrays, WebPageManager should return entities
+ * $.jquery.ImagePreview must be fixed with its dimensions
+ * Config needs to be aware of History
+ * Test and ensure the charset is UTF-8 without BOM everywhere
+ * Need special translations for some validation messages. In config forms especially
+ * In $.delete implementation there must be ability to define custom messages
+ * When site is down, there must be some kind of landing page instead of plain text. Think about it.
+ * Add ability to change fav-icon in administration area (for the site)
+ * Add ability to change WYSIWYG Editor
+ * Add ability to change time-zones
+ * New schematic for internalization (One-to-many relationships)
+ * Implement in-line theme editor
+ * Add core updates support
+ * Add custom backgrounds support
+ * Implement password recovery
+ * Environment analyser. That should make test to ensure everything will be working. 
+   Which also should ensure that all languages have the same class.
+ * Feature : Often used modules
+ * In administration area, there should be a drop-down menu of modules for quick access
+ * Drag and Drop for modules (changing orders)
+ * In tables, there must be a filter (In browsers) and sort
+ * Write CMS module manager. Should be able to disable and un-install modules
+
+ 
+Passed tasks:
+============
+
+ - getAssetPath needs to be renamed to getWithAssetPath() [DONE]
+ - Global template blocks [LATER]
+ - Define roles everywhere [DONE]
+ - Provide translations for all validation messages [DONE]
+ - Configs everywhere are vulnerable to XSS [DONE]
+ * In validation, success fields should highlight green [DONE]
+ - DeleteById() needs to renamed and protected from XSS [DONE]
+ - Rename Admin to Cms[DONE]
+ - Ensure we can't create anything until there's at least one published language [DONE]
+ - CKEditor must read its language option from somewhere[DONE]
+ - Improve Bootstrapper for modules [DONE]
+ - Decorate crappy code in authorization [DONE]
+ - Minify datepicker [DONE]
+ - Minify fam fam [DONE]
+ - Admin\Service\LanguageManager needs to get rid of $_SESSION[DONE]
+ - \Admin\Controller\Admin\Users\AbstractUser in validation need to define a pattern for password confirmation [DONE]
+ - In JS validation there must be a reset [DONE]

@@ -1,0 +1,253 @@
+<div class="row">
+	
+	<!-- Context menu for items -->
+	<ul id="contextMenu" class="dropdown-menu" role="menu">
+		<li><a href="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Return to beginning'); ?></a></li>
+		<li class="dropdown-header"><?php $this->show('Item'); ?></li>
+		<li><a href="#" data-button="add-child"><i class="glyphicon glyphicon-share"></i> <?php $this->show('Add child item'); ?></a></li>
+		<li><a href="#" data-button="item-edit"><i class="glyphicon glyphicon-edit"></i> <?php $this->show('Edit this item'); ?></a></li>
+		<li><a href="#" data-button="remove" data-category="item" data-id=""><i class="glyphicon glyphicon-flash"></i> <?php $this->show('Remove this item'); ?></a></li>
+		<li class="dropdown-header"><?php $this->show('Nesting'); ?></li>
+		<li><a href="#" data-button="expand-all"><i class="glyphicon glyphicon-resize-full"></i> <?php $this->show('Expand all'); ?></a></li>
+		<li><a href="#" data-button="collapse-all"><i class="glyphicon glyphicon-resize-small"></i> <?php $this->show('Collapse all'); ?></a></li>
+	</ul>
+	<!-- /Context menu for items -->
+	
+	
+	<div class="col-lg-5">
+		<?php if (!empty($itemsBlock)): ?>
+		<div class="dd" id="nestable2"><?php echo $itemsBlock; ?></div>	
+		
+		<?php else: ?>
+		
+		<div class="center-block">
+			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No items'); ?></h2>
+		</div>
+		
+		<?php endif; ?>
+	</div>
+	
+	
+	<div class="col-lg-7">
+		
+		<?php if (!empty($categories)): ?>
+		
+		<form>
+			
+			<input type="hidden" name="category_id" value="<?php echo $item->getCategoryId(); ?>" />
+			<input type="hidden" name="id" value="<?php echo $item->getId(); ?>" />
+			<input type="hidden" name="has_link" value="<?php echo $item->getHasLink(); ?>"/>
+			<input type="hidden" name="max_depth" value="<?php echo $maxDepth; ?>" />
+			
+			<div class="table-responsive">
+				<form class="form-horizontal">
+				  <fieldset>
+					<legend class="text-muted"><i class="glyphicon glyphicon-list"></i> <?php $this->show($helper_title); ?></legend>
+					
+					<div class="form-group">
+					  <label for="inputName" class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+					  <div class="col-lg-10">
+						<input type="text" id="inputName" class="form-control" name="name" placeholder="<?php echo $this->show('Item name'); ?>" value="<?php echo $item->getName(); ?>" />
+					  </div>
+					</div>
+					
+					<div class="form-group">
+					  <label for="chosenSelect" class="col-lg-2 control-label"><?php $this->show('Link'); ?></label>
+					  <div class="col-lg-10">
+						<select name="web_page_id" class="chosen-select form-control" id="chosenSelect">
+							<option value="#"><?php $this->show('None'); ?></option>
+							<option value="0" <?php $this->getHelper()->selectOnDemand($item->getWebPageId() == '0'); ?>><?php $this->show('Custom link'); ?></option>
+							
+							<?php foreach ($links as $module => $collection): ?>
+							
+							<optgroup label="<?php $this->show($module); ?>">
+								<?php foreach ($collection as $container): ?>
+								<option value="<?php echo $container['id']; ?>" <?php $this->getHelper()->selectOnDemand($container['id'] == $item->getWebPageId()); ?>><?php echo $container['title']; ?></option>
+								<?php endforeach; ?>
+							</optgroup>
+							
+							<?php endforeach; ?>
+						</select>
+
+					  </div>
+					</div>
+					
+					
+					<div class="form-group" id="custom-link-row">
+					  <label for="inputLink" class="col-lg-2 control-label"><?php $this->show('Type a link'); ?></label>
+					  <div class="col-lg-10">
+						<input type="text" class="form-control" id="inputLink" name="link" value="<?php echo $item->getLink(); ?>" placeholder="<?php $this->show('http://'); ?>" />
+					  </div>
+					</div>
+
+					<?php if (!$editing): ?>
+
+					<div class="form-group">
+					  <label for="select" class="col-lg-2 control-label"><?php $this->show('Parent item'); ?></label>
+					  <div class="col-lg-10">
+						<select name="parent_id" class="form-control" id="select">
+							<option value="0">— <?php $this->show('None'); ?> —</option>
+							
+							<?php if (!empty($items)): ?>
+							
+							<?php foreach ($items as $target => $title): ?>
+							<option value="<?php echo $target; ?>" <?php $this->getHelper()->selectOnDemand($item->getParentId() == $target); ?>><?php echo $title; ?></option>
+							<?php endforeach; ?>
+							
+							<?php endif; ?>
+						</select>
+
+					  </div>
+					</div>
+					<?php endif; ?>
+					
+					
+					
+					<div class="form-group">
+					  <label for="textArea" class="col-lg-2 control-label"><?php $this->show('Hint'); ?></label>
+					  <div class="col-lg-10">
+						<textarea class="form-control" rows="3" id="textArea" name="hint" placeholder="<?php $this->show('Hint to be displayed when mouse overs'); ?>"><?php echo $item->getHint(); ?></textarea>
+					  </div>
+					</div>
+					
+
+					<div class="form-group">
+					  <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+					  <div class="col-lg-10">
+						<div class="checkbox">
+						  <label>
+							<input type="hidden" name="published" value="0" />
+							<input type="checkbox" name="published" value="1" <?php $this->getHelper()->checkOnDemand($item->getPublished()); ?>/>
+						  </label>
+						</div>
+					  </div>
+					</div>
+					
+					
+					<div class="form-group">
+					  <label class="col-lg-2 control-label"><?php $this->show('Open in new window'); ?></label>
+					  <div class="col-lg-10">
+						<div class="checkbox">
+						  <label>
+							<input type="hidden" name="open_in_new_window" value="0" />
+							<input type="checkbox" name="open_in_new_window" value="1" <?php $this->getHelper()->checkOnDemand($item->getOpenInNewWindow()); ?>/>
+						  </label>
+						</div>
+					  </div>
+					</div>
+				  </fieldset>
+				</form>
+			</div>
+		</form>
+		
+		<br />
+		
+		<div class="pull-right">
+			
+			<?php if ($editing): ?>
+			
+			<div class="btn-group">
+			  <a class="btn btn-primary" data-button="save"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></a>
+			  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+			  
+			  <ul class="dropdown-menu">
+				<li><a href="#" data-button="save-create"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></a></li>
+				<li><a href="#" data-button="save-exit"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Exit'); ?></a></li>
+			  </ul>
+			</div>
+			
+			<a class="btn btn-primary" data-button="remove" data-category="item" data-id="<?php echo $item->getId(); ?>"><span class="glyphicon glyphicon-floppy-save"></span> <?php echo $this->translate('Remove'); ?></a>
+			<a class="btn btn-default" data-button="cancel"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Cancel'); ?></a>
+			
+			<?php else: ?>
+			
+			<div class="btn-group pull-right">
+			  <button type="submit" class="btn btn-primary" data-button="add"><span class="glyphicon glyphicon-floppy-save"></span> <?php $this->show('Add'); ?></button>
+			  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+			  
+			  <ul class="dropdown-menu">
+				<li><a href="#" data-button="create-new"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></a></li>
+				<li><a href="#" data-button="create-exit"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Exit'); ?></a></li>
+			  </ul>
+			</div>
+			
+			<?php endif; ?>
+		</div>
+		
+		<?php else: ?>
+
+		<div class="center-block">
+			<h2 class="text-center text-muted"><small><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('To start using menu module, you need to create at least one category'); ?></small></h2>
+		</div>
+		
+		<?php endif; ?>
+		
+	</div>
+	
+</div>
+
+<div class="clearfix"></div>
+
+<div class="table-responsive">
+	<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Categories'); ?> (<?php echo count($categories); ?>)</h4>
+	
+	<table class="table table-hover table-bordered table-striped table-condensed">
+		<thead>
+			<tr>
+				<th class="text-center"><?php $this->show('#'); ?></th>
+				<th class="text-center"><?php $this->show('Name'); ?></th>
+				<th class="text-center"><?php $this->show('Maximal depth'); ?></th>
+				<?php if ($extendedMode): ?>
+				<th class="text-center"><?php $this->show('Class'); ?></th>
+				<th class="text-center"><?php $this->show('Actions'); ?></th>
+				<?php endif; ?>
+			</tr>
+		</thead>
+		
+		<?php if (!empty($categories)): ?>
+		<tbody>
+			
+			<?php foreach ($categories as $category): ?>
+			<tr>
+				<td class="text-center text-muted"><?php echo $category->getId(); ?></td>
+				<td class="text-center">
+					<a href="<?php echo $this->url('Menu:Admin:Item@categoryAction', $category->getId()); ?>">
+						<?php if ($category->getId() == $item->getCategoryId()): ?>
+						<strong><?php echo $category->getName(); ?></strong>
+						<?php else: ?>
+						<?php echo $category->getName(); ?>
+						<?php endif; ?>
+					</a>
+				</td>
+				<td class="text-center"><?php echo $category->getMaxDepth(); ?></td>
+				
+				<?php if ($extendedMode): ?>
+				<td class="text-center"><?php echo $category->getClass(); ?></td>
+				<td class="text-center">
+					<a data-button="edit" href="<?php echo $this->url('Menu:Admin:Category:Edit@indexAction', $category->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit the category'); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a data-button="delete" href="#" data-category="category" data-id="<?php echo $category->getId(); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove the category with all its items'); ?>" ><i class="glyphicon glyphicon-remove"></i></a>
+				</td>
+				<?php endif; ?>
+				
+			</tr>
+			<?php endforeach; ?>
+			
+		</tbody>
+		<?php endif; ?>
+	</table>
+	
+	<?php if (empty($categories)): ?>
+	<div class="center-block">
+		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
+	</div>
+	<?php endif; ?>
+	
+	<?php if ($extendedMode): ?>
+	
+	<div class="pull-left">
+		<a href="<?php echo $this->url('Menu:Admin:Category:Add@indexAction'); ?>" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> <?php $this->show('Add category'); ?></a>
+	</div>
+	
+	<?php endif; ?>
+	
+</div>

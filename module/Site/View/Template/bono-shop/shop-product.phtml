@@ -1,0 +1,66 @@
+<div class="row">
+	<div class="col-lg-6 clearfix">
+		<img data-zoom-image="<?php echo $product->getImageBag()->getUrl('original'); ?>" data-product-image="cover" class="img-responsive" src="<?php echo $product->getImageBag()->getUrl('450x450'); ?>" title="<?php echo $product->getTitle(); ?>" />
+		
+		<?php if (count($images) > 1): ?>
+		
+		<div class="product-images pull-left">
+			<h2 class="text-muted"><?php $this->show('More views'); ?></h2>
+			<div id="gallery_01">
+				
+				<?php foreach ($images as $image): ?>
+				<a href="#" data-image="<?php echo $image->getImageBag()->getUrl('450x450'); ?>" data-zoom-image="<?php echo $image->getImageBag()->getUrl('original'); ?>">
+					<img src="<?php echo $image->getImageBag()->getUrl('75x75'); ?>" />
+				</a>
+				<?php endforeach; ?>
+				
+			</div>
+		</div>
+		
+		<?php endif; ?>
+		
+		<div class="clearfix"></div>
+		
+		<div class="col-lg-3">
+			<br />
+			
+			<div class="input-group input-group-lg">
+				<input class="form-control" type="number" min="1" max="1000" value="1" data-basket-product-id="<?php echo $product->getId(); ?>" data-basket-input="qty" />
+				<span class="input-group-addon" id="sizing-addon1">
+					<a class="btn btn-primary btn-lg" data-basket-button="add" data-basket-product-id="<?php echo $product->getId(); ?>" data-toggle="modal" data-target="#added-success" href="#"><i class="glyphicon glyphicon-shopping-cart"></i> <?php $this->show('Add to cart'); ?></a>
+				</span>
+			</div>
+		</div>
+		
+		<div class="clearfix"></div>
+		
+		<?php if (!empty($recent)): ?>
+		<div class="clearfix" style="margin-top:59px;">
+			<h1 class="text-muted"><small><i class="glyphicon glyphicon-tasks"></i> <?php $this->show('Recently viewed'); ?>: </small></h1>
+			
+			<?php $this->loadBlock('product-block', array('products' => $recent)); ?>
+		</div>
+		<?php endif; ?>
+	</div>
+	
+	<div class="col-lg-4">
+		<h2><?php echo $page->getTitle(); ?></h2>
+		
+		<div class="clearfix">
+			
+			<?php if (!$product->hasStokePrice()): ?>
+			
+			<h2><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $page->getPrice(); ?></h2>
+			
+			<?php else: ?>
+			
+			<h2><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $page->getStokePrice(); ?></h2>
+			<p><strike><h2 class="text-muted"><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $page->getPrice(); ?></h2></strike></p>
+			
+			<?php endif; ?>
+			
+		</div>
+		
+		<article><?php echo $page->getDescription(); ?></article>
+	</div>
+</div>

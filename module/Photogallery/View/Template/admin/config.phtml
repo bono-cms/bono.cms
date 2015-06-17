@@ -1,0 +1,131 @@
+<form>
+	<ul class="nav nav-tabs" role="tablist">
+	 <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
+	 <li role="presentation"><a href="#dimensions" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <?php $this->show('Dimensions'); ?></a></li>
+	</ul>
+	
+	<div class="tab-content clearfix">
+		
+		<!--Common tab-->
+		<div class="tab-pane fade in active" id="common" role="tabpanel">
+			<div class="well clearfix">
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Photos in an album per page'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" name="photos_per_page" class="form-control" value="<?php echo $config->getPerPageCount(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('How many photos do you want to be shown per album on your site?'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Quality'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" min="1" max="100" name="quality" class="form-control" value="<?php echo $config->getQuality(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Quality for saved images. 100 - best quality, 50 - medium, 20 or lower - worst'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Album's template"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" name="template" class="form-control" value="<?php echo $config->getTemplate(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Album's template file"); ?></span>
+					</div>
+				</div>
+
+				
+				
+				<?php if ($extendedMode): ?>
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Language support"); ?></label>
+					<div class="col-lg-10">
+						
+						<select class="form-control" name="language_support">
+							
+							<?php foreach ($config->getLanguageSupportOptions() as $optionId => $optionName): ?>
+							<option value="<?php echo $optionId; ?>" <?php $this->getHelper()->selectOnDemand($config->getLanguageSupport() == $optionId); ?>><?php $this->show($optionName); ?></option>
+							<?php endforeach; ?>
+							
+						</select>
+					</div>
+				</div>
+				
+				<?php else: ?>
+				
+				<input type="hidden" name="language_support" value="<?php echo $config->getLanguageSupport(); ?>" />
+				
+				<?php endif; ?>
+			</div>
+		</div>
+		<!--/Common-->
+		
+		
+		<div class="tab-pane fade" id="dimensions" role="tabpanel">
+			<div class="well">
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Maximal image height"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" name="max_img_height" class="form-control" value="<?php echo $config->getMaxHeight(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Maximal allowed height for photos on site. 0 - do not take into account'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Maximal image width"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" name="max_img_width" class="form-control" value="<?php echo $config->getMaxWidth(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Maximal allowed width for photos on site. 0 - do not take into account'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Thumb's height"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" name="thumb_height" class="form-control" value="<?php echo $config->getHeight(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Desired thumbs height when viewing on site'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Thumb's width"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" name="thumb_width" class="form-control" value="<?php echo $config->getWidth(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Desired thumbs width when viewing on site'); ?></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<button data-button="save" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+	
+</form>

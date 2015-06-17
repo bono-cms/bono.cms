@@ -1,0 +1,152 @@
+<form>
+	<ul class="nav nav-tabs" role="tablist">
+	 <li role="presentation" class="active"><a href="#page" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Page'); ?></a></li>
+	 <li role="presentation"><a href="#menu" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Item in menu'); ?></a></li>
+	</ul>
+	
+	
+	<div class="tab-content">
+		
+		<div class="tab-pane fade in active" id="page" role="tabpanel">
+			<div class="well clearfix">
+				
+				<input type="hidden" name="id" value="<?php echo $page->getId(); ?>" />
+				<input type="hidden" name="web_page_id" value="<?php echo $page->getWebPageId(); ?>" />
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $page->getTitle(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
+					<div class="col-lg-10">				
+						<textarea name="content" rows="7" class="form-control"><?php echo $page->getContent(); ?></textarea>
+					</div>
+				</div>
+				
+				
+				<div class="options">
+					
+					<?php if ($extendedMode): ?>
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Controller'); ?></label>
+						<div class="col-lg-10">
+							<select name="controller" class="form-control">
+								<?php foreach ($controllers as $controller): ?>
+								<option value="<?php echo $controller; ?>" <?php $this->getHelper()->selectOnDemand($controller == $page->getController()); ?>><?php echo $controller; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Template override'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="template" class="form-control" value="<?php echo $page->getTemplate(); ?>" placeholder="<?php $this->show('If you need another template which is different from default one, you can define its name here'); ?>" />
+								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Protect'); ?></label>
+						<div class="col-lg-10">
+							<input type="hidden" name="protected" value="0" />
+							<input type="checkbox" name="protected" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getProtected()); ?> title="If you protect the page you are going to created, them users that use only simple mode will not be able to remove it" />
+						</div>
+					</div>
+					
+					
+					<?php else: ?>
+					
+					<input type="hidden" name="controller" value="<?php echo $page->getController(); ?>" />
+					<input type="hidden" name="protected" value="<?php echo $page->getProtected(); ?>" />
+					<input type="hidden" name="template" value="<?php echo $page->getTemplate(); ?>" />
+					
+					<?php endif; ?>
+					
+					
+					<?php if (!isset($editing)): ?>
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
+						<div class="col-lg-10">
+							<input type="hidden" name="makeDefault" value="0" />
+							<input type="checkbox" name="makeDefault" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getDefault()); ?> title="Whether it should be home page or not" />
+						</div>
+					</div>
+					<?php endif; ?>
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
+						<div class="col-lg-10">
+							<input type="hidden" name="seo" value="0" />
+							<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getSeo()); ?> />
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="slug" class="form-control" value="<?php echo $page->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
+								<span class="input-group-addon">
+									<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
+								</span>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="keywords" class="form-control" value="<?php echo $page->getKeywords(); ?>" placeholder="<?php $this->show('Keywords used for search engines'); ?>" />
+								<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+						<div class="col-lg-10">
+							<textarea name="meta_description" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $page->getMetaDescription(); ?></textarea>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<?php if (!isset($editing)): ?>
+			<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+			<button data-button="add-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
+			
+			<?php else: ?>
+			
+			<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+			<button data-button="save-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
+			
+			<?php endif; ?>
+			
+			<button data-button="options" class="btn btn-primary"><i class="glyphicon glyphicon-open"></i> <?php $this->show('More options'); ?></button>
+			<button data-button="cancel" type="button" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+			
+		</div>
+		
+		<div class="tab-pane fade" id="menu" role="tabpanel">
+			<?php $this->loadBlock('menu-widget'); ?>
+		</div>
+	</div>
+</form>

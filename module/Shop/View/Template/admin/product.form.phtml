@@ -1,0 +1,248 @@
+
+<?php if ($form->hasData('categories')): ?>
+
+<form>
+	
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#product" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-shopping-cart"></i> <?php $this->show('Product'); ?></a></li>
+		<li role="presentation"><a href="#images" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <?php $this->show('Images'); ?></a></li>
+	</ul>
+	
+	
+	<div class="tab-content">
+		
+	  <!--Product tab-->
+	  <div role="tabpanel" class="tab-pane active" id="product">
+		<div class="well clearfix">
+			
+			<?php $form->show('id'); ?>
+			<?php $form->show('cover'); ?>
+			<?php $form->show('web_page_id'); ?>
+			
+			<div class="form-group clearfix">
+				<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+				<div class="col-lg-10">
+					<div class="input-group">
+						<?php $form->show('title'); ?>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group clearfix">
+				<label class="col-lg-2 control-label"><?php $this->show('Price'); ?></label>
+				<div class="col-lg-10">
+					<div class="input-group">
+						<?php $form->show('regular_price'); ?>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group clearfix <?php echo !$config->getStokePriceEnabled() ? 'hidden' : ''; ?>">
+				<label class="col-lg-2 control-label"><?php $this->show('Stoke price'); ?></label>
+				<div class="col-lg-10">
+					<div class="input-group">
+						<?php $form->show('stoke_price'); ?>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group clearfix">
+				<label class="col-lg-2 control-label"><?php $this->show('Category'); ?></label>
+				<div class="col-lg-10">
+					<?php $form->show('category_id'); ?>
+				</div>
+			</div>
+			
+			
+			<div class="form-group clearfix">
+				<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+				<div class="col-lg-10">
+					
+					<?php $form->show('description'); ?>
+				</div>
+			</div>
+			
+			
+			<div class="form-group clearfix <?php $this->getHelper()->addOnDemand($config->getSpecialSupport(), 'hidden'); ?>">
+				<label class="col-lg-2 control-label"><?php $this->show('Special offer'); ?></label>
+				<div class="col-lg-10">
+					
+					<?php $form->show('special_offer'); ?>
+				</div>
+			</div>
+			
+			<div class="options">
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<?php $form->show('order'); ?>
+							
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+					<div class="col-lg-10">
+						
+						<?php $form->show('published'); ?>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
+					<div class="col-lg-10">
+						
+						<?php $form->show('seo'); ?>
+						
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							
+							<?php $form->show('slug'); ?>
+							
+							<span class="input-group-addon">
+								<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
+							</span>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<?php $form->show('keywords'); ?>
+							
+							<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+					<div class="col-lg-10">
+						
+						<?php $form->show('meta_description'); ?>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<?php if ($form->isNewRecord()): ?>
+
+		<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> <?php $this->show('Add'); ?></button>
+		<button data-button="add-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
+
+		<?php else: ?>
+
+		<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> <?php $this->show('Save'); ?></button>
+
+		<?php endif; ?>
+
+		<button data-button="options" class="btn btn-primary"><i class="glyphicon glyphicon-open"></i> <?php $this->show('More options'); ?></button>
+		<button data-button="cancel" type="button" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+
+	  </div>
+	  <!--/Home tab-->
+	  
+	  
+	  <!--Images tab-->
+	  <div role="tabpanel" class="tab-pane" id="images">
+		<div class="well">
+			
+			<div id="file-input-container">
+				<input type="file" name="file[]" accept="image/x-png, image/gif, image/jpeg" />
+			</div>
+			
+			<div class="btn-container">
+				<a class="btn btn-default dropdown-toggle" data-button="upload" href="#"><i class="glyphicon glyphicon-camera"></i> <?php $this->show('Upload new image'); ?></a></a>
+			</div>
+			
+			<div class="table-responsive">
+				<table class="table table-hover table-striped table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th class="text-center"><?php $this->show('Image'); ?></th>
+							<th class="text-center"><?php $this->show('Order'); ?></th>
+							<th class="text-center"><?php $this->show('Published'); ?></th>
+							<th class="text-center"><?php $this->show('Cover'); ?></th>
+							<th class="text-center"><?php $this->show('Actions'); ?></th>
+						</tr>
+					</thead>
+					
+					<tbody data-container="image">
+						
+						<?php if (!empty($form->hasData('photos'))): ?>
+						<?php foreach ($form->getData('photos') as $photo): ?>
+						
+						<tr>
+							<td>
+								<img class="img-responsive center-block" data-image="" width="200" height="200" src="<?php echo $photo->getImageBag()->getUrl('200x200'); ?>" />
+							</td>
+							
+							<td class="text-center col-md-1">
+								<input type="number" class="form-control center-block" value="<?php echo $photo->getOrder(); ?>" name="photos[order][<?php echo $photo->getId(); ?>]" />
+							</td>
+							
+							<td class="text-center">
+								<input type="hidden" name="photos[published][<?php echo $photo->getId(); ?>]" value="0" />
+								<input type="checkbox" name="photos[published][<?php echo $photo->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($photo->getPublished()); ?>/>
+							</td>
+							
+							<td class="text-center">
+								<input type="radio" name="photos[cover]" value="<?php echo $photo->getImage(); ?>" <?php $this->getHelper()->checkOnDemand($form->getInput('cover') == $photo->getImage()); ?>/>
+							</td>
+							
+							<td class="text-center">
+								<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Replace this image'); ?>" data-button="edit" data-image="<?php echo $photo->getImage(); ?>" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+								
+								<?php if ($form->getInput('cover') != $photo->getImage()): ?>
+								<input name="photos[toDelete][<?php echo $photo->getId(); ?>]" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Check if you want to remove this image'); ?>" type="checkbox" /> <?php $this->show('Удалить'); ?>
+								<?php endif; ?>
+								
+								<input type="file" accept="image/x-png, image/gif, image/jpeg" class="hidden" name="<?php printf('image_%s', $photo->getId()); ?>" />
+							</td>
+						</tr>
+						
+						<?php endforeach; ?>
+						<?php endif; ?>
+						
+					</tbody>
+				</table>
+				
+			</div>
+			
+		</div>
+	  </div>
+	  <!--Images tab-->
+	 
+	 
+	</div>
+</form>
+
+<?php else: ?>
+
+<div class="well">
+ <div class="center-block">
+  <h2 class="text-muted text-center"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Before you add a product, you need to create at least one category'); ?></h2>
+ </div>
+</div>
+
+<?php endif; ?>

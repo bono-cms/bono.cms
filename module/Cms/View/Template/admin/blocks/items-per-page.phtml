@@ -1,0 +1,27 @@
+
+<?php if (isset($paginator)): ?>
+
+<div class="per-page-container">
+	<h4 class="inline"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show($caption); ?> 
+	<?php if ($paginator->getSummary() != 0): ?>
+	<small>(<?php $this->show('Displayed'); ?> <?php echo $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?php echo $paginator->getTotalAmount(); ?>)</small>
+	<?php endif; ?>
+	</h4>
+	
+	<div class="pull-right">
+		<span class="help-block inline"><?php $this->show('Items per page'); ?>: </span>
+		
+		<select data-button="per-page-changer">
+			
+			<?php foreach($perPageCounts as $count): ?>
+			<option value="<?php echo $count->getValue(); ?>" <?php $this->getHelper()->selectOnDemand($count->isCurrent()); ?>><?php echo $count->getName(); ?></option>
+			<?php endforeach; ?>
+			
+		</select>
+		
+	</div>
+	
+	<div class="clearfix"></div>
+	
+</div>
+<?php endif; ?>

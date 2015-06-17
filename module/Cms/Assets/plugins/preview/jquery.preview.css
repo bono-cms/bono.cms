@@ -1,0 +1,12 @@
+
+
+[data-image='preview'] {
+ height : 200px;
+ filter : alpha(opacity=40);
+ display : none;
+ -moz-opacity: 0.4;
+ -webkit-opacity: 0.4;
+ -khtml-opacity: 0.4;
+ opacity : 0.4
+}
+

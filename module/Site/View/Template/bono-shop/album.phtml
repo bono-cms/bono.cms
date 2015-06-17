@@ -1,0 +1,31 @@
+<div class="container">
+	<div class="page-header">
+	  <h3><?php echo $page->getTitle(); ?> </h3>
+	</div>
+	
+	<article><?php echo $page->getDescription(); ?></article>
+	
+	<?php if (!empty($photos)): ?>
+	<div class="row">
+	  <?php foreach ($photos as $photo): ?>
+	  
+	  <div class="col-xs-6 col-md-3">
+		<div class="thumbnail height-initial">
+		  <img src="<?php echo $photo->getImageBag()->getUrl('170x170'); ?>" alt="<?php echo $photo->getName(); ?>" />
+		  <div class="caption text-center">
+			<h3 class="text-muted"><?php echo $photo->getName(); ?></h3>
+			<p><?php echo $photo->getDescription(); ?></p>
+		  </div>
+		</div>
+	  </div>
+	  
+	  <?php endforeach; ?>
+	</div>
+
+    <?php $this->loadBlock('paginate'); ?>
+	
+	<?php else: ?>
+	
+	<h2><?php $this->show('No photos'); ?></h2>
+	<?php endif; ?>
+</div>

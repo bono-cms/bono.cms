@@ -1,0 +1,75 @@
+<div class="btn-toolbar">
+	<div class="btn-group">
+	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> 
+		<span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+		 <li><a href="<?php echo $this->url('Advice:Admin:Add@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Add new advice'); ?></a></li>
+		 <li class="divider"></li>
+		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
+		 
+		 <?php if (!empty($advices)): ?>
+		 <li><a href="#" data-button="save-changes"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
+		 <li><a href="#" data-button="remove-selected" data-button="remove-selected"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
+		 <?php else: ?>
+
+		 <li class="disabled"><a><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
+		 <li class="disabled"><a><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
+		 
+		 <?php endif; ?>
+	  </ul>
+	</div>
+</div>
+
+<?php $this->loadBlock('items-per-page', array('caption' => 'Advices')); ?>
+
+<form>
+	<div class="table-responsive">
+		<table class="table table-hover table-bordered table-striped">
+			<thead>
+				<tr>
+					<th class="text-center">
+						<input type="checkbox" />
+					</th>
+					<th class="text-center"><?php $this->show('#'); ?></th>
+					<th class="text-center"><?php $this->show('Title'); ?></th>
+					<th class="text-center"><?php $this->show('Published'); ?></th>
+					<th class="text-center"><?php $this->show('Actions'); ?></th>
+				</tr>
+			</thead>
+			
+			<?php if (!empty($advices)): ?>
+			<tbody>
+				<?php foreach ($advices as $advice): ?>
+				<tr>
+					<td class="text-center">
+						<input type="checkbox" name="toDelete[<?php echo $advice->getId(); ?>]" />
+					</td>
+					<td class="text-center text-muted"><?php echo $advice->getid(); ?></td>
+					<td class="text-center"><?php echo $advice->getTitle(); ?></td>
+					<td class="text-center">
+						<input type="hidden" name="published[<?php echo $advice->getId(); ?>]" value="0" />
+						<input type="checkbox" name="published[<?php echo $advice->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($advice->getPublished()); ?> />
+					</td>
+					<td class="text-center">
+						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this advice'); ?>" data-button="edit" href="<?php echo $this->url('Advice:Admin:Edit@indexAction', $advice->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this advice'); ?>" data-button="delete" data-id="<?php echo $advice->getId(); ?>" data-category="advice" href="#"><i class="glyphicon glyphicon-remove"></i></a>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+			
+			<?php endif; ?>
+		</table>
+
+		<?php if (empty($advices)): ?>
+		<div class="center-block">
+		 <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No advices'); ?></h2>
+		</div>
+		<?php endif; ?>
+		
+	</div>
+</form>
+
+<?php $this->loadBlock('paginator'); ?>

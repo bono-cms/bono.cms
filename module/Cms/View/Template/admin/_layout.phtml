@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title><?php $this->show($title); ?></title>
+ 
+ <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
+ <link rel="stylesheet" media="screen" href="<?php echo $stylesheet; ?>"  />
+ <?php endforeach; ?>
+ 
+ <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+ <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+ <![endif]-->
+ 
+</head>
+<body>
+
+<header>
+ <div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+	<div class="navbar-header">
+	  <a href="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" class="navbar-brand"><i class="glyphicon glyphicon-th-large"></i> Bono CMS</a>
+	  <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	  </button>
+	</div>
+	
+	<div class="navbar-collapse collapse" id="navbar-main">
+	  <ul class="nav navbar-nav"></ul>
+	  <ul class="nav navbar-nav navbar-right">
+		<!--System-->
+		<li class="dropdown">
+		  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="system"><i class="glyphicon glyphicon-align-left"></i> <?php $this->show('Menu'); ?><span class="caret"></span></a>
+		  <ul class="dropdown-menu" aria-labelledby="system">
+			 <li><a href="/" target="_blank"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Open a site'); ?></a></li>
+			 <li><a href="<?php echo $this->url('Cms:Admin:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-remove-circle"></i> <?php $this->show('Logout'); ?></a></li>
+			 <li><a href="#" data-button="refresh"><i class="glyphicon glyphicon-refresh"></i> <?php $this->show('Refresh'); ?></a></li>
+			 <li class="divider"></li>
+			 <li><a href="<?php echo $this->url('Cms:Admin:Users:Edit@indexAction', $role->getId()); ?>"><i class="fa fa-eyedropper"></i> <?php $this->show('Change the password'); ?></a></li>
+
+			 <?php if ($role->isDeveloper()): ?>
+
+			 <li class="dropdown-header"><?php $this->show('Mode'); ?></li>
+			 <?php foreach ($mode->getModes() as $id => $name): ?>
+			 <?php if ($mode->isCurrent($id)): ?>
+			 <li><a class="mode-link" data-mode-id="<?php echo $id; ?>" href="#"><i class="glyphicon glyphicon-ok"></i> <?php $this->show($name); ?></a></li>
+			 <?php else: ?>
+			 <li><a class="mode-link" data-mode-id="<?php echo $id; ?>" href="#"> <?php $this->show($name); ?></a></li>
+			 <?php endif; ?>
+			 <?php endforeach; ?>
+			 
+			 <?php endif; ?>
+		  </ul>
+		</li>
+		<!--/System-->
+		  
+		  <!--Languages-->
+		  <?php if (count($languages) > 1): ?>
+		  <li class="dropdown">
+		  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="<?php printf('famfamfam-flag-%s',$currentLanguage->getCode()); ?>"></i> <?php $this->show('Content'); ?><span class="caret"></span></a>
+		  <ul class="dropdown-menu" aria-labelledby="content">
+			<?php foreach ($languages as $language): ?>
+			<li>
+				<a data-button="change-content-language" data-language-id="<?php echo $language->getId(); ?>" href="#">
+					<i class="<?php printf('famfamfam-flag-%s', $language->getCode()); ?>"></i> 
+					<?php if ($language->getId() == $currentLanguage->getId()): ?>
+					<strong><?php echo $language->getName(); ?></strong>
+					<?php else: ?>
+					<?php echo $language->getName(); ?>
+					<?php endif; ?>
+				</a>
+			</li>
+			<?php endforeach; ?>
+		  </ul>
+		 </li>
+		 <?php endif; ?>
+		 <!--/Languages-->
+	  </ul>
+	</div>
+  </div>
+ </div>
+</header>
+
+<main>
+
+ <?php if ($this->getBreadcrumbBag()->has()): ?>
+ <ul class="breadcrumb">
+   <li><a href="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fa fa-home"></i> <?php $this->show('Dashboard'); ?></a></li>
+   <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $breadcrumb): ?>
+   <?php if ($breadcrumb->isActive()): ?>
+   <li class="active"><?php $this->show($breadcrumb->getName()); ?></li>
+   <?php else: ?>
+   <li><a href="<?php echo $this->url($breadcrumb->getLink()); ?>"><?php $this->show($breadcrumb->getName()); ?></a></li>
+   <?php endif; ?>
+   <?php endforeach; ?>
+ </ul>
+ <?php endif; ?>
+	
+	<?php if ($flashMessenger->has('success')):?>
+	<div class="alert alert-dismissable alert-success">
+		<button type="button" class="close" data-dismiss="alert">x</button>
+		<strong><span class="glyphicon glyphicon-ok"></span> <?php $this->show($flashMessenger->get('success')); ?></strong>
+	</div>
+	<?php endif; ?>
+	
+	<?php if ($flashMessenger->has('warning')): ?>
+	
+	<div class="alert alert-dismissable alert-warning">
+		<button type="button" class="close" data-dismiss="alert">x</button>
+		<h4><?php $this->show('Warning!'); ?></h4>
+		<strong><span class="glyphicon glyphicon-exclamation-sign"></span> <?php $this->show($flashMessenger->get('warning')); ?></strong>
+	</div>
+	
+	<?php endif; ?>
+	
+	
+	<?php if ($flashMessenger->has('info')): ?>
+	<div class="alert alert-dismissable alert-info">
+		<button type="button" class="close" data-dismiss="alert">x</button>
+		<strong><span class="glyphicon glyphicon-comment"></span> <?php $this->show($flashMessenger->get('info')); ?></strong>
+	</div>
+	<?php endif; ?>
+
+	<?php echo $fragment; ?>
+	
+</main>
+	
+
+<footer>
+
+ <?php /* No, you may not remove this copyright notice! */ ?>
+ <p><?php $this->show('Powered by'); ?> <a href="<?php echo $paramBag->get('site'); ?>" target="_blank">Bono CMS v <?php echo $paramBag->get('version'); ?></a></p>
+ 
+ <?php if ($extendedMode): ?>
+ <p><?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?> </p>
+ <p><?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></p>
+ <?php endif; ?>
+ 
+</footer>
+	
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php $this->show('Close'); ?></span></button>
+		<h4 class="modal-title"><?php $this->show('Are you sure?'); ?></h4>
+	  </div>
+	  <div class="modal-body">
+		<p><?php $this->show('Do you really want to delete this permanently?'); ?></p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" id="delete-yes-modal-btn" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> <?php $this->show('Yes'); ?></button>
+		<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> <?php $this->show('No'); ?></button>
+	  </div>
+	</div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- This value represents application language, which comes from application's configuration array -->
+<input type="hidden" name="language" value="<?php echo $appConfig->getLanguage(); ?>" />
+
+<?php $this->loadBlock('ajax'); ?>
+
+<?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
+<script src="<?php echo $script; ?>"></script>
+<?php endforeach; ?>
+
+</body>
+</html>
+	

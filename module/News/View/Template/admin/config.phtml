@@ -1,0 +1,173 @@
+<form>
+	<ul class="nav nav-tabs" role="tablist">
+	 <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
+	 <?php if ($extendedMode): ?>
+	 <li role="presentation"><a href="#additional" role="tab" data-toggle="tab"><i class="fa fa-th fa-fw"></i> <?php $this->show('Additional'); ?></a></li>
+	 <?php endif; ?>
+	</ul>
+	
+	<div class="tab-content clearfix">
+		<div class="tab-pane fade in active" id="common" role="tabpanel">
+			<div class="well clearfix">
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Time format in list'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="text" name="time_format_in_list" class="form-control" value="<?php echo $config->getTimeFormatInList(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Date format when showing posts in a category'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Date format in post's page"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="text" name="time_format_in_post" class="form-control" value="<?php echo $config->getTimeFormatInPost(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Date format when showing a post itself'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Items to show per page'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="number" class="form-control" name="per_page_count" min="1" value="<?php echo $config->getPerPageCount(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Amount of posts to be shown in a category'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('In announcement block'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="number" class="form-control" name="block_per_page_count" min="1" value="<?php echo $config->getBlockPerPageCount(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Amount of posts in announcement block'); ?></span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<div class="tab-pane" id="additional" role="tabpanel">
+			<div class="well clearfix">
+				
+				
+				<!--Cover full height-->
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Cover quality"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="number" name="cover_quality" class="form-control" value="<?php echo $config->getCoverQuality(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Image quality for covers'); ?></span>
+					</div>
+				</div>
+				<!--/Cover full height-->
+				
+				
+				<!--Cover full height-->
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Cover height'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="number" name="cover_height" class="form-control" value="<?php echo $config->getCoverHeight(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('The height of post covers'); ?></span>
+					</div>
+				</div>
+				<!--/Cover full height-->
+				
+				
+				<!--Cover full width-->
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Cover width'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="number" name="cover_width" class="form-control" value="<?php echo $config->getCoverWidth(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('The width of post covers'); ?></span>
+					</div>
+				</div>
+				<!--/Cover full width-->
+				
+
+				<!--Cover thumb height-->
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Thumb's height"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="number" name="thumb_height" class="form-control" value="<?php echo $config->getThumbHeight(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('The height of post thumb images'); ?></span>
+					</div>
+				</div>
+				<!--/Cover thumb height-->
+				
+				
+				<!--Cover thumb width-->
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Thumb's width"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="number" name="thumb_width" class="form-control" value="<?php echo $config->getThumbWidth(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('The width of post thumb images'); ?></span>
+					</div>
+				</div>
+				<!--/Cover thumb width-->
+				
+				
+				<!--Category template-->
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Category's template"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="text" class="form-control" name="category_template" min="1" value="<?php echo $config->getCategoryTemplate(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Category template used for rendering which must be framework compliant'); ?></span>
+					</div>
+				</div>
+				<!--Category template-->
+				
+				
+				<!--Post template-->
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Post's template"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group date">
+							<input type="text" class="form-control" name="post_template" min="1" value="<?php echo $config->getPostTemplate(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Post template used for rendering which must be framework compliant'); ?></span>
+					</div>
+				</div>
+				<!--/Post template-->
+				
+				
+			</div>
+		</div>
+	</div>
+
+	<button data-button="save" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+
+</form>

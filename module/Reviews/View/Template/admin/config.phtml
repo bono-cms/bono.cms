@@ -1,0 +1,60 @@
+<form>
+	
+	<ul class="nav nav-tabs" role="tablist">
+	 <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
+	</ul>
+	
+	<div class="tab-content">
+		
+		<!--Common tab-->
+		<div class="tab-pane fade in active" id="common" role="tabpanel">
+			<div class="well clearfix">
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Enable moderation'); ?></label>
+					<div class="col-lg-10">
+						<input type="hidden" name="enable_moderation" value="0" />
+						<input type="checkbox" class="form-control" name="enable_moderation" value="1" <?php $this->getHelper()->checkOnDemand($config->getEnabledModeration()); ?> />
+					</div>
+				</div>
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Items per page'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" min="1" class="form-control" name="per_page_count" value="<?php echo $config->getPerPageCount(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('How many reviews you want to be displayed per page on site?'); ?></span>
+					</div>
+				</div>
+				
+				<?php if ($extendedMode): ?>
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Template'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" name="template" class="form-control" value="<?php echo $config->getTemplate(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Template name for rendering on the site'); ?></span>
+					</div>
+				</div>
+				
+				<?php else: ?>
+				
+				<input type="hidden" name="template" value="<?php echo $config->getTemplate(); ?>" />
+				
+				<?php endif; ?>
+				
+			</div>
+		</div>
+		<!--/Common-->
+		
+	</div>
+	
+	<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="cancel" type="button" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+	
+</form>

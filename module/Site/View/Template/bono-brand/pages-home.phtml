@@ -1,0 +1,23 @@
+  
+  <div class="row">
+	<?php foreach ($announcement->getAllByClass('main') as $announce): ?>
+	<div class="col-lg-4">
+		<h2><i class="<?php echo $announce->getName(); ?>"></i></h2>
+		<h2><?php echo $announce->getTitle(); ?></h2>
+		<article><?php echo $announce->getIntro(); ?></article>
+	</div>
+	<?php endforeach; ?>
+	
+  </div>
+  
+  <div class="row">
+	<div class="col-md-7">
+	  <h2 class="featurette-heading">Brand new content management system with friendly administration UI and clean code, <span class="text-muted"> that you're gonna love</span></h2>
+	  
+	  <?php echo $block->render('brand-home'); ?>
+	  
+	</div>
+	<div class="col-md-5">
+	  <img class="featurette-image img-responsive" src="<?php echo $this->asset('img/bono.png'); ?>" alt="Made with love" />
+	</div>
+  </div>

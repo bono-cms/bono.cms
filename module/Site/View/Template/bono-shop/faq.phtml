@@ -1,0 +1,27 @@
+<div class="page-header">
+	<h2 class="text-muted"><?php echo $page->getTitle(); ?></h2>
+</div>
+
+<?php if (!empty($faqs)): ?>
+
+<div>
+	<?php foreach($faqs as $faq): ?>
+	
+	<div>
+		<blockquote><?php echo $faq->getQuestion(); ?></blockquote>
+		<article><?php echo $faq->getAnswer(); ?></article>
+	</div>
+	
+	<br />
+	
+	<?php endforeach; ?>
+	
+</div>
+
+<?php else: ?>
+
+<div class="block-center">
+	<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No faqs'); ?></h2>
+</div>
+
+<?php endif; ?>

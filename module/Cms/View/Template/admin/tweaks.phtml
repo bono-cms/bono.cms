@@ -1,0 +1,157 @@
+<form>
+	
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
+		<li role="presentation"><a href="#maintenance" role="tab" data-toggle="tab"><i class="fa fa-life-ring"></i> <?php $this->show('Maintenance'); ?></a></li>
+		<li role="presentation"><a href="#mail" role="tab" data-toggle="tab"><i class="fa fa-envelope"></i> <?php $this->show('Mail'); ?></a></li>
+	</ul>
+	
+	
+	<div class="tab-content">
+		<div class="tab-pane fade in active" id="common" role="tabpanel">
+			
+			<div class="well">
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Keep the track of latest activity'); ?></label>
+					<div class="col-lg-10">
+						<input type="hidden" name="keep_track" value="0" />
+						<input type="checkbox" class="form-control" name="keep_track" value="1" <?php $this->getHelper()->checkOnDemand($config->getKeepTrack()); ?> />
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Email for notifications'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="notification_email" value="<?php echo $config->getNotificationEmail(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('This email is used as an address for sending notifications'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Site's theme"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="theme" value="<?php echo $config->getTheme(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Directory's name where all theme files are stored. For example: my-blog"); ?></span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<!--Maintenance tab-->
+		<div class="tab-pane fade" id="maintenance" role="tabpanel">
+			<div class="well">
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Site is down for maintenance'); ?></label>
+					<div class="col-lg-10">
+						<input type="hidden" name="site_enabled" />
+						<input type="checkbox" name="site_enabled" class="form-control" <?php $this->getHelper()->checkOnDemand($config->getSiteEnabled()); ?> />
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Message'); ?></label>
+					<div class="col-lg-10">
+						<textarea name="site_down_reason" class="form-control"><?php echo $config->getSiteDownReason(); ?></textarea>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!--/Maintenance tab-->
+		
+		
+		
+		<!--Mail-->
+		<div class="tab-pane fade" id="mail" role="tabpanel">
+			<div class="well">
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Try using server's native mailer"); ?></label>
+					<div class="col-lg-10">
+						<input type="hidden" name="use_smtp_driver" value="0" />
+						<input type="checkbox" name="use_smtp_driver" value="1" id="smtpDriver" class="form-control" <?php $this->getHelper()->checkOnDemand($config->getUseSmtpDriver()); ?> />
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Secure layer'); ?> (SSL/TLS)</label>
+					<div class="col-lg-10">
+						<select class="form-control" name="smtp_secure_layer">
+							<?php foreach($config->getSmtpSecureLayers() as $id => $description): ?>
+							<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $config->getSmtpSecureLayer()); ?>><?php echo $description; ?></option>
+							<?php endforeach; ?>
+						</select>
+						<span class="help-block"><?php $this->show('If your provided requires secure layer, choice required one here'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Host'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="smtp_host" value="<?php echo $config->getSmtpHost(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('STMP host might look like as smtp.yourserver.com'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Username'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="smtp_username" value="<?php echo $config->getSmtpUsername(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Account's username, which usually represents your login"); ?></span>
+					</div>
+				</div>
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="smtp_password" value="<?php echo $config->getSmtpPassword(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Account's password"); ?></span>
+					</div>
+				</div>
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Port'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" class="form-control" name="smtp_port" value="<?php echo $config->getSmtpPort(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("SMTP server's port. In most cases its 25"); ?></span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!--/Mail-->
+		
+	</div>
+	
+	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="cancel" type="button" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+	
+</form>

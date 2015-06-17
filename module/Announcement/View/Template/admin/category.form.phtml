@@ -1,0 +1,30 @@
+<form>
+	<div class="well clearfix">
+		<input type="hidden" name="id" value="<?php echo $category->getId(); ?>" />
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+			<div class="col-lg-10">
+				<input type="text" name="name" class="form-control" placeholder="<?php $this->show('Category name'); ?>" value="<?php echo $category->getName(); ?>" />
+			</div>
+		</div>
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Class'); ?></label>
+			<div class="col-lg-10">
+				<input type="text" name="class" class="form-control" placeholder="<?php $this->show('Class name for rendering'); ?>" value="<?php echo $category->getClass(); ?>" />
+			</div>
+		</div>
+	</div>
+	
+	<?php if (!isset($editing)): ?>
+	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+	
+	<?php else: ?>
+	
+	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	
+	<?php endif; ?>
+	
+	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php echo $this->translate('Cancel'); ?></button>
+</form>

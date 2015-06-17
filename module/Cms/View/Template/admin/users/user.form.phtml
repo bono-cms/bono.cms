@@ -1,0 +1,99 @@
+<form>
+	<div class="well clearfix">
+		
+		<input type="hidden" name="id" value="<?php echo $user->getId(); ?>" />
+		<input type="hidden" name="passwordHash" value="<?php echo $user->getPasswordHash(); ?>" />
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Login'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="login" class="form-control" value="<?php echo $user->getLogin(); ?>" placeholder="<?php $this->show('Enter desired login'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="password" name="password" class="form-control" placeholder="<?php $this->show('Enter new password'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Password confirmation'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="password" name="passwordConfirm" class="form-control" placeholder="<?php $this->show('Enter new password again'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="email" class="form-control" value="<?php echo $user->getEmail(); ?>" placeholder="<?php $this->show('Email to be used for notifications and password recovery'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="name" class="form-control" value="<?php echo $user->getName(); ?>" placeholder="<?php $this->show('First Name of the user to be added'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		
+		<?php if ($role->isDeveloper()): ?>
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Role'); ?></label>
+			<div class="col-lg-10">
+				<select name="role" class="form-control">
+					
+					<?php foreach ($roles as $code => $name): ?>
+					<option value="<?php echo $code; ?>" <?php $this->getHelper()->selectOnDemand($code == $user->getRole()); ?>><?php echo ($name); ?></option>
+					<?php endforeach; ?>
+					
+				</select>
+			</div>
+		</div>
+		<?php else: ?>
+		
+		<input type="hidden" name="role" value="user" />
+		
+		<?php endif; ?>
+	</div>
+	
+	
+	<?php if (!isset($editing)): ?>
+	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+	
+	<?php else: ?>
+	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	
+	<?php endif; ?>
+	
+	<?php if ($role->isDeveloper()): ?>
+	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+	
+	<?php else: ?>
+	<button data-button="dashboard" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+	
+	<?php endif; ?>
+	
+</form>

@@ -1,0 +1,1 @@
+#scroller{background-image:url(to-top.png);background-repeat:no-repeat;background-position:top left;height:50px;display:none;width:100px;z-index:10;text-align:center;padding:10px;position:fixed;bottom:20px;right:25px;cursor:pointer}

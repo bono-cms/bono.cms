@@ -1,0 +1,166 @@
+/**!
+ * Basic shop design
+ * 
+ * (c) 2014 By D.D.Yang <daworld.ny@gmail.com>
+ */
+
+/*set a border on the images to prevent shifting*/
+#gallery_01 img { 
+ border : 2px solid white;
+}
+ 
+ /*Change the colour*/
+.active img {
+ border : 3px solid #333 !important;
+}
+
+div.zoomWindow {
+ margin-left: 20px !important;			
+}
+
+
+div.social-block > a > img:hover {
+ height: auto;
+ width: 5%;
+}
+
+#sizing-addon1 {
+ background-color: #FFF !important;
+ border:none !important;
+}
+
+#sizing-addon1 > a {
+ margin: -12px;
+}
+
+
+.height-initial {
+ min-height : initial !important;
+}
+
+div.thumbnail {
+ min-height: 368px;
+}
+
+div.product-images {
+ padding: 40px 55px 42px;
+}
+
+div.thumbnail > a > img {
+ transition: opacity .5s;
+ -webkit-transition: opacity .5s;
+ -moz-transition: opacity .5s;
+}
+
+div.thumbnail > a > img:hover {
+  opacity: 0.8;
+}
+
+/*Album*/
+ul.album-container > li {
+ float: left;
+}
+/*Album*/
+
+
+/* News*/
+div.post-container {
+ padding-bottom: 35px;
+}
+
+nav.pagination-container {
+ text-align: center;
+ margin: auto;
+}
+/* News*/
+
+
+
+/* Top menu */
+.sf-menu li {
+ background-image: linear-gradient(to bottom, #286090 0px, #241639 100%) !important;
+}
+
+li.active a {
+ background-color : rgb(103, 90, 90);
+ font-weight : bold;
+ text-decoration: underline;
+}
+
+.sf-menu a {
+ color: #FFF !important;
+}
+
+.sf-menu a:hover {
+ font-weight: bold !important;
+ text-decoration: none !important;
+}
+
+nav.top-menu {
+ background-image: linear-gradient(to bottom, #286090 0px, #241639 100%) !important;
+ height: 43px;
+ margin-bottom: 15px;
+ -webkit-border-radius: 5px 5px 5px 5px;
+ -moz-border-radius: 5px 5px 5px 5px;
+ -khtml-border-radius: 5px 5px 5px 5px;
+ border-radius: 5px 5px 5px 5px;
+ -webkit-box-shadow: 0px 2px 2px #DDDDDD;
+ -moz-box-shadow: 0px 2px 2px #DDDDDD;
+ box-shadow: 0px 2px 2px #DDDDDD;
+}
+/* Top menu */
+
+
+/* Basket page*/
+td {
+ vertical-align: middle !important;
+}
+
+[data-basket-input='recount'] {
+ min-width : 68px;
+ min-height : 34px;
+}
+
+td.data-basket-qty-container {
+ width: 20px;
+}
+
+div.product-basic-info {
+ text-align: center;
+}
+
+input[data-basket-input] {
+ width: 100px !important;
+}
+
+/* Basket page*/
+
+main {
+ max-width: 1260px;
+ margin: 0 auto;
+ padding: 15px;
+}
+
+.navbar-inverse {
+ background-image : linear-gradient(to bottom, #286090 0px, #241639 100%) !important;
+}
+
+header {
+ padding-bottom: 2px;
+ padding-top: 46px;
+}
+
+textarea {
+ resize: vertical;
+}
+
+footer {
+  padding-top: 30px;
+}
+
+footer address {
+  border-top: 1px solid #cccccc;
+  text-align: center;
+  margin-top: 30px;
+  padding: 30px 0;
+}

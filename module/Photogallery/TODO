@@ -1,0 +1,11 @@
+
+Planned:
+
+ * Improved nestedness when viewing on site
+ * Add different layout support in administration browser
+ * Add quick image changer. On double click on image, it should trigger it
+ * Add quick & batch image upload
+ * Add a column called "date created"
+ * Implement optional support for comments in each photo
+ * need to append getPermamentUrl() in bags
+ * Fetch random() must be everywhere in mappers

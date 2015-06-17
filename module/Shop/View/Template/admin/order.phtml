@@ -1,0 +1,75 @@
+<div class="btn-toolbar">
+	<div class="btn-group">
+	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+		 <li><a href="<?php echo $this->url('Shop:Admin:Product:Add@indexAction'); ?>"><i class="glyphicon glyphicon-shopping-cart"></i> <?php $this->show('Add product'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Shop:Admin:Category:Add@indexAction'); ?>"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Add category'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Shop:Admin:Config@indexAction'); ?>"><i class="glyphicon glyphicon-th-large"></i> <?php $this->show('Configuration'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Shop:Admin:Stat@indexAction'); ?>"><i class="glyphicon glyphicon-calendar"></i> <?php $this->show('Statistic'); ?></a></li>
+		 <li class="divider"></li>
+		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
+		 <li><a href="#" data-button="save-changes"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes');?></a></li>
+		 <li><a href="#" data-button="remove-selected" data-button="remove-selected"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
+	  </ul>
+	</div>
+</div>
+
+
+<div class="table-responsive">
+	<?php $this->loadBlock('items-per-page', array('caption' => 'Recent orders')); ?>
+	
+	<table class="table table-hover table-bordered table-striped">
+		<thead>
+			<tr>
+				<th class="text-center"><?php $this->show('#'); ?></th>
+				<th class="text-center"><?php $this->show('Date'); ?></th>
+				<th class="text-center"><?php $this->show('Customer'); ?></th>
+				<th class="text-center"><?php $this->show('Phone'); ?></th>
+				<th class="text-center"><?php $this->show('Address'); ?></th>
+				<th class="text-center"><?php $this->show('Comment'); ?></th>
+				<th class="text-center"><?php $this->show('Delivery type'); ?></th>
+				<th class="text-center"><?php $this->show('Qty'); ?></th>
+				<th class="text-center"><?php $this->show('Total price'); ?></th>
+				<th class="text-center"><?php $this->show('Approved'); ?></th>
+				<th class="text-center"><?php $this->show('Actions'); ?></th>
+			</tr>
+		</thead>
+		
+		<?php if (!empty($orders)): ?>
+		<tbody>
+			
+			<?php foreach($orders as $order): ?>
+			<tr>
+				<td class="text-center text-muted"><?php echo $order->getId(); ?></td>
+				<td class="text-center"><?php echo $order->getDate(); ?></td>
+				<td class="text-center"><?php echo $order->getName(); ?></td>
+				<td class="text-center"><?php echo $order->getPhone(); ?></td>
+				<td class="text-center"><?php echo $order->getAddress(); ?></td>
+				<td class="text-center"><?php echo $order->getComment(); ?></td>
+				<td class="text-center"><?php echo $order->getDelivery(); ?></td>
+				<td class="text-center"><?php echo $order->getQty(); ?></td>
+				<td class="text-center"><?php echo $order->getTotalPrice(); ?></td>
+				<td class="text-center"><?php echo $order->getApproved(); ?></td>
+				<td class="text-center">
+					<a data-button="delete"></a>
+				</td>
+			</tr>
+			<?php endforeach; ?>
+			
+		</tbody>
+		<?php endif; ?>
+		
+	</table>
+	
+	<?php $this->loadBlock('paginator'); ?>
+	
+	
+	<?php if (empty($orders)): ?>
+	<div class="center-block">
+		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No orders'); ?></h2>
+	</div>
+	<?php endif; ?>
+	
+</div>

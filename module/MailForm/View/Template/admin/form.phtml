@@ -1,0 +1,116 @@
+
+<form>
+	
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#page" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Form'); ?></a></li>
+		<li role="presentation"><a href="#menu" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Item in menu'); ?></a></li>
+	</ul>
+	
+	
+	<div class="tab-content">
+		<div class="tab-pane fade in active" id="page" role="tabpanel">
+			<div class="well">
+				<input type="hidden" name="id" value="<?php echo $form->getId(); ?>" />
+				<input type="hidden" name="web_page_id" value="<?php echo $form->getWebPageId(); ?>" />
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $form->getTitle(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+					</div>
+				</div>
+
+				<?php if ($extendedMode): ?>
+
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Template'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" name="template" class="form-control" placeholder="<?php $this->show('Framework template-view compliant file insiate site theme directory'); ?>" value="<?php echo $form->getTemplate(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+					</div>
+				</div>
+				
+				<?php else: ?>
+				
+				<input type="hidden" name="template" value="<?php echo $form->getTemplate(); ?>" />
+				
+				<?php endif; ?>
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+					<div class="col-lg-10">
+						<textarea name="description" rows="7" class="form-control"><?php echo $form->getDescription(); ?></textarea>
+					</div>
+				</div>
+				
+				
+				<div class="options">
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
+						<div class="col-lg-10">
+							<input type="hidden" name="seo" value="0" />
+							<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($form->getSeo()); ?> />
+						</div>
+					</div>
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="slug" class="form-control" value="<?php echo $form->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
+								<span class="input-group-addon">
+									<a href="#" data-button="slug">
+										<i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i>
+									</a>
+								</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="keywords" class="form-control" value="<?php echo $form->getKeywords(); ?>" placeholder="<?php $this->show('Keywords used for search engines'); ?>" />
+								<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+						<div class="col-lg-10">
+							<textarea name="metaDescription" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $form->getMetaDescription(); ?></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<?php if (!isset($editing)): ?>
+			<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+			<button data-button="add-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
+			<?php else: ?>
+			
+			<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+			<button data-button="save-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
+			
+			<?php endif; ?>
+			
+			<button data-button="options" class="btn btn-primary"><i class="glyphicon glyphicon-open"></i> <?php $this->show('More options'); ?></button>
+			<button data-button="cancel" type="button" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+			
+		</div>
+		
+		<div class="tab-pane fade" id="menu" role="tabpanel">
+			<?php $this->loadBlock('menu-widget'); ?>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,50 @@
+
+php_value memory_limit 512M
+php_value realpath_cache_size 2M
+
+
+# Please do not modify these settings until you know what you're doing!
+
+
+# We don't want this var to be readable
+ServerSignature Off
+
+# Force Apache to use UTF-8 by default
+AddDefaultCharset UTF-8
+
+# Prevent direct directory listing
+Options -Indexes
+IndexIgnore *.*
+
+# Make sure index is set as a front handler
+<IfModule dir_module>
+ DirectoryIndex index.php
+</IfModule>
+
+<IfModule mod_rewrite.c>
+ 
+ RewriteEngine On
+ 
+ # Send all www-prefixed requests to non-www
+ RewriteCond %{HTTPS} off
+ RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+ RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+ 
+ # Case when requesting via HTTPS
+ RewriteCond %{HTTPS} on
+ RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+ 
+ # Done there, now finally send everything to a front controller, except real files and directories
+ RewriteBase /
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteRule . index.php
+ 
+</IfModule>
+
+# And if we don't have mod_rewrite installed, we can still emulate its functionality by sending back to Front Controller
+# But 301 redirects won't work in that case
+<IfModule !mod_rewrite.c>
+ ErrorDocument 404 /index.php
+</IfModule>

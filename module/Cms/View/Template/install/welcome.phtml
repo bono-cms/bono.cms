@@ -1,0 +1,70 @@
+<?php $this->loadBlock('start'); ?>
+
+
+<main>
+	
+	<form>
+		
+		<h2 class="text-muted"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Installation wizard'); ?></h2>
+		<article>
+			In order to install the system, just provide following data. 
+			Krystal is distributed under GPL licence by installing this system, you'd agree to the license automatically
+		</article>
+		
+		<br />
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Host'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Host name'); ?>" value="<?php  ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+				<span class="help-block">Database name</span>
+			</div>
+		</div>
+	
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Database'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Datebase name'); ?>" value="<?php  ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+				<span class="help-block">Database name</span>
+			</div>
+		</div>
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('User'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Datebase name'); ?>" value="<?php  ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+				<span class="help-block">Username of database</span>
+			</div>
+		</div>
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Password'); ?>" value="<?php  ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+				<span class="help-block">Password of database</span>
+			</div>
+		</div>
+		
+	</form>
+	
+	<button class="btn btn-primary">Install</button>
+
+</main>
+
+<?php //$this->loadBlock('end'); ?>
+
+

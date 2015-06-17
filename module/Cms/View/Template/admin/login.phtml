@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title><?php $this->show('Enter the system'); ?></title>
+	
+ <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
+ <link rel="stylesheet" media="screen" href="<?php echo $stylesheet; ?>"  />
+ <?php endforeach; ?>
+</head>
+<body>
+ <main>
+  <div class="container">
+  <form class="form-signin" role="form">
+	<h2 class="form-signin-heading" style="color:white;"><?php $this->show('Enter the system'); ?></h2>
+	
+	<input type="text" class="form-control" placeholder="<?php $this->show('Login'); ?>" required="required" autofocus="true" name="login" />
+	<input type="password" class="form-control" placeholder="<?php $this->show('Password'); ?>" required="required" name="password" />
+	
+	<div class="checkbox">
+	  <label style="color:white;">
+		<input type="hidden" name="remember" value="0" />
+		<input type="checkbox" name="remember" value="1" /> <?php $this->show('Remember me'); ?>
+	  </label>
+	</div>
+	<button class="btn btn-lg btn-primary btn-block" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> <?php $this->show('Enter'); ?></button>
+  </form>
+  </div>
+ </main>
+
+ <?php $this->loadBlock('ajax'); ?>
+</body>
+
+<?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
+<script src="<?php echo $script; ?>"></script>
+<?php endforeach; ?>
+  
+</html>

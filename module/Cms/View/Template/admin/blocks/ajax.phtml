@@ -1,0 +1,37 @@
+  
+  <div class="modal fade" id="loader" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h4 class="modal-title"><?php $this->show('Please wait'); ?></h4>
+		</div>
+		
+		<div class="modal-body">
+			<center>
+				<img src="/module/Cms/Assets/images/ajax.gif" />
+				<h2><?php $this->show('Working'); ?>...</h2>
+			</center>
+		</div>
+		
+		<div class="modal-footer"></div>
+	  </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+  </div>
+  
+  <div class="modal fade" id="errors-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		  <h4 class="modal-title"><?php $this->show('Warning'); ?></h4>
+		</div>
+		
+		<div class="modal-body"></div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-dismiss="modal"><?php $this->show('OK'); ?></button>
+		</div>
+	 </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->  
+  </div>
+  

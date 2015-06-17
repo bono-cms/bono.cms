@@ -1,0 +1,33 @@
+<div class="container">
+	
+	<?php if (!empty($posts)): ?>
+	
+	<?php foreach ($posts as $post): ?>
+	<div class="post-container clearfix">
+		<h3>
+			<a href="<?php echo $post->getUrl(); ?>"><?php echo $post->getTitle(); ?></a> / 
+			<span class="label label-default"><?php echo $post->getTimeBag()->getListFormat(); ?></span>
+		</h3>
+		
+		<?php if ($post->hasCover()): ?>
+		<div class="col-xs-6 col-md-2">
+			<a href="<?php echo $post->getUrl(); ?>" class="thumbnail">
+				<img src="<?php echo $post->getImageBag()->getUrl('180x180'); ?>" alt="<?php echo $post->getTitle(); ?>" />
+			</a>
+		</div>
+		<?php endif; ?>
+		
+		<article><?php echo $post->getIntro(); ?></article>
+	</div>
+	<?php endforeach; ?>
+	
+	<?php $this->loadBlock('paginate'); ?>
+	
+	<?php else: ?>
+	
+	<div class="block-center">
+		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No news'); ?></h2>
+	</div>
+	
+	<?php endif; ?>
+</div>

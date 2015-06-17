@@ -1,0 +1,250 @@
+<form>
+	<ul class="nav nav-tabs" role="tablist">
+	 <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><span class="fa fa-home fa-fw"></span> <?php $this->show('Common'); ?></a></li>
+	 <li role="presentation"><a href="#maintenance" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-picture"></span> <?php $this->show('Images'); ?></a></li>
+	</ul>
+	
+	
+	<div class="tab-content">
+		
+		<!--Common tab-->
+		<div class="tab-pane fade in active" id="common" role="tabpanel">
+			
+			<div class="well clearfix">
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Activate stoke price support'); ?></label>
+					<div class="col-lg-10">
+						<input type="hidden" name="stoke_price_enabled" value="0" />
+						<input type="checkbox" name="stoke_price_enabled" class="form-control" value="1" <?php $this->getHelper()->checkOnDemand($config->getStokePriceEnabled()); ?> />
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Activate special offer support'); ?></label>
+					<div class="col-lg-10">
+						<input type="hidden" name="special_support" value="0" />
+						<input type="checkbox" name="special_support" class="form-control" value="1" <?php $this->getHelper()->checkOnDemand($config->getSpecialSupport()); ?> />
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Currency'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="currency" value="<?php echo $config->getCurrency(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Default which is displayed on site'); ?></span>
+					</div>
+				</div>
+
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Default per page count'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" min="3" class="form-control" name="default_category_per_page_count" value="<?php echo $config->getDefaultCategoryPerPageCount(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Default per page count for when browsing categories on site'); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Amount of new products in showcase'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" min="1" max="10" class="form-control" name="showcase_count" value="<?php echo $config->getShowCaseCount(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("How many products you want to be shown on site's showcase?"); ?></span>
+					</div>
+				</div>
+
+
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Maximal amount of recent products'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" min="1" max="10" class="form-control" name="recent_max_amount" value="<?php echo $config->getMaxRecentAmount(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Maximal amount of recent products for the block which is appeared on product's page. Enter 0 to disable this functionality"); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("User's storage type"); ?></label>
+					<div class="col-lg-10">
+						
+						<select class="form-control" name="basket_storage_type">
+							
+							<?php foreach ($config->getBasketStorageTypes() as $id => $description): ?>
+							<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $config->getBasketStorageType()); ?>><?php $this->show($description); ?></option>
+							<?php endforeach; ?>
+							
+						</select>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Basket's template"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="basket_template" value="<?php echo $config->getBasketTemplate(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Framework-compliant basket's template name for the view"); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Product's template"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="product_template" value="<?php echo $config->getProductTemplate(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Framework-compliant product's template name for the view"); ?></span>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Category's template"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="category_template" value="<?php echo $config->getCategoryTemplate(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Framework-compliant category's template's name for the view"); ?></span>
+					</div>
+				</div>
+				
+
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Basket's page id"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" class="form-control" name="basket_page_id" value="<?php echo $config->getBasketPageId(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("Page's id which is attached to basket's controller"); ?></span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!--/Common tab-->
+		
+		
+		
+		<div class="tab-pane fade" id="maintenance" role="tabpanel">
+
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#category-img" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <?php $this->show('Category'); ?></a></li>
+				<li role="presentation"><a href="#product-img" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-shopping-cart"></i> <?php $this->show("Product's page"); ?></a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="category-img" role="tabpanel">
+					<div class="well">
+						
+						<div class="form-group clearfix">
+							<label class="col-lg-2 control-label"><?php $this->show("Height"); ?></label>
+							
+							<div class="col-lg-10">
+								<div class="input-group">
+									<input type="number" min="10" max="1000" class="form-control" name="category_cover_height" value="<?php echo $config->getCategoryCoverHeight(); ?>" />
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+								</div>
+								<span class="help-block"><?php $this->show("Cover image's width when browsing categories"); ?></span>
+							</div>
+						</div>
+						
+						
+						<div class="form-group clearfix">
+							<label class="col-lg-2 control-label"><?php $this->show("Width"); ?></label>
+							<div class="col-lg-10">
+								<div class="input-group">
+									<input type="number" min="10" max="1000" class="form-control" name="category_cover_width" value="<?php echo $config->getCategoryCoverWidth(); ?>" />
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+								</div>
+								<span class="help-block"><?php $this->show("Cover image's width when browsing categories"); ?></span>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+				
+				<div class="tab-pane fade" id="product-img" role="tabpanel">
+					<div class="well">
+						
+						<div class="form-group clearfix">
+							<label class="col-lg-2 control-label"><?php $this->show("Cover's width"); ?></label>
+							
+							<div class="col-lg-10">
+								<div class="input-group">
+									<input type="number" min="10" max="1000" class="form-control" name="cover_width" value="<?php echo $config->getCoverWidth(); ?>" />
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+								</div>
+								<span class="help-block"><?php $this->show("Cover image's width on a cart page"); ?></span>
+							</div>
+						</div>
+						
+						
+						<div class="form-group clearfix">
+							<label class="col-lg-2 control-label"><?php $this->show("Cover's height"); ?></label>
+							
+							<div class="col-lg-10">
+								<div class="input-group">
+									<input type="number" min="10" max="1000" class="form-control" name="cover_height" value="<?php echo $config->getCoverHeight(); ?>" />
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+								</div>
+								<span class="help-block"><?php $this->show("Cover image's height on a cart page"); ?></span>
+							</div>
+						</div>
+						
+						
+						<div class="form-group clearfix">
+							<label class="col-lg-2 control-label"><?php $this->show("Thumb's height"); ?></label>
+							
+							<div class="col-lg-10">
+								<div class="input-group">
+									<input type="number" min="10" max="1000" class="form-control" name="thumb_height" value="<?php echo $config->getThumbHeight(); ?>" />
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+								</div>
+								<span class="help-block"><?php $this->show('Height of product small image'); ?></span>
+							</div>
+						</div>
+						
+						
+						<div class="form-group clearfix">
+							<label class="col-lg-2 control-label"><?php $this->show("Thumb's width"); ?></label>
+							<div class="col-lg-10">
+								<div class="input-group">
+									<input type="number" min="10" max="1000" class="form-control" name="thumb_width" value="<?php echo $config->getThumbWidth(); ?>" />
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+								</div>
+								<span class="help-block"><?php $this->show('Width of small images on product page'); ?></span>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<button type="submit" data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button type="button" data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+	
+</form>

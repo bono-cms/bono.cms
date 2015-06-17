@@ -1,0 +1,32 @@
+<div class="table-responsive">
+	<?php $this->loadBlock('items-per-page', array('caption' => 'Recent orders')); ?>
+
+	<table class="table table-hover table-bordered table-striped">
+		<thead>
+			<tr>
+				<th class="text-center"><?php $this->show('Product'); ?></th>
+				<th class="text-center"><?php $this->show('Price'); ?></th>
+				<th class="text-center"><?php $this->show('Sub total price'); ?></th>
+				<th class="text-center"><?php $this->show('Quantity'); ?></th>
+			</tr>
+		</thead>
+		
+		<?php if (!empty($details)): ?>
+		<tbody>
+
+			<?php foreach($details as $detail): ?>
+			<tr>
+				<td class="text-center"><?php echo $detail['name']; ?></td>
+				<td class="text-center"><?php echo $detail['price']; ?> <?php echo $currency; ?></td>
+				<td class="text-center"><?php echo $detail['sub_total_price']; ?> <?php echo $currency; ?></td>
+				<td class="text-center"><?php echo $detail['qty']; ?></td>
+			</tr>
+			<?php endforeach; ?>
+
+		</tbody>
+		<?php endif; ?>
+
+	</table>
+
+	<?php $this->loadBlock('paginator'); ?>
+</div>

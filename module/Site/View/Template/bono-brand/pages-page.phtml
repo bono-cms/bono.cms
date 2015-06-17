@@ -1,0 +1,22 @@
+
+<div class="row">
+ <div class="col-lg-4">
+  
+  <div class="page-header">
+	<h3 class="text-muted">Documentation</h3>
+  </div>
+  
+  <nav class="sidebar">
+   <?php echo $menu->renderByAssocWebPageId($page->getWebPageId()); ?>
+  </nav>
+  
+ </div>
+
+<div class="col-lg-7">
+  <div class="page-header">
+	 <h2><?php echo $page->getTitle(); ?></h2>
+  </div>
+
+  <article><?php echo $page->getContent(); ?></article>
+</div>
+</div>

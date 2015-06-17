@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8" />
+	<title><?php $this->show($title); ?></title>
+	
+	<?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
+	<link rel="stylesheet" media="screen" href="<?php echo $stylesheet; ?>"  />
+	<?php endforeach; ?>
+	
+	<?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
+	<script src="<?php echo $script; ?>"></script>
+	<?php endforeach; ?>
+	
+</head>
+
+<header>
+
+</header>

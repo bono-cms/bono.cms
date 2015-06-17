@@ -1,0 +1,151 @@
+<div class="btn-toolbar">
+	<div class="btn-group">
+	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> 
+		<span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+		 <li><a href="<?php echo $this->url('Slider:Admin:Image:Add@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Add a slider'); ?></a></li>
+		 <?php if ($extendedMode): ?>
+		 <li><a href="<?php echo $this->url('Slider:Admin:Category:Add@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Add a category'); ?></a></li>
+		 <?php endif; ?>
+		 <li class="divider"></li>
+		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
+		 
+		 <?php if (!empty($images)): ?>
+		 <li><a href="#" data-button="save-changes"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
+		 <li><a href="#" data-button="remove-selected"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
+		 <?php else: ?>
+		 
+		 <li class="disabled"><a><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
+		 <li class="disabled"><a><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
+		 
+		 <?php endif; ?>
+	  </ul>
+	</div>
+</div>
+
+<?php $this->loadBlock('items-per-page', array('caption' => 'Slider')); ?>
+
+<form>
+	<div class="table-responsive">
+		<table class="table table-hover table-bordered table-striped table-condensed">
+			<thead>
+				<tr>
+					<th class="text-center"><input type="checkbox" /></th>
+					<th class="text-center"><?php $this->show('#'); ?></th>
+					<th class="text-center"><?php $this->show('Preview'); ?></th>
+					<th class="text-center"><?php $this->show('Category'); ?></th>
+					<th class="text-center"><?php $this->show('Published'); ?></th>
+					<th class="text-center"><?php $this->show('Order'); ?></th>
+					<th class="text-center"><?php $this->show('Actions'); ?></th>
+				</tr>
+			</thead>
+			
+			<?php if (!empty($images)): ?>
+			<tbody>
+				<?php foreach ($images as $image): ?>
+				
+				<tr>
+					<td class="text-center">
+						<input type="checkbox" name="toDelete[<?php echo $image->getId(); ?>]" />
+					</td>
+					<td class="text-center text-muted"><?php echo $image->getId(); ?></td>
+					<td>
+						<img class="img-responsive center-block" src="<?php echo $image->getImageBag()->getUrl('400x200'); ?>" alt="<?php echo $image->getName(); ?>" />
+					</td>
+					<td class="text-center"><?php echo $image->getCategoryName(); ?></td>
+					<td class="text-center">
+						<input type="hidden" name="published[<?php echo $image->getId(); ?>]" value="0" />
+						<input type="checkbox" name="published[<?php echo $image->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($image->getPublished()); ?>/>
+					</td>
+					<td class="text-center col-md-1">
+						<input type="number" min="0" class="form-control" name="order[<?php echo $image->getId(); ?>]" value="<?php echo $image->getOrder(); ?>" />
+					</td>
+					<td class="text-center col-md-1">
+						<a data-button="edit" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this image'); ?>" href="<?php echo $this->url('Slider:Admin:Image:Edit@indexAction', $image->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+						<a data-button="delete" data-id="<?php echo $image->getId(); ?>" data-category="image" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this image'); ?>" href="#"><i class="glyphicon glyphicon-remove"></i></a>
+					</td>
+				</tr>
+				
+				<?php endforeach; ?>
+				
+			</tbody>
+			<?php endif; ?>
+		</table>
+		
+		<?php if (empty($images)): ?>
+		<div class="center-block">
+			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No images'); ?></h2>
+		</div>
+		<?php endif; ?>
+		
+	</div>
+</form>
+
+<?php $this->loadBlock('paginator'); ?>
+
+<div class="table-responsive clearfix">
+	
+	<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Categories'); ?> (<?php echo count($categories); ?>)</h4>
+	<table class="table table-hover table-bordered table-striped table-condensed">
+		<thead>
+			<tr>
+				<th class="text-center"><?php $this->show('#'); ?></th>
+				<th class="text-center"><?php $this->show('Name'); ?></th>
+				<th class="text-center"><?php $this->show('Amount of slides'); ?></th>
+				<th class="text-center"><?php $this->show('Height'); ?></th>
+				<th class="text-center"><?php $this->show('Width'); ?></th>
+				
+				<?php if ($extendedMode): ?>
+				<th class="text-center"><?php $this->show('Class'); ?></th>
+				<th class="text-center"><?php $this->show('Actions'); ?></th>
+				<?php endif; ?>
+				
+			</tr>
+		</thead>
+		
+		<?php if (!empty($categories)): ?>
+		<tbody>
+			
+			<?php foreach ($categories as $category): ?>
+			<tr>
+				<td class="text-center text-muted"><?php echo $category->getId(); ?></td>
+				<td class="text-center">
+					<a href="<?php echo $this->url('Slider:Admin:Browser@categoryAction', $category->getId()); ?>">
+						<?php if (isset($categoryId) && $categoryId == $category->getId()): ?>
+						<strong><?php echo $category->getName(); ?></strong>
+						<?php else: ?>
+						<?php echo $category->getName(); ?>
+						<?php endif; ?>
+					</a>
+				</td>
+				
+				<td class="text-center"><?php echo $taskManager->getSlidesCountByCategoryId($category->getId());; ?></td>
+				<td class="text-center"><?php echo $category->getHeight(); ?></td>
+				<td class="text-center"><?php echo $category->getWidth(); ?></td>
+				
+				<?php if ($extendedMode): ?>
+				
+				<td class="text-center"><?php echo $category->getClass(); ?></td>
+				<td class="text-center">
+					<a data-button="edit" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this category'); ?>" href="<?php echo $this->url('Slider:Admin:Category:Edit@indexAction', $category->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a data-button="delete" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this category'); ?>" data-id="<?php echo $category->getId(); ?>" data-category="category" href="#" ><i class="glyphicon glyphicon-remove"></i></a>
+				</td>
+				
+				<?php endif; ?>
+			</tr>
+			
+			<?php endforeach; ?>
+		</tbody>
+		<?php endif; ?>
+		
+	</table>
+
+	<?php if (empty($categories)): ?>
+	<div class="center-block">
+		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
+	</div>
+	<?php endif; ?>
+
+</div>

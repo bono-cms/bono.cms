@@ -1,0 +1,141 @@
+<form>
+	<ul class="nav nav-tabs" role="tablist">
+	 <li role="presentation" class="active"><a href="#page" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Album'); ?></a></li>
+	 <li role="presentation"><a href="#menu" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Item in menu'); ?></a></li>
+	</ul>
+	
+	
+	<div class="tab-content">
+		<div class="tab-pane fade in active" id="page" role="tabpanel">
+			<div class="well clearfix">
+				
+				<input type="hidden" name="id" value="<?php echo $album->getId(); ?>" />
+				<input type="hidden" name="web_page_id" value="<?php echo $album->getWebPageId(); ?>" />
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" name="name" class="form-control" placeholder="<?php $this->show("Photoalbum's name"); ?>" value="<?php echo $album->getName(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Parent album'); ?></label>
+					<div class="col-lg-10">
+						<select name="parent_id" class="form-control">
+							<option value="0">— <?php $this->show('None'); ?> —</option>
+							
+							<?php if (!empty($albums)): ?>
+							
+							<?php foreach ($albums as $id => $title): ?>
+							<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $album->getParentId()); ?>><?php echo $title; ?></option>
+							<?php endforeach; ?>
+							
+							<?php endif; ?>
+						</select>
+					</div>
+				</div>
+				
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+					<div class="col-lg-10">
+						<textarea name="description" id="description" class="form-control"><?php echo $album->getDescription(); ?></textarea>
+					</div>
+				</div>
+				
+				
+				
+				<div class="options">
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="title" value="<?php echo $album->getTitle(); ?>" class="form-control" placeholder="<?php $this->show("Photoalbum's title. By default is taken from the name"); ?>" />
+								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="order" value="<?php echo $album->getOrder(); ?>" class="form-control" placeholder="<?php $this->show('Sort order of this album'); ?>" />
+								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="slug" value="<?php echo $album->getSlug(); ?>" class="form-control" placeholder="<?php $this->show('URL slug for this album. By default is taken from a title'); ?>" />
+								<span class="input-group-addon">
+									<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" data-placement="left" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
+								</span>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<input type="text" name="keywords" value="<?php echo $album->getKeywords(); ?>" class="form-control" placeholder="<?php $this->show('Keywords for search engines'); ?>" />
+								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Meta-description'); ?></label>
+						<div class="col-lg-10">
+							<textarea class="form-control" name="meta_description" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $album->getMetaDescription(); ?></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
+						<div class="col-lg-10">
+							<input type="hidden" name="seo" value="0" />
+							<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($album->getSeo()); ?> />
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			
+			<?php if (!isset($editing)): ?>
+			
+			<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+			<button data-button="add-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
+			<?php else: ?>
+			
+			<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+			<button data-button="save-create-new" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
+			<?php endif; ?>
+			
+			<button data-button="options" class="btn btn-primary"><i class="glyphicon glyphicon-open"></i> <?php $this->show('More options'); ?></button>
+			<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+			
+		</div>
+		
+		<div class="tab-pane fade" id="menu" role="tabpanel">
+			<?php $this->loadBlock('menu-widget'); ?>
+		</div>
+		
+	</div>
+</form>

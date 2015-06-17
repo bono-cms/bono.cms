@@ -1,0 +1,15 @@
+Blog module
+===========
+
+Blogging module allows you to manager blogs on your site.
+
+
+- Ensure we can't add posts when no categories[DONE]
+
+TODO:
+
+- Interfaces
+- Config doesn't work
+- overall test
+- Sort order doesn't work
+- Bug with pagination on site

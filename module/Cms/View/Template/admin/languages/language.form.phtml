@@ -1,0 +1,81 @@
+<form>
+	<div class="well clearfix">
+		
+		<input type="hidden" name="id" value="<?php echo $language->getId(); ?>" />
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="name" class="form-control" value="<?php echo $language->getName(); ?>" placeholder="<?php $this->show('The name of the language to be created'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Code'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="code" class="form-control" value="<?php echo $language->getCode(); ?>" placeholder="<?php $this->show('Unique language identifier'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Country'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<select name="flag" class="form-control">
+						
+						<?php foreach ($countries as $code => $name): ?>
+						<option data-flag="<?php printf('famfamfam-flag-%s', $code); ?>" <?php $this->getHelper()->selectOnDemand($code == $language->getCode()); ?> value="<?php echo $code; ?>"><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						
+					</select>
+					
+					<span class="input-group-addon"><i data-container="flag" class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="number" min="0" name="order" class="form-control" value="<?php echo $language->getOrder(); ?>" placeholder="<?php $this->show('Language sort order in a list'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+			<div class="col-lg-10">
+				<input type="hidden" name="published" value="0" />
+				<input type="checkbox" name="published" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($language->getPublished()); ?> />
+			</div>
+		</div>
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
+			<div class="col-lg-10">
+				<input type="hidden" name="default" value="0" />
+				<input type="checkbox" name="default" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($language->getDefault()); ?> />
+			</div>
+		</div>
+	</div>
+	
+	
+	<?php if (!isset($editing)): ?>
+	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+	<?php else: ?>
+	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	
+	<?php endif; ?>
+	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+</form>

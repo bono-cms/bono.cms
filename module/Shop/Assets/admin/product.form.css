@@ -1,0 +1,16 @@
+
+[data-image='preview'] {
+ display: block;
+}
+
+* > [data-image='preview'], a.delete {
+ margin: 0 auto;
+}
+
+div.btn-container {
+ margin-bottom : 16px;
+}
+
+#file-input-container {
+ display: none;
+}

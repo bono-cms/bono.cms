@@ -1,0 +1,39 @@
+
+Hello there,
+
+You have a new order from : <?php echo $input['name']; ?>
+
+Contact information :
+
+Phone: <?php echo $input['phone']; ?>
+
+Address : <?php echo $input['address']; ?>
+
+<?php if (!empty($input['comment'])): ?>
+------------------------------------------
+
+Comments:
+
+<?php echo $input['comment']; ?>
+<?php endif; ?>
+
+------------------------------------------
+
+Delivery type : <?php echo $input['delivery']; ?>
+
+<?php foreach ($products as $product): ?>
+
+Product : <?php echo $product->getTitle(); ?>
+
+Quantity : <?php echo $product->getQty(); ?>
+
+Sub-total price: <?php echo $product->getSubTotalPrice(); ?>
+
+
+<?php endforeach; ?>
+
+------------------------------------------
+
+Products total  quantity: <?php echo $this->basketManager->getTotalQuantity(); ?>
+
+Total price : <?php echo $this->basketManager->getTotalPrice(); ?>

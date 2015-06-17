@@ -1,0 +1,82 @@
+
+<input type="hidden" name="menu[attached]" value='<?php echo $attached; ?>' />
+
+<?php foreach ($items as $item): ?>
+
+<div class="menu-block-container">
+	
+	<input type="hidden" name="menu[widget][id][]" value="<?php echo $item->getId(); ?>" />
+	
+	<div class="form-group clearfix">
+		<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+		<div class="col-lg-10">
+			<div class="input-group">
+				<input type="text" name="menu[widget][name][]" class="form-control" placeholder="<?php $this->show("Item's name which is taken from a title by default"); ?>" value="<?php echo $item->getName(); ?>" />
+				<span class="input-group-addon"><a href="#" data-widget-button="menu-remove" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Cancel this item'); ?>"><i class="glyphicon glyphicon-remove"></i></a></span>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="form-group clearfix">
+		<label class="col-lg-2 control-label"><?php $this->show('In menu'); ?></label>
+		<div class="col-lg-10">
+			
+			<select name="menu[widget][category_id][]" class="form-control" data-widget="menu-category">
+				
+				<?php foreach ($categories as $categoryBag): ?>
+				<option value="<?php echo $categoryBag->getId(); ?>" <?php $this->getHelper()->selectOnDemand($categoryBag->getId() == $item->getCategoryId()); ?>><?php echo $categoryBag->getName(); ?></option>
+				<?php endforeach; ?>
+				
+			</select>
+		</div>
+	</div>
+	
+	
+	<div class="form-group clearfix" data-widget="menu-parent-container">
+		<label class="col-lg-2 control-label"><?php $this->show('Parent item'); ?></label>
+		<div class="col-lg-10">
+			
+			<select name="menu[widget][parent_id][]" class="form-control" data-widget="menu-parent-item">
+				<?php foreach ($parentItems as $id => $title): ?>
+				<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $item->getParentId()); ?>><?php echo $title; ?></option>
+				<?php endforeach; ?>
+				
+			</select>
+		</div>
+	</div>
+	
+	
+	<div class="form-group clearfix">
+		<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+		<div class="col-lg-10">
+			
+			<select name="menu[widget][published][]" class="form-control">
+				<?php foreach ($publishOptions as $value => $title): ?>
+				<option value="<?php echo $value; ?>" <?php $this->getHelper()->selectOnDemand($value == $item->getPublished()); ?>><?php $this->show($title); ?></option>
+				<?php endforeach; ?>
+				
+			</select>
+		</div>
+	</div>
+	
+	
+	<div class="form-group clearfix">
+		<label class="col-lg-2 control-label"><?php $this->show('Window'); ?></label>
+		<div class="col-lg-10">
+			
+			<select name="menu[widget][open_in_new_window][]" class="form-control">
+				<?php foreach ($newWindowOptions as $value => $title): ?>
+				<option value="<?php echo $value; ?>" <?php $this->getHelper()->selectOnDemand($value == $item->getOpenInNewWindow()); ?>><?php $this->show($title); ?></option>
+				<?php endforeach; ?>
+				
+			</select>
+		</div>
+	</div>
+	
+</div>
+
+
+<div class="block-separator"></div>
+
+<?php endforeach; ?>

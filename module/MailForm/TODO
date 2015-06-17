@@ -1,0 +1,7 @@
+
+Planned
+=======
+
+ * Make the process of field creating dynamic, so that administrator can add fields right from administration area.
+   So that, no need to code it.
+ * need to append getPermamentUrl() in bags

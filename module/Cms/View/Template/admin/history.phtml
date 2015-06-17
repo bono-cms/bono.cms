@@ -1,0 +1,44 @@
+<?php $this->loadBlock('items-per-page', array('caption' => 'History')); ?>
+
+<div class="table-responsive">
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th class="text-center"><?php $this->show('#'); ?></th>
+				<th class="text-center"><?php $this->show('Time'); ?></th>
+				<th class="text-center"><?php $this->show('Action'); ?></th>
+				<th class="text-center"><?php $this->show('Module'); ?></th>
+				<th class="text-center"><?php $this->show('User'); ?></th>
+			</tr>
+		</thead>
+		
+		<?php if (!empty($records)): ?>
+		<tbody>
+			<?php foreach ($records as $record): ?>
+			<tr>
+				<td class="text-center text-muted"><?php echo $record->getId(); ?></td>
+				<td class="text-center"><?php echo date('d.m.y H:i:s', $record->getTimestamp()); ?></td>
+				<td class="text-center"><?php echo $this->translate($record->getComment(), $record->getPlaceholder()); ?></td>
+				<td class="text-center"><?php $this->show($record->getModule()); ?></td>
+				<td class="text-center"><?php echo $userManager->fetchNameById($record->getUserId()); ?></td>
+			</tr>
+			<?php endforeach; ?>
+		</tbody>
+		<?php endif; ?>
+		
+	</table>
+
+	<?php if (empty($records)): ?>
+	<div class="center-block">
+		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No records'); ?></h2>
+	</div>
+	<?php endif; ?>
+	
+</div>
+
+
+<?php if (!empty($records) && $extendedMode): ?>
+<button data-button="remove" data-category="main" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Clear all'); ?></button>
+<?php endif; ?>
+
+<?php $this->loadBlock('paginator'); ?>

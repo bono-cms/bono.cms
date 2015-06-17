@@ -1,0 +1,121 @@
+<?php
+
+/**
+ * This file is part of the Bono CMS
+ * 
+ * Copyright (c) 2015 David Yang <daworld.ny@gmail.com>
+ * 
+ * For the full copyright and license information, please view
+ * the license file that was distributed with this source code.
+ */
+
+namespace MailForm\Storage\MySQL;
+
+use Cms\Storage\MySQL\AbstractMapper;
+use MailForm\Storage\FormMapperInterface;
+
+final class FormMapper extends AbstractMapper implements FormMapperInterface
+{
+	/**
+	 * {@inheritDoc}
+	 */
+	protected $table = 'bono_module_mailform';
+
+	/**
+	 * Updates SEO state by form's associated id
+	 * 
+	 * @param string $id
+	 * @param string $seo
+	 * @return boolean
+	 */
+	public function updateSeoById($id, $seo)
+	{
+		return $this->db->update($this->table, array('seo' => $seo))
+						->whereEquals('id', $id)
+						->execute();
+	}
+
+	/**
+	 * Adds new form
+	 * 
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function insert(array $data)
+	{
+		return $this->db->insert($this->table, array(
+
+			'lang_id'		=> $this->getLangId(),
+			'web_page_id'	=> '',
+			'template'		=> $data['template'],
+			'title'			=> $data['title'],
+			'description'	=> $data['description'],
+			'seo'			=> $data['seo'],
+			'keywords'		=> $data['keywords'],
+			'meta_description' => $data['metaDescription']
+			
+		))->execute();
+	}
+
+	/**
+	 * Updates a form
+	 * 
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function update(array $data)
+	{
+		return $this->db->update($this->table, array(
+
+			'template' => $data['template'],
+			'title' => $data['title'],
+			'description' => $data['description'],
+			'seo' => $data['seo'],
+			'keywords' => $data['keywords'],
+			'meta_description' => $data['metaDescription']
+
+		))->whereEquals('id', $data['id'])
+		  ->execute();
+	}
+
+	/**
+	 * Fetches form data by its associated id
+	 * 
+	 * @param string $id Form's id
+	 * @return array
+	 */
+	public function fetchById($id)
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->whereEquals('id', $id)
+						->query();
+	}
+
+	/**
+	 * Fetches all forms
+	 * 
+	 * @return array
+	 */
+	public function fetchAll()
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->whereEquals('lang_id', $this->getLangId())
+						->queryAll();
+	}
+
+	/**
+	 * Deletes a form by its associated id
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	public function deleteById($id)
+	{
+		return $this->db->delete()
+						->from($this->table)
+						->whereEquals('id', $id)
+						->execute();
+	}
+}
