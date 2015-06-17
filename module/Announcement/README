@@ -2,15 +2,3 @@ Announcement module
 ===================
 
 Announcement module allows you to manage different announces on your site.
-
-- SITE SERVICE[DONE]
-
-@TODO:
-
- - Attribute field
- - Ensure we can't add posts when no categories
- - need to append getPermamentUrl() in bags
- - Add and connect Search Mapper
- - Add order in browser
- - Image uploader? Needed? Or get ride of it?
- - Fetch random() must be everywhere in mappers
