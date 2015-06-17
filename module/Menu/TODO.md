@@ -1,7 +1,8 @@
-Planned
-=======
+TODO List
+=========
 
- * There was a bug when sorting is done? [DEPRECATED]
+ * Add optional URL validation on item
+ * And validation for names as well * There was a bug when sorting is done? [DEPRECATED]
  * Cache for UI logic to improve performance
  * Improve widget "Add to menu" widget by adding "Appears after" functionality
  * Implement automatic menus tool (for example, which will collect menus from shop categories)
