@@ -1,9 +1,4 @@
 FAQ module
 ==========
 
-
-TODO:
-
-
- - Add validation on content
- - Need to implement config?
+This module allows you to manage FAQs on your site.
