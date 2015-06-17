@@ -1,6 +1,8 @@
-Planned
-=======
+TODO List
+=========
 
+ * Rename delete to remove in services only
+ * Need `SiteService`
  * need to append getPermamentUrl() in entities
  * Fetch_random() must be in post's mapper
  * Deprecate sorting order in categories
@@ -10,10 +12,3 @@ Planned
  * RSS for site visitors
  * If social module is loaded, then provide share links
  * If Subscriber is loaded, then send created post to all subscribers
-
-PASSED
-======
-
- * PostRemover [DONE]
- * CategoryRemover [DONE]
- * BreadcrumbMaker [DONE]
