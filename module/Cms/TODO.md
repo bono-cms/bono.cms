@@ -1,6 +1,11 @@
-Planned
-=======
+TODO List
+=========
 
+ * Improved password salts
+ * Instantiation of ConfigManager needs to be abstracted
+ * Need to deprecate form providers and replace with config [ON HOLD]
+ * Need to implement installation [ON HOLD]
+ * Need to implement mailer functionality [ON HOLD]. And what about HTML messages with attachments?
  * Deprecate array configuration
  * Need to implement slug validator
  * Instead of raw arrays, WebPageManager should return entities
@@ -25,25 +30,3 @@ Planned
  * Drag and Drop for modules (changing orders)
  * In tables, there must be a filter (In browsers) and sort
  * Write CMS module manager. Should be able to disable and un-install modules
-
- 
-Passed tasks:
-============
-
- - getAssetPath needs to be renamed to getWithAssetPath() [DONE]
- - Global template blocks [LATER]
- - Define roles everywhere [DONE]
- - Provide translations for all validation messages [DONE]
- - Configs everywhere are vulnerable to XSS [DONE]
- * In validation, success fields should highlight green [DONE]
- - DeleteById() needs to renamed and protected from XSS [DONE]
- - Rename Admin to Cms[DONE]
- - Ensure we can't create anything until there's at least one published language [DONE]
- - CKEditor must read its language option from somewhere[DONE]
- - Improve Bootstrapper for modules [DONE]
- - Decorate crappy code in authorization [DONE]
- - Minify datepicker [DONE]
- - Minify fam fam [DONE]
- - Admin\Service\LanguageManager needs to get rid of $_SESSION[DONE]
- - \Admin\Controller\Admin\Users\AbstractUser in validation need to define a pattern for password confirmation [DONE]
- - In JS validation there must be a reset [DONE]
