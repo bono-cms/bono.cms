@@ -78,57 +78,57 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
-	 * Inserts an announce
+	 * Adds an announce
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
 			
 			'lang_id'	 	=> $this->getLangId(),
-			'category_id' 	=> $data['categoryId'],
-			'web_page_id'	=> $data['webPageId'],
-			'title'			=> $data['title'],
-			'name'		 	=> $data['name'],
-			'intro'		 	=> $data['intro'],
-			'full'		 	=> $data['full'],
-			'order'		 	=> $data['order'],
-			'published'  	=> $data['published'],
-			'seo' 			=> $data['seo'],
-			'slug'		 	=> $data['slug'],
-			'keywords'	 	=> $data['keywords'],
-			'meta_description' => $data['metaDescription'],
-			'cover'		 	=> $data['cover']
-			
+			'category_id' 	=> $input['categoryId'],
+			'web_page_id'	=> $input['webPageId'],
+			'title'			=> $input['title'],
+			'name'		 	=> $input['name'],
+			'intro'		 	=> $input['intro'],
+			'full'		 	=> $input['full'],
+			'order'		 	=> $input['order'],
+			'published'  	=> $input['published'],
+			'seo' 			=> $input['seo'],
+			'slug'		 	=> $input['slug'],
+			'keywords'	 	=> $input['keywords'],
+			'meta_description' => $input['metaDescription'],
+			'cover'		 	=> $input['cover']
+
 		))->execute();
 	}
 
 	/**
 	 * Updates an announce
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean Depending on success
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
-			
-			'category_id' 	=> $data['categoryId'],
-			'title'			=> $data['title'],
-			'name'		 	=> $data['name'],
-			'intro'		 	=> $data['intro'],
-			'full'		 	=> $data['full'],
-			'order'		 	=> $data['order'],
-			'published'  	=> $data['published'],
-			'seo' 			=> $data['seo'],
-			'slug'		 	=> $data['slug'],
-			'keywords'	 	=> $data['keywords'],
-			'meta_description' => $data['metaDescription'],
-			'cover'		 	=> $data['cover']
-			
-		))->whereEquals('id', $data['id'])
+
+			'category_id' 	=> $input['categoryId'],
+			'title'			=> $input['title'],
+			'name'		 	=> $input['name'],
+			'intro'		 	=> $input['intro'],
+			'full'		 	=> $input['full'],
+			'order'		 	=> $input['order'],
+			'published'  	=> $input['published'],
+			'seo' 			=> $input['seo'],
+			'slug'		 	=> $input['slug'],
+			'keywords'	 	=> $input['keywords'],
+			'meta_description' => $input['metaDescription'],
+			'cover'		 	=> $input['cover']
+
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
@@ -147,56 +147,12 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
-	 * Counts all announces
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
-	}
-
-	/**
-	 * Counts all published announces
-	 * 
-	 * @return integer
-	 */
-	private function countAllPublished()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', $published)
-						->query('count');
-	}
-
-	/**
-	 * Count all announces filtered by category id
-	 * 
-	 * @param string $categoryId
-	 * @return integer
-	 */
-	private function countAllByCategoryId($categoryId)
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->query('count');
-	}
-
-	/**
 	 * Updates a column's value by its associated id
 	 * 
 	 * @param string $id Target id
 	 * @param string $column Target column
-	 * @oaram string $value
-	 * @retrun boolean
+	 * @param string $value
+	 * @return boolean
 	 */
 	private function updateRowColumnById($id, $column, $value)
 	{
@@ -206,9 +162,9 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
-	 * Updates announce's seo value
+	 * Updates seo value
 	 * 
-	 * @param string $id Advice id
+	 * @param string $id
 	 * @param string $seo Either 0 or 1
 	 * @return boolean
 	 */
@@ -218,9 +174,9 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
-	 * Updates announce's published value
+	 * Updates published value
 	 * 
-	 * @param string $id Advice id
+	 * @param string $id
 	 * @param string $published Either 0 or 1
 	 * @return boolean
 	 */
@@ -238,17 +194,12 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		// Tweak paginator instance
-		$this->paginator->setTotalAmount($this->countAll())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -275,17 +226,12 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		// Tweak paginator's instance
-		$this->paginator->setTotalAmount($this->countAllPublished())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('published', '1')
 						->andWhereEquals('lang_id', $this->getLangId())
 						->orderBy('order')
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -299,17 +245,12 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
 	{
-		// Tweak paginator instance
-		$this->paginator->setTotalAmount($this->countAllByCategoryId($categoryId))
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('category_id', $categoryId)
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 }

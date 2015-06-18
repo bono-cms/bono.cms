@@ -36,7 +36,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	}
 
 	/**
-	 * Inserts a category
+	 * Adds a category
 	 * 
 	 * @param string $name Category name
 	 * @param string $class Category class
@@ -45,6 +45,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	public function insert($name, $class)
 	{
 		return $this->db->insert($this->table, array(
+
 			'lang_id' => $this->getLangId(),
 			'name'	 => $name,
 			'class'  => $class
@@ -63,8 +64,10 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	public function update($id, $name, $class)
 	{
 		return $this->db->update($this->table, array(
+
 			'name'	 => $name,
 			'class'  => $class
+
 		))->whereEquals('id', $id)
 		  ->execute();
 	}
