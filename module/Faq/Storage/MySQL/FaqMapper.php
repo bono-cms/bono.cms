@@ -24,7 +24,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	/**
 	 * Fetches question name by its associated id
 	 * 
-	 * @param string $id Faq id
+	 * @param string $id FAQ id
 	 * @return string
 	 */
 	public function fetchQuestionById($id)
@@ -36,9 +36,9 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	}
 
 	/**
-	 * Updates column's value by associated faq id
+	 * Updates column's value by associated FAQ id
 	 * 
-	 * @param string $id Faq id
+	 * @param string $id FAQ id
 	 * @param string $column Target column
 	 * @param string $value New column's value
 	 * @return boolean
@@ -75,7 +75,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	}
 
 	/**
-	 * Fetches all faqs filtered by pagination
+	 * Fetches all FAQs filtered by pagination
 	 * 
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count
@@ -83,21 +83,17 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAll())
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('langId', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
 	/**
-	 * Fetches all published faqs filtered by pagination
+	 * Fetches all published FAQs filtered by pagination
 	 * 
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
@@ -105,21 +101,17 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllPublished())
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('published', '1')
 						->andWhereEquals('langId', $this->getLangId())
 						->orderBy('order')
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
 	/**
-	 * Fetches all published faqs
+	 * Fetches all published FAQs
 	 * 
 	 * @return array
 	 */
@@ -134,76 +126,47 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	}
 
 	/**
-	 * Count all records
+	 * Adds new FAQ
 	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->query('count');
-	}
-
-	/**
-	 * Counts all published records
-	 * 
-	 * @return integer
-	 */
-	private function countAllPublished()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->query('count');
-	}
-
-	/**
-	 * Inserts a faq
-	 * 
-	 * @param array $data Faq data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'langId'		=> $this->getLangId(),
-			'order'			=> $data['order'],
-			'question'		=> $data['question'],
-			'answer'		=> $data['answer'],
-			'published'		=> $data['published']
-			
+			'order'			=> $input['order'],
+			'question'		=> $input['question'],
+			'answer'		=> $input['answer'],
+			'published'		=> $input['published']
+
 		))->execute();
 	}
 
 	/**
-	 * Updates a fqq
+	 * Updates a FAQ
 	 * 
-	 * @param array $data Faq data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
-			
-			'order'			=> $data['order'],
-			'question'		=> $data['question'],
-			'answer'		=> $data['answer'],
-			'published'		=> $data['published']
-			
-		))->whereEquals('id', $data['id'])
+
+			'order'			=> $input['order'],
+			'question'		=> $input['question'],
+			'answer'		=> $input['answer'],
+			'published'		=> $input['published']
+
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
 	/**
-	 * Deletes a faq by its associated id
+	 * Deletes a FAQ by its associated id
 	 * 
-	 * @param string $id Faq's id
+	 * @param string $id FAQ's id
 	 * @return boolean
 	 */
 	public function deleteById($id)
@@ -215,9 +178,9 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	}
 
 	/**
-	 * Fetches faq data by its associated id
+	 * Fetches FAQ's data by its associated id
 	 * 
-	 * @param string $id Faq id
+	 * @param string $id FAQ's id
 	 * @return array
 	 */
 	public function fetchById($id)
