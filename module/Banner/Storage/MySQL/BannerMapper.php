@@ -38,36 +38,36 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	/**
 	 * Updates a banner
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean Depending on success
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
-			
-			'name'	=> $data['name'],
-			'link'	=> $data['link'],
-			'image'	=> $data['image'],
-			
-		))->whereEquals('id', $data['id'])
-		 ->execute();
+
+			'name'	=> $input['name'],
+			'link'	=> $input['link'],
+			'image'	=> $input['image'],
+
+		))->whereEquals('id', $input['id'])
+		  ->execute();
 	}
 
 	/**
-	 * Inserts a banner
+	 * Adds a banner
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean Depending on success
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'lang_id'	=> $this->getLangId(),
-			'name'		=> $data['name'],
-			'link'		=> $data['link'],
-			'image'		=> $data['image'],
-			
+			'name'		=> $input['name'],
+			'link'		=> $input['link'],
+			'image'		=> $input['image'],
+
 		))->execute();
 	}
 
@@ -80,31 +80,13 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAll())
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
-	}
-
-	/**
-	 * Counts all banners
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
 	}
 
 	/**
@@ -124,7 +106,7 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	/**
 	 * Deletes a banner by its associated id
 	 * 
-	 * @param string $id Banner id
+	 * @param string $id Banner's id
 	 * @return boolean
 	 */
 	public function deleteById($id)
