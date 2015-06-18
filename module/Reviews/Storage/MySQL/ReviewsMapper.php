@@ -50,22 +50,22 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	}
 
 	/**
-	 * Inserts a review
+	 * Adds a review
 	 * 
-	 * @param array $data Review data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
 
 			'langId'		=> $this->getLangId(),
-			'timestamp'		=> $data['timestamp'],
-			'ip'			=> $data['ip'],
-			'published'		=> $data['published'],
-			'name'			=> $data['name'],
-			'email'			=> $data['email'],
-			'content'		=> $data['content'],
+			'timestamp'		=> $input['timestamp'],
+			'ip'			=> $input['ip'],
+			'published'		=> $input['published'],
+			'name'			=> $input['name'],
+			'email'			=> $input['email'],
+			'content'		=> $input['content'],
 
 		))->execute();
 	}
@@ -73,20 +73,20 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	/**
 	 * Updates a review
 	 * 
-	 * @param array $data Review data
+	 * @param array $input Review data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
 
-			'timestamp' => $data['timestamp'],
-			'published'	=> $data['published'],
-			'name'     	=> $data['name'],
-			'email'		=> $data['email'],
-			'content'	=> $data['content'],
+			'timestamp' => $input['timestamp'],
+			'published'	=> $input['published'],
+			'name'     	=> $input['name'],
+			'email'		=> $input['email'],
+			'content'	=> $input['content'],
 
-		))->whereEquals('id', $data['id'])
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
@@ -99,16 +99,12 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAll())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('langId', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -121,53 +117,20 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAllPublished())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('langId', $this->getLangId())
 						->andWhereEquals('published', '1')
 						->orderBy('timestamp')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
-	}
-
-	/**
-	 * Counts all published reviews
-	 * 
-	 * @return integer
-	 */
-	private function countAllPublished()
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('langId', $this->getLangId())
-						->query('count');
-	}
-
-	/**
-	 * Counts all reviews
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->query('count');
 	}
 
 	/**
 	 * Fetches review data by its associated id
 	 * 
-	 * @param string $id Review id
+	 * @param string $id
 	 * @return array
 	 */
 	public function fetchById($id)
@@ -181,7 +144,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	/**
 	 * Deletes a review by its associated id
 	 * 
-	 * @param string $id Review id
+	 * @param string $id
 	 * @return boolean
 	 */
 	public function deleteById($id)

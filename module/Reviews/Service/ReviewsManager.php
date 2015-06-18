@@ -107,7 +107,7 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 				return false;
 			}
 		}
-		
+
 		$this->historyManager->write('Reviews', sprintf('Batch update of %s reviews', count($pair)));
 		return true;
 	}
@@ -141,9 +141,10 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 		$name = Filter::escape($this->reviewsMapper->fetchNameById($id));
 
 		if ($this->reviewsMapper->deleteById($id)) {
+
 			$this->track('A review by "%s" has been removed', $name);
 			return true;
-			
+
 		} else {
 			return false;
 		}
@@ -229,54 +230,55 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 	/**
 	 * Adds a review
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function add(array $data)
+	public function add(array $input)
 	{
-		$this->track('A new review by "%s" has been added', $data['name']);
+		$this->track('A new review by "%s" has been added', $input['name']);
 
-		$data = $this->prepareContainer($data);
-		return $this->reviewsMapper->insert($data);
+		$input = $this->prepareContainer($input);
+		return $this->reviewsMapper->insert($input);
 	}
 
 	/**
 	 * Sends data from a user
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @param boolean $enableModeration Whether a review should be moderated or not
 	 * @return boolean
 	 */
-	public function send(array $data, $enableModeration)
+	public function send(array $input, $enableModeration)
 	{
 		// Always current timestamp
-		$data['timestamp'] = time();
+		$input['timestamp'] = time();
 
 		// This value depends on configuration, where we handled moderation
 		if ($enableModeration) {
-			$data['published'] = '0';
+			$input['published'] = '0';
 			$this->notificationManager->notify('A new review waits for your approval');
 			
 		} else {
-			$data['published'] = '1';
+			$input['published'] = '1';
 		}
 
-		return $this->reviewsMapper->insert($data);
+		return $this->reviewsMapper->insert($input);
 	}
 
 	/**
 	 * Updates a review
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
-		$this->track('A review by "%s" has been updated', $data['name']);
-		$data = $this->prepareContainer($data);
-		return $this->reviewsMapper->update($data);
+		$this->track('A review by "%s" has been updated', $input['name']);
+
+		$input = $this->prepareContainer($input);
+		return $this->reviewsMapper->update($input);
 	}
-	
+
 	/**
 	 * Tracks activity
 	 * 
