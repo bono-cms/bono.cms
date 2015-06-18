@@ -19,7 +19,7 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'Krystal_module_banner';
+	protected $table = 'bono_module_banner';
 
 	/**
 	 * Fetches banner name by its associated id
