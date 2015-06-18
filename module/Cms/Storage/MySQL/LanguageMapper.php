@@ -130,41 +130,41 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	}
 
 	/**
-	 * Inserts language data
+	 * Adds a language
 	 * 
-	 * @param array $data Language data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
 			
-			'name' => $data['name'],
-			'code' => $data['code'],
-			'flag' => $data['flag'],
-			'order' => $data['order'],
-			'published' => $data['published'],
-			
+			'name' => $input['name'],
+			'code' => $input['code'],
+			'flag' => $input['flag'],
+			'order' => $input['order'],
+			'published' => $input['published'],
+
 		))->execute();
 	}
 
 	/**
 	 * Updates a language
 	 * 
-	 * @param array $data Language data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
-			
-			'name' => $data['name'],
-			'code' => $data['code'],
-			'flag' => $data['flag'],
-			'order' => $data['order'],
-			'published' => $data['published']
-			
-		))->whereEquals('id', $data['id'])
+
+			'name' => $input['name'],
+			'code' => $input['code'],
+			'flag' => $input['flag'],
+			'order' => $input['order'],
+			'published' => $input['published']
+
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 }

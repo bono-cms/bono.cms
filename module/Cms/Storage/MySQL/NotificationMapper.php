@@ -41,29 +41,12 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAll())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
-	}
-
-	/**
-	 * Counts all notifications
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->query('count');
 	}
 
 	/**
@@ -102,6 +85,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	public function insert($timestamp, $viewed, $message)
 	{
 		return $this->db->insert($this->table, array(
+
 			'timestamp'	=> $timestamp,
 			'viewed'	=> $viewed,
 			'message'	=> $message
@@ -112,7 +96,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	/**
 	 * Deletes a notification by its associated id
 	 * 
-	 * @param string $id Notification id
+	 * @param string $id
 	 * @return boolean
 	 */
 	public function deleteById($id)

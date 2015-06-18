@@ -96,7 +96,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 		$data = array_merge(array(
 			'lang_id' => $this->getLangId(),
 		), $data);
-		
+
 		return $this->db->insert($this->table, $data)
 						->execute();
 	}

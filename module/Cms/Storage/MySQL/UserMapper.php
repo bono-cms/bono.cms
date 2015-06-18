@@ -24,18 +24,18 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	/**
 	 * Inserts user's data
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
 
-			'login'			=> $data['login'],
-			'password_hash'	=> $data['password_hash'],
-			'role'			=> $data['role'],
-			'email'			=> $data['email'],
-			'name'			=> $data['name'],
+			'login'			=> $input['login'],
+			'password_hash'	=> $input['password_hash'],
+			'role'			=> $input['role'],
+			'email'			=> $input['email'],
+			'name'			=> $input['name'],
 
 		))->execute();
 	}
@@ -43,20 +43,20 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	/**
 	 * Updates user's data
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
 
-			'login'			=> $data['login'],
-			'password_hash'	=> $data['password_hash'],
-			'role'			=> $data['role'],
-			'email'			=> $data['email'],
-			'name'			=> $data['name'],
-			
-		))->whereEquals('id', $data['id'])
+			'login'			=> $input['login'],
+			'password_hash'	=> $input['password_hash'],
+			'role'			=> $input['role'],
+			'email'			=> $input['email'],
+			'name'			=> $input['name'],
+
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 

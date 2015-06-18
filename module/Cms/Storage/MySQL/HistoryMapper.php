@@ -37,57 +37,38 @@ final class HistoryMapper extends AbstractMapper implements HistoryMapperInterfa
 	/**
 	 * Inserts a history track
 	 * 
-	 * @param array $data History data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
 
 			'lang_id'	=> $this->getLangId(),
-			'user_id'	=> $data['user_id'],
-			'timestamp'	=> $data['timestamp'],
-			'module'	=> $data['module'],
-			'comment'	=> $data['comment'],
-			'placeholder' => $data['placeholder']
+			'user_id'	=> $input['user_id'],
+			'timestamp'	=> $input['timestamp'],
+			'module'	=> $input['module'],
+			'comment'	=> $input['comment'],
+			'placeholder' => $input['placeholder']
 
 		))->execute();
-	}
-
-	/**
-	 * Counts all history tracks
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
 	}
 
 	/**
 	 * Fetches all history tracks filtered by pagination
 	 * 
 	 * @param integer $page Current page
-	 * @parma integer $itemsPerPage Per page count
+	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		// Tweak paginator instance
-		$this->paginator->setTotalAmount($this->countAll())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 }
