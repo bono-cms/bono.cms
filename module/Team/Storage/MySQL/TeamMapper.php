@@ -103,14 +103,14 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	public function insert(array $data)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'lang_id'		=> $this->getLangId(),
 			'name'			=> $data['name'],
 			'description'	=> $data['description'],
 			'photo'			=> $data['photo'],
 			'published'		=> $data['published'],
 			'order'			=> $data['order'],
-			
+
 		))->execute();
 	}
 
@@ -161,15 +161,11 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setCurrentPage($page)
-						->setTotalAmount($this->countAllPublished())
-						->setItemsPerPage($itemsPerPage);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->andWhereEquals('published', '1')
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -184,36 +180,7 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	}
 
 	/**
-	 * Counts amount of published records
-	 * 
-	 * @return integer
-	 */
-	private function countAllPublished()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->query('count');
-	}
-
-	/**
-	 * Count amount of all records
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
-	}
-
-	/**
-	 * Fetches all filtered by pagination
+	 * Fetches all members filtered by pagination
 	 * 
 	 * @param integer $page
 	 * @param integer $itemsPerPage
@@ -221,16 +188,12 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAll())
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 }
