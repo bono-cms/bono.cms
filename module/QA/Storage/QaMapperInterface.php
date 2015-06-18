@@ -49,7 +49,7 @@ interface QaMapperInterface
 	/**
 	 * Updates QA data
 	 * 
-	 * @param array $data QA data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function update(array $data);
@@ -57,7 +57,7 @@ interface QaMapperInterface
 	/**
 	 * Inserts QA data
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function insert(array $data);

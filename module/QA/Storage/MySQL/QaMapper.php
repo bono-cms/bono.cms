@@ -30,16 +30,12 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllPublished())
-						->setCurrentPage($page);
-
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('published', '1')
 						->andWhereEquals('langId', $this->getLangId())
 						->orderBy('timestampAsked')
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -80,89 +76,56 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAll())
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('langId', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
-	}
-
-	/**
-	 * Count all published QA pairs
-	 * 
-	 * @return integer
-	 */
-	private function countAllPublished()
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->query('count');
-	}
-
-	/**
-	 * Counts all QA pairs
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->query('count');
 	}
 
 	/**
 	 * Updates QA data
 	 * 
-	 * @param array $data QA data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
-			
-			'question'			=> $data['question'],
-			'answer'			=> $data['answer'],
-			'questioner'		=> $data['questioner'],
-			'answerer'			=> $data['answerer'],
-			'published'			=> $data['published'],
-			'timestampAsked'	=> $data['timestampAsked'],
-			'timestampAnswered'	=> $data['timestampAnswered'],
-			
-		))->whereEquals('id', $data['id'])
+
+			'question'			=> $input['question'],
+			'answer'			=> $input['answer'],
+			'questioner'		=> $input['questioner'],
+			'answerer'			=> $input['answerer'],
+			'published'			=> $input['published'],
+			'timestampAsked'	=> $input['timestampAsked'],
+			'timestampAnswered'	=> $input['timestampAnswered'],
+
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
 	/**
-	 * Inserts QA data
+	 * Adds QA pair
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'langId'			=> $this->getLangId(),
-			'question'			=> $data['question'],
-			'answer'			=> $data['answer'],
-			'questioner'		=> $data['questioner'],
-			'answerer'			=> $data['answerer'],
-			'published'			=> $data['published'],
-			'timestampAsked'	=> $data['timestampAsked'],
-			'timestampAnswered'	=> $data['timestampAnswered'],
-			
+			'question'			=> $input['question'],
+			'answer'			=> $input['answer'],
+			'questioner'		=> $input['questioner'],
+			'answerer'			=> $input['answerer'],
+			'published'			=> $input['published'],
+			'timestampAsked'	=> $input['timestampAsked'],
+			'timestampAnswered'	=> $input['timestampAnswered'],
+
 		))->execute();
 	}
 
