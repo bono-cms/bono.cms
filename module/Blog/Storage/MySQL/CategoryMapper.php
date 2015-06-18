@@ -49,43 +49,43 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	/**
 	 * Inserts a category
 	 * 
-	 * @param array $data Category data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'lang_id'		=> $this->getLangId(),
-			'web_page_id'	=> $data['web_page_id'],
-			'title'			=> $data['title'],
-			'description'	=> $data['description'],
-			'seo'			=> $data['seo'],
-			'order'			=> $data['order'],
-			'keywords'		=> $data['keywords'],
-			'meta_description'	=> $data['meta_description'],
-			
+			'web_page_id'	=> $input['web_page_id'],
+			'title'			=> $input['title'],
+			'description'	=> $input['description'],
+			'seo'			=> $input['seo'],
+			'order'			=> $input['order'],
+			'keywords'		=> $input['keywords'],
+			'meta_description'	=> $input['meta_description'],
+
 		))->execute();
 	}
 
 	/**
 	 * Updates a category
 	 * 
-	 * @param array $data Category data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
-			
-			'title'			=> $data['title'],
-			'description'	=> $data['description'],
-			'seo'			=> $data['seo'],
-			'order'			=> $data['order'],
-			'keywords'		=> $data['keywords'],
-			'meta_description' => $data['meta_description'],
-			
-		))->whereEquals('id', $data['id'])
+
+			'title'			=> $input['title'],
+			'description'	=> $input['description'],
+			'seo'			=> $input['seo'],
+			'order'			=> $input['order'],
+			'keywords'		=> $input['keywords'],
+			'meta_description' => $input['meta_description'],
+
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 

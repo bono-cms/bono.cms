@@ -101,53 +101,53 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	}
 
 	/**
-	 * Inserts a post
+	 * Adds a post
 	 * 
-	 * @param array $data Post data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
 
 			'lang_id'		=> $this->getLangId(),
-			'web_page_id' 	=> $data['web_page_id'],
-			'category_id' 	=> $data['category_id'],
-			'title'			=> $data['title'],
-			'introduction'	=> $data['introduction'],
-			'full'		=> $data['full'],
-			'timestamp'	=> $data['timestamp'],
-			'published'	=> $data['published'],
-			'comments'	=> $data['comments'],
-			'seo'		=> $data['seo'],
-			'keywords'	=> $data['keywords'],
-			'meta_description' => $data['metaDescription']
-			
+			'web_page_id' 	=> $input['web_page_id'],
+			'category_id' 	=> $input['category_id'],
+			'title'			=> $input['title'],
+			'introduction'	=> $input['introduction'],
+			'full'		=> $input['full'],
+			'timestamp'	=> $input['timestamp'],
+			'published'	=> $input['published'],
+			'comments'	=> $input['comments'],
+			'seo'		=> $input['seo'],
+			'keywords'	=> $input['keywords'],
+			'meta_description' => $input['metaDescription']
+
 		))->execute();
 	}
 
 	/**
 	 * Updates a post
 	 * 
-	 * @param array $data Raw data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
 
-			'title' =>	$data['title'],
-			'category_id' => $data['category_id'],
-			'introduction' => $data['introduction'],
-			'full' => $data['full'],
-			'timestamp' => $data['timestamp'],
-			'published' => $data['published'],
-			'comments' => $data['comments'],
-			'seo' => $data['seo'],
-			'keywords' => $data['keywords'],
-			'meta_description' => $data['metaDescription']
+			'title'			=>	$input['title'],
+			'category_id'	=> $input['category_id'],
+			'introduction'	=> $input['introduction'],
+			'full'			=> $input['full'],
+			'timestamp'		=> $input['timestamp'],
+			'published'		=> $input['published'],
+			'comments'		=> $input['comments'],
+			'seo'			=> $input['seo'],
+			'keywords'		=> $input['keywords'],
+			'meta_description' => $input['metaDescription']
 
-		))->whereEquals('id', $data['id'])
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
@@ -218,17 +218,13 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAllPublishedByCategoryId($categoryId))
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('category_id', $categoryId)
 						->andWhereEquals('published', '1')
 						->orderBy('timestamp')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -242,16 +238,12 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAllByCategoryId($categoryId))
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('category_id', $categoryId)
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -264,17 +256,13 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAllPublished())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->andWhereEquals('published', '1')
 						->orderBy('timestamp')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -287,16 +275,12 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAll())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -317,20 +301,6 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	}
 
 	/**
-	 * Counts all published posts
-	 * 
-	 * @return integer
-	 */
-	private function countAllPublished()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->query('count');
-	}
-	
-	/**
 	 * Counts all posts associated with given category id
 	 * 
 	 * @param string $categoryId
@@ -342,20 +312,6 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 						->count('id', 'count')
 						->from($this->table)
 						->whereEquals('category_id', $categoryId)
-						->query('count');
-	}
-
-	/**
-	 * Counts all posts
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
 						->query('count');
 	}
 }
