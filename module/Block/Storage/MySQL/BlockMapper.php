@@ -19,7 +19,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'Krystal_module_block';
+	protected $table = 'bono_module_block';
 
 	/**
 	 * Fetches block's content by its associated class name
