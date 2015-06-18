@@ -58,13 +58,13 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	public function insert(array $data)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'lang_id' => $this->getLangId(),
 			'name'    => $data['name'],
 			'class'	  => $data['class'],
 			'width'   => $data['width'],
 			'height'  => $data['height']
-			
+
 		))->execute();
 	}
 

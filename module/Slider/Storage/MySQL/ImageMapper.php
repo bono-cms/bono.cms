@@ -89,52 +89,8 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	}
 
 	/**
-	 * Counts all images
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
-	}
-
-	/**
-	 * Count all published images
-	 * 
-	 * @return integer
-	 */
-	private function countAllPublished()
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->query('count');
-	}
-
-	/**
-	 * Counts all published images in given category id
-	 * 
-	 * @param string $categoryId
-	 * @return integer
-	 */
-	private function countAllPublishedByCategoryId($categoryId)
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->andWhereEquals('published', '1')
-						->query('count');
-	}
-
-	/**
 	 * Counts all images associated with given category id
+	 * Public intentionally
 	 * 
 	 * @param string $categoryId
 	 * @return integer
@@ -171,16 +127,12 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAll())
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -193,16 +145,12 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllPublished())
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->andWhereEquals('published', '1')
 						->orderBy('order') //@TODO
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -233,16 +181,12 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllByCategoryId())
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('category_id', $categoryId)
 						->andWhereEquals('published', '1')
 						->orderBy('order')
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -256,16 +200,12 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllByCategoryAndPage($categoryId, $page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllByCategoryId($categoryId))
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('category_id', $categoryId)
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
