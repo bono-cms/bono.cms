@@ -153,10 +153,6 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 				return array();
 		}
 
-		//$this->paginator->setItemsPerPage($itemsPerPage)
-			//			->setTotalAmount($this->countAllPublishedByCategoryId($categoryId))
-				//		->setCurrentPage($page);
-
 		// Build firstly, static part of query which always unchanged
 		$db = $this->db->select('*')
 						->from($this->table)
@@ -170,9 +166,6 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 		if ($desc == true) {
 			$db->desc();
 		}
-
-		// Finally append limit now
-		//$db->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
 
 		return $db->paginate($page, $itemsPerPage)
 				  ->queryAll();
@@ -216,22 +209,6 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	}
 
 	/**
-	 * Counts all published products associated with provided category id
-	 * 
-	 * @param string $categoryId
-	 * @return integer
-	private function countAllPublishedByCategoryId($categoryId)
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('category_id', $categoryId)
-						->query('count');
-	}
-	 */
-
-	/**
 	 * Counts total amount of products associated with provided category id
 	 * 
 	 * @param string $categoryId
@@ -245,20 +222,6 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 						->whereEquals('category_id', $categoryId)
 						->query('count');
 	}
-
-	/**
-	 * Counts all products
-	 * 
-	 * @return integer
-	private function countAll()
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
-	}
-	 */
 
 	/**
 	 * Updates a row by id
@@ -314,24 +277,24 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	/**
 	 * Updates a product
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
 
-			'category_id'		=> $data['category_id'],
-			'title'				=> $data['title'],
-			'regular_price'		=> $data['regular_price'],
-			'stoke_price'		=> $data['stoke_price'],
-			'description'		=> $data['description'],
-			'published'			=> $data['published'],
-			'order'				=> $data['order'],
-			'seo'				=> $data['seo'],
-			'keywords'			=> $data['keywords'],
-			'meta_description'  => $data['meta_description'],
-			'cover'				=> $data['cover']
+			'category_id'		=> $input['category_id'],
+			'title'				=> $input['title'],
+			'regular_price'		=> $input['regular_price'],
+			'stoke_price'		=> $input['stoke_price'],
+			'description'		=> $input['description'],
+			'published'			=> $input['published'],
+			'order'				=> $input['order'],
+			'seo'				=> $input['seo'],
+			'keywords'			=> $input['keywords'],
+			'meta_description'  => $input['meta_description'],
+			'cover'				=> $input['cover']
 
 		))->whereEquals('id', $data['id'])
 		  ->execute();
@@ -340,28 +303,28 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	/**
 	 * Adds a product
 	 *  
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean Depending on success
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'lang_id'			=> $this->getLangId(),
-			'category_id'		=> $data['category_id'],
-			'title'				=> $data['title'],
-			'regular_price'		=> $data['regular_price'],
-			'stoke_price'		=> $data['stoke_price'],
-			'special_offer'		=> $data['special_offer'],
-			'description'		=> $data['description'],
-			'published'			=> $data['published'],
-			'order'				=> $data['order'],
-			'seo'				=> $data['seo'],
-			'keywords'			=> $data['keywords'],
-			'meta_description'	=> $data['meta_description'],
-			'cover'				=> $data['cover'],
-			'timestamp'			=> $data['timestamp']
-			
+			'category_id'		=> $input['category_id'],
+			'title'				=> $input['title'],
+			'regular_price'		=> $input['regular_price'],
+			'stoke_price'		=> $input['stoke_price'],
+			'special_offer'		=> $input['special_offer'],
+			'description'		=> $input['description'],
+			'published'			=> $input['published'],
+			'order'				=> $input['order'],
+			'seo'				=> $input['seo'],
+			'keywords'			=> $input['keywords'],
+			'meta_description'	=> $input['meta_description'],
+			'cover'				=> $input['cover'],
+			'timestamp'			=> $input['timestamp']
+
 		))->execute();
 	}
 
