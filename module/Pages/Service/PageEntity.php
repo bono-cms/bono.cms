@@ -13,7 +13,7 @@ namespace Pages\Service;
 
 use Krystal\Stdlib\VirtualEntity;
 
-final class PageBag extends VirtualEntity
+final class PageEntity extends VirtualEntity
 {
 	/**
 	 * The alias to getDefault() 

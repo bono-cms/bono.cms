@@ -100,10 +100,10 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 	/**
 	 * Return breadcrumbs for a page bag
 	 * 
-	 * @param \Pages\Service\PageBag $page
+	 * @param \Pages\Service\PageEntity $page
 	 * @return array
 	 */
-	public function getBreadcrumbs(PageBag $page)
+	public function getBreadcrumbs(PageEntity $page)
 	{
 		return array(
 			array(
@@ -164,7 +164,7 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 			);
 		}
 
-		$entity = new PageBag();
+		$entity = new PageEntity();
 		$entity->setId((int) $page['id'])
 				->setLangId((int) $page['lang_id'])
 				->setWebPageId((int) $page['web_page_id'])

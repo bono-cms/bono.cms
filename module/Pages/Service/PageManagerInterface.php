@@ -17,10 +17,10 @@ interface PageManagerInterface
 	/**
 	 * Return breadcrumbs for a page entity
 	 * 
-	 * @param \Pages\Service\PageBag $page
+	 * @param \Pages\Service\PageEntity $page
 	 * @return array
 	 */
-	public function getBreadcrumbs(PageBag $page);
+	public function getBreadcrumbs(PageEntity $page);
 
 	/**
 	 * Fetches dummy page bag
