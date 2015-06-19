@@ -51,25 +51,25 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	}
 
 	/**
-	 * Inserts a record
+	 * Adds an album
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
 
 			'lang_id'			=> $this->getLangId(),
-			'parent_id' 		=> $data['parent_id'],
+			'parent_id' 		=> $input['parent_id'],
 			'web_page_id'		=> '',
-			'title'				=> $data['title'],
-			'name'				=> $data['name'],
-			'description'		=> $data['description'],
-			'order'				=> $data['order'],
-			'keywords'			=> $data['keywords'],
-			'meta_description'	=> $data['meta_description'],
-			'seo'				=> $data['seo']
+			'title'				=> $input['title'],
+			'name'				=> $input['name'],
+			'description'		=> $input['description'],
+			'order'				=> $input['order'],
+			'keywords'			=> $input['keywords'],
+			'meta_description'	=> $input['meta_description'],
+			'seo'				=> $input['seo']
 
 		))->execute();
 	}
@@ -77,23 +77,23 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	/**
 	 * Updates an album
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
-			
-			'parent_id' 	=> $data['parent_id'],
-			'title'     	=> $data['title'],
-			'name'			=> $data['name'],
-			'description'	=> $data['description'],
-			'order'			=> $data['order'],
-			'keywords'		=> $data['keywords'],
-			'meta_description' => $data['meta_description'],
-			'seo'			=> $data['seo']
-			
-		))->whereEquals('id', $data['id'])
+
+			'parent_id' 	=> $input['parent_id'],
+			'title'     	=> $input['title'],
+			'name'			=> $input['name'],
+			'description'	=> $input['description'],
+			'order'			=> $input['order'],
+			'keywords'		=> $input['keywords'],
+			'meta_description' => $input['meta_description'],
+			'seo'			=> $input['seo']
+
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
@@ -148,29 +148,12 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAll())
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
+						->paginate($page, $itemsPerPage)
 						->queryAll();
-	}
-
-	/**
-	 * Count all records
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
 	}
 }

@@ -52,49 +52,49 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	/**
 	 * Adds a photo
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'lang_id'		=> $this->getLangId(),
-			'album_id'		=> $data['albumId'],
-			'name'			=> $data['name'],
-			'photo'			=> $data['photo'],
-			'order'			=> $data['order'],
-			'description'	=> $data['description'],
-			'published'		=> $data['published'],
-			
+			'album_id'		=> $input['albumId'],
+			'name'			=> $input['name'],
+			'photo'			=> $input['photo'],
+			'order'			=> $input['order'],
+			'description'	=> $input['description'],
+			'published'		=> $input['published'],
+
 		))->execute();
 	}
 
 	/**
 	 * Updates a photo
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
 
-			'album_id'		=> $data['albumId'],
-			'name'			=> $data['name'],
-			'photo'			=> $data['photo'],
-			'order'			=> $data['order'],
-			'description'	=> $data['description'],
-			'published'		=> $data['published'],
+			'album_id'		=> $input['albumId'],
+			'name'			=> $input['name'],
+			'photo'			=> $input['photo'],
+			'order'			=> $input['order'],
+			'description'	=> $input['description'],
+			'published'		=> $input['published'],
 
-		))->whereEquals('id', $data['id'])
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
 	/**
 	 * Deletes a photo by its associated id
 	 * 
-	 * @param string $id Photo's id
+	 * @param string $id
 	 * @return boolean
 	 */
 	public function deleteById($id)
@@ -120,57 +120,6 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	}
 
 	/**
-	 * Fetches all published records by page
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublihedByPage($page, $itemsPerPage)
-	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllPublished())
-						->setCurrentPage($page);
-		
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('lang_id', $this->getLangId())
-						->orderBy('order')
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
-						->queryAll();
-	}
-
-	/**
-	 * Count all published photos
-	 * 
-	 * @return integer
-	 */
-	private function countAllPublished()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->query('count');
-	}
-
-	/**
-	 * Count all photos
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
-	}
-
-	/**
 	 * Count amount of records associated with category id
 	 * 
 	 * @param string $albumId
@@ -182,22 +131,6 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 						->count('id', 'count')
 						->from($this->table)
 						->whereEquals('album_id', $albumId)
-						->query('count');
-	}
-
-	/**
-	 * Count amount of records associated with category id
-	 * 
-	 * @param string $albumId
-	 * @return integer
-	 */
-	private function countAllPublishedByAlbumId($albumId)
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('album_id', $albumId)
-						->andWhereEquals('published', '1')
 						->query('count');
 	}
 
@@ -268,6 +201,24 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	}
 
 	/**
+	 * Fetches all published records by page
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllPublihedByPage($page, $itemsPerPage)
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->whereEquals('published', '1')
+						->andWhereEquals('lang_id', $this->getLangId())
+						->orderBy('order')
+						->paginate($page, $itemsPerPage)
+						->queryAll();
+	}
+
+	/**
 	 * Fetch photos by associated category's id
 	 * 
 	 * @param string $categoryId
@@ -277,16 +228,12 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchAllByAlbumIdAndPage($albumId, $page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllByAlbumId($albumId))
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('album_id', $albumId)
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -300,18 +247,14 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchAllPublishedByAlbumIdAndPage($albumId, $page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllPublishedByAlbumId($albumId))
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('album_id', $albumId)
 						->andWhereEquals('published', '1')
-						//, CASE WHEN `order` = 0 THEN id END
+						//@TODO: CASE WHEN `order` = 0 THEN id END
 						->orderBy('order')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -324,14 +267,12 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->tweak($this->countAll(), $itemsPerPage, $page);
-
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
