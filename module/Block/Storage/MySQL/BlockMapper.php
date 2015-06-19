@@ -79,38 +79,20 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	}
 
 	/**
-	 * Counts all blocks
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->query('count');
-	}
-
-	/**
 	 * Fetches all blocks filtered by pagination
 	 * 
 	 * @param integer $page Current page
-	 * @param integer $perPageCount Per page count
+	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $perPageCount)
+	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setTotalAmount($this->countAll())
-						->setItemsPerPage($perPageCount)
-						->setCurrentPage($page);
-		
 		return $this->db->select('*')
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
+						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
 
@@ -131,44 +113,44 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	/**
 	 * Inserts block's data
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'lang_id'	=> $this->getLangId(),
-			'name'		=> $data['name'],
-			'content'	=> $data['content'],
-			'class'		=> $data['class']
-			
+			'name'		=> $input['name'],
+			'content'	=> $input['content'],
+			'class'		=> $input['class']
+
 		))->execute();
 	}
 
 	/**
 	 * Updates block's data
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->db->update($this->table, array(
-			
-			'name'		=> $data['name'],
-			'content'	=> $data['content'],
-			'class'		=> $data['class']
-			
-		))->whereEquals('id', $data['id'])
+
+			'name'		=> $input['name'],
+			'content'	=> $input['content'],
+			'class'		=> $input['class']
+
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
 	/**
 	 * Deletes a block by its associated id
 	 * 
-	 * @param string $id Block id
-	 * @return boolean Depending on success
+	 * @param string $id
+	 * @return boolean
 	 */
 	public function deleteById($id)
 	{

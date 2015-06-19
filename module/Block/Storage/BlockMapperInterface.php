@@ -64,18 +64,18 @@ interface BlockMapperInterface
 	/**
 	 * Inserts block's data
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data);
+	public function insert(array $input);
 
 	/**
 	 * Updates block's data
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data);
+	public function update(array $input);
 
 	/**
 	 * Deletes a block by its associated id
