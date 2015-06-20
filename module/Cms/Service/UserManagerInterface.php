@@ -16,5 +16,35 @@ namespace Cms\Service;
  */
 interface UserManagerInterface
 {
-	//@TODO
+	/**
+	 * Fetches user's name by associated id
+	 * 
+	 * @param string $id
+	 * @return array
+	 */
+	public function fetchNameById($id);
+
+	/**
+	 * Returns last added user's` id
+	 * 
+	 * @return integer
+	 */
+	public function getLastId();
+
+	/**
+	 * Adds a user
+	 * 
+	 * @param array $input Raw input data
+	 * @return boolean
+	 */
+	public function add(array $input);
+
+	/**
+	 * Updates a user
+	 * 
+	 * @param array $input Raw input data
+	 * @return boolean
+	 */
+	public function update(array $input);
+	
 }

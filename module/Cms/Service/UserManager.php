@@ -194,10 +194,10 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 	}
 
 	/**
-	 * Adds an user
+	 * Adds a user
 	 * 
 	 * @param array $input Raw input data
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function add(array $input)
 	{
@@ -206,7 +206,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 	}
 
 	/**
-	 * Updates an user
+	 * Updates a user
 	 * 
 	 * @param array $input Raw input data
 	 * @return boolean
@@ -221,9 +221,9 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 	}
 
 	/**
-	 * Deletes a user by its associated id
+	 * Deletes a user by associated id
 	 * 
-	 * @param string $id User's id
+	 * @param string $id
 	 * @return boolean
 	 */
 	public function deleteById($id)
@@ -232,7 +232,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 	}
 
 	/**
-	 * Fetches a user's bag by its associated
+	 * Fetches user's entity by associated id
 	 * 
 	 * @param string $id User's id
 	 * @return array
@@ -243,7 +243,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 	}
 
 	/**
-	 * Fetches all user entities
+	 * Fetches all entities
 	 * 
 	 * @return array
 	 */
