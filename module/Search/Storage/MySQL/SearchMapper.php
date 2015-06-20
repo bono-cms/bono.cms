@@ -27,7 +27,7 @@ final class SearchMapper extends AbstractMapper implements SearchMapperInterface
 	const PARAM_QUERY_PLACEHOLDER = ':keyword';
 
 	/**
-	 * Appends searchable mapper
+	 * Appends a searchable mapper
 	 * 
 	 * @param \Search\Storage\MySQL\AbstractSearchProvider
 	 * @return void
@@ -38,7 +38,7 @@ final class SearchMapper extends AbstractMapper implements SearchMapperInterface
 	}
 
 	/**
-	 * Searchers in provided mappers
+	 * Queries by a keyword in all attached mappers
 	 * 
 	 * @param string $keyword
 	 * @param integer $page Current page

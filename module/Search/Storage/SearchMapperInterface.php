@@ -11,7 +11,25 @@
 
 namespace Search\Storage;
 
+use Search\Storage\MySQL\AbstractSearchProvider;
+
 interface SearchMapperInterface
 {
-	//@TODO
+	/**
+	 * Appends a searchable mapper
+	 * 
+	 * @param \Search\Storage\MySQL\AbstractSearchProvider
+	 * @return void
+	 */
+	public function append(AbstractSearchProvider $mapper);
+
+	/**
+	 * Queries by a keyword in all attached mappers
+	 * 
+	 * @param string $keyword
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function queryAll($keyword, $page, $itemsPerPage);
 }
