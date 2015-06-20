@@ -55,7 +55,7 @@
 							<th><?php $form->show('id'); ?></th>
 							<th></th>
 							<th><?php $form->show('title'); ?></th>
-							<th><?php $form->show('date'); ?></th>
+							<th class="col-lg-2"></th>
 							<th></th>
 							<th><?php $form->show('price'); ?></th>
 							<th class="text-center"><?php $form->show('published'); ?></th>
@@ -108,7 +108,7 @@
 				</table>
 
 				<div>
-					<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i> Filter</button>
+					<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i> <?php $this->show('Filter'); ?></button>
 					<br />
 				</div>
 				

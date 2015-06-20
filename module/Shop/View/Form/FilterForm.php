@@ -42,16 +42,6 @@ final class FilterForm extends AbstractFilterForm
 				)
 			),
 
-			'date' => array(
-				'element' => array(
-					'type' => 'text',
-					'attributes' => array(
-						'type' => 'text',
-						'class' => 'form-control'
-					)
-				)
-			),
-
 			'price' => array(
 				'element' => array(
 					'type' => 'text',
@@ -61,19 +51,18 @@ final class FilterForm extends AbstractFilterForm
 					)
 				)
 			),
-			
+
 			'seo' => array(
 				'element' => array(
 					'type' => 'checkbox',
 				)
 			),
-			
+
 			'published' => array(
 				'element' => array(
 					'type' => 'checkbox',
 				)
-			),
-			
+			)
 		);
 	}
 

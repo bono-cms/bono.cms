@@ -214,7 +214,7 @@
 								<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Replace this image'); ?>" data-button="edit" data-image="<?php echo $photo->getImage(); ?>" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
 								
 								<?php if ($form->getInput('cover') != $photo->getImage()): ?>
-								<input name="photos[toDelete][<?php echo $photo->getId(); ?>]" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Check if you want to remove this image'); ?>" type="checkbox" /> <?php $this->show('Удалить'); ?>
+								<input name="photos[toDelete][<?php echo $photo->getId(); ?>]" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Check if you want to remove this image'); ?>" type="checkbox" /> <?php $this->show('Remove'); ?>
 								<?php endif; ?>
 								
 								<input type="file" accept="image/x-png, image/gif, image/jpeg" class="hidden" name="<?php printf('image_%s', $photo->getId()); ?>" />
