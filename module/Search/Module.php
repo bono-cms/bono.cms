@@ -11,29 +11,13 @@
 
 namespace Search;
 
-use Krystal\Config\FileArray;
+use Krystal\Config\File\FileArray;
 use Cms\AbstractCmsModule;
 use Search\Service\SearchManager;
 use Search\Service\ConfigManager;
 
 final class Module extends AbstractCmsModule
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getRoutes()
-	{
-		return include(__DIR__ . '/Config/routes.php');
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getTranslations($language)
-	{
-		return $this->loadArray(__DIR__.'/Translations/'.$language.'/messages.php');
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
