@@ -23,10 +23,7 @@ final class Post extends AbstractController
 	 */
 	public function indexAction($id)
 	{
-		// Grab the module
-		$news = $this->moduleManager->getModule('News');
-		
-		$postManager = $news->getService('postManager');
+		$postManager = $this->getService('News', 'postManager');
 		$post = $postManager->fetchById($id);
 
 		if ($post !== false) {
@@ -35,15 +32,15 @@ final class Post extends AbstractController
 			$this->view->getBreadcrumbBag()
 					   ->add($postManager->getBreadcrumbs($post));
 			
-			$config = $news->getService('configManager')->getEntity();
-			
+			$config = $this->getService('News', 'configManager')->getEntity();
+
 			return $this->view->render($config->getPostTemplate(), array(
 				'page' => $post,
 				'post' => $post
 			));
-			
+
 		} else {
-			
+
 			return false;
 		}
 	}

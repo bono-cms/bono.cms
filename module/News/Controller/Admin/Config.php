@@ -11,10 +11,9 @@
 
 namespace News\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
 use Krystal\Validate\Pattern;
 
-final class Config extends AbstractController
+final class Config extends AbstractAdminController
 {
 	/**
 	 * Shows configuration form
@@ -81,16 +80,6 @@ final class Config extends AbstractController
 	}
 
 	/**
-	 * Returns configuration manager
-	 * 
-	 * @return \News\Service\ConfigManager
-	 */
-	private function getConfigManager()
-	{
-		return $this->moduleManager->getModule('News')->getService('configManager');
-	}
-
-	/**
 	 * Loads required plugins
 	 * 
 	 * @return void
@@ -98,7 +87,7 @@ final class Config extends AbstractController
 	private function loadPlugins()
 	{
 		$this->view->getPluginBag()
-						->appendScript($this->getWithAssetPath('/admin/config.js'));
+				   ->appendScript($this->getWithAssetPath('/admin/config.js'));
 		
 		$this->view->getBreadcrumbBag()->add(array(
 			array(

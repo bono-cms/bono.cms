@@ -11,10 +11,10 @@
 
 namespace News\Controller\Admin\Category;
 
-use Cms\Controller\Admin\AbstractController;
 use Krystal\Validate\Pattern;
+use News\Controller\Admin\AbstractAdminController;
 
-abstract class AbstractCategory extends AbstractController
+abstract class AbstractCategory extends AbstractAdminController
 {
 	/**
 	 * Returns prepared validator instance
@@ -42,16 +42,6 @@ abstract class AbstractCategory extends AbstractController
 	final protected function getTemplatePath()
 	{
 		return 'category.form';
-	}
-
-	/** 
-	 * Returns category manager
-	 * 
-	 * @return \News\Service\CategoryManager
-	 */
-	final protected function getCategoryManager()
-	{
-		return $this->moduleManager->getModule('News')->getService('categoryManager');
 	}
 
 	/**

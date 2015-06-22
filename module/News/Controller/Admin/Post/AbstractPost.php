@@ -11,10 +11,10 @@
 
 namespace News\Controller\Admin\Post;
 
-use Cms\Controller\Admin\AbstractController;
+use News\Controller\Admin\AbstractAdminController;
 use Krystal\Validate\Pattern;
 
-abstract class AbstractPost extends AbstractController
+abstract class AbstractPost extends AbstractAdminController
 {
 	/**
 	 * Returns configured form validator
@@ -75,7 +75,6 @@ abstract class AbstractPost extends AbstractController
 	 */
 	final protected function getSharedVars(array $overrides)
 	{
-		$news = $this->moduleManager->getModule('News');
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'link' => 'News:Admin:Browser@indexAction',
@@ -88,19 +87,9 @@ abstract class AbstractPost extends AbstractController
 		));
 
 		$vars = array(
-			'categories' => $news->getService('categoryManager')->fetchAll(),
+			'categories' => $this->getCategoryManager()->fetchAll(),
 		);
 
 		return array_replace_recursive($vars, $overrides);
-	}
-
-	/**
-	 * Returns post manager
-	 * 
-	 * @return \News\Post\PostManager
-	 */
-	final protected function getPostManager()
-	{
-		return $this->moduleManager->getModule('News')->getService('postManager');
 	}
 }
