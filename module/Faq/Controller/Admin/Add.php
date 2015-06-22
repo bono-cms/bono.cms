@@ -29,7 +29,7 @@ final class Add extends AbstractFaq
 	}
 
 	/**
-	 * Adds a faq
+	 * Adds a FAQ
 	 * 
 	 * @return string
 	 */
@@ -40,7 +40,7 @@ final class Add extends AbstractFaq
 		if ($formValidator->isValid()) {
 
 			$faqManager = $this->getFaqManager();
-			
+
 			if ($faqManager->add($this->request->getPost())) {
 				$this->flashMessenger->set('success', 'A faq has been created successfully');
 				return $faqManager->getLastId();

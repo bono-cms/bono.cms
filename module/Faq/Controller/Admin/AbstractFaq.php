@@ -11,10 +11,9 @@
 
 namespace Faq\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
 use Krystal\Validate\Pattern;
 
-abstract class AbstractFaq extends AbstractController
+abstract class AbstractFaq extends AbstractAdminController
 {
 	/**
 	 * Returns configured form validator
@@ -77,15 +76,5 @@ abstract class AbstractFaq extends AbstractController
 	final protected function getTemplatePath()
 	{
 		return 'faq.form';
-	}
-
-	/**
-	 * Returns FAQ manager
-	 * 
-	 * @return \Faq\Service\FaqManager
-	 */
-	final protected function getFaqManager()
-	{
-		return $this->moduleManager->getModule('Faq')->getService('faqManager');
 	}
 }

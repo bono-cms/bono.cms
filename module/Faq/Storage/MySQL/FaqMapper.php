@@ -19,7 +19,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'Krystal_module_faq';
+	protected $table = 'bono_module_faq';
 
 	/**
 	 * Fetches question name by its associated id

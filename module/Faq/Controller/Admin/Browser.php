@@ -11,9 +11,7 @@
 
 namespace Faq\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
-final class Browser extends AbstractController
+final class Browser extends AbstractAdminController
 {
 	/**
 	 * Shows a table
@@ -38,16 +36,6 @@ final class Browser extends AbstractController
 	}
 
 	/**
-	 * Returns FAQ manager
-	 * 
-	 * @return \Faq\Service\FaqManager
-	 */
-	private function getFaqManager()
-	{
-		return $this->moduleManager->getModule('Faq')->getService('faqManager');
-	}
-
-	/**
 	 * Loads required plugins for view
 	 * 
 	 * @return void
@@ -68,7 +56,7 @@ final class Browser extends AbstractController
 	/**
 	 * Delete selected FAQs by their associated ids
 	 * 
-	 * @return string The response
+	 * @return string
 	 */
 	public function deleteSelectedAction()
 	{
@@ -92,7 +80,7 @@ final class Browser extends AbstractController
 	/**
 	 * Saves options
 	 * 
-	 * @return string The response
+	 * @return string
 	 */
 	public function saveAction()
 	{
@@ -123,10 +111,11 @@ final class Browser extends AbstractController
 
 			$id = $this->request->getPost('id');
 
-			$this->getFaqManager()->deleteById($id);
-			$this->flashMessenger->set('success', 'The FAQ has been removed successfully');
+			if ($this->getFaqManager()->deleteById($id)) {
 
-			return '1';
+				$this->flashMessenger->set('success', 'The FAQ has been removed successfully');
+				return '1';
+			}
 		}
 	}
 }
