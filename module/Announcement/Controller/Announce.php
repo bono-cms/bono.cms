@@ -23,7 +23,7 @@ final class Announce extends AbstractController
 	 */
 	public function indexAction($id)
 	{
-		$announceManager = $this->moduleManager->getModule('Announcement')->getService('announceManager');
+		$announceManager = $this->getModuleService('announceManager');
 		$announce = $announceManager->fetchById($id);
 
 		if ($announce !== false) {

@@ -11,9 +11,7 @@
 
 namespace Announcement\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
-abstract class AbstractBrowser extends AbstractController
+abstract class AbstractBrowser extends AbstractAdminController
 {
 	/**
 	 * Returns template path
@@ -23,36 +21,6 @@ abstract class AbstractBrowser extends AbstractController
 	final protected function getTemplatePath()
 	{
 		return 'browser';
-	}
-	
-	/**
-	 * Returns announcement module
-	 * 
-	 * @return \Announcement\Module
-	 */
-	final protected function getAnnouncementModule()
-	{
-		return $this->moduleManager->getModule('Announcement');
-	}
-
-	/**
-	 * Returns announce manager
-	 * 
-	 * @return \Announcement\Service\AnnounceManager
-	 */
-	final protected function getAnnounceManager()
-	{
-		return $this->getAnnouncementModule()->getService('announceManager');
-	}
-
-	/**
-	 * Returns category manager
-	 * 
-	 * @return \Announcement\Service\CategoryManager
-	 */
-	final protected function getCategoryManager()
-	{
-		return $this->getAnnouncementModule()->getService('categoryManager');
 	}
 
 	/**

@@ -54,30 +54,33 @@ final class Browser extends AbstractBrowser
 	}
 
 	/**
-	 * Save settings from the table
+	 * Save settings from the grid
 	 * 
-	 * @return string The response
+	 * @return string
 	 */
 	public function saveAction()
 	{
-		$published = $this->request->getPost('published');
-		$seo = $this->request->getPost('seo');
+		if ($this->request->hasPost('seo', 'published')) {
 
-		// Grab a service
-		$announceManager = $this->getAnnounceManager();
+			$published = $this->request->getPost('published');
+			$seo = $this->request->getPost('seo');
 
-		$announceManager->updatePublished($published);
-		$announceManager->updateSeo($seo);
+			// Grab a service
+			$announceManager = $this->getAnnounceManager();
 
-		$this->flashMessenger->set('success', 'Announce settings have been updated successfully');
+			$announceManager->updatePublished($published);
+			$announceManager->updateSeo($seo);
 
-		return '1';
+			$this->flashMessenger->set('success', 'Announce settings have been updated successfully');
+
+			return '1';
+		}
 	}
 
 	/**
 	 * Delete selected announces
 	 * 
-	 * @return string The response
+	 * @return string
 	 */
 	public function deleteSelectedAction()
 	{
@@ -102,35 +105,41 @@ final class Browser extends AbstractBrowser
 	/**
 	 * Deletes an announce by its id
 	 * 
-	 * @return string The response
+	 * @return string
 	 */
 	public function deleteAction()
 	{
-		$id = $this->request->getPost('id');
-		
-		// Grab a service
-		$announceManager = $this->getAnnounceManager();
-		$announceManager->deleteById($id);
-		
-		$this->flashMessenger->set('success', 'The announces have been removed successfully');
-		
-		return '1';
+		if ($this->request->hasPost('id')) {
+
+			$id = $this->request->getPost('id');
+
+			// Grab a service
+			$announceManager = $this->getAnnounceManager();
+			$announceManager->deleteById($id);
+
+			$this->flashMessenger->set('success', 'The announces have been removed successfully');
+
+			return '1';
+		}
 	}
 
 	/**
 	 * Deletes a category by its associated id
 	 * 
-	 * @return string The response
+	 * @return string
 	 */
 	public function deleteCategoryAction()
 	{
-		$id = $this->request->getPost('id');
-		
-		$categoryManager = $this->getCategoryManager();
-		$categoryManager->deleteById($id);
-		
-		$this->flashMessenger->set('success', 'Selected category has been removed successfully');
-		
-		return '1';
+		if ($this->request->hasPost('id')) {
+
+			$id = $this->request->getPost('id');
+
+			$categoryManager = $this->getCategoryManager();
+			$categoryManager->deleteById($id);
+
+			$this->flashMessenger->set('success', 'Selected category has been removed successfully');
+
+			return '1';
+		}
 	}
 }

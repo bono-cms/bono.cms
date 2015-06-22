@@ -11,10 +11,10 @@
 
 namespace Announcement\Controller\Admin\Announce;
 
-use Cms\Controller\Admin\AbstractController;
+use Announcement\Controller\Admin\AbstractAdminController;
 use Krystal\Validate\Pattern;
 
-abstract class AbstractAnnounce extends AbstractController
+abstract class AbstractAnnounce extends AbstractAdminController
 {
 	/**
 	 * Returns shared form validator
@@ -82,15 +82,5 @@ abstract class AbstractAnnounce extends AbstractController
 	{
 		$this->view->getPluginBag()->load($this->getWysiwygPluginName())
 								   ->appendScript($this->getWithAssetPath('/admin/announce.form.js'));
-	}
-
-	/**
-	 * Just returns announce manager
-	 * 
-	 * @return \Announcement\Service\AnnounceManager
-	 */
-	final protected function getAnnounceManager()
-	{
-		return $this->moduleManager->getModule('Announcement')->getService('announceManager');
 	}
 }
