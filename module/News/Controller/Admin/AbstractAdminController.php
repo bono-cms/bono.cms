@@ -22,7 +22,7 @@ abstract class AbstractAdminController extends AbstractController
 	 */
 	final protected function getConfigManager()
 	{
-		return $this->getService('News', 'configManager');
+		return $this->getModuleService('configManager');
 	}
 
 	/**
@@ -32,7 +32,7 @@ abstract class AbstractAdminController extends AbstractController
 	 */
 	final protected function getPostManager()
 	{
-		return $this->getService('News', 'postManager');
+		return $this->getModuleService('postManager');
 	}
 
 	/** 
@@ -42,7 +42,7 @@ abstract class AbstractAdminController extends AbstractController
 	 */
 	final protected function getCategoryManager()
 	{
-		return $this->getService('News', 'categoryManager');
+		return $this->getModuleService('categoryManager');
 	}
 
 	/**
@@ -52,6 +52,6 @@ abstract class AbstractAdminController extends AbstractController
 	 */
 	final protected function getTaskManager()
 	{
-		return $this->getService('News', 'taskManager');
+		return $this->getModuleService('taskManager');
 	}
 }
