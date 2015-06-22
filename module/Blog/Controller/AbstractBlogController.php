@@ -22,7 +22,7 @@ abstract class AbstractBlogController extends AbstractController
 	 */
 	final protected function getConfig()
 	{
-		return $this->getBlogModule()->getService('configManager')->getEntity();
+		return $this->getService('Blog', 'configManager')->getEntity();
 	}
 
 	/**
@@ -32,7 +32,7 @@ abstract class AbstractBlogController extends AbstractController
 	 */
 	final protected function getCategoryManager()
 	{
-		return $this->getBlogModule()->getService('categoryManager');
+		return $this->getService('Blog', 'categoryManager');
 	}
 
 	/**
@@ -42,16 +42,6 @@ abstract class AbstractBlogController extends AbstractController
 	 */
 	final protected function getPostManager()
 	{
-		return $this->getBlogModule()->getService('postManager');
-	}
-
-	/**
-	 * Returns blog module
-	 * 
-	 * @return \Blog\Module
-	 */
-	final protected function getBlogModule()
-	{
-		return $this->moduleManager->getModule('Blog');
+		return $this->getService('Blog', 'postManager');
 	}
 }

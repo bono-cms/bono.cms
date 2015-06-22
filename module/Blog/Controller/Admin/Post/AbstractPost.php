@@ -11,10 +11,10 @@
 
 namespace Blog\Controller\Admin\Post;
 
-use Cms\Controller\Admin\AbstractController;
+use Blog\Controller\Admin\AbstractAdminController;
 use Krystal\Validate\Pattern;
 
-abstract class AbstractPost extends AbstractController
+abstract class AbstractPost extends AbstractAdminController
 {
 	/**
 	 * Returns prepared and configured validator
@@ -34,36 +34,6 @@ abstract class AbstractPost extends AbstractController
 				)
 			)
 		));
-	}
-
-	/**
-	 * Returns blog's module
-	 * 
-	 * @return \Blog\Module
-	 */
-	final protected function getBlogModule()
-	{
-		return $this->moduleManager->getModule('Blog');
-	}
-
-	/**
-	 * Returns post manager
-	 * 
-	 * @return \Blog\Service\PostManager
-	 */
-	final protected function getPostManager()
-	{
-		return $this->getBlogModule()->getService('postManager');
-	}
-
-	/**
-	 * Returns category manager
-	 * 
-	 * @return \Blog\Service\CategoryManager
-	 */
-	final protected function getCategoryManager()
-	{
-		return $this->getBlogModule()->getService('categoryManager');
 	}
 
 	/**

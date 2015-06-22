@@ -11,9 +11,7 @@
 
 namespace Blog\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
-abstract class AbstractBrowser extends AbstractController
+abstract class AbstractBrowser extends AbstractAdminController
 {
 	/**
 	 * Returns template path
@@ -37,36 +35,6 @@ abstract class AbstractBrowser extends AbstractController
 	}
 
 	/**
-	 * Returns blog module
-	 * 
-	 * @return \Blog\Module
-	 */
-	final protected function getBlogModule()
-	{
-		return $this->moduleManager->getModule('Blog');
-	}
-
-	/**
-	 * Returns PostManager
-	 * 
-	 * @return \Blog\Service\PostManager
-	 */
-	final protected function getPostManager()
-	{
-		return $this->getBlogModule()->getService('postManager');
-	}
-
-	/**
-	 * Returns CategoryManager
-	 * 
-	 * @return \Blog\Service\CategoryManager
-	 */
-	final protected function getCategoryManager()
-	{
-		return $this->getBlogModule()->getService('categoryManager');
-	}
-
-	/**
 	 * Returns shared variables
 	 * 
 	 * @param array $overrides
@@ -83,8 +51,8 @@ abstract class AbstractBrowser extends AbstractController
 
 		$vars = array(
 			'title' => 'Blog',
-			'taskManager' => $this->getBlogModule()->getService('taskManager'),
-			'categories' => $this->getBlogModule()->getService('categoryManager')->fetchAll()
+			'taskManager' => $this->getTaskManager(),
+			'categories' => $this->getCategoryManager()->fetchAll()
 		);
 
 		return array_replace_recursive($vars, $overrides);

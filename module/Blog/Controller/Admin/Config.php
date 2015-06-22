@@ -11,9 +11,7 @@
 
 namespace Blog\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
-final class Config extends AbstractController
+final class Config extends AbstractAdminController
 {
 	/**
 	 * Shows configuration form
@@ -82,15 +80,5 @@ final class Config extends AbstractController
 				'link' => '#'
 			)
 		));
-	}
-
-	/**
-	 * Returns configuration manager
-	 * 
-	 * @return \Blog\Service\ConfigManager
-	 */
-	private function getConfigManager()
-	{
-		return $this->moduleManager->getModule('Blog')->getService('configManager');
 	}
 }
