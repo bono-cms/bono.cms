@@ -11,9 +11,7 @@
 
 namespace Advice\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
-final class Browser extends AbstractController
+final class Browser extends AbstractAdminController
 {
 	/**
 	 * Shows a grid
@@ -41,16 +39,6 @@ final class Browser extends AbstractController
 	}
 
 	/**
-	 * Returns advice manager
-	 * 
-	 * @return \Advice\Service\AdviceManager
-	 */
-	private function getAdviceManager()
-	{
-		return $this->moduleManager->getModule('Advice')->getService('adviceManager');
-	}
-
-	/**
 	 * Loads required plugins for view
 	 * 
 	 * @return void
@@ -75,12 +63,15 @@ final class Browser extends AbstractController
 	 */
 	public function saveAction()
 	{
-		$published = $this->request->getPost('published');
+		if ($this->request->hasPost('published')) {
 
-		$this->getAdviceManager()->updatePublished($published);
-		$this->flashMessenger->set('success', 'Settings have been updated successfully');
+			$published = $this->request->getPost('published');
 
-		return '1';
+			$this->getAdviceManager()->updatePublished($published);
+			$this->flashMessenger->set('success', 'Settings have been updated successfully');
+
+			return '1';
+		}
 	}
 
 	/**
@@ -90,12 +81,15 @@ final class Browser extends AbstractController
 	 */
 	public function deleteAction()
 	{
-		$id = $this->request->getPost('id');
+		if ($this->request->hasPost('id')) {
 
-		if ($this->getAdviceManager()->deleteById($id)) {
+			$id = $this->request->getPost('id');
 
-			$this->flashMessenger->set('success', 'Selected advice has been removed successfully');
-			return '1';
+			if ($this->getAdviceManager()->deleteById($id)) {
+
+				$this->flashMessenger->set('success', 'Selected advice has been removed successfully');
+				return '1';
+			}
 		}
 	}
 

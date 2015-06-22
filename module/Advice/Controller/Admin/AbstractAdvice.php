@@ -11,10 +11,9 @@
 
 namespace Advice\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
 use Krystal\Validate\Pattern;
 
-abstract class AbstractAdvice extends AbstractController
+abstract class AbstractAdvice extends AbstractAdminController
 {
 	/**
 	 * Returns prepared and configured validator
@@ -77,15 +76,5 @@ abstract class AbstractAdvice extends AbstractController
 	final protected function getTemplatePath()
 	{
 		return 'advice.form';
-	}
-
-	/**
-	 * Returns advice manager instance
-	 * 
-	 * @return \Adivce\Service\AdivceManager
-	 */
-	final protected function getAdviceManager()
-	{
-		return $this->moduleManager->getModule('Advice')->getService('adviceManager');
 	}
 }
