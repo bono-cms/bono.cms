@@ -11,10 +11,9 @@
 
 namespace Banner\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
 use Krystal\Validate\Pattern;
 
-abstract class AbstractBanner extends AbstractController
+abstract class AbstractBanner extends AbstractAdminController
 {
 	/**
 	 * Returns prepared validator
@@ -77,16 +76,6 @@ abstract class AbstractBanner extends AbstractController
 
 		$vars = array();
 		return array_replace_recursive($vars, $overrides);
-	}
-
-	/**
-	 * Just returns banner manager
-	 * 
-	 * @return \Banner\Service\BannerManager
-	 */
-	final protected function getBannerManager()
-	{
-		return $this->moduleManager->getModule('Banner')->getService('bannerManager');
 	}
 
 	/**

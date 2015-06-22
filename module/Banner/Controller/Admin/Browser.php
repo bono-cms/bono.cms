@@ -11,9 +11,7 @@
 
 namespace Banner\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
-final class Browser extends AbstractController
+final class Browser extends AbstractAdminController
 {
 	/**
 	 * Shows a table
@@ -35,16 +33,6 @@ final class Browser extends AbstractController
 			'paginator' => $paginator,
 			'title' => 'Banner',
 		));
-	}
-
-	/**
-	 * Returns beaner manager
-	 * 
-	 * @return \Banner\Service\BannerManager
-	 */
-	private function getBannerManager()
-	{
-		return $this->moduleManager->getModule('Banner')->getService('bannerManager');
 	}
 
 	/**
@@ -77,7 +65,7 @@ final class Browser extends AbstractController
 			$id = $this->request->getPost('id');
 
 			if ($this->getBannerManager()->deleteById($id)) {
-				
+
 				$this->flashMessenger->set('success', 'A banner has been removed successfully');
 				return '1';
 			}
@@ -92,17 +80,17 @@ final class Browser extends AbstractController
 	public function deleteSelectedAction()
 	{
 		if ($this->request->hasPost('toDelete')) {
-			
+
 			$ids = array_keys($this->request->getPost('toDelete'));
-			
+
 			// Grab a service
 			$this->getBannerManager()->deleteByIds($ids);
-			
+
 			$flashKey = 'success';
 			$flashMessage = 'Selected banners have been removed successfully';
-			
+
 		} else {
-			
+
 			$flashKey = 'warning';
 			$flashMessage = 'You should select at least one banner to remove';
 		}
