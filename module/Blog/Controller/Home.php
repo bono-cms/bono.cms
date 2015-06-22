@@ -31,7 +31,7 @@ final class Home extends AbstractBlogController
 		$paginator = $postManager->getPaginator();
 		$this->preparePaginator($paginator, null, 'blog', $pageNumber);
 
-		$page = $this->moduleManager->getModule('Pages')->getService('pageManager')->fetchDefault();
+		$page = $this->getService('Pages', 'pageManager')->fetchDefault();
 
 		return $this->view->render($this->getConfig()->getCategoryTemplate(), array(
 			'paginator' => $paginator,
