@@ -37,13 +37,16 @@ final class Config extends AbstractController
 	 */
 	public function saveAction()
 	{
-		$content = $this->request->getPost('content');
+		if ($this->request->hasPost('content')) {
 
-		if ($this->getAboutBoxManager()->update($content)) {
-			$this->flashMessenger->set('success', 'About box has been updated successfully');
+			$content = $this->request->getPost('content');
+
+			if ($this->getAboutBoxManager()->update($content)) {
+				$this->flashMessenger->set('success', 'About box has been updated successfully');
+			}
+
+			return '1';
 		}
-
-		return '1';
 	}
 
 	/**
@@ -53,7 +56,7 @@ final class Config extends AbstractController
 	 */
 	private function getAboutBoxManager()
 	{
-		return $this->moduleManager->getModule('AboutBox')->getService('aboutBoxManager');
+		return $this->getModuleService('aboutBoxManager');
 	}
 
 	/**
@@ -66,7 +69,7 @@ final class Config extends AbstractController
 		$this->view->getPluginBag()
 				   ->load($this->getWysiwygPluginName())
 				   ->appendScript($this->getWithAssetPath('/admin/box.form.js'));
-		
+
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'link' => '#',
