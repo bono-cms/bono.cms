@@ -31,7 +31,7 @@ final class Add extends AbstractBlock
 	/**
 	 * Adds a block
 	 * 
-	 * @return string The response
+	 * @return string
 	 */
 	public function addAction()
 	{

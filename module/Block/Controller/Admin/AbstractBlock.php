@@ -11,10 +11,9 @@
 
 namespace Block\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
 use Krystal\Validate\Pattern;
 
-abstract class AbstractBlock extends AbstractController
+abstract class AbstractBlock extends AbstractAdminController
 {
 	/**
 	 * Returns prepared and configured validator's instance
@@ -79,15 +78,5 @@ abstract class AbstractBlock extends AbstractController
 		);
 
 		return array_replace_recursive($vars, $overrides);
-	}
-
-	/**
-	 * Just returns block manager
-	 * 
-	 * @return \Block\Service\BlockManager
-	 */
-	final protected function getBlockManager()
-	{
-		return $this->moduleManager->getModule('Block')->getService('blockManager');
 	}
 }

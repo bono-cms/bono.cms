@@ -11,9 +11,7 @@
 
 namespace Block\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
-final class Browser extends AbstractController
+final class Browser extends AbstractAdminController
 {
 	/**
 	 * Shows a table
@@ -35,16 +33,6 @@ final class Browser extends AbstractController
 			'paginator'	=> $paginator,
 			'title' => 'HTML Blocks',
 		));
-	}
-
-	/**
-	 * Returns block manager
-	 * 
-	 * @return \Block\Service\BlockManager
-	 */
-	private function getBlockManager()
-	{
-		return $this->moduleManager->getModule('Block')->getService('blockManager');
 	}
 
 	/**
