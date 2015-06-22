@@ -58,7 +58,7 @@ final class Widget extends AbstractItem
 		$categoryId = $categories[0]->getId();
 		$treeBuilder = $this->getTreeBuilder($categoryId);
 
-		$menuWidget = $this->moduleManager->getModule('Menu')->getService('menuWidget');
+		$menuWidget = $this->getMenuWidget();
 
 		if (is_null($webPageId)) {
 			$items = $menuWidget->fetchAllAsOneDummy();

@@ -11,30 +11,12 @@
 
 namespace Menu\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
 use Krystal\Tree\AdjacencyList\TreeBuilder;
 use Krystal\Tree\AdjacencyList\Render\PhpArray;
 use Menu\View\Nestedable;
 
-abstract class AbstractItem extends AbstractController
+abstract class AbstractItem extends AbstractAdminController
 {
-	/**
-	 * Returns prepared menu link builder
-	 * 
-	 * @return \Menu\Service\LinkBuilder
-	 */
-	final protected function getLinkBuilder()
-	{
-		$menu = $this->getMenuModule();
-
-		// Menu link builder is just prepared, but now configured yet. I.e it has no data yet
-		// So we'll be adding it here. If adding it in Module definition, then that would be extra overhead
-		$linkBuilder = $menu->getService('linkBuilder');
-		$linkBuilder->loadFromDefiniton($menu->getLinkDefinitions(), $this->moduleManager);
-
-		return $linkBuilder;
-	}
-
 	/**
 	 * Fetches maximal allowed nested level depth
 	 * 
@@ -120,43 +102,13 @@ abstract class AbstractItem extends AbstractController
 	}
 
 	/**
-	 * Returns menu module definition
-	 * 
-	 * @return \Menu\Module
-	 */
-	final protected function getMenuModule()
-	{
-		return $this->moduleManager->getModule('Menu');
-	}
-
-	/**
-	 * Returns category manager
-	 * 
-	 * @return \Menu\Service\CategoryManager
-	 */
-	final protected function getCategoryManager()
-	{
-		return $this->getMenuModule()->getService('categoryManager');
-	}
-
-	/**
-	 * Returns item manager
-	 * 
-	 * @return \Menu\Service\ItemManager
-	 */
-	final protected function getItemManager()
-	{
-		return $this->getMenuModule()->getService('itemManager');
-	}
-
-	/**
 	 * Fetches last category id
 	 * 
 	 * @return integer
 	 */
 	final protected function getLastCategoryId()
 	{
-		return $this->getMenuModule()->getService('categoryManager')->fetchLastId();
+		return $this->getCategoryManager()->fetchLastId();
 	}
 
 	/**
