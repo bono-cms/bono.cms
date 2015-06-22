@@ -22,6 +22,6 @@ abstract class AbstractAdminController extends AbstractController
 	 */
 	final protected function getBannerManager()
 	{
-		return $this->getService('Banner', 'bannerManager');
+		return $this->getModuleService('bannerManager');
 	}
 }
