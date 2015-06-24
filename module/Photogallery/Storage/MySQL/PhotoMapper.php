@@ -22,6 +22,79 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	protected $table = 'bono_module_photoalbum_photos';
 
 	/**
+	 * Returns shared select
+	 * 
+	 * @param boolean $published Whether to filter by published records only
+	 * @param string $albumId Optionally can be filtered by album id
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery($published, $albumId = null)
+	{
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('lang_id', $this->getLangId());
+
+		if ($albumId !== null) {
+			$db->andWhereEquals('album_id', $albumId);
+		}
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1')
+			   ->orderBy('order'); // @TODO: CASE WHEN `order` = 0 THEN id END
+		} else {
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
+	}
+
+	/**
+	 * Queries for results
+	 * 
+	 * @param boolean $published Whether to sort only published records
+	 * @param string $sort Column name to sort by
+	 * @param string $albumId Optional album id
+	 * @return array
+	 */
+	private function getResults($page, $itemsPerPage, $published, $albumId = null)
+	{
+		return $this->getSelectQuery($published, $albumId)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
+	}
+
+	/**
+	 * Updates row columns by matched id
+	 * 
+	 * @param string $id
+	 * @param string $column
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function updateRowById($id, $column, $value)
+	{
+		return $this->db->update($this->table, array($column => $value))
+						->whereEquals('id', $id)
+						->execute();
+	}
+
+	/**
+	 * Deletes all records by provided column name
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function deleteAllByColumn($column, $value)
+	{
+		return $this->db->delete()
+						->from($this->table)
+						->whereEquals($column, $value)
+						->execute();
+	}
+
+	/**
 	 * Fetches a photo name by its associated id
 	 * 
 	 * @param string $id
@@ -43,10 +116,18 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function deleteAllByAlbumId($albumId)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('album_id', $albumId)
-						->execute();
+		return $this->deleteAllByColumn('album_id', $albumId);
+	}
+
+	/**
+	 * Deletes a photo by its associated id
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	public function deleteById($id)
+	{
+		return $this->deleteAllByColumn('id', $id);
 	}
 
 	/**
@@ -92,31 +173,14 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	}
 
 	/**
-	 * Deletes a photo by its associated id
-	 * 
-	 * @param string $id
-	 * @return boolean
-	 */
-	public function deleteById($id)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
-	}
-
-	/**
 	 * Fetches all published records
 	 * 
 	 * @return array
 	 */
 	public function fetchAllPublished()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('lang_id', $this->getLangId())
-						->queryAll();
+		return $this->getSelectQuery(true)
+					->queryAll();
 	}
 
 	/**
@@ -155,25 +219,8 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchAll()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->queryAll();
-	}
-
-	/**
-	 * Updates row columns by matched id
-	 * 
-	 * @param string $id
-	 * @param string $column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function updateRowById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
+		return $this->getSelectQuery(false)
+					->queryAll();
 	}
 
 	/**
@@ -209,13 +256,19 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchAllPublihedByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('lang_id', $this->getLangId())
-						->orderBy('order')
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, true);
+	}
+
+	/**
+	 * Fetch all records filter by pagination
+	 * 
+	 * @param integer $page
+	 * @param integer $itemsPerPage
+	 * @return array
+	 */
+	public function fetchAllByPage($page, $itemsPerPage)
+	{
+		return $this->getResults($page, $itemsPerPage, false);
 	}
 
 	/**
@@ -228,13 +281,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchAllByAlbumIdAndPage($albumId, $page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('album_id', $albumId)
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false, $albumId);
 	}
 
 	/**
@@ -247,33 +294,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchAllPublishedByAlbumIdAndPage($albumId, $page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('album_id', $albumId)
-						->andWhereEquals('published', '1')
-						//@TODO: CASE WHEN `order` = 0 THEN id END
-						->orderBy('order')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
-	}
-
-	/**
-	 * Fetch all records filter by pagination
-	 * 
-	 * @param integer $page
-	 * @param integer $itemsPerPage
-	 * @return array
-	 */
-	public function fetchAllByPage($page, $itemsPerPage)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, true, $albumId);
 	}
 
 	/**
@@ -284,9 +305,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchAllByAlbumId($albumId)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('album_id', $albumId)
-						->queryAll();
+		return $this->getSelectQuery(false, $albumId)
+					->queryAll();
 	}
 }
