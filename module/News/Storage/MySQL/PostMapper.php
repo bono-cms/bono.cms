@@ -181,18 +181,43 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	}
 
 	/**
+	 * Builds shared select query
+	 * 
+	 * @param boolean $published
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @param string $sort Column name to sort by
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery($published, $categoryId = null, $sort = 'id')
+	{
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('lang_id', $this->getLangId());
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1');
+		}
+
+		if ($categoryId !== null) {
+			$db->andWhereEquals('category_id', $categoryId);
+		}
+
+		$db->orderBy($sort)
+		   ->desc();
+
+		// Done building shared query
+		return $db;
+	}
+
+	/**
 	 * Fetches all published posts
 	 * 
 	 * @return array
 	 */
 	public function fetchAllPublished()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('lang_id', $this->getLangId())
-						->orderBy('timestamp')
-						->queryAll();
+		return $this->getSelectQuery(true, null, 'timestamp')
+					->queryAll();
 	}
 
 	/**
@@ -204,14 +229,9 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllPublishedByCategoryId($categoryId, $limit)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->andWhereEquals('published', '1')
-						->orderBy('id')
-						->desc()
-						->limit($limit)
-						->queryAll();
+		return $this->getSelectQuery(true, $categoryId)
+					->limit($limit)
+					->queryAll();
 	}
 
 	/**
@@ -219,75 +239,30 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 * 
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to fetch only published records
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $itemsPerPage)
+	public function fetchAllByPage($page, $itemsPerPage, $published)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
-	}
-
-	/**
-	 * Fetches all published posts
-	 * 
-	 * @param string $page Current page
-	 * @param string $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByPage($page, $itemsPerPage)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
-	}
-
-	/**
-	 * Fetches all published posts by category id and filtered by pagination
-	 * 
-	 * @param string $categoryId
-	 * @param integer $page Current page number
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->andWhereEquals('published', '1')
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getSelectQuery($published)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
 	 * Fetches all posts by associated category id and filtered by pagination
 	 * 
 	 * @param string $categoryId
+	 * @param boolean $published Whether to fetch only published records
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
+	public function fetchAllByCategoryIdAndPage($categoryId, $published, $page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getSelectQuery($published, $categoryId)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -323,7 +298,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	/**
 	 * Fetches post data by its associated id
 	 * 
-	 * @param string $id Post id
+	 * @param string $id
 	 * @return array
 	 */
 	public function fetchById($id)

@@ -413,33 +413,21 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->prepareResults($this->postMapper->fetchAllByPage($page, $itemsPerPage));
+		return $this->prepareResults($this->postMapper->fetchAllByPage($page, $itemsPerPage, false));
 	}
 
 	/**
 	 * Fetches all posts associated with category id and filtered by pagination
 	 * 
 	 * @param string $id Category id
+	 * @param boolean $published Whether to fetch only published records
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Items per page count
 	 * @return array
 	 */
-	public function fetchAllByCategoryIdAndPage($id, $page, $itemsPerPage)
+	public function fetchAllByCategoryIdAndPage($id, $published, $page, $itemsPerPage)
 	{
-		return $this->prepareResults($this->postMapper->fetchAllByCategoryIdAndPage($id, $page, $itemsPerPage));
-	}
-
-	/**
-	 * Fetches all post bags associated with category id
-	 * 
-	 * @param string $id Category id
-	 * @param integer $page Current page number
-	 * @param integer $itemsPerPage Items per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByCategoryIdAndPage($id, $page, $itemsPerPage)
-	{
-		return $this->prepareResults($this->postMapper->fetchAllPublishedByCategoryIdAndPage($id, $page, $itemsPerPage));
+		return $this->prepareResults($this->postMapper->fetchAllByCategoryIdAndPage($id, $published, $page, $itemsPerPage));
 	}
 
 	/**

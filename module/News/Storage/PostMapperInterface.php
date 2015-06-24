@@ -107,38 +107,21 @@ interface PostMapperInterface
 	 * 
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to fetch only published records
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $itemsPerPage);
-
-	/**
-	 * Fetches all published posts
-	 * 
-	 * @param string $page Current page
-	 * @param string $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByPage($page, $itemsPerPage);
-
-	/**
-	 * Fetches all published posts by category id and filtered by pagination
-	 * 
-	 * @param string $categoryId
-	 * @param integer $page Current page number
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage);
+	public function fetchAllByPage($page, $itemsPerPage, $published);
 
 	/**
 	 * Fetches all posts by associated category id and filtered by pagination
 	 * 
 	 * @param string $categoryId
+	 * @param boolean $published Whether to fetch only published records
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage);
+	public function fetchAllByCategoryIdAndPage($categoryId, $published, $page, $itemsPerPage);
 
 	/**
 	 * Fetches post title by its associated id

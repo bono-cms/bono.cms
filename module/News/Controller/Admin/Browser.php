@@ -49,7 +49,7 @@ final class Browser extends AbstractBrowser
 		
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 
-			'posts' => $this->getPostManager()->fetchAllByCategoryIdAndPage($id, $page, $this->getSharedPerPageCount()),
+			'posts' => $this->getPostManager()->fetchAllByCategoryIdAndPage($id, false, $page, $this->getSharedPerPageCount()),
 			'categoryId' => $id,
 			'paginator' => $paginator,
 		)));
