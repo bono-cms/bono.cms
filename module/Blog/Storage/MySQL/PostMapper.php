@@ -22,6 +22,100 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	protected $table = 'bono_module_blog_posts';
 
 	/**
+	 * Updates row column's value by associated id
+	 * 
+	 * @param string $id Post id
+	 * @param string $column Column name
+	 * @param string $value Column's new value
+	 * @return boolean
+	 */
+	private function updateRowById($id, $column, $value)
+	{
+		return $this->db->update($this->table, array($column => $value))
+						->whereEquals('id', $id)
+						->execute();
+	}
+
+	/**
+	 * Returns shared select query
+	 * 
+	 * @param boolean $published Whether to sort only published records
+	 * @param string $sort Column name to sort by
+	 * @param string $categoryId Optional category id
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery($published, $sort, $categoryId = null)
+	{
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('lang_id', $this->getLangId());
+
+		if ($published == true) {
+			$db->andWhereEquals('published', '1');
+		}
+
+		if ($categoryId !== null) {
+			$db->andWhereEquals('category_id', $categoryId);
+		}
+
+		$db->orderBy('timestamp')
+		   ->desc();
+
+		return $db;
+	}
+
+	/**
+	 * Queries for results
+	 * 
+	 * @param boolean $published Whether to sort only published records
+	 * @param string $sort Column name to sort by
+	 * @param string $categoryId Optional category id
+	 * @return array
+	 */
+	private function getResults($page, $itemsPerPage, $published, $sort, $categoryId = null)
+	{
+		return $this->getSelectQuery($published, $sort, $categoryId)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
+	}
+
+	/**
+	 * Counts amount of categories
+	 * 
+	 * @param string $categoryId
+	 * @param boolean $published Whether to include published in calculation
+	 * @return integer
+	 */
+	private function getCount($categoryId, $published)
+	{
+		$db = $this->db->select()
+					   ->count('id', 'count')
+					   ->from($this->table)
+					   ->whereEquals('category_id', $categoryId);
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1');
+		}
+
+		return (int) $db->query('count');
+	}
+
+	/**
+	 * Deletes all data by a column
+	 * 
+	 * @param string $column Column name
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function deleteAllByColumn($column, $value)
+	{
+		return $this->db->delete()
+						->from($this->table)
+						->whereEquals($column, $value)
+						->execute();
+	}
+
+	/**
 	 * Fetches web page ids by associated category id
 	 * 
 	 * @param string $id Category's id
@@ -47,21 +141,6 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 						->from($this->table)
 						->whereEquals('id', $id)
 						->query('title');
-	}
-
-	/**
-	 * Updates row column's value by associated id
-	 * 
-	 * @param string $id Post id
-	 * @param string $column Column name
-	 * @param string $value Column's new value
-	 * @return boolean
-	 */
-	private function updateRowById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
 	}
 
 	/**
@@ -173,10 +252,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteAllByColumn('id', $id);
 	}
 
 	/**
@@ -187,10 +263,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function deleteByCategoryId($categoryId)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->execute();
+		return $this->deleteAllByColumn('category_id', $categoryId);
 	}
 
 	/**
@@ -200,32 +273,8 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllPublished()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->orderBy('timestamp')
-						->queryAll();
-	}
-
-	/**
-	 * Fetches all published posts associated with given category id and filtered by pagination
-	 * 
-	 * @param string $categoryId Target category id
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->andWhereEquals('published', '1')
-						->orderBy('timestamp')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getSelectQuery(true, 'timestamp', null)
+					->queryAll();
 	}
 
 	/**
@@ -238,13 +287,20 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false, 'id', $categoryId);
+	}
+
+	/**
+	 * Fetches all published posts associated with given category id and filtered by pagination
+	 * 
+	 * @param string $categoryId Target category id
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
+	{
+		return $this->getResults($page, $itemsPerPage, true, 'timestamp', $categoryId);
 	}
 
 	/**
@@ -256,14 +312,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->orderBy('timestamp')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, true, 'timestamp');
 	}
 
 	/**
@@ -275,13 +324,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false, 'id');
 	}
 
 	/**
@@ -292,12 +335,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function countAllPublishedByCategoryId($categoryId)
 	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->andWhereEquals('published', '1')
-						->query('count');
+		return $this->getCount($categoryId, true);
 	}
 
 	/**
@@ -308,10 +346,6 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function countAllByCategoryId($categoryId)
 	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->query('count');
+		return $this->getCount($categoryId, false);
 	}
 }
