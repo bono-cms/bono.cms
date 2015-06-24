@@ -16,82 +16,74 @@ interface FaqMapperInterface
 	/**
 	 * Fetches question name by its associated id
 	 * 
-	 * @param string $id Faq id
+	 * @param string $id
 	 * @return string
 	 */
 	public function fetchQuestionById($id);
 
 	/**
-	 * Update published state by its associated faq id
+	 * Update published state by its associated FAQ's id
 	 * 
-	 * @param integer $id Faq id
+	 * @param integer $id
 	 * @param string $published Either 0 or 1
 	 * @return boolean
 	 */
 	public function updatePublishedById($id, $published);
 
 	/**
-	 * Update an order by its associated faq id
+	 * Update an order by its associated FAQ id
 	 * 
-	 * @param string $id Faq id
+	 * @param string $id
 	 * @param integer $order New sort order
 	 * @return boolean
 	 */
 	public function updateOrderById($id, $order);
 
 	/**
-	 * Fetches all faqs filtered by pagination
+	 * Fetches all records filtered by pagination
 	 * 
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to fetch only published records
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $itemsPerPage);
+	public function fetchAllByPage($page, $itemsPerPage, $published);
 
 	/**
-	 * Fetches all published faqs filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByPage($page, $itemsPerPage);
-
-	/**
-	 * Fetches all published faqs
+	 * Fetches all published records
 	 * 
 	 * @return array
 	 */
 	public function fetchAllPublished();
 
 	/**
-	 * Inserts a faq
+	 * Inserts a record
 	 * 
-	 * @param array $data Faq data
+	 * @param array $data
 	 * @return boolean
 	 */
 	public function insert(array $data);
 
 	/**
-	 * Updates a fqq
+	 * Updates a record
 	 * 
-	 * @param array $data Faq data
+	 * @param array $data
 	 * @return boolean
 	 */
 	public function update(array $data);
 
 	/**
-	 * Deletes a faq by its associated id
+	 * Deletes a FAQ by its associated id
 	 * 
-	 * @param string $id Faq id
+	 * @param string $id
 	 * @return boolean
 	 */
 	public function deleteById($id);
 
 	/**
-	 * Fetches faq data by its associated id
+	 * Fetches a record by its associated id
 	 * 
-	 * @param string $id Faq id
+	 * @param string $id
 	 * @return array
 	 */
 	public function fetchById($id);

@@ -79,35 +79,26 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 * 
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to fetch only published ones
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $itemsPerPage)
+	public function fetchAllByPage($page, $itemsPerPage, $published)
 	{
-		return $this->db->select('*')
+		// Build first fragment
+		$qb = $this->db->select('*')
 						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
-	}
+						->whereEquals('langId', $this->getLangId());
 
-	/**
-	 * Fetches all published FAQs filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByPage($page, $itemsPerPage)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('langId', $this->getLangId())
-						->orderBy('order')
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		if ($published === true) {
+			$qb->andWhereEquals('published', '1')
+			   ->order('order');
+		} else {
+			$qb->orderBy('id')
+			   ->desc();
+		}
+
+		return $qb->paginate($page, $itemsPerPage)
+				  ->queryAll();
 	}
 
 	/**

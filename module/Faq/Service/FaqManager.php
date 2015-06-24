@@ -140,31 +140,20 @@ final class FaqManager extends AbstractManager implements FaqManagerInterface
 	}
 
 	/**
-	 * Fetches all faq bags filtered by pagination
+	 * Fetches all entities filtered by pagination
 	 * 
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to fetch only published ones
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $itemsPerPage)
+	public function fetchAllByPage($page, $itemsPerPage, $published)
 	{
-		return $this->prepareResults($this->faqMapper->fetchAllByPage($page, $itemsPerPage));
+		return $this->prepareResults($this->faqMapper->fetchAllByPage($page, $itemsPerPage, $published));
 	}
 
 	/**
-	 * Fetches all published fag bags filtered by pagination
-	 * 
-	 * @param integer $page Current page number
-	 * @param integer $itemsPerPage
-	 * @return array
-	 */
-	public function fetchAllPublishedByPage($page, $itemsPerPage)
-	{
-		return $this->prepareResults($this->faqMapper->fetchAllPublishedByPage($page, $itemsPerPage));
-	}
-
-	/**
-	 * Fetches all published faq bags
+	 * Fetches all published entities
 	 * 
 	 * @return array
 	 */

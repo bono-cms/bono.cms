@@ -30,7 +30,7 @@ final class Browser extends AbstractAdminController
 
 		return $this->view->render('browser', array(
 			'paginator'	=> $paginator,
-			'faqs' => $faqManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
+			'faqs' => $faqManager->fetchAllByPage($page, $this->getSharedPerPageCount(), false),
 			'title' => 'FAQ',
 		));
 	}

@@ -47,22 +47,14 @@ interface FaqManagerInterface
 	public function updateOrders(array $pair);
 
 	/**
-	 * Fetches all faq bags filtered by pagination
+	 * Fetches all FAQs filtered by pagination
 	 * 
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to fetch only published ones
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $itemsPerPage);
-
-	/**
-	 * Fetches all published fag bags filtered by pagination
-	 * 
-	 * @param integer $page Current page number
-	 * @param integer $itemsPerPage
-	 * @return array
-	 */
-	public function fetchAllPublishedByPage($page, $itemsPerPage);
+	public function fetchAllByPage($page, $itemsPerPage, $published);
 
 	/**
 	 * Fetches all published faq bags
