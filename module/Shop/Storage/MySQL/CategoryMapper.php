@@ -22,44 +22,40 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	protected $table = 'bono_module_shop_categories';
 
 	/**
-	 * Fetches breadcrumb's data
+	 * Builds shared select
 	 * 
-	 * @param string $id Category id
-	 * @return array
+	 * @param boolean $front
+	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function fetchBcData()
+	private function getSelectQuery($front)
 	{
-		return $this->db->select(array('title', 'web_page_id', 'lang_id', 'parent_id', 'id'))
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->queryAll();
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('lang_id', $this->getLangId());
+
+		if ($front === true) {
+			$db->orderBy('order');
+		} else {
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
 	}
 
 	/**
-	 * Fetches category's title by its associated id
+	 * Queries for a result
 	 * 
-	 * @param string $id Category id
-	 * @return string
-	 */
-	public function fetchTitleById($id)
-	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('title');
-	}
-
-	/**
-	 * Fetches all categories
-	 * 
+	 * @param integer $page Current page number
+	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $front
 	 * @return array
 	 */
-	public function fetchAll()
+	private function getResults($page, $itemsPerPage, $front)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->queryALl();
+		return $this->getSelectQuery($front)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -152,63 +148,67 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	}
 
 	/**
+	 * Fetches breadcrumb's data
+	 * 
+	 * @param string $id Category id
+	 * @return array
+	 */
+	public function fetchBcData()
+	{
+		return $this->db->select(array('title', 'web_page_id', 'lang_id', 'parent_id', 'id'))
+						->from($this->table)
+						->whereEquals('lang_id', $this->getLangId())
+						->queryAll();
+	}
+
+	/**
+	 * Fetches category's title by its associated id
+	 * 
+	 * @param string $id Category id
+	 * @return string
+	 */
+	public function fetchTitleById($id)
+	{
+		return $this->db->select('title')
+						->from($this->table)
+						->whereEquals('id', $id)
+						->query('title');
+	}
+
+	/**
+	 * Fetches all categories
+	 * 
+	 * @return array
+	 */
+	public function fetchAll()
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->whereEquals('lang_id', $this->getLangId())
+						->queryAll();
+	}
+
+	/**
 	 * Fetches all categories filtered by pagination
 	 * 
-	 * @param string $id Category's id
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllByIdAndPage($id, $page, $itemsPerPage)
+	public function fetchAllByIdAndPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllById($id))
-						->setCurrentPage($page);
-
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->orderBy('id')
-						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false);
 	}
 
 	/**
 	 * Fetches all published categories by associated id and filtered by pagination
 	 * 
-	 * @param string $id Category id
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllPublishedByIdAndPage($id, $page, $itemsPerPage)
+	public function fetchAllPublishedByIdAndPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAllPublishedById($id))
-						->setCurrentPage($page);
-
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->andWhereEquals('published', '1')
-						->orderBy('order')
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
-						->queryAll();
-	}
-
-	/**
-	 * Counts all categories by associated id
-	 * 
-	 * @param string $id Category id
-	 * @return integer
-	 */
-	private function countAllById($id)
-	{
-		return (int) $this->db->select()
-						->count('id', 'count')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('count');
+		return $this->getResults($page, $itemsPerPage, true);
 	}
 }

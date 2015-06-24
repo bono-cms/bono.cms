@@ -79,20 +79,18 @@ interface CategoryMapperInterface
 	/**
 	 * Fetches all categories filtered by pagination
 	 * 
-	 * @param string $id Category's id
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllByIdAndPage($id, $page, $itemsPerPage);
+	public function fetchAllByIdAndPage($page, $itemsPerPage);
 
 	/**
 	 * Fetches all published categories by associated id and filtered by pagination
 	 * 
-	 * @param string $id Category id
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllPublishedByIdAndPage($id, $page, $itemsPerPage);
+	public function fetchAllPublishedByIdAndPage($page, $itemsPerPage);
 }
