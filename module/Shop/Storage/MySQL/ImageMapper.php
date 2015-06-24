@@ -22,6 +22,73 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	protected $table = 'bono_module_shop_product_images';
 
 	/**
+	 * Returns shared select
+	 * 
+	 * @param string $productId
+	 * @param boolean $published
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery($productId, $published)
+	{
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('product_id', $productId);
+
+		if ($published === true) {
+
+			$db->andWhereEquals('published', '1')
+			   ->orderBy('order');
+		} else {
+
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
+	}
+	
+	/**
+	 * Queries for result-set
+	 * 
+	 * @param string $productId
+	 * @param boolean $published
+	 * @return array
+	 */
+	private function getResults($productId, $published)
+	{
+		return $this->getSelectQuery($productId, $published)
+					->queryAll();
+	}
+
+	/**
+	 * Updates a row data by associated id
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	private function updateRowById($id, $column, $value)
+	{
+		return $this->db->update($this->table, array($column => $value))
+						->whereEquals('id', $id)
+						->execute();
+	}
+	
+	/**
+	 * Deletes all by associated column name and its value
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function deleteAllByColumn($column, $value)
+	{
+		return $this->db->delete()
+						->from($this->table)
+						->whereEquals($column, $value)
+						->execute();
+	}
+
+	/**
 	 * Fetches image's file name by its associated id
 	 * 
 	 * @param string $id Image's id
@@ -43,12 +110,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllPublishedByProductId($productId)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('product_id', $productId)
-						->andWhereEquals('published', '1')
-						->orderBy('order')
-						->queryAll();
+		return $this->getResults($productId, true);
 	}
 
 	/**
@@ -59,12 +121,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllByProductId($productId)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('product_id', $productId)
-						->orderBy('id')
-						->desc()
-						->queryAll();
+		return $this->getResults($productId, false);
 	}
 
 	/**
@@ -85,33 +142,6 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 			'published' => $published
 			
 		))->execute();
-	}
-
-	/**
-	 * Deletes all images by associated product id
-	 * 
-	 * @param string $productId
-	 * @return boolean
-	 */
-	public function deleteAllByProductId($productId)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('product_id', $productId)
-						->execute();
-	}
-
-	/**
-	 * Updates a row data by associated id
-	 * 
-	 * @param string $id
-	 * @return boolean
-	 */
-	private function updateRowById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
 	}
 
 	/**
@@ -158,9 +188,17 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteAllByColumn('id', $id);
+	}
+
+	/**
+	 * Deletes all images by associated product id
+	 * 
+	 * @param string $productId
+	 * @return boolean
+	 */
+	public function deleteAllByProductId($productId)
+	{
+		return $this->deleteAllByColumn('product_id', $productId);
 	}
 }
