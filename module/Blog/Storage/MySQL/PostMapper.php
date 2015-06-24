@@ -58,7 +58,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 			$db->andWhereEquals('category_id', $categoryId);
 		}
 
-		$db->orderBy('timestamp')
+		$db->orderBy($sort)
 		   ->desc();
 
 		return $db;
