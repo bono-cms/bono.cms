@@ -116,6 +116,17 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	}
 
 	/**
+	 * Decides which column to use depending on published state
+	 * 
+	 * @param boolean $published
+	 * @return string
+	 */
+	private function getSortingColumn($published)
+	{
+		return (bool) $published ? 'timestamp' : 'id';
+	}
+
+	/**
 	 * Fetches web page ids by associated category id
 	 * 
 	 * @param string $id Category's id
@@ -281,50 +292,27 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 * Fetches all posts associated with given category id and filtered by pagination
 	 * 
 	 * @param string $categoryId
-	 * @param integer $page Current page
-	 * @param integer Per page count
-	 * @return array
-	 */
-	public function fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
-	{
-		return $this->getResults($page, $itemsPerPage, false, 'id', $categoryId);
-	}
-
-	/**
-	 * Fetches all published posts associated with given category id and filtered by pagination
-	 * 
-	 * @param string $categoryId Target category id
+	 * @param boolean $published Whether to fetch only published records
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
+	public function fetchAllByCategoryIdAndPage($categoryId, $published, $page, $itemsPerPage)
 	{
-		return $this->getResults($page, $itemsPerPage, true, 'timestamp', $categoryId);
-	}
-
-	/**
-	 * Fetches all published posts filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByPage($page, $itemsPerPage)
-	{
-		return $this->getResults($page, $itemsPerPage, true, 'timestamp');
+		return $this->getResults($page, $itemsPerPage, $published, $this->getSortingColumn($published), $categoryId);
 	}
 
 	/**
 	 * Fetches all posts filtered by pagination
 	 * 
+	 * @param boolean $published Whether to fetch only published records
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $itemsPerPage)
+	public function fetchAllByPage($published, $page, $itemsPerPage)
 	{
-		return $this->getResults($page, $itemsPerPage, false, 'id');
+		return $this->getResults($page, $itemsPerPage, $published, $this->getSortingColumn($published));
 	}
 
 	/**

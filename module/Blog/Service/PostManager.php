@@ -248,39 +248,28 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	/**
 	 * Fetches all posts filtered by pagination
 	 * 
+	 * @param boolean $published Whether to fetch only published records
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Items per page count
 	 * @return array
 	 */
-	public function fetchAllByPage($page, $itemsPerPage)
+	public function fetchAllByPage($published, $page, $itemsPerPage)
 	{
-		return $this->prepareResults($this->postMapper->fetchAllByPage($page, $itemsPerPage));
+		return $this->prepareResults($this->postMapper->fetchAllByPage($published, $page, $itemsPerPage));
 	}
 
 	/**
 	 * Fetches all posts associated with given category id and filtered by pagination
 	 * 
 	 * @param string $categoryId
+	 * @param boolean $published Whether to fetch only published records
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Items per page count
 	 * @return array
 	 */
-	public function fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
+	public function fetchAllByCategoryIdAndPage($categoryId, $published, $page, $itemsPerPage)
 	{
-		return $this->prepareResults($this->postMapper->fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage));
-	}
-
-	/**
-	 * Fetches all published posts associated with given category id and filtered by pagination
-	 * 
-	 * @param string $categoryId Target category id
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Items per page to be shown
-	 * @return array
-	 */
-	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
-	{
-		return $this->prepareResults($this->postMapper->fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage));
+		return $this->prepareResults($this->postMapper->fetchAllByCategoryIdAndPage($categoryId, $published, $page, $itemsPerPage));
 	}
 
 	/**

@@ -25,7 +25,7 @@ final class Home extends AbstractBlogController
 		$this->loadPlugins();
 
 		$postManager = $this->getPostManager();
-		$posts = $postManager->fetchAllPublishedByPage($pageNumber, $this->getConfig()->getPerPageCount());
+		$posts = $postManager->fetchAllByPage(true, $pageNumber, $this->getConfig()->getPerPageCount());
 
 		// Tweak pagination
 		$paginator = $postManager->getPaginator();

@@ -28,7 +28,7 @@ final class Browser extends AbstractBrowser
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 
-			'posts' => $this->getPostManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
+			'posts' => $this->getPostManager()->fetchAllByPage(false, $page, $this->getSharedPerPageCount()),
 			'paginator' => $paginator,
 		)));
 	}
@@ -47,7 +47,7 @@ final class Browser extends AbstractBrowser
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'categoryId' => $categoryId,
-			'posts' => $this->getPostManager()->fetchAllByCategoryIdAndPage($categoryId, $page, $this->getSharedPerPageCount()),
+			'posts' => $this->getPostManager()->fetchAllByCategoryIdAndPage($categoryId, false, $page, $this->getSharedPerPageCount()),
 			'paginator' => $paginator,
 		)));
 	}

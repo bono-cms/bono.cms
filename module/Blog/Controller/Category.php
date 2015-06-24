@@ -32,7 +32,7 @@ final class Category extends AbstractBlogController
 			$config = $this->getConfig();
 
 			$postManager = $this->getPostManager();
-			$posts = $postManager->fetchAllPublishedByCategoryIdAndPage($id, $pageNumber, $config->getPerPageCount());
+			$posts = $postManager->fetchAllByCategoryIdAndPage($id, true, $pageNumber, $config->getPerPageCount());
 
 			$paginator = $postManager->getPaginator();
 
