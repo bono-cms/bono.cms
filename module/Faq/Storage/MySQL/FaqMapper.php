@@ -53,7 +53,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	/**
 	 * Update published state by its associated faq id
 	 * 
-	 * @param integer $id Faq id
+	 * @param integer $id
 	 * @param string $published Either 0 or 1
 	 * @return boolean
 	 */
@@ -63,15 +63,39 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	}
 
 	/**
-	 * Update an order by its associated faq id
+	 * Update an order by record's associated id
 	 * 
-	 * @param string $id Faq id
+	 * @param string $id
 	 * @param integer $order New sort order
 	 * @return boolean
 	 */
 	public function updateOrderById($id, $order)
 	{
 		return $this->updateColumnById($id, 'order', $order);
+	}
+
+	/**
+	 * Builds SELECT query
+	 * 
+	 * @param boolean $published Whether to filter by published records
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery($published)
+	{
+		// Build first fragment
+		$db = $this->db->select('*')
+						->from($this->table)
+						->whereEquals('langId', $this->getLangId());
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1')
+			   ->order('order');
+		} else {
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
 	}
 
 	/**
@@ -84,21 +108,9 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage, $published)
 	{
-		// Build first fragment
-		$qb = $this->db->select('*')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId());
-
-		if ($published === true) {
-			$qb->andWhereEquals('published', '1')
-			   ->order('order');
-		} else {
-			$qb->orderBy('id')
-			   ->desc();
-		}
-
-		return $qb->paginate($page, $itemsPerPage)
-				  ->queryAll();
+		return $this->getSelectQuery($published)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -108,12 +120,8 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function fetchAllPublished()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->orderBy('order')
-						->queryAll();
+		return $this->getSelectQuery(true)
+					->queryAll();
 	}
 
 	/**
