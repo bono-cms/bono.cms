@@ -22,6 +22,60 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	protected $table = 'bono_module_photoalbum_albums';
 
 	/**
+	 * Returns shared select
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery()
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->whereEquals('lang_id', $this->getLangId())
+						->orderBy('id')
+						->desc();
+	}
+
+	/**
+	 * Deletes all data by associated column and its value
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function deleteAllByColumn($column, $value)
+	{
+		return $this->db->delete()
+						->from($this->table)
+						->whereEquals($column, $value)
+						->execute();
+	}
+
+	/**
+	 * Fetch all records filtered by pagination
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Items Per page count
+	 * @return array
+	 */
+	public function fetchAllByPage($page, $itemsPerPage)
+	{
+		return $this->getSelectQuery()
+					->paginate($page, $itemsPerPage)
+					->queryAll();
+	}
+
+	/**
+	 * Fetches all albums
+	 * 
+	 * @return array
+	 */
+	public function fetchAll()
+	{
+		return $this->getSelectQuery()
+					->queryAll();
+	}
+
+	/**
 	 * Fetches album name by its associated id
 	 * 
 	 * @param string $id
@@ -36,18 +90,25 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	}
 
 	/**
-	 * Fetches all albums
+	 * Deletes an album by its associated id
 	 * 
-	 * @return array
+	 * @param string $id
+	 * @return boolean
 	 */
-	public function fetchAll()
+	public function deleteById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->queryAll();
+		return $this->deleteAllByColumn('id', $id);
+	}
+
+	/**
+	 * Deletes all albums children by associated parent id
+	 * 
+	 * @pamra integer $parentId
+	 * @return boolean
+	 */
+	public function deleteAllByParentId($parentId)
+	{
+		return $this->deleteAllByColumn('parent_id', $parentId);
 	}
 
 	/**
@@ -98,34 +159,6 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	}
 
 	/**
-	 * Deletes an album by its associated id
-	 * 
-	 * @param string $id
-	 * @return boolean
-	 */
-	public function deleteById($id)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
-	}
-
-	/**
-	 * Deletes all albums children by associated parent id
-	 * 
-	 * @pamra integer $parentId
-	 * @return boolean
-	 */
-	public function deleteAllByParentId($parentId)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('parent_id', $parentId)
-						->execute();
-	}
-
-	/**
 	 * Fetches a record by its id
 	 * 
 	 * @param string $id
@@ -137,23 +170,5 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 						->from($this->table)
 						->whereEquals('id', $id)
 						->query();
-	}
-
-	/**
-	 * Fetch all records filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Items Per page count
-	 * @return array
-	 */
-	public function fetchAllByPage($page, $itemsPerPage)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
 	}
 }
