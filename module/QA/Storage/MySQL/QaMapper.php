@@ -22,6 +22,47 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	protected $table = 'bono_module_qa';
 
 	/**
+	 * Returns shared select
+	 * 
+	 * @param boolean $published
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery($published)
+	{
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('langId', $this->getLangId());
+
+		if ($published === true) {
+
+			$db->andWhereEquals('published', '1')
+			   ->orderBy('timestampAsked');
+
+		} else {
+
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
+	}
+
+	/**
+	 * Queries for result-set
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to fetch only published records
+	 * @return array
+	 */
+	private function getResults($page, $itemsPerPage, $published)
+	{
+		return $this->getSelectQuery($published)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
+	}
+
+	/**
 	 * Fetches all published QA pairs filtered by pagination
 	 * 
 	 * @param integer $page Current page
@@ -30,13 +71,30 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('langId', $this->getLangId())
-						->orderBy('timestampAsked')
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, true);
+	}
+
+	/**
+	 * Fetches all published QA pairs
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished()
+	{
+		return $this->getSelectQuery(true)
+					->queryAll();
+	}
+
+	/**
+	 * Fetches all QA pairs filtered by pagination
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllByPage($page, $itemsPerPage)
+	{
+		return $this->getResults($page, $itemsPerPage, false);
 	}
 
 	/**
@@ -54,35 +112,17 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	}
 
 	/**
-	 * Fetches all published QA pairs
+	 * Fetches QA data by its associated id
 	 * 
+	 * @param string $id QA id
 	 * @return array
 	 */
-	public function fetchAllPublished()
+	public function fetchById($id)
 	{
 		return $this->db->select('*')
 						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('langId', $this->getLangId())
-						->queryAll();
-	}
-
-	/**
-	 * Fetches all QA pairs filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllByPage($page, $itemsPerPage)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+						->whereEquals('id', $id)
+						->query();
 	}
 
 	/**
@@ -141,20 +181,6 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 		return $this->db->update($this->table, array('published' => $published))
 						->whereEquals('id', $id)
 						->execute();
-	}
-
-	/**
-	 * Fetches QA data by its associated id
-	 * 
-	 * @param string $id QA id
-	 * @return array
-	 */
-	public function fetchById($id)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
 	}
 
 	/**
