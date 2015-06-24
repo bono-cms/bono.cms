@@ -22,17 +22,49 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	protected $table = 'bono_module_slider_images';
 
 	/**
-	 * Fetches image's name by its associated id
+	 * Returns shared select
 	 * 
-	 * @param string $id Image id
-	 * @return string
+	 * @param boolean $published
+	 * @param string $categoryId Optional category id
+	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function fetchNameById($id)
+	private function getSelectQuery($published, $categoryId = null)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		// Build first shared fragment
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('lang_id', $this->getLangId());
+
+		if ($categoryId !== null) {
+			$db->andWhereEquals('category_id', $categoryId);
+		}
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1')
+			   // @TODO Add this: CASE WHEN `order` = 0 THEN `id` END
+			   ->orderBy('order');
+		} else {
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
+	}
+
+	/**
+	 * Queries for results
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to sort only published records
+	 * @param string $categoryId Optional category id
+	 * @return array
+	 */
+	private function getResults($page, $itemsPerPage, $published, $categoryId = null)
+	{
+		return $this->getSelectQuery($published, $categoryId)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -48,6 +80,20 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 		return $this->db->update($this->table, array($column => $value))
 						->whereEquals('id', $id)
 						->execute();
+	}
+
+	/**
+	 * Fetches image's name by its associated id
+	 * 
+	 * @param string $id Image id
+	 * @return string
+	 */
+	public function fetchNameById($id)
+	{
+		return $this->db->select('name')
+						->from($this->table)
+						->whereEquals('id', $id)
+						->query('name');
 	}
 
 	/**
@@ -127,13 +173,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false);
 	}
 
 	/**
@@ -145,13 +185,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->orderBy('order') //@TODO
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, true);
 	}
 
 	/**
@@ -162,13 +196,8 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllPublishedByCategoryId($categoryId)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->andWhereEquals('published', '1')
-						// @TODO: CASE WHEN `order` = 0 THEN `id` END
-						->orderBy('order')
-						->queryAll();
+		return $this->getSelectQuery(true, $categoryId)
+					->queryAll();
 	}
 
 	/**
@@ -181,13 +210,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllPublishedByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->andWhereEquals('published', '1')
-						->orderBy('order')
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, true, $categoryId);
 	}
 
 	/**
@@ -200,13 +223,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchAllByCategoryAndPage($categoryId, $page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false, $categoryId);
 	}
 
 	/**
