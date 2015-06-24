@@ -62,17 +62,19 @@ final class Browser extends AbstractBrowser
 	 */
 	public function saveAction()
 	{
-		$published = $this->request->getPost('published');
-		$seo = $this->request->getPost('seo');
-		
-		$postManager = $this->getPostManager();
-		
-		$postManager->updatePublished($published);
-		$postManager->updateSeo($seo);
-		
-		$this->flashMessenger->set('success', 'Settings have been saved successfully');
-		
-		return '1';
+		if ($this->request->hasPost('published', 'seo')) {
+
+			$published = $this->request->getPost('published');
+			$seo = $this->request->getPost('seo');
+
+			$postManager = $this->getPostManager();
+
+			if ($postManager->updatePublished($published) && $postManager->updateSeo($seo)) {
+
+				$this->flashMessenger->set('success', 'Settings have been saved successfully');
+				return '1';
+			}
+		}
 	}
 
 	/**
