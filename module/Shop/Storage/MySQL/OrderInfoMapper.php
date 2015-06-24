@@ -22,6 +22,19 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	protected $table = 'bono_module_shop_orders_info';
 
 	/**
+	 * Returns shared select query
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery()
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->orderBy('id')
+						->desc();
+	}
+
+	/**
 	 * Adds new order data
 	 * 
 	 * @param array $data
@@ -30,7 +43,7 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	public function insert(array $data)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'name' => $data['name'],
 			'phone' => $data['phone'],
 			'address' => $data['address'],
@@ -40,7 +53,7 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 			'approved' => $data['approved'],
 			'qty' => $data['qty'],
 			'total_price' => $data['total_price']
-			
+
 		))->execute();
 	}
 
@@ -52,12 +65,9 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	 */
 	public function fetchLatest($limit)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->orderBy('id')
-						->desc()
-						->limit($limit)
-						->queryAll();
+		return $this->getSelectQuery()
+					->limit($limit)
+					->queryAll();
 	}
 
 	/**
@@ -69,29 +79,9 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($this->countAll())
-						->setCurrentPage($page);
-		
-		return $this->db->select('*')
-						->from($this->table)
-						->orderBy('id')
-						->desc()
-						->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage())
-						->queryAll();
-	}
-
-	/**
-	 * Counts all orders
-	 * 
-	 * @return integer
-	 */
-	private function countAll()
-	{
-		return (int) $this->db->select()
-							->count('id', 'count')
-							->from($this->table)
-							->query('count');
+		return $this->getSelectQuery()
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
