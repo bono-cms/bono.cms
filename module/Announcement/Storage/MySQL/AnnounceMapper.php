@@ -22,31 +22,76 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	protected $table = 'bono_module_announcement_announces';
 
 	/**
-	 * Fetches all published announces associated with provided category id
+	 * Returns shared select
 	 * 
-	 * @param string $id
-	 * @return array
+	 * @param boolean $published
+	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function fetchAllPublishedByCategoryId($id)
+	private function getSelectQuery($published, $categoryId = null)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $id)
-						->queryAll();
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('lang_id', $this->getLangId());
+		
+		if ($categoryId !== null) {
+			$db->andWhereEquals('category_id', $categoryId);
+		}
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1')
+			   ->orderBy('order');
+		} else {
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
 	}
 
 	/**
-	 * Fetches announce title by its associated id
+	 * Queries for a result
 	 * 
-	 * @param string $id Announce id
-	 * @return string
+	 * @param integer $page Current page number
+	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to sort only published records
+	 * @param string $categoryId Optional category id
+	 * @return array
 	 */
-	public function fetchTitleById($id)
+	private function getResults($page, $itemsPerPage, $published, $categoryId = null)
 	{
-		return $this->db->select('title')
-						->from($this->table)
+		return $this->getSelectQuery($published, $categoryId)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
+	}
+
+	/**
+	 * Updates a column's value by its associated id
+	 * 
+	 * @param string $id Target id
+	 * @param string $column Target column
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function updateRowColumnById($id, $column, $value)
+	{
+		return $this->db->update($this->table, array($column => $value))
 						->whereEquals('id', $id)
-						->query('title');
+						->execute();
+	}
+	
+	/**
+	 * Deletes all by a column name
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function deleteAllByColumn($column, $value)
+	{
+		return $this->db->delete()
+						->from($this->table)
+						->whereEquals($column, $value)
+						->execute();
 	}
 
 	/**
@@ -57,10 +102,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function deleteAllByCategoryId($categoryId)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->execute();
+		return $this->deleteAllByColumn('category_id', $categoryId);
 	}
 
 	/**
@@ -71,10 +113,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteAllByColumn('id', $id);
 	}
 
 	/**
@@ -86,7 +125,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	public function insert(array $input)
 	{
 		return $this->db->insert($this->table, array(
-			
+
 			'lang_id'	 	=> $this->getLangId(),
 			'category_id' 	=> $input['categoryId'],
 			'web_page_id'	=> $input['webPageId'],
@@ -133,35 +172,6 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
-	 * Fetches announce data by its associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
-	}
-
-	/**
-	 * Updates a column's value by its associated id
-	 * 
-	 * @param string $id Target id
-	 * @param string $column Target column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function updateRowColumnById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
-	}
-
-	/**
 	 * Updates seo value
 	 * 
 	 * @param string $id
@@ -186,6 +196,46 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
+	 * Fetches announce title by its associated id
+	 * 
+	 * @param string $id Announce id
+	 * @return string
+	 */
+	public function fetchTitleById($id)
+	{
+		return $this->db->select('title')
+						->from($this->table)
+						->whereEquals('id', $id)
+						->query('title');
+	}
+
+	/**
+	 * Fetches announce data by its associated id
+	 * 
+	 * @param string $id
+	 * @return array
+	 */
+	public function fetchById($id)
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->whereEquals('id', $id)
+						->query();
+	}
+
+	/**
+	 * Fetches all published announces associated with provided category id
+	 * 
+	 * @param string $id
+	 * @return array
+	 */
+	public function fetchAllPublishedByCategoryId($id)
+	{
+		return $this->getSelectQuery(false, $id)
+					->queryAll();
+	}
+
+	/**
 	 * Fetches all announces filtered by pagination
 	 * 
 	 * @param integer $page Current page number
@@ -194,27 +244,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
-	}
-
-	/**
-	 * Fetches all published announces
-	 * 
-	 * @return array
-	 */
-	public function fetchAllPublished()
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('lang_id', $this->getLangId())
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false);
 	}
 
 	/**
@@ -226,13 +256,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('published', '1')
-						->andWhereEquals('lang_id', $this->getLangId())
-						->orderBy('order')
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, true);
 	}
 
 	/**
@@ -245,12 +269,17 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function fetchAllByCategoryIdAndPage($categoryId, $page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false, $categoryId);
+	}
+
+	/**
+	 * Fetches all published announces
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished()
+	{
+		return $this->getSelectQuery(true)
+					->queryAll();
 	}
 }
