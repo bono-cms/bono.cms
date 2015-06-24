@@ -22,17 +22,34 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	protected $table = 'bono_module_advice';
 
 	/**
-	 * Fetches advice's title by its associated id
+	 * Returns shared select
 	 * 
-	 * @param string $id Advice id
-	 * @return string
+	 * @param boolean $published
+	 * @param boolean $rand Whether to select random record
+	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function fetchTitleById($id)
+	private function getSelectQuery($published, $rand = false)
 	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('title');
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('lang_id', $this->getLangId());
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1');
+		}
+
+		if ($rand === true) {
+
+			$db->orderBy()
+			   ->rand();
+
+		} else {
+
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
 	}
 
 	/**
@@ -56,14 +73,9 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function fetchRandom()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->orderBy()
-						->rand()
-						->limit(1)
-						->query();
+		return $this->getSelectQuery(true, true)
+					->limit(1)
+					->query();
 	}
 
 	/**
@@ -75,13 +87,9 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getSelectQuery(false)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -93,12 +101,9 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getSelectQuery(true)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -108,10 +113,8 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function fetchAll()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->queryAll();
+		return $this->getSelectQuery(false)
+					->queryAll();
 	}
 
 	/**
@@ -126,6 +129,20 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 						->from($this->table)
 						->whereEquals('id', $id)
 						->query();
+	}
+
+	/**
+	 * Fetches advice's title by its associated id
+	 * 
+	 * @param string $id Advice id
+	 * @return string
+	 */
+	public function fetchTitleById($id)
+	{
+		return $this->db->select('title')
+						->from($this->table)
+						->whereEquals('id', $id)
+						->query('title');
 	}
 
 	/**
