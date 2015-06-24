@@ -65,8 +65,10 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	}
 
 	/**
-	 * Queries for results
+	 * Queries for a result
 	 * 
+	 * @param integer $page Current page number
+	 * @param integer $itemsPerPage Per page count
 	 * @param boolean $published Whether to sort only published records
 	 * @param string $sort Column name to sort by
 	 * @param string $categoryId Optional category id
