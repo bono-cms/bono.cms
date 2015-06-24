@@ -22,6 +22,44 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	protected $table = 'bono_module_reviews';
 
 	/**
+	 * Returns shared select
+	 * 
+	 * @param boolean $published
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery($published)
+	{
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('langId', $this->getLangId());
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1')
+			   ->orderBy('timestamp');
+		} else {
+			$db->orderBy('id');
+		}
+
+		$db->desc();
+		return $db;
+	}
+
+	/**
+	 * Queries for a result
+	 * 
+	 * @param integer $page Current page number
+	 * @param integer $itemsPerPage Per page count
+	 * @param boolean $published Whether to sort only published records
+	 * @return array
+	 */
+	private function getResults($page, $itemsPerPage, $published)
+	{
+		return $this->getSelectQuery($published)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
+	}
+
+	/**
 	 * Fetches review author's name by associated id
 	 * 
 	 * @param string $id
@@ -99,13 +137,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, false);
 	}
 
 	/**
@@ -117,14 +149,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('langId', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->orderBy('timestamp')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getResults($page, $itemsPerPage, true);
 	}
 
 	/**
