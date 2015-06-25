@@ -5,7 +5,4 @@ TODO List
  * Need `SiteService`
  * Post views counter
  * Validation on date posts
- * Add a comment system, that support social widgets, own comment system
  * RSS for site visitors
- * If social module is loaded, then provide share links
- * If Subscriber is loaded, then send created post to all subscribers
