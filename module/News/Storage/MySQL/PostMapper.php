@@ -202,11 +202,31 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 			$db->andWhereEquals('category_id', $categoryId);
 		}
 
-		$db->orderBy($sort)
-		   ->desc();
+		if ($sort == 'rand') {
+			$db->orderBy()
+			   ->rand();
+			   
+		} else {
+			$db->orderBy($sort)
+			   ->desc();
+		}
 
 		// Done building shared query
 		return $db;
+	}
+
+	/**
+	 * Fetches random published posts
+	 * 
+	 * @param integer $amount
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @return array
+	 */
+	public function fetchRandomPublished($amount, $categoryId = null)
+	{
+		return $this->getSelectQuery(true, $categoryId, 'rand')
+					->limit($amount)
+					->queryAll();
 	}
 
 	/**
