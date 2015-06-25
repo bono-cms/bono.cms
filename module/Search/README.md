@@ -6,9 +6,3 @@ It can bridge search results from all modules which support web pages.
 
 To start using it, just install it. The rest stuff (including connections with modules) 
 will be done automatically behind the scenes for you.
-
-
-@TODO:
-
-- Add max des length pattern in config
-- Add option, "exact encounter"

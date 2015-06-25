@@ -1,8 +1,10 @@
+CHANGELOG
+=========
 
 1.1
 ---
 
- * Added SearchSiteService
+ * Added `SearchSiteService`
 
 
 1.0
