@@ -90,7 +90,6 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 			'web_page_id'		=> $input['web_page_id'],
 			'title'				=> $input['title'],
 			'description'		=> $input['description'],
-			'order'				=> $input['order'],
 			'seo'				=> $input['seo'],
 			'keywords'			=> $input['keywords'],
 			'meta_description'	=> $input['meta_description'],
@@ -110,7 +109,6 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 
 			'title'			=> $input['title'],
 			'description'	=> $input['description'],
-			'order'			=> $input['order'],
 			'seo'			=> $input['seo'],
 			'keywords'		=> $input['keywords'],
 			'meta_description' => $input['meta_description'],

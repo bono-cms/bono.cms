@@ -132,7 +132,6 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 			->setLangId((int) $category['lang_id'])
 			->setTitle(Filter::escape($category['title']))
 			->setDescription(Filter::escapeContent($category['description']))
-			->setOrder((int) $category['order'])
 			->setSlug(Filter::escape($this->webPageManager->fetchSlugByWebPageId($category['web_page_id'])))
 			->setSeo((bool) $category['seo'])
 			->setKeywords(Filter::escape($category['keywords']))
@@ -157,7 +156,6 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 			'title' => null,
 			'description' => null,
 			'seo' => true,
-			'order' => null,
 			'keywords' => null,
 			'meta_description' => null,
 		));

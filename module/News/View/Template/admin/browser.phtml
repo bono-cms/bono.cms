@@ -96,7 +96,6 @@
 					<th class="text-center"><?php $this->show('#'); ?></th>
 					<th class="text-center"><?php $this->show('Title'); ?></th>
 					<th class="text-center"><?php $this->show('Amount of news'); ?></th>
-					<th class="text-center"><?php $this->show('Order'); ?></th>
 					<th class="text-center"><?php $this->show('Actions'); ?></th>
 				</tr>
 			</thead>
@@ -120,7 +119,6 @@
 					</td>
 					
 					<td class="text-center"><?php echo $taskManager->getPostCountByCategoryId($category->getId()); ?></td>
-					<td class="text-center"><?php echo $category->getOrder(); ?></td>
 					<td class="text-center">
 						<a data-button="view" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this category on site'); ?>" target="_blank" href="<?php echo $category->getUrl();?>"><i class="glyphicon glyphicon-search"></i></a>
 						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this category'); ?>" data-button="edit" href="<?php echo $this->url('News:Admin:Category:Edit@indexAction', $category->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
