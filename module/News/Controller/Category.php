@@ -26,7 +26,7 @@ final class Category extends AbstractController
 	 */
 	public function indexAction($id, $pageNumber = 1, $code = null, $slug = null)
 	{
-		$categoryManager = $this->getService('News', 'categoryManager');
+		$categoryManager = $this->getModuleService('categoryManager');
 		$page = $categoryManager->fetchById($id);
 
 		if ($page !== false) {
@@ -35,8 +35,8 @@ final class Category extends AbstractController
 			$this->view->getBreadcrumbBag()
 					   ->add($categoryManager->getBreadcrumbs($page));
 
-			$postManager = $this->getService('News', 'postManager');
-			$config = $this->getService('News', 'configManager')->getEntity();
+			$postManager = $this->getModuleService('postManager');
+			$config = $this->getModuleService('configManager')->getEntity();
 
 			// Now get all posts associated with provided category id
 			$posts = $postManager->fetchAllByCategoryIdAndPage($id, true, $pageNumber, $config->getPerPageCount());
