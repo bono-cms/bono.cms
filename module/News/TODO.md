@@ -3,7 +3,6 @@ TODO List
 
  * Rename delete to remove in services only
  * Need `SiteService`
- * need to append getPermamentUrl() in entities
  * Fetch_random() must be in post's mapper
  * Deprecate sorting order in categories
  * Post views counter

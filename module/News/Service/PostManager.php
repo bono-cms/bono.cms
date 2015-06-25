@@ -244,11 +244,12 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 			->setFull(Filter::escapeContent($post['full']))
 			->setSlug(Filter::escape($this->webPageManager->fetchSlugByWebPageId($post['web_page_id'])))
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
+			->setPermanentUrl('/module/news/post/'.$entity->getId())
 			->setTimestamp((int) $post['timestamp'])
 			->setKeywords(Filter::escape($post['keywords']))
 			->setMetaDescription(Filter::escape($post['meta_description']))
 			->setCover(Filter::escape($post['cover']));
-		
+
 		return $entity;
 	}
 
