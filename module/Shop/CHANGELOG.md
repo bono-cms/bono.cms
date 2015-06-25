@@ -7,9 +7,10 @@ CHANGELOG
  * Added currency support
  * Added stoke price support
  * Improved cart's logic
- * Add "recently viewed products" functionality which is optional
+ * Add "recently viewed products" functionality, which is optional
 
 
 1.0
 ---
+
  * First public version
