@@ -1,11 +1,5 @@
 Questions and Answers module
 ============================
 
-
-
-TODO:
- 
- - Issues with validation
- - Fetch random() must be in mappers
- - Implement configuration
- - Overall test
+This module allows you to manage a review system with comments. 
+For instance, a user might leave a review and you can reply to it.
