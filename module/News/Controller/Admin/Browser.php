@@ -44,9 +44,8 @@ final class Browser extends AbstractBrowser
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getPostManager()->getPaginator();
-		//@TODO
 		$paginator->setUrl('/admin/module/news/browse/%s');
-		
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 
 			'posts' => $this->getPostManager()->fetchAllByCategoryIdAndPage($id, false, $page, $this->getSharedPerPageCount()),
@@ -88,9 +87,7 @@ final class Browser extends AbstractBrowser
 
 			$id = $this->request->getPost('id');
 
-			// Grab a service
 			if ($this->getCategoryManager()->deleteById($id)) {
-
 				$this->flashMessenger->set('success', 'Selected category has been removed successfully');
 				return '1';
 			}
@@ -131,11 +128,9 @@ final class Browser extends AbstractBrowser
 	public function deleteAction()
 	{
 		if ($this->request->hasPost('id')) {
-
 			$id = $this->request->getPost('id');
 
 			if ($this->getPostManager()->deleteById($id)) {
-
 				$this->flashMessenger->set('success', 'Selected post has been removed successfully');
 				return '1';
 			}

@@ -22,6 +22,55 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	protected $table = 'bono_module_news_posts';
 
 	/**
+	 * Builds shared select query
+	 * 
+	 * @param boolean $published
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @param string $sort Column name to sort by
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function getSelectQuery($published, $categoryId = null, $sort = 'id')
+	{
+		$db = $this->db->select('*')
+					   ->from($this->table)
+					   ->whereEquals('lang_id', $this->getLangId());
+
+		if ($published === true) {
+			$db->andWhereEquals('published', '1');
+		}
+
+		if ($categoryId !== null) {
+			$db->andWhereEquals('category_id', $categoryId);
+		}
+
+		if ($sort == 'rand') {
+			$db->orderBy()
+			   ->rand();
+			   
+		} else {
+			$db->orderBy($sort)
+			   ->desc();
+		}
+
+		return $db;
+	}
+
+	/**
+	 * Updates post column's value by its associated id
+	 * 
+	 * @param string $id Post id
+	 * @param string $column Target column
+	 * @param string $value New value
+	 * @return boolean
+	 */
+	private function updateColumnById($id, $column, $value)
+	{
+		return $this->db->update($this->table, array($column => $value))
+						->whereEquals('id', $id)
+						->execute();
+	}
+
+	/**
 	 * Removes all web pages by associated category id
 	 * 
 	 * @param string $categoryId
@@ -48,21 +97,6 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 						->whereEquals('category_id', $categoryId)
 						->andWhereNotEquals('cover', '')
 						->queryAll('id');
-	}
-
-	/**
-	 * Updates post column's value by its associated id
-	 * 
-	 * @param string $id Post id
-	 * @param string $column Target column
-	 * @param string $value New value
-	 * @return boolean
-	 */
-	private function updateColumnById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
 	}
 
 	/**
@@ -178,41 +212,6 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 						->from($this->table)
 						->whereEquals('lang_id', $this->getLangId())
 						->queryAll();
-	}
-
-	/**
-	 * Builds shared select query
-	 * 
-	 * @param boolean $published
-	 * @param string $categoryId Optionally can be filtered by category id
-	 * @param string $sort Column name to sort by
-	 * @return \Krystal\Db\Sql\Db
-	 */
-	private function getSelectQuery($published, $categoryId = null, $sort = 'id')
-	{
-		$db = $this->db->select('*')
-					   ->from($this->table)
-					   ->whereEquals('lang_id', $this->getLangId());
-
-		if ($published === true) {
-			$db->andWhereEquals('published', '1');
-		}
-
-		if ($categoryId !== null) {
-			$db->andWhereEquals('category_id', $categoryId);
-		}
-
-		if ($sort == 'rand') {
-			$db->orderBy()
-			   ->rand();
-			   
-		} else {
-			$db->orderBy($sort)
-			   ->desc();
-		}
-
-		// Done building shared query
-		return $db;
 	}
 
 	/**
