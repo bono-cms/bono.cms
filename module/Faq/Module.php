@@ -19,30 +19,6 @@ final class Module extends AbstractCmsModule
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getRoutes()
-	{
-		return include(__DIR__ . '/Config/routes.php');
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getTranslations($language)
-	{
-		return $this->loadArray(__DIR__ . '/Translations/'.$language.'/messages.php');
-	}
-
-	/**
-	 * {@inhertiDoc}
-	 */
-	public function getConfigData()
-	{
-		return include(__DIR__ . '/Config/module.config.php');
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getServiceProviders()
 	{
 		return array(

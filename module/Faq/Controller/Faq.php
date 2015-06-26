@@ -34,7 +34,7 @@ final class Faq extends AbstractController
 
 			// Append breadcrumbs no
 			$this->view->getBreadcrumbBag()->add($faqManager->getBreadcrumbs($page));
-			
+
 			return $this->view->render('faq', array(
 
 				'faqs' => $faqManager->fetchAllPublished(),

@@ -19,59 +19,9 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_faq';
-
-	/**
-	 * Fetches question name by its associated id
-	 * 
-	 * @param string $id FAQ id
-	 * @return string
-	 */
-	public function fetchQuestionById($id)
+	public static function getTableName()
 	{
-		return $this->db->select('question')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('question');
-	}
-
-	/**
-	 * Updates column's value by associated FAQ id
-	 * 
-	 * @param string $id FAQ id
-	 * @param string $column Target column
-	 * @param string $value New column's value
-	 * @return boolean
-	 */
-	private function updateColumnById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
-	}
-
-	/**
-	 * Update published state by its associated faq id
-	 * 
-	 * @param integer $id
-	 * @param string $published Either 0 or 1
-	 * @return boolean
-	 */
-	public function updatePublishedById($id, $published)
-	{
-		return $this->updateColumnById($id, 'published', $published);
-	}
-
-	/**
-	 * Update an order by record's associated id
-	 * 
-	 * @param string $id
-	 * @param integer $order New sort order
-	 * @return boolean
-	 */
-	public function updateOrderById($id, $order)
-	{
-		return $this->updateColumnById($id, 'order', $order);
+		return 'bono_module_faq';
 	}
 
 	/**
@@ -84,7 +34,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	{
 		// Build first fragment
 		$db = $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('langId', $this->getLangId());
 
 		if ($published === true) {
@@ -96,6 +46,41 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 		}
 
 		return $db;
+	}
+
+	/**
+	 * Fetches question name by its associated id
+	 * 
+	 * @param string $id FAQ id
+	 * @return string
+	 */
+	public function fetchQuestionById($id)
+	{
+		return $this->findColumnByPk($id, 'question');
+	}
+
+	/**
+	 * Update published state by its associated FAQ id
+	 * 
+	 * @param integer $id
+	 * @param string $published Either 0 or 1
+	 * @return boolean
+	 */
+	public function updatePublishedById($id, $published)
+	{
+		return $this->updateColumnByPk($id, 'published', $published);
+	}
+
+	/**
+	 * Update an order by record's associated id
+	 * 
+	 * @param string $id
+	 * @param integer $order New sort order
+	 * @return boolean
+	 */
+	public function updateOrderById($id, $order)
+	{
+		return $this->updateColumnByPk($id, 'order', $order);
 	}
 
 	/**
@@ -132,7 +117,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'langId'		=> $this->getLangId(),
 			'order'			=> $input['order'],
@@ -151,7 +136,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'order'			=> $input['order'],
 			'question'		=> $input['question'],
@@ -170,10 +155,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -184,9 +166,6 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 }
