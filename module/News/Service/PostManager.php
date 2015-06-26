@@ -444,6 +444,18 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	}
 
 	/**
+	 * Fetches random published posts
+	 * 
+	 * @param integer $amount
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @return array
+	 */
+	public function fetchRandomPublished($amount, $categoryId = null)
+	{
+		return $this->prepareResults($this->postMapper->fetchRandomPublished($amount, $categoryId));
+	}
+
+	/**
 	 * Fetches all posts
 	 * 
 	 * @return array

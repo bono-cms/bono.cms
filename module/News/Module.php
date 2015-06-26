@@ -20,6 +20,7 @@ use News\Service\PostManager;
 use News\Service\TaskManager;
 use News\Service\PostImageManagerFactory;
 use News\Service\TimeBagFactory;
+use News\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -36,12 +37,14 @@ final class Module extends AbstractCmsModule
 		$webPageManager = $this->getWebPageManager();
 		$historyManager = $this->getHistoryManager();
 
-		return array(
+		$postManager = new PostManager($postMapper, $categoryMapper, $this->getTimeBag(), $webPageManager, $imageManager, $historyManager);
 
+		return array(
+			'siteService' => new SiteService($postManager),
 			'configManager' => $this->getConfigProvider(),
 			'taskManager' => new TaskManager($postMapper),
 			'categoryManager' => new CategoryManager($categoryMapper, $postMapper, $webPageManager, $historyManager, $imageManager, $this->getMenuWidget()),
-			'postManager' => new PostManager($postMapper, $categoryMapper, $this->getTimeBag(), $webPageManager, $imageManager, $historyManager)
+			'postManager' => $postManager
 		);
 	}
 

@@ -131,6 +131,15 @@ interface PostManagerInterface
 	public function fetchAllPublishedByCategoryId($categoryId, $limit);
 
 	/**
+	 * Fetches random published posts
+	 * 
+	 * @param integer $amount
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @return array
+	 */
+	public function fetchRandomPublished($amount, $categoryId = null);
+
+	/**
 	 * Fetches all posts
 	 * 
 	 * @return array

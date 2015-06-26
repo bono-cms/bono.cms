@@ -27,7 +27,7 @@ abstract class AbstractController extends BaseController
 	private function getBootstrappers()
 	{
 		return array(
-			// Class bootstrappers with their array of arguments
+			// Class bootstrappers with their dependencies
 			'\Announcement\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\Menu\Service\SiteBootstrapper' => array($this->moduleManager, $this->view, $this->getThemeConfig()),
 			'\Shop\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
@@ -35,7 +35,8 @@ abstract class AbstractController extends BaseController
 			'\Block\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\AboutBox\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\Search\Service\SiteBootstrapper' => array($this->view),
-			'\Blog\Service\SiteBootstrapper' => array($this->moduleManager, $this->view)
+			'\Blog\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
+			'\News\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 		);
 	}
 
