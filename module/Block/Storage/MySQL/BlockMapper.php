@@ -19,7 +19,10 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_block';
+	public static function getTableName()
+	{
+		return 'bono_module_block';
+	}
 
 	/**
 	 * Fetches block's content by its associated class name
@@ -30,7 +33,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	public function fetchContentByClass($class)
 	{
 		return $this->db->select('content')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('class', $class)
 						->andWhereEquals('lang_id', $this->getLangId())
 						->query('content');
@@ -44,10 +47,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 
 	/**
@@ -59,7 +59,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	public function fetchByClass($class)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('class', $class)
 						->andWhereEquals('lang_id', $this->getLangId())
 						->query();
@@ -73,7 +73,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	public function fetchAll()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->queryAll();
 	}
@@ -88,7 +88,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
@@ -104,10 +104,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -118,7 +115,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'	=> $this->getLangId(),
 			'name'		=> $input['name'],
@@ -136,7 +133,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'name'		=> $input['name'],
 			'content'	=> $input['content'],
@@ -154,9 +151,6 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }
