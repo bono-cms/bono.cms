@@ -19,15 +19,10 @@ final class SearchMapper extends AbstractSearchProvider
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_news_posts';
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public function appendQuery(QueryBuilderInterface $queryBuilder, $placeholder)
 	{
 		$queryBuilder->select($this->getWithDefaults(array('full' => 'content')))
-					 ->from($this->table)
+					 ->from(PostMapper::getTableName())
 					 ->whereEquals('lang_id', "'{$this->getLangId()}'")
 					 ->andWhereEquals('published', '1')
 					 ->andWhereLike('title', $placeholder)

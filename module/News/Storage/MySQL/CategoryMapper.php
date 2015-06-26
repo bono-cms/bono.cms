@@ -19,7 +19,10 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_news_categories';
+	public static function getTableName()
+	{
+		return 'bono_module_news_categories';
+	}
 
 	/**
 	 * Fetches category name by its associated id
@@ -29,10 +32,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function fetchTitleById($id)
 	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('title');
+		return $this->findColumnByPk($id, 'title');
 	}
 
 	/**
@@ -43,10 +43,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -56,10 +53,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function fetchAll()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->queryAll();
+		return $this->findAllByColumn('lang_id', $this->getLangId());
 	}
 
 	/**
@@ -70,10 +64,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -84,7 +75,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'			=> $this->getLangId(),
 			'web_page_id'		=> $input['web_page_id'],
@@ -105,7 +96,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'title'			=> $input['title'],
 			'description'	=> $input['description'],
