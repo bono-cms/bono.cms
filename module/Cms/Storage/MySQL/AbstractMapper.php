@@ -16,18 +16,22 @@ use Krystal\Db\Sql\AbstractMapper as BaseMapper;
 abstract class AbstractMapper extends BaseMapper
 {
 	/**
-	 * Target table we're dealing with
-	 * 
-	 * @var string
-	 */
-	protected $table;
-
-	/**
 	 * Language identification
 	 * 
 	 * @var string
 	 */
 	protected $language;
+
+	/**
+	 * Returns PK name
+	 * Most tables share the same
+	 * 
+	 * @return string
+	 */
+	protected function getPk()
+	{
+		return 'id';
+	}
 
 	/**
 	 * Sets language id belonging to a mapper
@@ -53,15 +57,11 @@ abstract class AbstractMapper extends BaseMapper
 	/**
 	 * Returns last id from a table
 	 * 
-	 * @param string $column
 	 * @return integer
 	 */
-	final public function getLastId($column = 'id')
+	final public function getLastId()
 	{
-		return $this->db->select()
-						->max($column, 'last')
-						->from($this->table)
-						->query('last');
+		return $this->getLastPk();
 	}
 
 	/**
@@ -72,10 +72,7 @@ abstract class AbstractMapper extends BaseMapper
 	 */
 	final public function fetchWebPageIdById($id)
 	{
-		return $this->db->select('web_page_id')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('web_page_id');
+		return $this->findColumnByPk($id, 'web_page_id');
 	}
 
 	/**
@@ -86,10 +83,7 @@ abstract class AbstractMapper extends BaseMapper
 	 */
 	final public function fetchTitleByWebPageId($webPageId)
 	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('web_page_id', $webPageId)
-						->query('title');
+		return $this->fetchOneColumn('title', 'web_page_id', $webPageId);
 	}
 
 	/**
@@ -101,8 +95,6 @@ abstract class AbstractMapper extends BaseMapper
 	 */
 	final public function updateWebPageIdById($id, $webPageId)
 	{
-		return $this->db->update($this->table, array('web_page_id' => $webPageId))
-						->whereEquals('id', $id)
-						->execute();
+		return $this->updateColumnByPk($id, 'web_page_id', $webPageId);
 	}
 }
