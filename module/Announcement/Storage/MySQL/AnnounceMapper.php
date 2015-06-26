@@ -19,7 +19,10 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_announcement_announces';
+	public static function getTableName()
+	{
+		return 'bono_module_announcement_announces';
+	}
 
 	/**
 	 * Returns shared select
@@ -30,7 +33,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	private function getSelectQuery($published, $categoryId = null)
 	{
 		$db = $this->db->select('*')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('lang_id', $this->getLangId());
 		
 		if ($categoryId !== null) {
@@ -65,36 +68,6 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
-	 * Updates a column's value by its associated id
-	 * 
-	 * @param string $id Target id
-	 * @param string $column Target column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function updateRowColumnById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
-	}
-	
-	/**
-	 * Deletes all by a column name
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function deleteAllByColumn($column, $value)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals($column, $value)
-						->execute();
-	}
-
-	/**
 	 * Deletes all announces associated with provided category id
 	 * 
 	 * @param string $categoryId
@@ -102,7 +75,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function deleteAllByCategoryId($categoryId)
 	{
-		return $this->deleteAllByColumn('category_id', $categoryId);
+		return $this->deleteByColumn('category_id', $categoryId);
 	}
 
 	/**
@@ -113,7 +86,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function deleteById($id)
 	{
-		return $this->deleteAllByColumn('id', $id);
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -124,7 +97,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'	 	=> $this->getLangId(),
 			'category_id' 	=> $input['categoryId'],
@@ -152,7 +125,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'category_id' 	=> $input['categoryId'],
 			'title'			=> $input['title'],
@@ -172,7 +145,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
-	 * Updates seo value
+	 * Updates SEO value
 	 * 
 	 * @param string $id
 	 * @param string $seo Either 0 or 1
@@ -180,7 +153,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function updateSeoById($id, $seo)
 	{
-		return $this->updateRowColumnById($id, 'seo', $seo);
+		return $this->updateColumnByPk($id, 'seo', $seo);
 	}
 
 	/**
@@ -192,7 +165,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->updateRowColumnById($id, 'published', $published);
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
@@ -203,10 +176,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function fetchTitleById($id)
 	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('title');
+		return $this->findColumnByPk($id, 'title');
 	}
 
 	/**
@@ -217,10 +187,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**

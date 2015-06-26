@@ -19,7 +19,10 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_announcement_categories';
+	public static function getTableName()
+	{
+		return 'bono_module_announcement_categories';
+	}
 
 	/**
 	 * Fetches class id by associated class name
@@ -29,10 +32,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function fetchIdByClass($class)
 	{
-		return $this->db->select('id')
-						->from($this->table)
-						->whereEquals('class', $class)
-						->query('id');
+		return $this->fetchOneColumn('id', 'class', $class);
 	}
 
 	/**
@@ -40,11 +40,11 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 * 
 	 * @param string $name Category name
 	 * @param string $class Category class
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function insert($name, $class)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id' => $this->getLangId(),
 			'name'	 => $name,
@@ -63,7 +63,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function update($id, $name, $class)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'name'	 => $name,
 			'class'  => $class
@@ -80,10 +80,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -94,7 +91,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	public function fetchAll()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->queryAll();
 	}
@@ -107,10 +104,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -121,9 +115,6 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 }
