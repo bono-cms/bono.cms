@@ -19,21 +19,9 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_blog_posts';
-
-	/**
-	 * Updates row column's value by associated id
-	 * 
-	 * @param string $id Post id
-	 * @param string $column Column name
-	 * @param string $value Column's new value
-	 * @return boolean
-	 */
-	private function updateRowById($id, $column, $value)
+	public static function getTableName()
 	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
+		return 'bono_module_blog_posts';
 	}
 
 	/**
@@ -47,7 +35,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	private function getSelectQuery($published, $sort, $categoryId = null)
 	{
 		$db = $this->db->select('*')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($published == true) {
@@ -92,7 +80,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	{
 		$db = $this->db->select()
 					   ->count('id', 'count')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('category_id', $categoryId);
 
 		if ($published === true) {
@@ -100,21 +88,6 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 		}
 
 		return (int) $db->query('count');
-	}
-
-	/**
-	 * Deletes all data by a column
-	 * 
-	 * @param string $column Column name
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function deleteAllByColumn($column, $value)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals($column, $value)
-						->execute();
 	}
 
 	/**
@@ -137,7 +110,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	public function fetchWebPageIdsByCategoryId($id)
 	{
 		return $this->db->select('web_page_id')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('category_id', $id)
 						->queryAll('web_page_id');
 	}
@@ -150,10 +123,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchTitleById($id)
 	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('title');
+		return $this->findColumnByPk($id, 'title');
 	}
 
 	/**
@@ -165,7 +135,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function updatePublished($id, $published)
 	{
-		return $this->updateRowById($id, 'published', $published);
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
@@ -177,7 +147,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function updateComments($id, $comments)
 	{
-		return $this->updateRowById($id, 'comments', $comments);
+		return $this->updateColumnByPk($id, 'comments', $comments);
 	}
 
 	/**
@@ -189,7 +159,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function updateSeo($id, $seo)
 	{
-		return $this->updateRowById($id, 'seo', $seo);
+		return $this->updateColumnByPk($id, 'seo', $seo);
 	}
 
 	/**
@@ -200,7 +170,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'		=> $this->getLangId(),
 			'web_page_id' 	=> $input['web_page_id'],
@@ -226,7 +196,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'title'			=>	$input['title'],
 			'category_id'	=> $input['category_id'],
@@ -251,10 +221,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -265,7 +232,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->deleteAllByColumn('id', $id);
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -276,7 +243,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function deleteByCategoryId($categoryId)
 	{
-		return $this->deleteAllByColumn('category_id', $categoryId);
+		return $this->deleteByColumn('category_id', $categoryId);
 	}
 
 	/**

@@ -22,30 +22,6 @@ use Blog\Service\BlogSiteService;
 final class Module extends AbstractCmsModule
 {
 	/**
-	 * {@inheritDoc}
-	 */
-	public function getRoutes()
-	{
-		return include(__DIR__ . '/Config/routes.php');
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getTranslations($language)
-	{
-		return $this->loadArray(__DIR__ . '/Translations/'.$language.'/messages.php');
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getConfigData()
-	{
-		return include(__DIR__ . '/Config/module.config.php');
-	}
-
-	/**
 	 * Returns configuration manager
 	 * 
 	 * @return \Blog\Service\ConfigManager
@@ -63,7 +39,6 @@ final class Module extends AbstractCmsModule
 	 */
 	public function getServiceProviders()
 	{
-		// Build mappers
 		$postMapper = $this->getMapper('/Blog/Storage/MySQL/PostMapper');
 		$categoryMapper = $this->getMapper('/Blog/Storage/MySQL/CategoryMapper');
 		
