@@ -19,7 +19,10 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_advice';
+	public static function getTableName()
+	{
+		return 'bono_module_advice';
+	}
 
 	/**
 	 * Returns shared select
@@ -31,7 +34,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	private function getSelectQuery($published, $rand = false)
 	{
 		$db = $this->db->select('*')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($published === true) {
@@ -61,9 +64,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->db->update($this->table, array('published' => $published))
-						->whereEquals('id', $id)
-						->execute();
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
@@ -125,10 +126,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -139,10 +137,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function fetchTitleById($id)
 	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('title');
+		return $this->findColumnByPk($id, 'title');
 	}
 
 	/**
@@ -153,10 +148,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -169,7 +161,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function insert($title, $content, $published)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 			
 			'lang_id'	=> $this->getLangId(),
 			'title'		=> $title,
@@ -190,7 +182,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
 	 */
 	public function update($id, $title, $content, $published)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 			
 			'title'	=> $title,
 			'content'	=> $content,
