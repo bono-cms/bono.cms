@@ -19,8 +19,11 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_banner';
-
+	public static function getTableName()
+	{
+		return 'bono_module_banner';
+	}
+	
 	/**
 	 * Fetches banner name by its associated id
 	 * 
@@ -29,21 +32,18 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 
 	/**
 	 * Updates a banner
 	 * 
 	 * @param array $input Raw input data
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'name'	=> $input['name'],
 			'link'	=> $input['link'],
@@ -57,11 +57,11 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	 * Adds a banner
 	 * 
 	 * @param array $input Raw input data
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'	=> $this->getLangId(),
 			'name'		=> $input['name'],
@@ -81,7 +81,7 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
@@ -97,10 +97,7 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -111,9 +108,6 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }
