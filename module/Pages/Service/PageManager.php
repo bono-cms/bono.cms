@@ -178,11 +178,12 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 				->setSeo((bool) $page['seo'])
 				->setMetaDescription(Filter::escape($page['meta_description']))
 				->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
+				->setPermanentUrl('/module/pages/'.$entity->getId())
 				->setKeywords(Filter::escape($page['keywords']));
 		
 		return $entity;
 	}
-	
+
 	/**
 	 * Fetches entity of default page
 	 * 

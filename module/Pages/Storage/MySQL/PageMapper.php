@@ -20,7 +20,10 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_pages';
+	public static function getTableName()
+	{
+		return 'bono_module_pages';
+	}
 
 	/**
 	 * Inserts a page
@@ -30,7 +33,7 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'			=> $this->getLangId(),
 			'web_page_id'		=> $data['web_page_id'],
@@ -53,7 +56,7 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	 */
 	public function update(array $data)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'template'			=> $data['template'],
 			'protected'			=> $data['protected'],
@@ -76,9 +79,7 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	 */
 	public function updateSeoById($id, $seo)
 	{
-		return $this->db->update($this->table, array('seo' => $seo))
-						->whereEquals('id', $id)
-						->execute();
+		return $this->updateColumnByPk($id, 'seo', $seo);
 	}
 
 	/**
@@ -89,10 +90,7 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	 */
 	public function fetchWebPageIdByPageId($id)
 	{
-		return $this->db->select('web_page_id')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('web_page_id');
+		return $this->findColumnByPk($id, 'web_page_id');
 	}
 
 	/**
@@ -105,7 +103,7 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()
@@ -117,14 +115,11 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	 * Fetches page title by its associated id
 	 * 
 	 * @param string $id Page id
-	 * @retunr string
+	 * @return string
 	 */
 	public function fetchTitleById($id)
 	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('title');
+		return $this->findColumnByPk($id, 'title');
 	}
 
 	/**
@@ -135,10 +130,7 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -149,9 +141,6 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }
