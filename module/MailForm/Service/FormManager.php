@@ -161,10 +161,11 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 				->setSeo((bool) $form['seo'])
 				->setSlug(Filter::escape($this->webPageManager->fetchSlugByWebPageId($form['web_page_id'])))
 				->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
+				->setPermanentUrl('/module/mail-form/'.$entity->getId())
 				->setTemplate(Filter::escape($form['template']))
 				->setKeywords(Filter::escape($form['keywords']))
 				->setMetaDescription(Filter::escape($form['meta_description']));
-		
+
 		return $entity;
 	}
 
@@ -222,7 +223,7 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	}
 
 	/**
-	 * Fetch all form bags
+	 * Fetches all form entities
 	 * 
 	 * @return array
 	 */
@@ -232,7 +233,7 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	}
 
 	/**
-	 * Fetches a page by its associated id
+	 * Fetches form entity by its associated id
 	 * 
 	 * @param string $id
 	 * @return array
@@ -265,13 +266,14 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	 * Adds a form
 	 * 
 	 * @param array $input Raw input data
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function add(array $input)
 	{
 		$input = $this->prepareInput($input);
 
 		if ($this->formMapper->insert($input)) {
+
 			// Add a web page now
 			if ($this->webPageManager->add($this->getLastId(), $input['slug'], 'Mail forms', 'MailForm:Form@indexAction', $this->formMapper)) {
 
@@ -293,7 +295,7 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	 * Updates a form
 	 * 
 	 * @param array $input Raw input data
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function update(array $input)
 	{

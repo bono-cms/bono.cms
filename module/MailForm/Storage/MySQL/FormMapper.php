@@ -19,7 +19,10 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_mailform';
+	public static function getTableName()
+	{
+		return 'bono_module_mailform';
+	}
 
 	/**
 	 * Updates SEO state by form's associated id
@@ -30,9 +33,7 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 	 */
 	public function updateSeoById($id, $seo)
 	{
-		return $this->db->update($this->table, array('seo' => $seo))
-						->whereEquals('id', $id)
-						->execute();
+		return $this->updateColumnByPk($id, 'seo', $seo);
 	}
 
 	/**
@@ -43,7 +44,7 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'		=> $this->getLangId(),
 			'web_page_id'	=> '',
@@ -65,7 +66,7 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 	 */
 	public function update(array $data)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'template' => $data['template'],
 			'title' => $data['title'],
@@ -86,10 +87,7 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -100,7 +98,7 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 	public function fetchAll()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->queryAll();
 	}
@@ -113,9 +111,6 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }

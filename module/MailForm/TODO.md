@@ -8,4 +8,3 @@ TODO List
  - How about configuration?
  * Make the process of field creating dynamic, so that an administrator can add fields right from administration area.
    So that, there won't be needs to code it.
- * need to append getPermamentUrl() in bags
