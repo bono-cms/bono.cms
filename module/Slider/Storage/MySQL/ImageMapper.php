@@ -19,8 +19,11 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_slider_images';
-
+	public static function getTableName()
+	{
+		return 'bono_module_slider_images';
+	}
+	
 	/**
 	 * Returns shared select
 	 * 
@@ -32,7 +35,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	{
 		// Build first shared fragment
 		$db = $this->db->select('*')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($categoryId !== null) {
@@ -68,21 +71,6 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	}
 
 	/**
-	 * Updates image column's value by its id
-	 * 
-	 * @param string $id Image id
-	 * @param string $column Target column
-	 * @param string $value New value
-	 * @return boolean
-	 */
-	private function updateColumnById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
-	}
-
-	/**
 	 * Fetches image's name by its associated id
 	 * 
 	 * @param string $id Image id
@@ -90,10 +78,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 
 	/**
@@ -105,7 +90,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->updateColumnById($id, 'published', $published);
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
@@ -117,7 +102,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function updateOrderById($id, $order)
 	{
-		return $this->updateColumnById($id, 'order', $order);
+		return $this->updateColumnByPk($id, 'order', $order);
 	}
 
 	/**
@@ -129,7 +114,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	public function fetchIdsByCategoryId($categoryId)
 	{
 		return $this->db->select('id')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('category_id', $categoryId)
 						->queryAll('id');
 	}
@@ -145,7 +130,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	{
 		return $this->db->select()
 						->count('id', 'count')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('category_id', $categoryId)
 						->query('count');
 	}
@@ -153,15 +138,12 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	/**
 	 * Fetches image id by its associated category id
 	 * 
-	 * @param string $id Image id
+	 * @param string $id
 	 * @return string
 	 */
 	public function fetchCategoryIdById($id)
 	{
-		return $this->db->select('category_id')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('category_id');
+		return $this->findColumnByPk($id, 'category_id');
 	}
 
 	/**
@@ -191,7 +173,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	/**
 	 * Fetches all published images associated with given category id
 	 * 
-	 * @param string $categoryId Category id
+	 * @param string $categoryId
 	 * @return array
 	 */
 	public function fetchAllPublishedByCategoryId($categoryId)
@@ -234,7 +216,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function update(array $data)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 			
 			'category_id'	=> $data['category_id'],
 			'name'			=> $data['name'],
@@ -256,7 +238,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 			
 			'lang_id'		=> $this->getLangId(),
 			'category_id'	=> $data['category_id'],
@@ -273,28 +255,22 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	/**
 	 * Fetches an image by its associated id
 	 * 
-	 * @param string $id Image id
+	 * @param string $id
 	 * @return array
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
 	 * Deletes an image by its associated id
 	 * 
-	 * @param string $id Image id
+	 * @param string $id
 	 * @return boolean
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }
