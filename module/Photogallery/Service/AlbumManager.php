@@ -145,9 +145,10 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 			->setKeywords(Filter::escape($album['keywords']))
 			->setSlug(Filter::escape($this->webPageManager->fetchSlugByWebPageId($album['web_page_id'])))
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $album['lang_id']))
+			->setPermanentUrl('/module/photogallery/'.$entity->getId())
 			->setMetaDescription(Filter::escape($album['meta_description']))
 			->setSeo((bool) $album['seo']);
-		
+
 		return $entity;
 	}
 

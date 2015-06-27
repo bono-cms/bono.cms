@@ -36,13 +36,9 @@ final class Album extends AbstractController
 	 */
 	public function showAction($albumId, $pageNumber = 1, $code = null, $slug = null)
 	{
-		// Grab current module first
-		$photogallery = $this->moduleManager->getModule('Photogallery');
-
-		// Now get its services
-		$photoManager = $photogallery->getService('photoManager');
-		$albumManager = $photogallery->getService('albumManager');
-		$config = $photogallery->getService('configManager')->getEntity();
+		$photoManager = $this->getModuleService('photoManager');
+		$albumManager = $this->getModuleService('albumManager');
+		$config = $this->getModuleService('configManager')->getEntity();
 
 		// Prepare pagination
 		$paginator = $photoManager->getPaginator();

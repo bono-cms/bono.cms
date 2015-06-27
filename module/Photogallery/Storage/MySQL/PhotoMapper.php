@@ -19,7 +19,10 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_photoalbum_photos';
+	public static function getTableName()
+	{
+		return 'bono_module_photoalbum_photos';
+	}
 
 	/**
 	 * Returns shared select
@@ -31,7 +34,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	private function getSelectQuery($published, $albumId = null)
 	{
 		$db = $this->db->select('*')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($albumId !== null) {
@@ -65,36 +68,6 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	}
 
 	/**
-	 * Updates row columns by matched id
-	 * 
-	 * @param string $id
-	 * @param string $column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function updateRowById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
-	}
-
-	/**
-	 * Deletes all records by provided column name
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function deleteAllByColumn($column, $value)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals($column, $value)
-						->execute();
-	}
-
-	/**
 	 * Fetches a photo name by its associated id
 	 * 
 	 * @param string $id
@@ -102,10 +75,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 
 	/**
@@ -116,7 +86,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function deleteAllByAlbumId($albumId)
 	{
-		return $this->deleteAllByColumn('album_id', $albumId);
+		return $this->deleteByColumn('album_id', $albumId);
 	}
 
 	/**
@@ -127,7 +97,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->deleteAllByColumn('id', $id);
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -138,7 +108,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'		=> $this->getLangId(),
 			'album_id'		=> $input['albumId'],
@@ -159,7 +129,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'album_id'		=> $input['albumId'],
 			'name'			=> $input['name'],
@@ -193,7 +163,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	{
 		return $this->db->select()
 						->count('id', 'count')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('album_id', $albumId)
 						->query('count');
 	}
@@ -206,10 +176,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -232,7 +199,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->updateRowById($id, 'published', $published);
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
@@ -244,7 +211,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function updateOrderById($id, $order)
 	{
-		return $this->updateRowById($id, 'order', $order);
+		return $this->updateColumnByPk($id, 'order', $order);
 	}
 
 	/**

@@ -19,7 +19,10 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_photoalbum_albums';
+	public static function getTableName()
+	{
+		return 'bono_module_photoalbum_albums';
+	}
 
 	/**
 	 * Returns shared select
@@ -29,25 +32,21 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	private function getSelectQuery()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc();
 	}
 
 	/**
-	 * Deletes all data by associated column and its value
+	 * Fetches a record by its id
 	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @return boolean
+	 * @param string $id
+	 * @return array
 	 */
-	private function deleteAllByColumn($column, $value)
+	public function fetchById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals($column, $value)
-						->execute();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -83,10 +82,7 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 
 	/**
@@ -97,7 +93,7 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->deleteAllByColumn('id', $id);
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -108,7 +104,7 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function deleteAllByParentId($parentId)
 	{
-		return $this->deleteAllByColumn('parent_id', $parentId);
+		return $this->deleteByColumn('parent_id', $parentId);
 	}
 
 	/**
@@ -119,7 +115,7 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'			=> $this->getLangId(),
 			'parent_id' 		=> $input['parent_id'],
@@ -143,7 +139,7 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'parent_id' 	=> $input['parent_id'],
 			'title'     	=> $input['title'],
@@ -156,19 +152,5 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 
 		))->whereEquals('id', $input['id'])
 		  ->execute();
-	}
-
-	/**
-	 * Fetches a record by its id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
 	}
 }

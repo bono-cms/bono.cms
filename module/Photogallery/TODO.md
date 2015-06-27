@@ -9,5 +9,4 @@ Planned
  * Add quick & batch image upload
  * Add a column called "date created"
  * Implement optional support for comments in each photo
- * need to implement getPermamentUrl() for albums
  * must support fetching random pictures, in one or another way
