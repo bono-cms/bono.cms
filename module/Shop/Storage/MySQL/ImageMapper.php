@@ -19,7 +19,10 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_shop_product_images';
+	public static function getTableName()
+	{
+		return 'bono_module_shop_product_images';
+	}
 
 	/**
 	 * Returns shared select
@@ -31,13 +34,14 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	private function getSelectQuery($productId, $published)
 	{
 		$db = $this->db->select('*')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('product_id', $productId);
 
 		if ($published === true) {
 
 			$db->andWhereEquals('published', '1')
 			   ->orderBy('order');
+
 		} else {
 
 			$db->orderBy('id')
@@ -46,7 +50,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 
 		return $db;
 	}
-	
+
 	/**
 	 * Queries for result-set
 	 * 
@@ -61,34 +65,6 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	}
 
 	/**
-	 * Updates a row data by associated id
-	 * 
-	 * @param string $id
-	 * @return boolean
-	 */
-	private function updateRowById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
-	}
-	
-	/**
-	 * Deletes all by associated column name and its value
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function deleteAllByColumn($column, $value)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals($column, $value)
-						->execute();
-	}
-
-	/**
 	 * Fetches image's file name by its associated id
 	 * 
 	 * @param string $id Image's id
@@ -96,10 +72,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function fetchFileNameById($id)
 	{
-		return $this->db->select('image')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('image');
+		return $this->findColumnByPk($id, 'image');
 	}
 
 	/**
@@ -135,7 +108,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function insert($productId, $image, $order, $published)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 			'product_id' => $productId,
 			'image'	=> $image,
 			'order' => $order,
@@ -153,7 +126,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function updateFileNameById($id, $filename)
 	{
-		return $this->updateRowById($id, 'image', $filename);
+		return $this->updateColumnByPk($id, 'image', $filename);
 	}
 
 	/**
@@ -165,7 +138,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function updateOrderById($id, $order)
 	{
-		return $this->updateRowById($id, 'order', $order);
+		return $this->updateColumnByPk($id, 'order', $order);
 	}
 
 	/**
@@ -177,7 +150,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->updateRowById($id, 'published', $published);
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
@@ -188,7 +161,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->deleteAllByColumn('id', $id);
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -199,6 +172,6 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function deleteAllByProductId($productId)
 	{
-		return $this->deleteAllByColumn('product_id', $productId);
+		return $this->deleteByColumn('product_id', $productId);
 	}
 }

@@ -19,7 +19,10 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_shop_orders_info';
+	public static function getTableName()
+	{
+		return 'bono_module_shop_orders_info';
+	}
 
 	/**
 	 * Returns shared select query
@@ -29,7 +32,7 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	private function getSelectQuery()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->orderBy('id')
 						->desc();
 	}
@@ -42,7 +45,7 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'name' => $data['name'],
 			'phone' => $data['phone'],
@@ -92,10 +95,7 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -106,8 +106,6 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	 */
 	public function approveById($id)
 	{
-		return $this->db->update($this->table, array('approved' => '1'))
-						->whereEquals('id', $id)
-						->execute();
+		return $this->updateColumnByPk($id, 'approved', '1');
 	}
 }

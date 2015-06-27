@@ -20,7 +20,10 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_shop_products';
+	public static function getTableName()
+	{
+		return 'bono_module_shop_products';
+	}
 
 	/**
 	 * Returns shared select
@@ -33,7 +36,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	private function getSelectQuery($published, $categoryId = null, $order = 'id', $desc = true)
 	{
 		$db = $this->db->select('*')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($published === true) {
@@ -67,36 +70,6 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	}
 
 	/**
-	 * Updates a row by id
-	 * 
-	 * @param string $id Product's id
-	 * @param string $column Target column
-	 * @param string $value New value
-	 * @return boolean
-	 */
-	private function updateRowById($id, $column, $value)
-	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
-	}
-
-	/**
-	 * Deletes all by column name and its associated value
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function deleteAllByColumn($column, $value)
-	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals($column, $value)
-						->execute();
-	}
-
-	/**
 	 * Finds data by the filter
 	 * 
 	 * @param array $input Raw input data
@@ -107,7 +80,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	public function filter(array $input, $page, $itemsPerPage)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereLike('title', '%'.$input['title'].'%', true)
 						->andWhereEquals('id', $input['id'], true)
 						->andWhereEquals('regular_price', $input['price'], true)
@@ -123,10 +96,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -137,10 +107,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function fetchProductIdsByCategoryId($categoryId)
 	{
-		return $this->db->select('id')
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->queryAll('id');
+		return $this->fetchOneColumn('id', 'category_id', $categoryId);
 	}
 
 	/**
@@ -151,10 +118,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function fetchTitleById($id)
 	{
-		return $this->db->select('title')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('title');
+		return $this->findColumnByPk($id, 'title');
 	}
 
 	/**
@@ -269,7 +233,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	{
 		return (int) $this->db->select()
 						->count('id', 'count')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('category_id', $categoryId)
 						->query('count');
 	}
@@ -283,7 +247,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function updatePriceById($id, $price)
 	{
-		return $this->updateRowById($id, 'regular_price', $price);
+		return $this->updateColumnByPk($id, 'regular_price', $price);
 	}
 
 	/**
@@ -295,7 +259,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->updateRowById($id, 'published', $published);
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
@@ -307,7 +271,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function updateSeoById($id, $seo)
 	{
-		return $this->updateRowById($id, 'seo', $seo);
+		return $this->updateColumnByPk($id, 'seo', $seo);
 	}
 
 	/**
@@ -318,7 +282,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'category_id'		=> $input['category_id'],
 			'title'				=> $input['title'],
@@ -344,7 +308,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'			=> $this->getLangId(),
 			'category_id'		=> $input['category_id'],
@@ -372,7 +336,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function deleteByCategoryId($categoryId)
 	{
-		return $this->deleteAllByColumn('category_id', $categoryId);
+		return $this->deleteByColumn('category_id', $categoryId);
 	}
 
 	/**	
@@ -383,6 +347,6 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function deleteById($id)
 	{
-		return $this->deleteAllByColumn('id', $id);
+		return $this->deleteByPk('id', $id);
 	}
 }
