@@ -23,7 +23,6 @@ abstract class AbstractQa extends AbstractController
 	 */
 	final protected function getValidator(array $post)
 	{
-		//@TODO
 		return $this->validatorFactory->build(array(
 			'input' => array(
 				'source' => $post,
@@ -66,7 +65,7 @@ abstract class AbstractQa extends AbstractController
 	 */
 	final protected function getQaManager()
 	{
-		return $this->moduleManager->getModule('QA')->getService('qaManager');
+		return $this->getModuleService('qaManager');
 	}
 
 	/**
@@ -99,7 +98,7 @@ abstract class AbstractQa extends AbstractController
 				'name' => $overrides['title']
 			)
 		));
-		
+
 		$vars = array(
 			'timeFormat' => $qa->getService('qaManager')->getTimeFormat()
 		);

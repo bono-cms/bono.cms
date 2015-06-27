@@ -25,7 +25,7 @@ interface QaMapperInterface
 	/**
 	 * Fetches question data by QA's associated id
 	 * 
-	 * @param string $id QA id
+	 * @param string $id
 	 * @return string
 	 */
 	public function fetchQuestionById($id);
@@ -65,7 +65,7 @@ interface QaMapperInterface
 	/**
 	 * Updates published state by QA's associated id
 	 * 
-	 * @param string $id QA id
+	 * @param string $id
 	 * @param string $published Either 0 or 1
 	 * @return boolean
 	 */
@@ -74,7 +74,7 @@ interface QaMapperInterface
 	/**
 	 * Fetches QA data by its associated id
 	 * 
-	 * @param string $id QA id
+	 * @param string $id
 	 * @return array
 	 */
 	public function fetchById($id);
@@ -82,7 +82,7 @@ interface QaMapperInterface
 	/**
 	 * Deletes QA pair by its associated id
 	 * 
-	 * @param string $id QA id
+	 * @param string $id
 	 * @return boolean
 	 */
 	public function deleteById($id);

@@ -19,7 +19,10 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_qa';
+	public static function getTableName()
+	{
+		return 'bono_module_qa';
+	}
 
 	/**
 	 * Returns shared select
@@ -30,7 +33,7 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	private function getSelectQuery($published)
 	{
 		$db = $this->db->select('*')
-					   ->from($this->table)
+					   ->from(static::getTableName())
 					   ->whereEquals('langId', $this->getLangId());
 
 		if ($published === true) {
@@ -100,29 +103,23 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	/**
 	 * Fetches question data by QA's associated id
 	 * 
-	 * @param string $id QA id
+	 * @param string $id
 	 * @return string
 	 */
 	public function fetchQuestionById($id)
 	{
-		return $this->db->select('question')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('question');
+		return $this->findColumnByPk($id, 'question');
 	}
 
 	/**
 	 * Fetches QA data by its associated id
 	 * 
-	 * @param string $id QA id
+	 * @param string $id
 	 * @return array
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -133,7 +130,7 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'question'			=> $input['question'],
 			'answer'			=> $input['answer'],
@@ -155,7 +152,7 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'langId'			=> $this->getLangId(),
 			'question'			=> $input['question'],
@@ -172,28 +169,23 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	/**
 	 * Updates published state by QA's associated id
 	 * 
-	 * @param string $id QA id
+	 * @param string $id
 	 * @param string $published Either 0 or 1
 	 * @return boolean
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->db->update($this->table, array('published' => $published))
-						->whereEquals('id', $id)
-						->execute();
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
 	 * Deletes QA pair by its associated id
 	 * 
-	 * @param string $id QA id
+	 * @param string $id
 	 * @return boolean
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }

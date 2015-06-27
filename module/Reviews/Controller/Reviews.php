@@ -67,7 +67,7 @@ final class Reviews extends AbstractController
 	 */
 	private function getConfig()
 	{
-		return $this->moduleManager->getModule('Reviews')->getService('configManager')->getEntity();
+		return $this->getModuleService('configManager')->getEntity();
 	}
 
 	/**
@@ -77,7 +77,7 @@ final class Reviews extends AbstractController
 	 */
 	private function getReviewsManager()
 	{
-		return $this->moduleManager->getModule('Reviews')->getService('reviewsManager');
+		return $this->getModuleService('reviewsManager');
 	}
 	
 	/**
