@@ -19,22 +19,22 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_team';
+	public static function getTableName()
+	{
+		return 'bono_module_team';
+	}
 
 	/**
-	 * Fetches name by associated id
+	 * Fetches a name by associated id
 	 * 
 	 * @param string $id Member's id
 	 * @return string
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
-	
+
 	/**
 	 * Updates an order by its associated id
 	 * 
@@ -44,7 +44,7 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function updateOrderById($id, $order)
 	{
-		return $this->updateColumnById('order', $order, $id);
+		return $this->updateColumnByPk('order', $order, $id);
 	}
 
 	/**
@@ -56,78 +56,49 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->updateColumnById('published', $published, $id);
+		return $this->updateColumnByPk('published', $published, $id);
 	}
 
 	/**
-	 * Updates a column by its associated id
+	 * Updates a member
 	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @param string $id
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	private function updateColumnById($id, $column, $value)
+	public function update(array $input)
 	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
-	}
+		return $this->db->update(static::getTableName(), array(
 
-	/**
-	 * Updates a record
-	 * 
-	 * @param stdclass $container
-	 * @return boolean
-	 */
-	public function update(array $data)
-	{
-		return $this->db->update($this->table, array(
+			'name'			=> $input['name'],
+			'description'	=> $input['description'],
+			'photo'			=> $input['photo'],
+			'published'		=> $input['published'],
+			'order'			=> $input['order'],
 
-			'name'			=> $data['name'],
-			'description'	=> $data['description'],
-			'photo'			=> $data['photo'],
-			'published'		=> $data['published'],
-			'order'			=> $data['order'],
-
-		))->whereEquals('id', $data['id'])
+		))->whereEquals('id', $input['id'])
 		  ->execute();
 	}
 
 	/**
 	 * Adds a member
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'		=> $this->getLangId(),
-			'name'			=> $data['name'],
-			'description'	=> $data['description'],
-			'photo'			=> $data['photo'],
-			'published'		=> $data['published'],
-			'order'			=> $data['order'],
+			'name'			=> $input['name'],
+			'description'	=> $input['description'],
+			'photo'			=> $input['photo'],
+			'published'		=> $input['published'],
+			'order'			=> $input['order'],
 
 		))->execute();
 	}
 
-	/**
-	 * Fetches a record by its associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id)
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
-	}
-	
 	/**
 	 * Deletes a record by its associated id
 	 * 
@@ -136,20 +107,34 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 
 	/**
-	 * Fetches all published records
+	 * Returns shared select query
 	 * 
-	 * @return array
+	 * @param boolean $published
+	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function fetchAllPublished()
+	private function getSelectQuery($published)
 	{
-		//@TODO
+		// Build first fragment
+		$db = $this->db->select('*')
+					   ->from(static::getTableName())
+					   ->whereEquals('lang_id', $this->getLangId());
+
+		if ($published === true) {
+
+			$db->andWhereEquals('published', '1')
+			   ->orderBy('order');
+
+		} else {
+
+			$db->orderBy('id')
+			   ->desc();
+		}
+
+		return $db;
 	}
 
 	/**
@@ -161,12 +146,9 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->andWhereEquals('published', '1')
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getSelectQuery(true)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -176,7 +158,19 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function fetchAll()
 	{
-		//@TODO
+		return $this->getSelectQuery(false)
+					->queryAll();
+	}
+
+	/**
+	 * Fetches all published records
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished()
+	{
+		return $this->getSelectQuery(true)
+					->queryAll();
 	}
 
 	/**
@@ -188,12 +182,19 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+		return $this->getSelectQuery(false)
+					->paginate($page, $itemsPerPage)
+					->queryAll();
+	}
+
+	/**
+	 * Fetches a record by its associated id
+	 * 
+	 * @param string $id
+	 * @return array
+	 */
+	public function fetchById($id)
+	{
+		return $this->findByPk($id);
 	}
 }

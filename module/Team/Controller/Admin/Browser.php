@@ -44,7 +44,7 @@ final class Browser extends AbstractController
 	 */
 	private function getTeamManager()
 	{
-		return $this->moduleManager->getModule('Team')->getService('teamManager');
+		return $this->getModuleService('teamManager');
 	}
 
 	/**

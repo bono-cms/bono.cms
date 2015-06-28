@@ -99,6 +99,6 @@ abstract class AbstractMember extends AbstractController
 	 */
 	final protected function getTeamManager()
 	{
-		return $this->moduleManager->getModule('Team')->getService('teamManager');
+		return $this->getModuleService('teamManager');
 	}
 }

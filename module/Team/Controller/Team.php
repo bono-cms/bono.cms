@@ -23,10 +23,10 @@ final class Team extends AbstractController
 	 */
 	public function indexAction($id, $pageNumber = 1)
 	{
-		$page = $this->moduleManager->getModule('Pages')->getService('pageManager')->fetchById($id);
+		$page = $this->getService('Pages', 'pageManager')->fetchById($id);
 		$this->loadSitePlugins();
 
-		$teamManager = $this->moduleManager->getModule('Team')->getService('teamManager');
+		$teamManager = $this->getModuleService('teamManager');
 
 		$paginator = $teamManager->getPaginator();
 
