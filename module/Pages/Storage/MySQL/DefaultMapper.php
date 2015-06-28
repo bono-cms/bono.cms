@@ -19,7 +19,10 @@ final class DefaultMapper extends AbstractMapper implements DefaultMapperInterfa
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_pages_defaults';
+	public static function getTableName()
+	{
+		return 'bono_module_pages_defaults';
+	}
 
 	/**
 	 * Updates a page's default id by its associated id
@@ -29,7 +32,7 @@ final class DefaultMapper extends AbstractMapper implements DefaultMapperInterfa
 	 */
 	public function update($id)
 	{
-		return $this->db->update($this->table, array('id' => $id))
+		return $this->db->update(static::getTableName(), array('id' => $id))
 						->whereEquals('lang_id', $this->getLangId())
 						->execute();
 	}
@@ -42,7 +45,7 @@ final class DefaultMapper extends AbstractMapper implements DefaultMapperInterfa
 	 */
 	public function insert($id)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 			'id' => $id,
 			'lang_id' => $this->getLangId()
 		))->execute();
@@ -57,7 +60,7 @@ final class DefaultMapper extends AbstractMapper implements DefaultMapperInterfa
 	{
 		return $this->db->select()
 						->count('id', 'count')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->query('count') != 0;
 	}
@@ -70,7 +73,7 @@ final class DefaultMapper extends AbstractMapper implements DefaultMapperInterfa
 	public function fetchAll()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->queryAll();
 	}
 
@@ -82,7 +85,7 @@ final class DefaultMapper extends AbstractMapper implements DefaultMapperInterfa
 	public function fetchDefaultId()
 	{
 		return $this->db->select('id')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->query('id');
 	}
@@ -96,7 +99,7 @@ final class DefaultMapper extends AbstractMapper implements DefaultMapperInterfa
 	public function fetchById($id)
 	{
 		return $this->db->select('id')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('id', $id)
 						->query('id');
 	}
