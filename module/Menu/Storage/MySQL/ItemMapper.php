@@ -19,7 +19,10 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_menu_items';
+	public static function getTableName()
+	{
+		return 'bono_module_menu_items';
+	}
 
 	/**
 	 * Fetches category id by its associated web page id
@@ -29,10 +32,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function fetchCategoryIdByWebPageId($webPageId)
 	{
-		return $this->db->select('category_id')
-						->from($this->table)
-						->whereEquals('web_page_id', $webPageId)
-						->query('category_id');
+		return $this->fetchOneColumn('category_id', 'web_page_id', $webPageId);
 	}
 
 	/**
@@ -43,10 +43,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function fetchAllByWebPageId($webPageId)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('web_page_id', $webPageId)
-						->queryAll();
+		return $this->findAllByColumn('web_page_id', $webPageId);
 	}
 
 	/**
@@ -59,7 +56,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function save($id, $parentId, $range)
 	{
-		return $this->db->update($this->table, array('range' => $range, 'parent_id' => $parentId))
+		return $this->db->update(static::getTableName(), array('range' => $range, 'parent_id' => $parentId))
 						->whereEquals('id', $id)
 						->execute();
 	}
@@ -72,10 +69,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 
 	/**
@@ -87,7 +81,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	public function fetchAllByCategoryId($categoryId)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->andWhereEquals('category_id', $categoryId)
 						->orderBy('range')
@@ -103,7 +97,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	public function fetchAllPublishedByCategoryId($categoryId)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->andWhereEquals('category_id', $categoryId)
 						->andWhereEquals('published', '1')
@@ -115,14 +109,11 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 * Deletes an item by its associated id
 	 * 
 	 * @param string $id
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -133,10 +124,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function deleteAllByCategoryId($categoryId)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('category_id', $categoryId)
-						->execute();
+		return $this->deleteByColumn('category_id', $categoryId);
 	}
 
 	/**
@@ -147,10 +135,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function deleteAllByParentId($parentId)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('parent_id', $parentId)
-						->execute();
+		return $this->deleteByColumn('parent_id', $parentId);
 	}
 
 	/**
@@ -161,10 +146,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function deleteAllByWebPageId($webPageId)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('web_page_id', $webPageId)
-						->execute();
+		return $this->deleteByColumn('web_page_id', $webPageId);
 	}
 
 	/**
@@ -175,10 +157,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -188,21 +167,18 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function fetchAll()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->queryAll();
+		return $this->findAllByColumn('lang_id', $this->getLangId());
 	}
 
 	/**
 	 * Inserts an item
 	 * 
 	 * @param array $data
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'		=> $this->getLangId(),
 			'parent_id'		=> $data['parent_id'],
@@ -222,11 +198,11 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 * Updates an item
 	 * 
 	 * @param array $data
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function update(array $data)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'category_id'	=> $data['category_id'],
 			'web_page_id'   => $data['web_page_id'],

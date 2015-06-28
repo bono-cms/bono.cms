@@ -29,4 +29,3 @@ CREATE TABLE `bono_module_menu_items` (
 	`open_in_new_window` varchar(1) NOT NULL COMMENT 'Whether an item should be opened in new window or not'
 	
 ) DEFAULT CHARSET=UTF8;
-
