@@ -19,21 +19,9 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_cms_languages';
-
-	/**
-	 * Updates a column by its associated id with new value
-	 * 
-	 * @param string $id Language id
-	 * @param string $column
-	 * @param string $value
-	 * @return boolean
-	 */
-	private function updateColumnById($id, $column, $value)
+	public static function getTableName()
 	{
-		return $this->db->update($this->table, array($column => $value))
-						->whereEquals('id', $id)
-						->execute();
+		return 'bono_module_cms_languages';
 	}
 
 	/**
@@ -45,7 +33,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->updateColumnById($id, 'published', $published);
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
@@ -57,7 +45,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function updateOrderById($id, $order)
 	{
-		return $this->updateColumnById($id, 'order', $order);
+		return $this->updateColumnByPk($id, 'order', $order);
 	}
 
 	/**
@@ -68,10 +56,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -82,10 +67,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function fetchByCode($code)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('code', $code)
-						->query();
+		return $this->fetchByColumn('code', $code, '*');
 	}
 
 	/**
@@ -96,10 +78,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 
 	/**
@@ -110,7 +89,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	public function fetchAllPublished()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('published', '1')
 						->queryAll();
 	}
@@ -123,7 +102,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	public function fetchAll()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->orderBy('id')
 						->desc()
 						->queryAll();
@@ -137,7 +116,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 			
 			'name' => $input['name'],
 			'code' => $input['code'],
@@ -156,7 +135,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'name' => $input['name'],
 			'code' => $input['code'],

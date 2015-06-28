@@ -19,7 +19,10 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_cms_users';
+	public static function getTableName()
+	{
+		return 'bono_module_cms_users';
+	}
 
 	/**
 	 * Inserts user's data
@@ -29,7 +32,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'login'			=> $input['login'],
 			'password_hash'	=> $input['password_hash'],
@@ -48,7 +51,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
+		return $this->db->update(static::getTableName(), array(
 
 			'login'			=> $input['login'],
 			'password_hash'	=> $input['password_hash'],
@@ -68,10 +71,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 
 	/**
@@ -84,7 +84,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	public function fetchByCredentials($login, $passwordHash)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('login', $login)
 						->andWhereEquals('password_hash', $passwordHash)
 						->query();
@@ -98,7 +98,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	public function fetchAll()
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->queryAll();
 	}
 
@@ -110,10 +110,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -124,9 +121,6 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }

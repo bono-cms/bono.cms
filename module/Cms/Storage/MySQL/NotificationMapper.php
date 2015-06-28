@@ -19,7 +19,10 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_cms_notifications';
+	public static function getTableName()
+	{
+		return 'bono_module_cms_notifications';
+	}
 
 	/**
 	 * Clears all notifications
@@ -28,7 +31,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	 */
 	public function clearAll()
 	{
-		return $this->db->truncate($this->table)
+		return $this->db->truncate(static::getTableName())
 						->execute();
 	}
 
@@ -42,7 +45,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->orderBy('id')
 						->desc()
 						->paginate($page, $itemsPerPage)
@@ -56,7 +59,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	 */
 	public function nullify()
 	{
-		return $this->db->update($this->table, array('viewed' => '1'))
+		return $this->db->update(static::getTableName(), array('viewed' => '1'))
 						->execute();
 	}
 
@@ -69,7 +72,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	{
 		return $this->db->select()
 						->count('id', 'count')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('viewed', '0')
 						->query('count');
 	}
@@ -84,7 +87,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	 */
 	public function insert($timestamp, $viewed, $message)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'timestamp'	=> $timestamp,
 			'viewed'	=> $viewed,
@@ -101,9 +104,6 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }

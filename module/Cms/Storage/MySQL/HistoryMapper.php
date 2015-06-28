@@ -19,7 +19,10 @@ final class HistoryMapper extends AbstractMapper implements HistoryMapperInterfa
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_cms_history';
+	public static function getTableName()
+	{
+		return 'bono_module_cms_history';
+	}
 
 	/**
 	 * Clears the history
@@ -29,7 +32,7 @@ final class HistoryMapper extends AbstractMapper implements HistoryMapperInterfa
 	public function clear()
 	{
 		return $this->db->delete()
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->execute();
 	}
@@ -42,7 +45,7 @@ final class HistoryMapper extends AbstractMapper implements HistoryMapperInterfa
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(static::getTableName(), array(
 
 			'lang_id'	=> $this->getLangId(),
 			'user_id'	=> $input['user_id'],
@@ -64,7 +67,7 @@ final class HistoryMapper extends AbstractMapper implements HistoryMapperInterfa
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy('id')
 						->desc()

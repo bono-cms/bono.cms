@@ -19,7 +19,10 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_cms_webpages';
+	public static function getTableName()
+	{
+		return 'bono_module_cms_webpages';
+	}
 
 	/**
 	 * Fetches language id by associated web page id
@@ -29,10 +32,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	 */
 	public function fetchLangIdByWebPageId($id)
 	{
-		return $this->db->select('lang_id')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('lang_id');
+		return $this->findColumnByPk($id, 'lang_id');
 	}
 
 	/**
@@ -43,10 +43,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	 */
 	public function fetchSlugByWebPageId($webPageId)
 	{
-		return $this->db->select('slug')
-						->from($this->table)
-						->whereEquals('id', $webPageId)
-						->query('slug');
+		return $this->findColumnByPk($webPageId, 'slug');
 	}
 
 	/**
@@ -56,10 +53,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	 */
 	public function fetchAll()
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('lang_id', $this->getLangId())
-						->queryAll();
+		return $this->findAllByColumn('lang_id', $this->getLangId());
 	}
 
 	/**
@@ -75,12 +69,12 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 		$data = array(
 			'slug' => $slug
 		);
-		
+
 		if ($controller !== null) {
 			$data = array_merge($data, array('controller' => $controller));
 		}
-		
-		return $this->db->update($this->table, $data)
+
+		return $this->db->update(static::getTableName(), $data)
 						->whereEquals('id', $id)
 						->execute();
 	}
@@ -97,7 +91,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 			'lang_id' => $this->getLangId(),
 		), $data);
 
-		return $this->db->insert($this->table, $data)
+		return $this->db->insert(static::getTableName(), $data)
 						->execute();
 	}
 
@@ -109,10 +103,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	 */
 	public function fetchBySlug($slug)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('slug', $slug)
-						->query();
+		return $this->fetchByColumn('slug', $slug);
 	}
 
 	/**
@@ -124,7 +115,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	public function fetchSlugByTargetId($targetId)
 	{
 		return $this->db->select('slug')
-						->from($this->table)
+						->from(static::getTableName())
 						->whereEquals('target_id', $targetId)
 						->query('slug');
 	}
@@ -137,10 +128,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -151,9 +139,6 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }
