@@ -28,46 +28,23 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	/**
 	 * Inserts a page
 	 * 
-	 * @param array $data Page data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'			=> $this->getLangId(),
-			'web_page_id'		=> $data['web_page_id'],
-			'template'			=> $data['template'],
-			'protected'			=> $data['protected'],
-			'title'   			=> $data['title'],
-			'content'  			=> $data['content'],
-			'seo'				=> $data['seo'],
-			'keywords'			=> $data['keywords'],
-			'meta_description'	=> $data['meta_description'],
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
 	 * Updates a page
 	 * 
-	 * @param array $data Page data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'template'			=> $data['template'],
-			'protected'			=> $data['protected'],
-			'title'				=> $data['title'],
-			'content'			=> $data['content'],
-			'seo'				=> $data['seo'],
-			'keywords'			=> $data['keywords'],
-			'meta_description'	=> $data['meta_description']
-
-		))->whereEquals('id', $data['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**

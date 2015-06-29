@@ -324,7 +324,10 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 		$input = $this->prepareInput($input);
 		$input['web_page_id'] = '';
 
-		if (!$this->pageMapper->insert($input)) {
+		$data = $input;
+		unset($data['controller'], $data['makeDefault'], $data['slug']);
+
+		if (!$this->pageMapper->insert($data)) {
 			return false;
 		} else {
 			// It was inserted successfully
@@ -365,6 +368,9 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 		}
 
 		$this->track('The page "%s" has been updated', $input['title']);
+
+		unset($input['controller'], $input['makeDefault'], $input['slug']);
+
 		return $this->pageMapper->update($input);
 	}
 
