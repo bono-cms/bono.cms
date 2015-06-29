@@ -291,10 +291,6 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function countAllByCategoryId($categoryId)
 	{
-		return $this->db->select()
-						->count('id', 'count')
-						->from(static::getTableName())
-						->whereEquals('category_id', $categoryId)
-						->query('count');
+		return $this->countByColumn('category_id', $categoryId);
 	}
 }
