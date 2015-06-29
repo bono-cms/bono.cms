@@ -109,29 +109,14 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	}
 
 	/**
-	 * Inserts a post
+	 * Adds a post
 	 * 
 	 * @param array $input Raw input data
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'			=> $this->getLangId(),
-			'web_page_id'		=> $input['webPageId'],
-			'category_id'		=> $input['categoryId'],
-			'published'			=> $input['published'],
-			'seo'				=> $input['seo'],
-			'title'				=> $input['title'],
-			'intro'				=> $input['intro'],
-			'full'				=> $input['full'],
-			'timestamp'			=> $input['timestamp'],
-			'keywords'			=> $input['keywords'],
-			'meta_description'	=> $input['metaDescription'],
-			'cover'				=> $input['cover']
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -142,20 +127,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'category_id' => $input['categoryId'],
-			'published'   => $input['published'],
-			'seo' 		  => $input['seo'],
-			'title'		  => $input['title'],
-			'intro'		  => $input['intro'],
-			'full'        => $input['full'],
-			'keywords'    => $input['keywords'],
-			'meta_description' => $input['metaDescription'],
-			'cover'		 => $input['cover']
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**

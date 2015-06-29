@@ -13,6 +13,7 @@ namespace News\Service;
 
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Security\Filter;
+use Krystal\Stdlib\ArrayUtils;
 use Menu\Contract\MenuAwareManager;
 use News\Storage\PostMapperInterface;
 use News\Storage\CategoryMapperInterface;
@@ -329,7 +330,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 			$data['cover'] = '';
 		}
 
-		$this->postMapper->insert($data);
+		$this->postMapper->insert(ArrayUtils::arrayWithout($data, array('date', 'slug')));
 
 		// Not sure about this one
 		if (!empty($input['files'])) {
@@ -383,10 +384,10 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 		}
 
 		// Update a record itself now
-		$this->postMapper->update($post);
+		$this->postMapper->update(ArrayUtils::arrayWithout($post, array('date', 'slug')));
 
 		// Update a slug
-		$this->webPageManager->update($post['webPageId'], $post['slug']);
+		$this->webPageManager->update($post['web_page_id'], $post['slug']);
 
 		// And finally now just track it
 		$this->track('Post "%s" has been updated', $post['title']);
