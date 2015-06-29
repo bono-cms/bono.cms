@@ -75,17 +75,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'			=> $this->getLangId(),
-			'web_page_id'		=> $input['web_page_id'],
-			'title'				=> $input['title'],
-			'description'		=> $input['description'],
-			'seo'				=> $input['seo'],
-			'keywords'			=> $input['keywords'],
-			'meta_description'	=> $input['meta_description'],
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -96,15 +86,6 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'title'			=> $input['title'],
-			'description'	=> $input['description'],
-			'seo'			=> $input['seo'],
-			'keywords'		=> $input['keywords'],
-			'meta_description' => $input['meta_description'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 }
