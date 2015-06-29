@@ -23,6 +23,17 @@ abstract class AbstractMapper extends BaseMapper
 	protected $language;
 
 	/**
+	 * Merges target array with language id
+	 * 
+	 * @param array $data Target data
+	 * @return array
+	 */
+	final protected function getWithLang(array $data)
+	{
+		return array_merge(array('lang_id' => $this->getLangId()), $data);
+	}
+
+	/**
 	 * Returns PK name
 	 * Most tables share the same
 	 * 
