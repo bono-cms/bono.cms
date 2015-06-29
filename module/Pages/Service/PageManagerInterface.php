@@ -23,13 +23,6 @@ interface PageManagerInterface
 	public function getBreadcrumbs(PageEntity $page);
 
 	/**
-	 * Fetches dummy page bag
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetches default page bag
 	 * 
 	 * @return object|boolean

@@ -125,30 +125,6 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 	}
 
 	/**
-	 * Fetches dummy page entity
-	 * 
-	 * @return Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'web_page_id' => null,
-			'id'		  => null,
-			'lang_id'	  => null,
-			'title'		  => null,
-			'content'	  => null,
-			'slug'		  => null,
-			'controller'  => null,
-			'template'	  => null,
-			'protected'   => false,
-			'default'	  => false,
-			'meta_description' => null,
-			'seo'		  => true,
-			'keywords' => null,
-		));
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	protected function toEntity(array $page)

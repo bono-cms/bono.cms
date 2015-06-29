@@ -87,10 +87,6 @@ abstract class AbstractPage extends AbstractController
 	 */
 	final protected function getSharedVars(array $overrides)
 	{
-		// Return all loaded routes
-		$routes = $this->moduleManager->getRoutes();
-		$mapManager = new MapManager($routes);
-
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'link' => 'Pages:Admin:Browser@indexAction',
@@ -103,12 +99,7 @@ abstract class AbstractPage extends AbstractController
 			)
 		));
 
-		$current = array(
-			'controllers' => $mapManager->getControllers(),
-			'page' => $this->moduleManager->getModule('Pages')->getService('pageManager')->fetchDummy()
-		);
-
-		return array_replace_recursive($current, $overrides);
+		return $overrides;
 	}
 
 	/**
