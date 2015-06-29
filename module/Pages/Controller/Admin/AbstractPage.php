@@ -18,6 +18,50 @@ use Cms\Controller\Admin\AbstractController;
 abstract class AbstractPage extends AbstractController
 {
 	/**
+	 * Returns a list of all loaded controllers
+	 * 
+	 * @return array
+	 */
+	protected function getControllers()
+	{
+		// Return all loaded routes
+		$routes = $this->moduleManager->getRoutes();
+		$mapManager = new MapManager($routes);
+
+		return $mapManager->getControllers();
+	}
+
+	/**
+	 * Returns prepared form
+	 */
+	protected function getForm($page = null)
+	{
+		$form = $this->makeForm('\Pages\View\Form\PageForm');
+		$form->setData('controllers', $this->getControllers());
+
+		if ($page !== null) {
+			$form->populate(function() use ($page){
+				return array(
+					'id' => $page->getId(),
+					'web_page_id' => $page->getWebPageId(),
+					'title' => $page->getTitle(),
+					'content' => $page->getContent(),
+					'controller' => $page->getController(),
+					'template' => $page->getTemplate(),
+					'protected' => $page->getProtected(),
+					'makeDefault' => $page->getDefault(),
+					'seo' => $page->getSeo(),
+					'slug' => $page->getSlug(),
+					'keywords' => $page->getKeywords(),
+					'meta_description' => $page->getMetaDescription(),
+				);
+			});
+		}
+
+		return $form;
+	}
+
+	/**
 	 * Returns configured form validator
 	 * 
 	 * @param array $input Raw input data

@@ -28,8 +28,8 @@ final class Edit extends AbstractPage
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 				'page' => $page,
-				'editing' => true,
 				'title' => 'Edit the page',
+				'form' => $this->getForm($page)
 			)));
 
 		} else {
@@ -44,10 +44,12 @@ final class Edit extends AbstractPage
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$ns = $this->getForm()->getName();
+
+		$formValidator = $this->getValidator($this->request->getPost($ns));
 
 		if ($formValidator->isValid()) {
-			if ($this->getPageManager()->update($this->request->getPost())) {
+			if ($this->getPageManager()->update($this->request->getPost($ns))) {
 
 				$this->flashMessenger->set('success', 'The page has been updated successfully');
 				return '1';

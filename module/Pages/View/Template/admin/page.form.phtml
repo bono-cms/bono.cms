@@ -10,14 +10,14 @@
 		<div class="tab-pane fade in active" id="page" role="tabpanel">
 			<div class="well clearfix">
 				
-				<input type="hidden" name="id" value="<?php echo $page->getId(); ?>" />
-				<input type="hidden" name="web_page_id" value="<?php echo $page->getWebPageId(); ?>" />
+				<?php $form->show('id'); ?>
+				<?php $form->show('web_page_id'); ?>
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $page->getTitle(); ?>" />
+							<?php $form->show('title'); ?>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -26,23 +26,23 @@
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
-					<div class="col-lg-10">				
-						<textarea name="content" rows="7" class="form-control"><?php echo $page->getContent(); ?></textarea>
+					<div class="col-lg-10">
+						<?php $form->show('content'); ?>
 					</div>
 				</div>
 				
 				
 				<div class="options">
 					
-					<?php if ($extendedMode): ?>
+					<?php if (!$extendedMode): ?>
+					<div class="hidden">
+					<?php endif; ?>
+					
+					
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Controller'); ?></label>
 						<div class="col-lg-10">
-							<select name="controller" class="form-control">
-								<?php foreach ($controllers as $controller): ?>
-								<option value="<?php echo $controller; ?>" <?php $this->getHelper()->selectOnDemand($controller == $page->getController()); ?>><?php echo $controller; ?></option>
-								<?php endforeach; ?>
-							</select>
+							<?php $form->show('controller'); ?>
 						</div>
 					</div>
 					
@@ -51,7 +51,7 @@
 						<label class="col-lg-2 control-label"><?php $this->show('Template override'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="template" class="form-control" value="<?php echo $page->getTemplate(); ?>" placeholder="<?php $this->show('If you need another template which is different from default one, you can define its name here'); ?>" />
+								<?php $form->show('template'); ?>
 								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 							</div>
 						</div>
@@ -61,18 +61,12 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Protect'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="protected" value="0" />
-							<input type="checkbox" name="protected" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getProtected()); ?> title="If you protect the page you are going to created, them users that use only simple mode will not be able to remove it" />
+							<?php $form->show('protected'); ?>
 						</div>
 					</div>
 					
-					
-					<?php else: ?>
-					
-					<input type="hidden" name="controller" value="<?php echo $page->getController(); ?>" />
-					<input type="hidden" name="protected" value="<?php echo $page->getProtected(); ?>" />
-					<input type="hidden" name="template" value="<?php echo $page->getTemplate(); ?>" />
-					
+					<?php if (!$extendedMode): ?>
+					</div>
 					<?php endif; ?>
 					
 					
@@ -80,8 +74,7 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="makeDefault" value="0" />
-							<input type="checkbox" name="makeDefault" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getDefault()); ?> title="Whether it should be home page or not" />
+							<?php $form->show('makeDefault'); ?>
 						</div>
 					</div>
 					<?php endif; ?>
@@ -89,8 +82,7 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="seo" value="0" />
-							<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getSeo()); ?> />
+							<?php $form->show('seo'); ?>
 						</div>
 					</div>
 					
@@ -99,7 +91,8 @@
 						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="slug" class="form-control" value="<?php echo $page->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
+								<?php $form->show('slug'); ?>
+								
 								<span class="input-group-addon">
 									<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
 								</span>
@@ -112,7 +105,7 @@
 						<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="keywords" class="form-control" value="<?php echo $page->getKeywords(); ?>" placeholder="<?php $this->show('Keywords used for search engines'); ?>" />
+								<?php $form->show('keywords'); ?>
 								<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
 							</div>
 						</div>
@@ -122,14 +115,15 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 						<div class="col-lg-10">
-							<textarea name="meta_description" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $page->getMetaDescription(); ?></textarea>
+							<?php $form->show('meta_description'); ?>
 						</div>
 					</div>
 					
 				</div>
 			</div>
 			
-			<?php if (!isset($editing)): ?>
+			<?php if ($form->isNewRecord()): ?>
+			
 			<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
 			<button data-button="add-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
 			

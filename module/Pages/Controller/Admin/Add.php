@@ -24,7 +24,7 @@ final class Add extends AbstractPage
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a page',
-			'page' => $this->getPageManager()->fetchDummy()
+			'form' => $this->getForm()
 		)));
 	}
 
@@ -35,12 +35,14 @@ final class Add extends AbstractPage
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$ns = $this->getForm()->getName();
+
+		$formValidator = $this->getValidator($this->request->getPost($ns));
 
 		if ($formValidator->isValid()) {
 			$pageManager = $this->getPageManager();
 
-			if ($pageManager->add($this->request->getPost())) {
+			if ($pageManager->add($this->request->getPost($ns))) {
 
 				$this->flashMessenger->set('success', 'A page has been created successfully');
 				return $pageManager->getLastId();
