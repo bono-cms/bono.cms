@@ -144,7 +144,7 @@
 		</div>
 	</div>
 	
-	<?php if (isset($editing)): ?>
+	<?php if ($post->getId()): ?>
 	<button data-button="save" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> <?php $this->show('Save'); ?></button>
 	
 	<?php else: ?>
