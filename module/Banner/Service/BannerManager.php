@@ -199,7 +199,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	 */
 	public function deleteById($id)
 	{
-		$name = Filter::escape($this->banerMapper->fetchNameById($id));
+		$name = Filter::escape($this->bannerMapper->fetchNameById($id));
 
 		if ($this->delete($id)) {
 			$this->track('Banner "%s" has been removed', $name);
