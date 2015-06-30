@@ -19,6 +19,7 @@ use Blog\Storage\CategoryMapperInterface;
 use Menu\Contract\MenuAwareManager;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Security\Filter;
+use Krystal\Stdlib\ArrayUtils;
 
 final class PostManager extends AbstractManager implements PostManagerInterface, MenuAwareManager
 {
@@ -324,7 +325,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 		$input = $this->prepareInput($input);
 		$input['web_page_id'] = '';
 
-		if ($this->postMapper->insert($input)) {
+		if ($this->postMapper->insert(ArrayUtils::arrayWithout($input, array('date', 'slug')))) {
 			$id = $this->getLastId();
 
 			$this->track('Post "%s" has been added', $input['title']);
@@ -346,7 +347,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 		$this->webPageManager->update($input['web_page_id'], $input['slug']);
 
 		$this->track('Post "%s" has been updated', $input['title']);
-		return $this->postMapper->update($input);
+		return $this->postMapper->update(ArrayUtils::arrayWithout($input, array('date', 'slug')));
 	}
 
 	/**
