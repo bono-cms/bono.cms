@@ -27,11 +27,10 @@ final class Edit extends AbstractBanner
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'editing' => true,
 				'title' => 'Edit the banner',
 				'banner' => $banner
 			)));
-			
+
 		} else {
 
 			return false;

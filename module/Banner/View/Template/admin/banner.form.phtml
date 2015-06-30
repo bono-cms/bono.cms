@@ -4,7 +4,6 @@
 		<input type="hidden" name="id" value="<?php echo $banner->getId(); ?>" />
 		<input type="hidden" name="image" value="<?php echo $banner->getImage(); ?>" >
 		
-		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
@@ -30,13 +29,14 @@
 		</div>
 	</div>
 	
-	<?php if (!isset($editing)): ?>
-	<button data-button="add" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> <?php $this->show('Add'); ?></button>
-	
-	<?php else: ?>
+	<?php if ($banner->getId()): ?>
 	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
-	
+
+	<?php else: ?>
+	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+
 	<?php endif; ?>
-	
+
 	<button class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+
 </form>
