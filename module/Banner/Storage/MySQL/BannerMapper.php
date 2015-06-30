@@ -23,7 +23,7 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	{
 		return 'bono_module_banner';
 	}
-	
+
 	/**
 	 * Fetches banner name by its associated id
 	 * 
@@ -43,14 +43,7 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'name'	=> $input['name'],
-			'link'	=> $input['link'],
-			'image'	=> $input['image'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**
@@ -61,14 +54,7 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'	=> $this->getLangId(),
-			'name'		=> $input['name'],
-			'link'		=> $input['link'],
-			'image'		=> $input['image'],
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
