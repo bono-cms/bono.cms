@@ -20,6 +20,7 @@ use Menu\Service\MenuWidgetInterface;
 use Menu\Contract\MenuAwareManager;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Security\Filter;
+use Krystal\Stdlib\ArrayUtils;
 
 final class CategoryManager extends AbstractManager implements CategoryManagerInterface, MenuAwareManager
 {
@@ -237,7 +238,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 		$input = $this->prepareInput($input);
 		$input['web_page_id'] = '';
 
-		if ($this->categoryMapper->insert($input)) {
+		if ($this->categoryMapper->insert(ArrayUtils::arrayWithout($input, array('menu', 'slug')))) {
 
 			$id = $this->getLastId();
 			$this->track('Category "%s" has been created', $input['title']);
@@ -274,6 +275,6 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 
 		$this->track('Category "%s" has been updated', $input['title']);
 
-		return $this->categoryMapper->update($input);
+		return $this->categoryMapper->update(ArrayUtils::arrayWithout($input, array('menu', 'slug')));
 	}
 }

@@ -81,17 +81,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'title'			=> $input['title'],
-			'description'	=> $input['description'],
-			'seo'			=> $input['seo'],
-			'order'			=> $input['order'],
-			'keywords'		=> $input['keywords'],
-			'meta_description' => $input['meta_description'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**
