@@ -115,14 +115,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'	=> $this->getLangId(),
-			'name'		=> $input['name'],
-			'content'	=> $input['content'],
-			'class'		=> $input['class']
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -133,14 +126,7 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'name'		=> $input['name'],
-			'content'	=> $input['content'],
-			'class'		=> $input['class']
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**
