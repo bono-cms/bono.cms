@@ -19,6 +19,7 @@ use Menu\Service\MenuWidgetInterface;
 use Menu\Contract\MenuAwareManager;
 use MailForm\Storage\FormMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 
 final class FormManager extends AbstractManager implements FormManagerInterface, MenuAwareManager
@@ -271,8 +272,9 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	public function add(array $input)
 	{
 		$input = $this->prepareInput($input);
+		$input['web_page_id'] = '';
 
-		if ($this->formMapper->insert($input)) {
+		if ($this->formMapper->insert(ArrayUtils::arrayWithout($input, array('slug', 'menu')))) {
 
 			// Add a web page now
 			if ($this->webPageManager->add($this->getLastId(), $input['slug'], 'Mail forms', 'MailForm:Form@indexAction', $this->formMapper)) {
@@ -301,7 +303,8 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	{
 		$input = $this->prepareInput($input);
 
-		if ($this->formMapper->update($input)) {
+		if ($this->formMapper->update(ArrayUtils::arrayWithout($input, array('slug', 'menu')))) {
+
 			$this->webPageManager->update($input['web_page_id'], $input['slug']);
 
 			if ($this->hasMenuWidget() && isset($input['menu'])) {

@@ -25,7 +25,6 @@ final class Browser extends AbstractController
 		$this->loadPlugins();
 
 		return $this->view->render('browser', array(
-
 			'forms' => $this->getFormManager()->fetchAll(),
 			'title' => 'Mail forms'
 		));
@@ -116,6 +115,6 @@ final class Browser extends AbstractController
 	 */
 	private function getFormManager()
 	{
-		return $this->moduleManager->getModule('MailForm')->getService('formManager');
+		return $this->getModuleService('formManager');
 	}
 }

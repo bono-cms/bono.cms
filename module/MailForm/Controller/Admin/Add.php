@@ -21,7 +21,7 @@ final class Add extends AbstractForm
 	public function indexAction()
 	{
 		$this->loadSharedPlugins();
-		
+
 		return $this->view->render('form', $this->getSharedVars(array(
 			'title' => 'Add a form',
 			'form' => $this->getFormManager()->fetchDummy()

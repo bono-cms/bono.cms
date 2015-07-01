@@ -28,14 +28,12 @@ final class Edit extends AbstractForm
 			$this->loadSharedPlugins();
 
 			return $this->view->render('form', $this->getSharedVars(array(
-				
 				'title' => 'Edit the form',
-				'form' => $form,
-				'editing' => true
+				'form' => $form
 			)));
-			
+
 		} else {
-			
+
 			return false;
 		}
 	}
@@ -48,16 +46,16 @@ final class Edit extends AbstractForm
 	public function updateAction()
 	{
 		$formValidator = $this->getValidator($this->request->getPost());
-		
+
 		if ($formValidator->isValid()) {
-			
+
 			if ($this->getFormManager()->update($this->request->getPost())) {
 				$this->flashMessenger->set('success', 'The form has been updated successfully');
 				return '1';
 			}
-		
+
 		} else {
-			
+
 			return $formValidator->getErrors();
 		}
 	}

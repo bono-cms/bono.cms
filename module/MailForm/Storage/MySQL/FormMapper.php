@@ -39,44 +39,23 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 	/**
 	 * Adds new form
 	 * 
-	 * @param array $data
+	 * @param array $input
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'		=> $this->getLangId(),
-			'web_page_id'	=> '',
-			'template'		=> $data['template'],
-			'title'			=> $data['title'],
-			'description'	=> $data['description'],
-			'seo'			=> $data['seo'],
-			'keywords'		=> $data['keywords'],
-			'meta_description' => $data['metaDescription']
-			
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
 	 * Updates a form
 	 * 
-	 * @param array $data
+	 * @param array $input
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'template' => $data['template'],
-			'title' => $data['title'],
-			'description' => $data['description'],
-			'seo' => $data['seo'],
-			'keywords' => $data['keywords'],
-			'meta_description' => $data['metaDescription']
-
-		))->whereEquals('id', $data['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**

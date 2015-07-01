@@ -104,7 +104,7 @@ final class Form extends AbstractController
 	 */
 	private function getFormManager()
 	{
-		return $this->moduleManager->getModule('MailForm')->getService('formManager');
+		return $this->getModuleService('formManager');
 	}
 
 	/**
@@ -123,7 +123,7 @@ final class Form extends AbstractController
 
 				$flashKey = 'success';
 				$flashMessage = 'Your message has been sent';
-				
+
 			} else {
 				
 				$flashKey = 'warning';

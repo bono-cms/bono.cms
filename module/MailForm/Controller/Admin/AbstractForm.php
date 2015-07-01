@@ -53,7 +53,7 @@ abstract class AbstractForm extends AbstractController
 	 */
 	final protected function getFormManager()
 	{
-		return $this->moduleManager->getModule('MailForm')->getService('formManager');
+		return $this->getModuleService('formManager');
 	}
 
 	/**
