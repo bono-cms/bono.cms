@@ -11,6 +11,8 @@
 
 namespace Faq\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractFaq
 {
 	/**
@@ -22,9 +24,12 @@ final class Add extends AbstractFaq
 	{
 		$this->loadSharedPlugins();
 
+		$faq = new VirtualEntity();
+		$faq->setPublished(true);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add new FAQ',
-			'faq' => $this->getFaqManager()->fetchDummy()
+			'faq' => $faq
 		)));
 	}
 

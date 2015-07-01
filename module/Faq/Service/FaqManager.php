@@ -90,22 +90,6 @@ final class FaqManager extends AbstractManager implements FaqManagerInterface
 	}
 
 	/**
-	 * Fetches dummy FAQ entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'question' => null,
-			'answer' => null,
-			'order' => null,
-			'published' => true
-		));
-	}
-
-	/**
 	 * Updates published states by their associated ids
 	 * 
 	 * @param array $pair

@@ -24,13 +24,6 @@ interface FaqManagerInterface
 	public function getBreadcrumbs(VirtualEntity $faq);
 
 	/**
-	 * Fetches dummy FAQ entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Updates published states by their associated ids
 	 * 
 	 * @param array $pair
