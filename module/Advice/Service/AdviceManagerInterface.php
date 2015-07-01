@@ -31,13 +31,6 @@ interface AdviceManagerInterface
 	public function deleteByIds(array $ids);
 
 	/**
-	 * Fetches dummy advice entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetches random advice entity
 	 * 
 	 * @return boolean|\Krystal\Stdlib\VirtualEntity

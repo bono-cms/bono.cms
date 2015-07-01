@@ -76,22 +76,6 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 	}
 
 	/**
-	 * Fetches dummy advice entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'lang_id' => null,
-			'title' => null,
-			'content' => null,
-			'published' => true
-		));
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	protected function toEntity(array $advice)

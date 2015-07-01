@@ -11,6 +11,8 @@
 
 namespace Advice\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractAdvice
 {
 	/**
@@ -22,9 +24,12 @@ final class Add extends AbstractAdvice
 	{
 		$this->loadSharedPlugins();
 
+		$advice = new VirtualEntity();
+		$advice->setPublished(true);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add an advice',
-			'advice' => $this->getAdviceManager()->fetchDummy()
+			'advice' => $advice
 		)));
 	}
 
