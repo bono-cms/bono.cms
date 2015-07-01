@@ -1,11 +1,9 @@
 
-
 DROP TABLE IF EXISTS `bono_module_reviews`;
-
 CREATE TABLE `bono_module_reviews` (
 	
 	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`langId` INT NOT NULL,
+	`lang_id` INT NOT NULL,
 	`timestamp` INT NOT NULL,
 	`ip` varchar(254) NOT NULL,
 	`published` varchar(1) NOT NULL,
@@ -14,4 +12,3 @@ CREATE TABLE `bono_module_reviews` (
 	`content` TEXT
 	
 ) DEFAULT CHARSET = UTF8;
-

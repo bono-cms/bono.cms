@@ -19,7 +19,10 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_reviews';
+	public static function getTableName()
+	{
+		return 'bono_module_reviews';
+	}
 
 	/**
 	 * Returns shared select
@@ -30,8 +33,8 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	private function getSelectQuery($published)
 	{
 		$db = $this->db->select('*')
-					   ->from($this->table)
-					   ->whereEquals('langId', $this->getLangId());
+					   ->from(static::getTableName())
+					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($published === true) {
 			$db->andWhereEquals('published', '1')
@@ -67,10 +70,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function fetchNameById($id)
 	{
-		return $this->db->select('name')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query('name');
+		return $this->findColumnByPk($id, 'name');
 	}
 
 	/**
@@ -82,9 +82,12 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->db->update($this->table, array('published' => $published))
-						->whereEquals('id', $id)
-						->execute();
+		$data = array(
+			'published' => $published,
+			'id' => $id
+		);
+
+		return $this->persist($data);
 	}
 
 	/**
@@ -95,17 +98,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert($this->table, array(
-
-			'langId'		=> $this->getLangId(),
-			'timestamp'		=> $input['timestamp'],
-			'ip'			=> $input['ip'],
-			'published'		=> $input['published'],
-			'name'			=> $input['name'],
-			'email'			=> $input['email'],
-			'content'		=> $input['content'],
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -116,16 +109,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update($this->table, array(
-
-			'timestamp' => $input['timestamp'],
-			'published'	=> $input['published'],
-			'name'     	=> $input['name'],
-			'email'		=> $input['email'],
-			'content'	=> $input['content'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**
@@ -160,10 +144,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function fetchById($id)
 	{
-		return $this->db->select('*')
-						->from($this->table)
-						->whereEquals('id', $id)
-						->query();
+		return $this->findByPk($id);
 	}
 
 	/**
@@ -174,9 +155,6 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function deleteById($id)
 	{
-		return $this->db->delete()
-						->from($this->table)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->deleteByPk($id);
 	}
 }

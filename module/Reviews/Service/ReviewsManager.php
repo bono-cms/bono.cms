@@ -16,6 +16,7 @@ use Cms\Service\HistoryManagerInterface;
 use Cms\Service\NotificationManagerInterface;
 use Reviews\Storage\ReviewsMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 
 final class ReviewsManager extends AbstractManager implements ReviewsManagerInterface
@@ -224,7 +225,7 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 	private function prepareContainer(array $data)
 	{
 		$data['timestamp'] = strtotime($data['date']);
-		return $data;
+		return ArrayUtils::arrayWithout($data, array('date'));
 	}
 
 	/**
