@@ -35,7 +35,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 		// Build first fragment
 		$db = $this->db->select('*')
 						->from(static::getTableName())
-						->whereEquals('langId', $this->getLangId());
+						->whereEquals('lang_id', $this->getLangId());
 
 		if ($published === true) {
 			$db->andWhereEquals('published', '1')
@@ -117,15 +117,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'langId'		=> $this->getLangId(),
-			'order'			=> $input['order'],
-			'question'		=> $input['question'],
-			'answer'		=> $input['answer'],
-			'published'		=> $input['published']
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -136,15 +128,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'order'			=> $input['order'],
-			'question'		=> $input['question'],
-			'answer'		=> $input['answer'],
-			'published'		=> $input['published']
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**

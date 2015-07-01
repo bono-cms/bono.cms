@@ -28,7 +28,6 @@ final class Edit extends AbstractFaq
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 				'title' => 'Edit the FAQ',
-				'editing' => true,
 				'faq' => $faq
 			)));
 
