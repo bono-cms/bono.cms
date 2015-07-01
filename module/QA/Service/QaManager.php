@@ -15,6 +15,7 @@ use Cms\Service\HistoryManagerInterface;
 use Cms\Service\AbstractManager;
 use QA\Storage\QaMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 
 final class QaManager extends AbstractManager implements QaManagerInterface
@@ -53,16 +54,16 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 	{
 		$entity = new VirtualEntity();
 		$entity->setId((int) $qa['id'])
-			  ->setLangId((int) $qa['langId'])
+			  ->setLangId((int) $qa['lang_id'])
 			  ->setQuestion(Filter::escape($qa['question']))
 			  ->setAnswer(Filter::escapeContent($qa['answer']))
 			  ->setQuestioner(Filter::escape($qa['questioner']))
 			  ->setAnswerer(Filter::escape($qa['answerer']))
 			  ->setPublished((bool) $qa['published'])
-			  ->setTimestampAsked((int) $qa['timestampAsked'])
-			  ->setTimestampAnswered((int) $qa['timestampAnswered'])
-			  ->setDateAsked(strtotime($qa['timestampAsked']))
-			  ->setDateAnswered(strtotime($qa['timestampAnswered']));
+			  ->setTimestampAsked((int) $qa['timestamp_asked'])
+			  ->setTimestampAnswered((int) $qa['timestamp_answered'])
+			  ->setDateAsked(strtotime($qa['timestamp_asked']))
+			  ->setDateAnswered(strtotime($qa['timestamp_answered']));
 		
 		return $entity;
 	}
@@ -76,14 +77,14 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 	{
 		return $this->toEntity(array(
 			'id' => null,
-			'langId' => null,
+			'lang_id' => null,
 			'question' => null,
 			'answer' => null,
 			'questioner' => null,
 			'answerer' => null,
 			'published' => true,
-			'timestampAsked' => time(),
-			'timestampAnswered' => time()
+			'timestamp_asked' => time(),
+			'timestamp_answered' => time()
 		));
 	}
 
@@ -196,17 +197,17 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 	}
 
 	/**
-	 * Prepare a container before sending to a mapper
+	 * Prepare raw input data before sending to a mapper
 	 * 
 	 * @param array $data
 	 * @return void
 	 */
-	private function prepareContainer(array $data)
+	private function prepareInput(array $input)
 	{
-		$data['timestampAsked']	= strtotime($data['dateAsked']);
-		$data['timestampAnswered'] = strtotime($data['dateAnswered']);
+		$input['timestamp_asked'] = strtotime($input['date_asked']);
+		$input['timestamp_answered'] = strtotime($input['date_answered']);
 
-		return $data;
+		return ArrayUtils::arrayWithout($input, array('date_asked', 'date_answered'));
 	}
 
 	/**
@@ -217,10 +218,10 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 	 */
 	public function add(array $input)
 	{
-		$data = $this->prepareContainer($data);
-		$this->track('Question "%s" has been created', $data['question']);
+		$input = $this->prepareInput($input);
+		$this->track('Question "%s" has been created', $input['question']);
 		
-		return $this->qaMapper->insert($data);
+		return $this->qaMapper->insert($input);
 	}
 
 	/**
@@ -231,10 +232,10 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 	 */
 	public function update(array $input)
 	{
-		$data = $this->prepareContainer($input);
-		$this->track('Question "%s" has been updated', $data['question']);
+		$input = $this->prepareInput($input);
+		$this->track('Question "%s" has been updated', $input['question']);
 
-		return $this->qaMapper->update($data);
+		return $this->qaMapper->update($input);
 	}
 
 	/**

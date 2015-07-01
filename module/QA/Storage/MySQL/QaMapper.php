@@ -34,12 +34,12 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	{
 		$db = $this->db->select('*')
 					   ->from(static::getTableName())
-					   ->whereEquals('langId', $this->getLangId());
+					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($published === true) {
 
 			$db->andWhereEquals('published', '1')
-			   ->orderBy('timestampAsked');
+			   ->orderBy('timestamp_asked');
 
 		} else {
 
@@ -130,18 +130,7 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'question'			=> $input['question'],
-			'answer'			=> $input['answer'],
-			'questioner'		=> $input['questioner'],
-			'answerer'			=> $input['answerer'],
-			'published'			=> $input['published'],
-			'timestampAsked'	=> $input['timestampAsked'],
-			'timestampAnswered'	=> $input['timestampAnswered'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**
@@ -152,18 +141,7 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'langId'			=> $this->getLangId(),
-			'question'			=> $input['question'],
-			'answer'			=> $input['answer'],
-			'questioner'		=> $input['questioner'],
-			'answerer'			=> $input['answerer'],
-			'published'			=> $input['published'],
-			'timestampAsked'	=> $input['timestampAsked'],
-			'timestampAnswered'	=> $input['timestampAnswered'],
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
