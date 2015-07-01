@@ -27,7 +27,6 @@ final class Edit extends AbstractMember
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'editing' => true,
 				'title' => 'Edit the member',
 				'member' => $member
 			)));

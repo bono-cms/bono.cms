@@ -64,7 +64,7 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 		$imageBag = clone $this->imageManager->getImageBag();
 		$imageBag->setId($member['id'])
 				 ->setCover($member['photo']);
-		
+
 		$entity = new VirtualEntity();
 		$entity->setImageBag($imageBag)
 				  ->setId((int) $member['id'])
@@ -105,7 +105,7 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 	}
 
 	/**
-	 * Fetches all members bags filtered by pagination
+	 * Fetches all member entities filtered by pagination
 	 * 
 	 * @param integer $page
 	 * @param integer $itemsPerPage
@@ -117,7 +117,7 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 	}
 
 	/**
-	 * Fetches all published member bags filtered by pagination
+	 * Fetches all published member entities filtered by pagination
 	 * 
 	 * @param integer $page Page number
 	 * @param integer $itemsPerPage Items per page count
@@ -141,41 +141,41 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 	/**
 	 * Adds a member
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function add(array $data)
+	public function add(array $input)
 	{
 		// Ensure we have a file
-		if (!empty($data['files'])) {
+		if (!empty($input['files'])) {
 
-			$file =& $data['files']['file'];
+			$file =& $input['files']['file'];
 			$this->filterFileInput($file);
 
 			// Append new photo key into data container
-			$data['data']['photo'] = $file[0]->getName();
+			$input['data']['photo'] = $file[0]->getName();
 
-			$this->track('Member "%s" has been added', $data['data']['name']);
+			$this->track('Member "%s" has been added', $input['data']['name']);
 
 			// Insert must be first, so that we can get the last id
-			return $this->teamMapper->insert($data['data']) && $this->imageManager->upload($this->getLastId(), $file);
+			return $this->teamMapper->insert($input['data']) && $this->imageManager->upload($this->getLastId(), $file);
 		}
 	}
 
 	/**
 	 * Updates a member
 	 * 
-	 * @param array $data Raw input data
+	 * @param array $input Raw input data
 	 * @return boolean Depending on success
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		// Just a reference
-		$form =& $data['data'];
+		$form =& $input['data'];
 
-		if (!empty($data['files'])) {
+		if (!empty($input['files'])) {
 
-			$file =& $data['files']['file'];
+			$file =& $input['files']['file'];
 
 			// When overriding a photo, we need to remove old one from the file-system
 			if ($this->imageManager->delete($form['id'], $form['photo'])) {
@@ -199,7 +199,7 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 	}
 
 	/**
-	 * Fetches by associated id
+	 * Fetches member's entity by associated id
 	 * 
 	 * @param string $id Member's id
 	 * @return array

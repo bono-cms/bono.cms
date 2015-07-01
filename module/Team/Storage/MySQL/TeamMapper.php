@@ -67,16 +67,7 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'name'			=> $input['name'],
-			'description'	=> $input['description'],
-			'photo'			=> $input['photo'],
-			'published'		=> $input['published'],
-			'order'			=> $input['order'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**
@@ -87,16 +78,7 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'		=> $this->getLangId(),
-			'name'			=> $input['name'],
-			'description'	=> $input['description'],
-			'photo'			=> $input['photo'],
-			'published'		=> $input['published'],
-			'order'			=> $input['order'],
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
