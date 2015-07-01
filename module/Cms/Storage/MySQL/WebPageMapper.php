@@ -74,9 +74,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 			$data = array_merge($data, array('controller' => $controller));
 		}
 
-		return $this->db->update(static::getTableName(), $data)
-						->whereEquals('id', $id)
-						->execute();
+		return $this->persist($data);
 	}
 
 	/**
@@ -87,12 +85,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	 */
 	public function insert(array $data)
 	{
-		$data = array_merge(array(
-			'lang_id' => $this->getLangId(),
-		), $data);
-
-		return $this->db->insert(static::getTableName(), $data)
-						->execute();
+		return $this->persist($this->getWithLang($data));
 	}
 
 	/**
