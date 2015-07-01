@@ -19,6 +19,7 @@ use Pages\Storage\DefaultMapperInterface;
 use Menu\Contract\MenuAwareManager;
 use Menu\Service\MenuWidgetInterface;
 use Krystal\Security\Filter;
+use Krystal\Stdlib\ArrayUtils;
 
 final class PageManager extends AbstractManager implements PageManagerInterface, MenuAwareManager
 {
@@ -132,14 +133,6 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 		// Fetch meta data
 		$meta = $this->webPageManager->fetchById((int) $page['web_page_id']);
 
-		// Work-around in case it's a dummy request
-		if (empty($meta)) {
-			$meta = array(
-				'slug' => null,
-				'controller' => 'Pages:Page@indexAction'
-			);
-		}
-
 		$entity = new PageEntity();
 		$entity->setId((int) $page['id'])
 				->setLangId((int) $page['lang_id'])
@@ -156,7 +149,7 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 				->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
 				->setPermanentUrl('/module/pages/'.$entity->getId())
 				->setKeywords(Filter::escape($page['keywords']));
-		
+
 		return $entity;
 	}
 
@@ -300,10 +293,7 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 		$input = $this->prepareInput($input);
 		$input['web_page_id'] = '';
 
-		$data = $input;
-		unset($data['controller'], $data['makeDefault'], $data['slug']);
-
-		if (!$this->pageMapper->insert($data)) {
+		if (!$this->pageMapper->insert(ArrayUtils::arrayWithout($input, array('controller', 'makeDefault', 'slug', 'menu')))) {
 			return false;
 		} else {
 			// It was inserted successfully
@@ -345,9 +335,7 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 
 		$this->track('The page "%s" has been updated', $input['title']);
 
-		unset($input['controller'], $input['makeDefault'], $input['slug']);
-
-		return $this->pageMapper->update($input);
+		return $this->pageMapper->update(ArrayUtils::arrayWithout($input, array('controller', 'makeDefault', 'slug', 'menu')));
 	}
 
 	/**

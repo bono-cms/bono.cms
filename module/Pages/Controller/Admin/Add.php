@@ -11,6 +11,8 @@
 
 namespace Pages\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractPage
 {
 	/**
@@ -22,9 +24,12 @@ final class Add extends AbstractPage
 	{
 		$this->loadSharedPlugins();
 
+		$page = new VirtualEntity();
+		$page->setSeo(true);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a page',
-			'form' => $this->getForm()
+			'page' => $page
 		)));
 	}
 
@@ -35,14 +40,12 @@ final class Add extends AbstractPage
 	 */
 	public function addAction()
 	{
-		$ns = $this->getForm()->getName();
-
-		$formValidator = $this->getValidator($this->request->getPost($ns));
+		$formValidator = $this->getValidator($this->request->getPost());
 
 		if ($formValidator->isValid()) {
 			$pageManager = $this->getPageManager();
 
-			if ($pageManager->add($this->request->getPost($ns))) {
+			if ($pageManager->add($this->request->getPost())) {
 
 				$this->flashMessenger->set('success', 'A page has been created successfully');
 				return $pageManager->getLastId();
