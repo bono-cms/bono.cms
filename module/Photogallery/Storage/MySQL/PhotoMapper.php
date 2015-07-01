@@ -108,17 +108,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'		=> $this->getLangId(),
-			'album_id'		=> $input['albumId'],
-			'name'			=> $input['name'],
-			'photo'			=> $input['photo'],
-			'order'			=> $input['order'],
-			'description'	=> $input['description'],
-			'published'		=> $input['published'],
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -129,17 +119,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'album_id'		=> $input['albumId'],
-			'name'			=> $input['name'],
-			'photo'			=> $input['photo'],
-			'order'			=> $input['order'],
-			'description'	=> $input['description'],
-			'published'		=> $input['published'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**

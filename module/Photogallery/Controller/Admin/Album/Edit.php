@@ -27,12 +27,12 @@ final class Edit extends AbstractAlbum
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'editing' => true,
 				'title' => 'Edit the album',
 				'album' => $album,
 			)));
 
 		} else {
+
 			return false;
 		}
 	}

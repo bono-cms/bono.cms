@@ -19,6 +19,7 @@ use Cms\Service\WebPageManagerInterface;
 use Menu\Contract\MenuAwareManager;
 use Menu\Service\MenuWidgetInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Security\Filter;
 
@@ -217,10 +218,12 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	public function add(array $input)
 	{
 		$input = $this->prepareInput($input);
+		$input['web_page_id'] = '';
 
-		if ($this->albumMapper->insert($input)) {
+		if ($this->albumMapper->insert(ArrayUtils::arrayWithout($input, array('slug', 'menu')))) {
+
 			$this->track('Album "%s" has been created', $input['title']);
-			
+
 			if ($this->webPageManager->add($this->getLastId(), $input['slug'], 'Photogallery', 'Photogallery:Album@showAction', $this->albumMapper)){
 				// Do the work in case menu widget was injected
 				if ($this->hasMenuWidget()) {
@@ -229,6 +232,7 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 			}
 
 		} else {
+
 			return false;
 		}
 	}
@@ -250,7 +254,7 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 			$this->updateMenuItem($input['web_page_id'], $input['title'], $input['menu']);
 		}
 
-		return $this->albumMapper->update($input);
+		return $this->albumMapper->update(ArrayUtils::arrayWithout($input, array('slug', 'menu')));
 	}
 
 	/**

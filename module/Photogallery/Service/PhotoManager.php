@@ -251,13 +251,13 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	/**
 	 * Prepares a container before sending to a mapper
 	 * 
-	 * @param array $form
+	 * @param array $input Raw input data
 	 * @return array
 	 */
-	private function prepareContainer(array $form)
+	private function prepareInput(array $input)
 	{
-		$data =& $form['data'];
-		$file =& $form['files']['file'];
+		$data =& $input['data'];
+		$file =& $input['files']['file'];
 
 		// Empty photo name should be replace by target filename
 		if (empty($data['name'])) {
@@ -266,21 +266,21 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 
 		$this->filterFileInput($file);
 
-		return $form;
+		return $input;
 	}
 
 	/**
 	 * Adds a photo
 	 * 
-	 * @param array $form Form data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function add(array $form)
+	public function add(array $input)
 	{
-		$form = $this->prepareContainer($form);
+		$input = $this->prepareInput($input);
 
-		$data =& $form['data'];
-		$file =& $form['files']['file'];
+		$data =& $input['data'];
+		$file =& $input['files']['file'];
 
 		$data['photo'] = $file[0]->getName();
 
@@ -293,18 +293,18 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	/**
 	 * Updates a photo
 	 * 
-	 * @param array $form Raw input data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $form)
+	public function update(array $input)
 	{
-		$data =& $form['data'];
+		$data =& $input['data'];
 
 		// Upload a photo if present and override it
-		if (!empty($form['files'])) {
-			$form = $this->prepareContainer($form);
+		if (!empty($input['files'])) {
+			$input = $this->prepareInput($input);
 
-			$file =& $form['files']['file'];
+			$file =& $input['files']['file'];
 
 			// First of all, we need to remove old photo on the file-system
 			if ($this->imageManager->delete($data['id'], $data['photo'])) {
@@ -376,7 +376,7 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	 * Tracks activity
 	 * 
 	 * @param string $message
-	 * @parma string $placeholder
+	 * @param string $placeholder
 	 * @return boolean
 	 */
 	private function track($message, $placeholder)

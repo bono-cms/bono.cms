@@ -22,10 +22,10 @@ final class Browser extends AbstractBrowser
 	public function indexAction($page = 1)
 	{
 		$this->loadSharePlugins();
-		
+
 		$paginator = $this->getPhotoManager()->getPaginator();
 		$paginator->setUrl('/admin/module/photogallery/browse/%s');
-		
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'paginator' => $paginator,
 			'photos' => $this->getPhotoManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
@@ -44,11 +44,12 @@ final class Browser extends AbstractBrowser
 		$album = $this->getAlbumManager()->fetchById($albumId);
 
 		if ($album !== false) {
+
 			$this->loadSharePlugins();
 
 			$paginator = $this->getPhotoManager()->getPaginator();
 			$paginator->setUrl('/admin/module/photogallery/browse/album/'.$albumId.'/page/%s');
-			
+
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 				'albumId' => $albumId,
 				'paginator' => $paginator,
@@ -67,17 +68,20 @@ final class Browser extends AbstractBrowser
 	 */
 	public function saveAction()
 	{
-		$published = $this->request->getPost('published');
-		$orders = $this->request->getPost('order');
-		
-		// Grab a service
-		$photoManager = $this->getPhotoManager();
-		$photoManager->updatePublished($published);
-		$photoManager->updateOrders($orders);
-		
-		$this->flashMessenger->set('success', 'Settings have been updated successfully');
-		
-		return '1';
+		if ($this->request->hasPost('published', 'order')) {
+
+			$published = $this->request->getPost('published');
+			$orders = $this->request->getPost('order');
+
+			// Grab a service
+			$photoManager = $this->getPhotoManager();
+
+			if ($photoManager->updatePublished($published) && $photoManager->updateOrders($orders)){
+
+				$this->flashMessenger->set('success', 'Settings have been updated successfully');
+				return '1';
+			}
+		}
 	}
 
 	/**
@@ -87,30 +91,37 @@ final class Browser extends AbstractBrowser
 	 */
 	public function deleteAlbumAction()
 	{
-		$id = $this->request->getPost('id');
-		
-		// Grab a service
-		$albumManager = $this->moduleManager->getModule('Photogallery')->getService('albumManager');
-		$albumManager->deleteById($id);
-		
-		$this->flashMessenger->set('success', 'Selected album has been removed successfully');
-		
-		return '1';
+		if ($this->request->hasPost('id')) {
+
+			$id = $this->request->getPost('id');
+
+			// Grab a service
+			$albumManager = $this->moduleManager->getModule('Photogallery')->getService('albumManager');
+
+			if ($albumManager->deleteById($id)) {
+
+				$this->flashMessenger->set('success', 'Selected album has been removed successfully');
+				return '1';
+			}
+		}
 	}
 
 	/**
-	 * Deletes a photo
+	 * Deletes a photo by its associated id
 	 * 
 	 * @return string
 	 */
 	public function deleteAction()
 	{
-		$id = $this->request->getPost('id');
-		
-		$this->getPhotoManager()->deleteById($id);
-		$this->flashMessenger->set('success', 'Selected photo has been removed successfully');
-		
-		return '1';
+		if ($this->request->hasPost('id')) {
+			$id = $this->request->getPost('id');
+
+			if ($this->getPhotoManager()->deleteById($id)){
+
+				$this->flashMessenger->set('success', 'Selected photo has been removed successfully');
+				return '1';
+			}
+		}
 	}
 
 	/**

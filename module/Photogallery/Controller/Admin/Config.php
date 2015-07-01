@@ -61,7 +61,7 @@ final class Config extends AbstractController
 	{
 		$this->view->getPluginBag()
 				   ->appendScript($this->getWithAssetPath('/admin/config.js'));
-		
+
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'link' => 'Photogallery:Admin:Browser@indexAction',
@@ -81,7 +81,7 @@ final class Config extends AbstractController
 	 */
 	private function getConfigManager()
 	{
-		return $this->moduleManager->getModule('Photogallery')->getService('configManager');
+		return $this->getModuleService('configManager');
 	}
 
 	/**

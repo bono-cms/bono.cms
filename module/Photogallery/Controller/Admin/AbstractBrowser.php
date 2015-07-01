@@ -75,7 +75,7 @@ abstract class AbstractBrowser extends AbstractController
 	 */
 	final protected function getPhotoManager()
 	{
-		return $this->moduleManager->getModule('Photogallery')->getService('photoManager');
+		return $this->getModuleService('photoManager');
 	}
 
 	/**
@@ -85,6 +85,6 @@ abstract class AbstractBrowser extends AbstractController
 	 */
 	final protected function getAlbumManager()
 	{
-		return $this->moduleManager->getModule('Photogallery')->getService('albumManager');
+		return $this->getModuleService('albumManager');
 	}
 }

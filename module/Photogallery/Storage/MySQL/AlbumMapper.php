@@ -99,7 +99,7 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	/**
 	 * Deletes all albums children by associated parent id
 	 * 
-	 * @pamra integer $parentId
+	 * @param integer $parentId
 	 * @return boolean
 	 */
 	public function deleteAllByParentId($parentId)
@@ -115,20 +115,7 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'			=> $this->getLangId(),
-			'parent_id' 		=> $input['parent_id'],
-			'web_page_id'		=> '',
-			'title'				=> $input['title'],
-			'name'				=> $input['name'],
-			'description'		=> $input['description'],
-			'order'				=> $input['order'],
-			'keywords'			=> $input['keywords'],
-			'meta_description'	=> $input['meta_description'],
-			'seo'				=> $input['seo']
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -139,18 +126,6 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'parent_id' 	=> $input['parent_id'],
-			'title'     	=> $input['title'],
-			'name'			=> $input['name'],
-			'description'	=> $input['description'],
-			'order'			=> $input['order'],
-			'keywords'		=> $input['keywords'],
-			'meta_description' => $input['meta_description'],
-			'seo'			=> $input['seo']
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 }
