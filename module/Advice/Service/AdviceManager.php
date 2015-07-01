@@ -145,7 +145,7 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 	public function add(array $input)
 	{
 		$this->track('Advice "%s" has been added', $input['title']);
-		return $this->adviceMapper->insert($input['title'], $input['content'], $input['published']);
+		return $this->adviceMapper->insert($input);
 	}
 
 	/**
@@ -157,7 +157,7 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 	public function update(array $input)
 	{
 		$this->track('Advice "%s" has been updated', $input['title']);
-		return $this->adviceMapper->update($input['id'], $input['title'], $input['content'], $input['published']);
+		return $this->adviceMapper->update($input);
 	}
 
 	/**

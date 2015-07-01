@@ -72,7 +72,7 @@ interface AdviceManagerInterface
 	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data);
+	public function update(array $input);
 
 	/**
 	 * Fetches advice entities filtered by pagination

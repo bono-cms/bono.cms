@@ -71,23 +71,18 @@ interface AdviceMapperInterface
 	public function deleteById($id);
 
 	/**
-	 * Inserts an advice
+	 * Adds an advice
 	 * 
-	 * @param string $title
-	 * @param string $content
-	 * @param string $published
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert($title, $content, $published);
+	public function insert(array $input);
 
 	/**
 	 * Updates an advice
 	 * 
-	 * @param string $id
-	 * @param string $title
-	 * @param string $content
-	 * @param string $published
+	 * @param array $input Raw input data
 	 * @return boolean Depending on success
 	 */
-	public function update($id, $title, $content, $published);
+	public function update(array $input);
 }
