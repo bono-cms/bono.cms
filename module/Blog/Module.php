@@ -41,15 +41,15 @@ final class Module extends AbstractCmsModule
 	{
 		$postMapper = $this->getMapper('/Blog/Storage/MySQL/PostMapper');
 		$categoryMapper = $this->getMapper('/Blog/Storage/MySQL/CategoryMapper');
-		
+
 		$webPageManager = $this->getWebPageManager();
 		$historyManager = $this->getHistoryManager();
 
 		$postManager = new PostManager($postMapper, $categoryMapper, $webPageManager, $historyManager);
 		$categoryManager = new CategoryManager($categoryMapper, $postMapper, $webPageManager, $historyManager, $this->getMenuWidget());
-		
+
 		$siteService = new BlogSiteService($categoryMapper, $postMapper, $webPageManager);
-		
+
 		return array(
 			'siteService' => $siteService,
 			'configManager' => $this->getConfigManager(),
