@@ -56,9 +56,13 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function save($id, $parentId, $range)
 	{
-		return $this->db->update(static::getTableName(), array('range' => $range, 'parent_id' => $parentId))
-						->whereEquals('id', $id)
-						->execute();
+		$data = array(
+			'range' => $range,
+			'parent_id' => $parentId,
+			'id' => $id
+		);
+
+		return $this->persist($data);
 	}
 
 	/**
@@ -173,25 +177,12 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	/**
 	 * Inserts an item
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function insert(array $data)
+	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'		=> $this->getLangId(),
-			'parent_id'		=> $data['parent_id'],
-			'category_id'	=> $data['category_id'],
-			'web_page_id'	=> $data['web_page_id'],
-			'name'			=> $data['name'],
-			'link'			=> $data['link'],
-			'has_link'		=> $data['has_link'],
-			'hint'			=> $data['hint'],
-			'published'		=> $data['published'],
-			'open_in_new_window' => $data['open_in_new_window']
-			
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -202,18 +193,6 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
 	 */
 	public function update(array $data)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'category_id'	=> $data['category_id'],
-			'web_page_id'   => $data['web_page_id'],
-			'name'			=> $data['name'],
-			'link'			=> $data['link'],
-			'has_link'		=> $data['has_link'],
-			'hint'			=> $data['hint'],
-			'published'		=> $data['published'],
-			'open_in_new_window' => $data['open_in_new_window']
-
-		))->whereEquals('id', $data['id'])
-		  ->execute();
+		return $this->persist($data);
 	}
 }

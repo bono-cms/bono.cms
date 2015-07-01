@@ -16,6 +16,7 @@ use Menu\Storage\CategoryMapperInterface;
 use Cms\Service\HistoryManagerInterface;
 use Krystal\Tree\AdjacencyList\ChildrenJsonParser;
 use Krystal\Security\Filter;
+use Krystal\Stdlib\ArrayUtils;
 
 final class ItemManager extends AbstractItemService implements ItemManagerInterface
 {
@@ -129,7 +130,7 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
 	public function add(array $input)
 	{
 		$this->track('A new "%s" item has been created', $input['name']);
-		$this->itemMapper->insert($input);
+		$this->itemMapper->insert(ArrayUtils::arrayWithout($input, array('max_depth')));
 
 		return true;
 	}
@@ -143,7 +144,7 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
 	public function update(array $input)
 	{
 		$this->track('The "%s" item has been updated', $input['name']);
-		return $this->itemMapper->update($input);
+		return $this->itemMapper->update(ArrayUtils::arrayWithout($input, array('max_depth')));
 	}
 
 	/**
