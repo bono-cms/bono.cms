@@ -11,7 +11,7 @@
 
 namespace Photogallery\Controller\Admin;
 
-use Admin\Controller\Admin\AbstractController;
+use Cms\Controller\Admin\AbstractController;
 use Krystal\Validate\Pattern;
 
 final class Config extends AbstractController
