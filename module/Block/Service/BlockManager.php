@@ -84,21 +84,6 @@ final class BlockManager extends AbstractManager implements BlockManagerInterfac
 	}
 
 	/**
-	 * Fetches dummy block
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'name' => null,
-			'class' => null,
-			'content' => null,
-		));
-	}
-
-	/**
 	 * Returns prepared paginator instance
 	 * 
 	 * @return \Krystal\Paginate\Paginator

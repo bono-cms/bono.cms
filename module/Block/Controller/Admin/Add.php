@@ -11,6 +11,8 @@
 
 namespace Block\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractBlock
 {
 	/**
@@ -23,7 +25,7 @@ final class Add extends AbstractBlock
 		$this->loadSharedPlugins();
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-			'block' => $this->getBlockManager()->fetchDummy(),
+			'block' => new VirtualEntity(),
 			'title' => 'Add a block'
 		)));
 	}
