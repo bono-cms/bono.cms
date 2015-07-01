@@ -38,27 +38,18 @@ final class HistoryMapper extends AbstractMapper implements HistoryMapperInterfa
 	}
 
 	/**
-	 * Inserts a history track
+	 * Adds new history record
 	 * 
 	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'	=> $this->getLangId(),
-			'user_id'	=> $input['user_id'],
-			'timestamp'	=> $input['timestamp'],
-			'module'	=> $input['module'],
-			'comment'	=> $input['comment'],
-			'placeholder' => $input['placeholder']
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
-	 * Fetches all history tracks filtered by pagination
+	 * Fetches all history records filtered by pagination
 	 * 
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count

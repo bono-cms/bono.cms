@@ -17,6 +17,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Krystal\Authentication\AuthManagerInterface;
 use Krystal\Authentication\UserAuthServiceInterface;
 use Krystal\Security\Filter;
+use Krystal\Stdlib\ArrayUtils;
 
 final class UserManager extends AbstractManager implements UserManagerInterface, UserAuthServiceInterface
 {
@@ -202,7 +203,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 	public function add(array $input)
 	{
 		$input['password_hash'] = $this->getHash($input['password']);
-		return $this->userMapper->insert($input);
+		return $this->userMapper->insert(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
 	}
 
 	/**
@@ -217,7 +218,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 			$input['password_hash'] = $this->getHash($input['password']);
 		}
 
-		return $this->userMapper->update($input);
+		return $this->userMapper->update(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
 	}
 
 	/**

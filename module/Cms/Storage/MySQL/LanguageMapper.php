@@ -116,15 +116,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-			
-			'name' => $input['name'],
-			'code' => $input['code'],
-			'flag' => $input['flag'],
-			'order' => $input['order'],
-			'published' => $input['published'],
-
-		))->execute();
+		return $this->persist($input);
 	}
 
 	/**
@@ -135,15 +127,6 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'name' => $input['name'],
-			'code' => $input['code'],
-			'flag' => $input['flag'],
-			'order' => $input['order'],
-			'published' => $input['published']
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 }

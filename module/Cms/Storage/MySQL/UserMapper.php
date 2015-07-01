@@ -32,15 +32,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'login'			=> $input['login'],
-			'password_hash'	=> $input['password_hash'],
-			'role'			=> $input['role'],
-			'email'			=> $input['email'],
-			'name'			=> $input['name'],
-
-		))->execute();
+		return $this->persist($input);
 	}
 
 	/**
@@ -51,16 +43,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'login'			=> $input['login'],
-			'password_hash'	=> $input['password_hash'],
-			'role'			=> $input['role'],
-			'email'			=> $input['email'],
-			'name'			=> $input['name'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**

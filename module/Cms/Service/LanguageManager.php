@@ -13,6 +13,7 @@ namespace Cms\Service;
 
 use Krystal\Iso\ISO3166\Country;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 use Krystal\Http\PersistentStorageInterface;
 use Cms\Service\AbstractManager;
@@ -270,7 +271,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
 	 */
 	public function add(array $input)
 	{
-		if ($this->languageMapper->insert($input)) {
+		if ($this->languageMapper->insert(ArrayUtils::arrayWithout($input, array('default')))) {
 			if ($input['default'] == '1') {
 				$this->makeDefault($this->getLastId());
 			}
@@ -289,7 +290,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
 	 */
 	public function update(array $input)
 	{
-		return $this->languageMapper->update($input);
+		return $this->languageMapper->update(ArrayUtils::arrayWithout($input, array('default')));
 	}
 
 	/**

@@ -2,7 +2,7 @@
 	<div class="well clearfix">
 		
 		<input type="hidden" name="id" value="<?php echo $user->getId(); ?>" />
-		<input type="hidden" name="passwordHash" value="<?php echo $user->getPasswordHash(); ?>" />
+		<input type="hidden" name="password_hash" value="<?php echo $user->getPasswordHash(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Login'); ?></label>
@@ -30,7 +30,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Password confirmation'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="password" name="passwordConfirm" class="form-control" placeholder="<?php $this->show('Enter new password again'); ?>" />
+					<input type="password" name="password_confirm" class="form-control" placeholder="<?php $this->show('Enter new password again'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
