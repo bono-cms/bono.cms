@@ -18,6 +18,7 @@ use Announcement\Storage\AnnounceMapperInterface;
 use Announcement\Storage\CategoryMapperInterface;
 use Menu\Contract\MenuAwareManager;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 
 final class AnnounceManager extends AbstractManager implements AnnounceManagerInterface, MenuAwareManager
@@ -252,15 +253,15 @@ final class AnnounceManager extends AbstractManager implements AnnounceManagerIn
 	 */
 	public function add(array $input)
 	{
-		$data = $this->prepareInput($input);
-		$data['webPageId'] = '';
+		$input = $this->prepareInput($input);
+		$input['web_page_id'] = '';
 
-		$this->announceMapper->insert($data);
+		$this->announceMapper->insert(ArrayUtils::arrayWithout($input, array('slug')));
 
 		$id = $this->getLastId();
 
-		$this->track('Announce "%s" has been added', $data['title']);
-		$this->webPageManager->add($id, $data['slug'], 'Announcements', 'Announcement:Announce@indexAction', $this->announceMapper);
+		$this->track('Announce "%s" has been added', $input['title']);
+		$this->webPageManager->add($id, $input['slug'], 'Announcements', 'Announcement:Announce@indexAction', $this->announceMapper);
 
 		return true;
 	}
@@ -273,12 +274,12 @@ final class AnnounceManager extends AbstractManager implements AnnounceManagerIn
 	 */
 	public function update(array $input)
 	{
-		$data = $this->prepareInput($input);
-		$this->webPageManager->update($data['webPageId'], $data['slug']);
+		$input = $this->prepareInput($input);
+		$this->webPageManager->update($input['web_page_id'], $input['slug']);
 
-		$this->track('Announce "%s" has been updated', $data['title']);
+		$this->track('Announce "%s" has been updated', $input['title']);
 
-		return $this->announceMapper->update($data);
+		return $this->announceMapper->update(ArrayUtils::arrayWithout($input, array('slug')));
 	}
 
 	/**

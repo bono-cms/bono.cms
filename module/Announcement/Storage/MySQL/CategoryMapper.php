@@ -44,13 +44,12 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function insert($name, $class)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id' => $this->getLangId(),
+		$data = $this->getWithLang(array(
 			'name'	 => $name,
 			'class'  => $class
+		));
 
-		))->execute();
+		return $this->persist($data);
 	}
 
 	/**
@@ -63,13 +62,11 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function update($id, $name, $class)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'name'	 => $name,
-			'class'  => $class
-
-		))->whereEquals('id', $id)
-		  ->execute();
+		return $this->persist(array(
+			'name' => $name,
+			'class' => $class,
+			'id' => $id
+		));
 	}
 
 	/**

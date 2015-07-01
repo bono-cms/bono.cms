@@ -1,5 +1,4 @@
 
-
 DROP TABLE IF EXISTS `bono_module_announcement_announces`;
 CREATE TABLE `bono_module_announcement_announces` (
 	
@@ -14,14 +13,11 @@ CREATE TABLE `bono_module_announcement_announces` (
 	`order` INT NOT NULL,
 	`published` varchar(1) NOT NULL,
 	`seo` varchar(1) NOT NULL,
-	`slug` varchar(255) NOT NULL,
 	`keywords` TEXT NOT NULL,
 	`meta_description` TEXT NOT NULL,
 	`cover` varchar(254) NOT NULL
 	
 ) DEFAULT CHARSET = UTF8;
-
-
 
 DROP TABLE IF EXISTS `bono_module_announcement_categories`;
 CREATE TABLE `bono_module_announcement_categories` (

@@ -21,30 +21,6 @@ final class Module extends AbstractCmsModule
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getRoutes()
-	{
-		return include(__DIR__ . '/Config/routes.php');
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getTranslations($language)
-	{
-		return $this->loadArray(__DIR__ . '/Translations/'.$language.'/messages.php');
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getConfigData()
-	{
-		return include(__DIR__ . '/Config/module.config.php');
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getServiceProviders()
 	{
 		// Build mappers
@@ -53,11 +29,11 @@ final class Module extends AbstractCmsModule
 
 		$webPageManager = $this->getWebPageManager();
 		$historyManager = $this->getHistoryManager();
-		
+
 		$announceManager = new AnnounceManager($announceMapper, $categoryMapper, $webPageManager, $historyManager);
-		
+
 		$siteService = new SiteService($announceManager, $categoryMapper);
-		
+
 		return array(
 			'siteService' => $siteService,
 			'announceManager' => $announceManager,

@@ -2,7 +2,7 @@
 	<div class="well clearfix">
 		
 		<input type="hidden" name="id" value="<?php echo $announce->getId(); ?>" />
-		<input type="hidden" name="webPageId" value="<?php echo $announce->getWebPageId(); ?>" />
+		<input type="hidden" name="web_page_id" value="<?php echo $announce->getWebPageId(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
@@ -27,7 +27,7 @@
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Category'); ?></label>
 			<div class="col-lg-10">
-				<select name="categoryId" class="form-control">
+				<select name="category_id" class="form-control">
 					
 					<?php foreach ($categories as $category): ?>
 					<option value="<?php echo $category->getId(); ?>" <?php $this->getHelper()->selectOnDemand($category->getId() == $announce->getCategoryId()); ?>><?php echo $category->getName(); ?></option>
@@ -109,7 +109,7 @@
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Meta-Description'); ?></label>
 				<div class="col-lg-10">
-					<textarea name="metaDescription" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $announce->getMetaDescription(); ?></textarea>
+					<textarea name="meta_description" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $announce->getMetaDescription(); ?></textarea>
 				</div>
 			</div>
 			
@@ -131,7 +131,8 @@
 		</div>
 	</div>
 	
-	<?php if (isset($editing)):?>
+	<?php if ($announce->getId()): ?>
+	
 	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
 	<button data-button="save-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Save & Create new'); ?></button>
 	

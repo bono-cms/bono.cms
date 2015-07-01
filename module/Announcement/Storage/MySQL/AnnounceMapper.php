@@ -97,24 +97,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'	 	=> $this->getLangId(),
-			'category_id' 	=> $input['categoryId'],
-			'web_page_id'	=> $input['webPageId'],
-			'title'			=> $input['title'],
-			'name'		 	=> $input['name'],
-			'intro'		 	=> $input['intro'],
-			'full'		 	=> $input['full'],
-			'order'		 	=> $input['order'],
-			'published'  	=> $input['published'],
-			'seo' 			=> $input['seo'],
-			'slug'		 	=> $input['slug'],
-			'keywords'	 	=> $input['keywords'],
-			'meta_description' => $input['metaDescription'],
-			'cover'		 	=> $input['cover']
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -125,23 +108,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'category_id' 	=> $input['categoryId'],
-			'title'			=> $input['title'],
-			'name'		 	=> $input['name'],
-			'intro'		 	=> $input['intro'],
-			'full'		 	=> $input['full'],
-			'order'		 	=> $input['order'],
-			'published'  	=> $input['published'],
-			'seo' 			=> $input['seo'],
-			'slug'		 	=> $input['slug'],
-			'keywords'	 	=> $input['keywords'],
-			'meta_description' => $input['metaDescription'],
-			'cover'		 	=> $input['cover']
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**

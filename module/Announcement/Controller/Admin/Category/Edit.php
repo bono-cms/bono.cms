@@ -27,7 +27,6 @@ final class Edit extends AbstractCategory
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'editing' => true,
 				'title' => 'Edit the category',
 				'category' => $category
 			)));

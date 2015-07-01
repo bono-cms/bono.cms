@@ -27,8 +27,6 @@ final class Edit extends AbstractAnnounce
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				
-				'editing' => true,
 				'title' => 'Edit the announce',
 				'announce'	 => $announce
 			)));
