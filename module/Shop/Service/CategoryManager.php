@@ -22,6 +22,7 @@ use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Security\Filter;
 use Krystal\Tree\AdjacencyList\TreeBuilder;
 use Krystal\Tree\AdjacencyList\Render\PhpArray;
+use Krystal\Stdlib\ArrayUtils;
 
 final class CategoryManager extends AbstractManager implements CategoryManagerInterface, MenuAwareManager
 {
@@ -272,7 +273,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 		}
 
 		$this->webPageManager->update($category['web_page_id'], $category['slug']);
-		$this->categoryMapper->update($category);
+		$this->categoryMapper->update(ArrayUtils::arrayWithout($category, array('slug', 'menu')));
 
 		if ($this->hasMenuWidget() && isset($input['data']['menu'])) {
 			$this->updateMenuItem($category['web_page_id'], $category['title'], $input['data']['menu']);
@@ -304,7 +305,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 
 		$category['web_page_id'] = '';
 
-		if ($this->categoryMapper->insert($category)) {
+		if ($this->categoryMapper->insert(ArrayUtils::arrayWithout($category, array('slug', 'menu')))) {
 			$id = $this->getLastId();
 
 			// If we have a cover, then we need to upload it
@@ -335,17 +336,8 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	{
 		$categoryRemover = new CategoryRemover($this->categoryMapper, $this->webPageManager, $this->imageManager, $this->productRemover);
 		$categoryRemover->removeAllById($id);
-		
+
 		return true;
-		
-		//$webPageId = $this->categoryMapper->fetchWebPageIdById($id);
-		//$this->webPageManager->deleteById($webPageId);
-		
-		//@todo Delete product images
-		//@todo delete category images
-		//$this->categoryMapper->deleteByParentId($id);
-		//$this->categoryMapper->deleteById($id);
-		//$this->imageManager->delete($id);
 	}
 
 	/**

@@ -12,6 +12,7 @@
 namespace Shop\Service;
 
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Security\Filter;
 use Menu\Contract\MenuAwareManager;
@@ -444,7 +445,7 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 		$files =& $input['files']['file'];
 
 		// Insert should be first, because we need to provide an id
-		$this->productMapper->insert($product);
+		$this->productMapper->insert(ArrayUtils::arrayWithout($product, array('slug')));
 
 		// After insert, now we can get an id
 		$id = $this->getLastId();
@@ -479,21 +480,20 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	public function update(array $input)
 	{
 		$input = $this->prepareInput($input);
-		
+
 		// Product data
 		$product =& $input['data']['product'];
-		
+
 		// Current product id we're dealing with
 		$productId = $product['id'];
-		
+
 		// An array of new appended images from a user
 		$appendedImages = $input['files']['file'];
-		
+
 		if (!empty($input['files'])) {
-			
 			// Array of changed images, representing an id => FileBag instance
 			$changedImages = $this->getChangedImages($input['files']);
-			
+
 			// Do we have any changed image?
 			if (!empty($changedImages)) {
 				foreach ($changedImages as $imageId => $fileBag) {
@@ -505,12 +505,12 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 						$this->imageMapper->updateFileNameById($imageId, $fileBag[0]->getName());
 					}
 				}
-				
+
 				// PHP hasn't block scope, so we have to remove it manually
 				unset($fileBag);
 			}
 		}
-		
+
 		// New user appended images
 		if (!empty($appendedImages)) {
 			// Upload all appended files firstly
@@ -521,14 +521,14 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 				}
 			}
 		}
-		
+
 		$photos =& $input['data']['photos'];
-		
+
 		// Do we have images to delete?
 		if (isset($photos['toDelete'])) {
 			// Grab photo ids we're gonna remove
 			$ids = array_keys($photos['toDelete']);
-			
+
 			foreach ($ids as $imageId) {
 				// Try to remove on file-system first
 				if ($this->imageManager->delete($productId, $this->imageMapper->fetchFileNameById($imageId))){
@@ -537,31 +537,31 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 				}
 			}
 		}
-		
+
 		if (isset($photos['published'])) {
 			// Update photos published state
 			foreach ($photos['published'] as $id => $published) {
 				$this->imageMapper->updatePublishedById($id, $published);
 			}
 		}
-		
+
 		if (isset($photos['order'])) {
 			// Update photos order
 			foreach ($photos['order'] as $id => $order) {
 				$this->imageMapper->updateOrderById($id, $order);
 			}
 		}
-		
+
 		// Update a cover now
 		if (isset($photos['cover'])) {
 			$product['cover'] = $photos['cover'];
 		}
-		
+
 		$this->track('Product "%s" has been updated', $product['title']);
-		
+
 		$this->webPageManager->update($product['web_page_id'], $product['slug']);
-		
-		return $this->productMapper->update($product);
+
+		return $this->productMapper->update(ArrayUtils::arrayWithout($product, array('slug')));
 	}
 
 	/**

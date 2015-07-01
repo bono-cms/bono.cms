@@ -64,48 +64,23 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	/**
 	 * Adds a category
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert(static::getTableName(), array(
-			
-			'lang_id'			=> $this->getLangId(),
-			'parent_id'			=> $data['parent_id'],
-			'web_page_id'		=> $data['web_page_id'],
-			'title'				=> $data['title'],
-			'description'		=> $data['description'],
-			'order'				=> $data['order'],
-			'seo'				=> $data['seo'],
-			'keywords'			=> $data['keywords'],
-			'meta_description'	=> $data['meta_description'],
-			'cover'				=> $data['cover'],
-			
-		))->execute();
+		return $this->persist($this->getWithLang($data));
 	}
 
 	/**
 	 * Updates a category
 	 * 
-	 * @param array $data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function update(array $data)
 	{
-		return $this->db->update(static::getTableName(), array(
-			
-			'parent_id'		=> $data['parent_id'],
-			'title'			=> $data['title'],
-			'description'	=> $data['description'],
-			'order'			=> $data['order'],
-			'seo'			=> $data['seo'],
-			'keywords'		=> $data['keywords'],
-			'meta_description' => $data['meta_description'],
-			'cover'        	=> $data['cover'],
-			
-		))->whereEquals('id', $data['id'])
-		  ->execute();
+		return $this->persist($data);
 	}
 
 	/**

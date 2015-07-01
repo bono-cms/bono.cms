@@ -282,22 +282,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'category_id'		=> $input['category_id'],
-			'title'				=> $input['title'],
-			'regular_price'		=> $input['regular_price'],
-			'stoke_price'		=> $input['stoke_price'],
-			'description'		=> $input['description'],
-			'published'			=> $input['published'],
-			'order'				=> $input['order'],
-			'seo'				=> $input['seo'],
-			'keywords'			=> $input['keywords'],
-			'meta_description'  => $input['meta_description'],
-			'cover'				=> $input['cover']
-
-		))->whereEquals('id', $data['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**
@@ -308,24 +293,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id'			=> $this->getLangId(),
-			'category_id'		=> $input['category_id'],
-			'title'				=> $input['title'],
-			'regular_price'		=> $input['regular_price'],
-			'stoke_price'		=> $input['stoke_price'],
-			'special_offer'		=> $input['special_offer'],
-			'description'		=> $input['description'],
-			'published'			=> $input['published'],
-			'order'				=> $input['order'],
-			'seo'				=> $input['seo'],
-			'keywords'			=> $input['keywords'],
-			'meta_description'	=> $input['meta_description'],
-			'cover'				=> $input['cover'],
-			'timestamp'			=> $input['timestamp']
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
