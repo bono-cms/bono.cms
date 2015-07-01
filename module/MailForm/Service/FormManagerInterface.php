@@ -38,13 +38,6 @@ interface FormManagerInterface
 	public function fetchTitleByWebPageId($webPageId);
 
 	/**
-	 * Fetches dummy form entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Returns last id
 	 * 
 	 * @return integer

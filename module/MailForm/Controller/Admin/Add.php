@@ -11,6 +11,8 @@
 
 namespace MailForm\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractForm
 {
 	/**
@@ -22,9 +24,12 @@ final class Add extends AbstractForm
 	{
 		$this->loadSharedPlugins();
 
+		$form = new VirtualEntity();
+		$form->setSeo(true);
+
 		return $this->view->render('form', $this->getSharedVars(array(
 			'title' => 'Add a form',
-			'form' => $this->getFormManager()->fetchDummy()
+			'form' => $form
 		)));
 	}
 

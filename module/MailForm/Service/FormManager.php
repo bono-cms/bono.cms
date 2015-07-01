@@ -128,27 +128,6 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	}
 
 	/**
-	 * Fetches dummy form entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'lang_id' => null,
-			'web_page_id' => null,
-			'title' => null,
-			'description' => null,
-			// By default SEO must be enabled
-			'seo' => true,
-			'keywords' => null,
-			'meta_description' => null,
-			'template' => null
-		));
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	protected function toEntity(array $form)
