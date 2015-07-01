@@ -54,13 +54,6 @@ interface AnnounceManagerInterface
 	public function getPaginator();
 
 	/**
-	 * Fetches dummy announce bag
-	 * 
-	 * @return array
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Adds an announce
 	 * 
 	 * @param array $input Raw form data

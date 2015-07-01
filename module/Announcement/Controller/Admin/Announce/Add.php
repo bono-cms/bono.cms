@@ -11,6 +11,8 @@
 
 namespace Announcement\Controller\Admin\Announce;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractAnnounce
 {
 	/**
@@ -22,9 +24,13 @@ final class Add extends AbstractAnnounce
 	{
 		$this->loadSharedPlugins();
 
+		$announce = new VirtualEntity();
+		$announce->setSeo(true);
+		$announce->setPublished(true);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add new announce',
-			'announce' => $this->getAnnounceManager()->fetchDummy()
+			'announce' => $announce
 		)));
 	}
 

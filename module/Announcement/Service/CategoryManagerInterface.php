@@ -14,13 +14,6 @@ namespace Announcement\Service;
 interface CategoryManagerInterface
 {
 	/**
-	 * Fetches dummy category bag
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetches category data by its associated id
 	 * 
 	 * @param string $id Category id

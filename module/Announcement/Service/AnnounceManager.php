@@ -193,33 +193,6 @@ final class AnnounceManager extends AbstractManager implements AnnounceManagerIn
 	}
 
 	/**
-	 * Fetches dummy announce entity
-	 * 
-	 * @return array
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			
-			'id' => null,
-			'lang_id' => null,
-			'web_page_id' => null,
-			'category_id' => null,
-			'title' => null,
-			'name' => null,
-			'intro' => null,
-			'full' => null,
-			'order' => null,
-			'published' => true,
-			'seo' => true,
-			'slug' => null,
-			'keywords' => null,
-			'meta_description' => null,
-			'cover' => null,
-		));
-	}
-
-	/**
 	 * Prepares a container
 	 * 
 	 * @param array $input Raw input data
