@@ -35,7 +35,6 @@ final class Module extends AbstractCmsModule
 		$imageManager = new ImageManager($imageMapper, $categoryMapper, new ImageManagerFactory($this->getAppConfig()), $historyManager);
 
 		return array(
-			
 			'siteService' => new SiteService($imageManager, new MemoryCache),
 			'categoryManager' => new CategoryManager($categoryMapper, $historyManager),
 			'imageManager'  => $imageManager,

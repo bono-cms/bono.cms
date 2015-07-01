@@ -216,18 +216,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function update(array $data)
 	{
-		return $this->db->update(static::getTableName(), array(
-			
-			'category_id'	=> $data['category_id'],
-			'name'			=> $data['name'],
-			'description'	=> $data['description'],
-			'order'			=> $data['order'],
-			'published'		=> $data['published'],
-			'link' 			=> $data['link'],
-			'image'			=> $data['image']
-			
-		))->whereEquals('id', $data['id'])
-		  ->execute();
+		return $this->persist($data);
 	}
 
 	/**
@@ -238,18 +227,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert(static::getTableName(), array(
-			
-			'lang_id'		=> $this->getLangId(),
-			'category_id'	=> $data['category_id'],
-			'name'			=> $data['name'],
-			'description'	=> $data['description'],
-			'order'			=> $data['order'],
-			'published'		=> $data['published'],
-			'link' 			=> $data['link'],
-			'image'			=> $data['image']
-			
-		))->execute();
+		return $this->persist($this->getWithLang($data));
 	}
 
 	/**

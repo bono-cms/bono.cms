@@ -91,7 +91,7 @@
 	</div>
 	
 	
-	<?php if (!isset($editing)): ?>
+	<?php if (!$image->getId()): ?>
 	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
 	<?php else: ?>
 	

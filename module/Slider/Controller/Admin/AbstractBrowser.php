@@ -43,7 +43,7 @@ abstract class AbstractBrowser extends AbstractController
 	 */
 	final protected function getImageManager()
 	{
-		return $this->getSliderModule()->getService('imageManager');
+		return $this->getModuleService('imageManager');
 	}
 
 	/**
@@ -53,17 +53,17 @@ abstract class AbstractBrowser extends AbstractController
 	 */
 	final protected function getCategoryManager()
 	{
-		return $this->getSliderModule()->getService('categoryManager');
+		return $this->getModuleService('categoryManager');
 	}
-
+	
 	/**
-	 * Returns slider's module definition
+	 * Returns task manager
 	 * 
-	 * @return \Slider\Module
+	 * @return \Slider\Service\TaskManager
 	 */
-	final protected function getSliderModule()
+	final protected function getTaskManager()
 	{
-		return $this->moduleManager->getModule('Slider');
+		return $this->getModuleService('taskManager');
 	}
 
 	/**
@@ -83,10 +83,10 @@ abstract class AbstractBrowser extends AbstractController
 
 		$vars = array(
 			'title' => 'Slider',
-			'taskManager' => $this->getSliderModule()->getService('taskManager'),
+			'taskManager' => $this->getTaskManager(),
 			'categories' => $this->getCategoryManager()->fetchAll(),
 		);
-		
+
 		return array_replace_recursive($vars, $overrides);
 	}
 }

@@ -10,12 +10,8 @@ CREATE TABLE `bono_module_slider_category` (
 ) DEFAULT CHARSET = UTF8;
 
 
-
-
-
 DROP TABLE IF EXISTS `bono_module_slider_images`;
 CREATE TABLE `bono_module_slider_images` (
-	
 	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`lang_id` INT NOT NULL,
 	`category_id` INT NOT NULL,

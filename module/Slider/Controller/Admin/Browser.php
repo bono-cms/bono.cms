@@ -22,12 +22,12 @@ final class Browser extends AbstractBrowser
 	public function indexAction($page = 1)
 	{
 		$this->loadSharedPlugins();
-		
+
 		$paginator = $this->getImageManager()->getPaginator();
 		$paginator->setUrl('/admin/module/slider/page/%s');
-		
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-			
+
 			'title' => 'Slider',
 			'images' => $this->getImageManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
 			'paginator' => $paginator
@@ -62,14 +62,17 @@ final class Browser extends AbstractBrowser
 	 */
 	public function deleteCategoryAction()
 	{
-		// Get category id from request
-		$id = $this->request->getPost('id');
+		if ($this->request->hasPost('id')) {
 
-		// Remove all images associated with provided category id
-		if ($this->getImageManager()->deleteAllByCategoryId($id) && $this->getCategoryManager()->deleteById($id)) {
+			// Get category id from request
+			$id = $this->request->getPost('id');
 
-			$this->flashMessenger->set('success', 'The category has been removed successfully');
-			return '1';
+			// Remove all images associated with provided category id
+			if ($this->getImageManager()->deleteAllByCategoryId($id) && $this->getCategoryManager()->deleteById($id)) {
+
+				$this->flashMessenger->set('success', 'The category has been removed successfully');
+				return '1';
+			}
 		}
 	}
 
@@ -80,12 +83,14 @@ final class Browser extends AbstractBrowser
 	 */
 	public function deleteAction()
 	{
-		$id = $this->request->getPost('id');
+		if ($this->request->hasPost('id')) {
+			$id = $this->request->getPost('id');
 
-		if ($this->getImageManager()->deleteById($id)) {
+			if ($this->getImageManager()->deleteById($id)) {
 
-			$this->flashMessenger->set('success', 'Selected slider has been removed successfully');
-			return '1';
+				$this->flashMessenger->set('success', 'Selected slider has been removed successfully');
+				return '1';
+			}
 		}
 	}
 
@@ -122,17 +127,19 @@ final class Browser extends AbstractBrowser
 	 */
 	public function saveAction()
 	{
-		// Get input variables first
-		$published = $this->request->getPost('published');
-		$orders = $this->request->getPost('order');
+		if ($this->request->has('published', 'order')) {
 
-		$imageManager = $this->getImageManager();
+			// Get input variables first
+			$published = $this->request->getPost('published');
+			$orders = $this->request->getPost('order');
 
-		$imageManager->updatePublished($published);
-		$imageManager->updateOrders($orders);
+			$imageManager = $this->getImageManager();
 
-		$this->flashMessenger->set('success', 'Settings have been updated successfully');
-		
-		return '1';
+			if ($imageManager->updatePublished($published) && $imageManager->updateOrders($orders)) {
+
+				$this->flashMessenger->set('success', 'Settings have been updated successfully');
+				return '1';
+			}
+		}
 	}
 }
