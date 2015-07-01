@@ -88,23 +88,8 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 			->setName(Filter::escape($banner['name']))
 			->setLink(Filter::escape($banner['link']))
 			->setImage(Filter::escape($banner['image']));
-		
-		return $entity;
-	}
 
-	/**
-	 * Fetches dummy banner's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'name' => null,
-			'link' => null,
-			'image' => null,
-		));
+		return $entity;
 	}
 
 	/**

@@ -29,13 +29,6 @@ interface BannerManagerInterface
 	public function getLastId();
 
 	/**
-	 * Fetches dummy banner's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetches all banner entities filtered by pagination
 	 * 
 	 * @param string $page Current page

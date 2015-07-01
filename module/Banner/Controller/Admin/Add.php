@@ -11,6 +11,8 @@
 
 namespace Banner\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractBanner
 {
 	/**
@@ -24,7 +26,7 @@ final class Add extends AbstractBanner
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a banner',
-			'banner' => $this->getBannerManager()->fetchDummy()
+			'banner' => new VirtualEntity()
 		)));
 	}
 
