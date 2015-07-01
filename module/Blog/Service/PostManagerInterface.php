@@ -45,13 +45,6 @@ interface PostManagerInterface
 	public function getTimeFormat();
 
 	/**
-	 * Fetches dummy post entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Returns prepared paginator's instance
 	 * 
 	 * @return \Krystal\Paginate\Paginator

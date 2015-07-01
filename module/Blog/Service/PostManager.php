@@ -201,32 +201,6 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	}
 
 	/**
-	 * Fetches dummy post entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'lang_id' => null,
-			'web_page_id' => null,
-			'category_id' => null,
-			'title' => null,
-			'introduction' => null,
-			'full' => null,
-			// By default we'd use current timestamp
-			'timestamp' => time(),
-			'published' => true,
-			'comments' => true,
-			'seo' => true,
-			'slug' => null,
-			'keywords' => null,
-			'meta_description' => null
-		));
-	}
-
-	/**
 	 * Returns prepared paginator's instance
 	 * 
 	 * @return \Krystal\Paginate\Paginator

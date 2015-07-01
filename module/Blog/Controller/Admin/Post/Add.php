@@ -11,6 +11,8 @@
 
 namespace Blog\Controller\Admin\Post;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractPost
 {
 	/**
@@ -22,9 +24,15 @@ final class Add extends AbstractPost
 	{
 		$this->loadSharedPlugins();
 
+		$post = new VirtualEntity();
+		$post->setTimestamp(time())
+			 ->setPublished(true)
+			 ->setComments(true)
+			 ->setSeo(true);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a post',
-			'post' => $this->getPostManager()->fetchDummy()
+			'post' => $post
 		)));
 	}
 

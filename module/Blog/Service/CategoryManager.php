@@ -138,27 +138,6 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	}
 
 	/**
-	 * Fetches dummy category's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'lang_id' => null,
-			'web_page_id' => null,
-			'title' => null,
-			'description' => null,
-			'seo' => true,
-			'order' => null,
-			'slug' => null,
-			'meta_description' => null,
-			'keywords' => null,
-		));
-	}
-
-	/**
 	 * Returns last category's id
 	 * 
 	 * @return integer

@@ -24,13 +24,6 @@ interface CategoryManagerInterface
 	public function getBreadcrumbs(VirtualEntity $category);
 
 	/**
-	 * Fetches dummy category's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Returns last category's id
 	 * 
 	 * @return integer
