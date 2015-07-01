@@ -11,6 +11,8 @@
 
 namespace Menu\Controller\Admin\Category;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractCategory
 {
 	/**
@@ -22,9 +24,12 @@ final class Add extends AbstractCategory
 	{
 		$this->loadSharedPlugins();
 
+		$category = new VirtualEntity();
+		$category->setMaxDepth(5);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a category',
-			'category' => $this->getCategoryManager()->fetchDummy()
+			'category' => $category
 		)));
 	}
 

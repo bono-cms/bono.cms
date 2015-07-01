@@ -46,19 +46,13 @@ abstract class AbstractItemService extends AbstractManager
 	 */
 	public function fetchDummy($categoryId = null, $parentId = null)
 	{
-		$item = array(
-			'category_id' => $categoryId,
-			'web_page_id' => null,
-			'parent_id' => $parentId,
-			'name' => null,
-			'link' => null,
-			'has_link' => false,
-			'id'   => null,
-			'hint' => null,
-			'published' => '1',
-			'open_in_new_window' => '0'
-		);
-		
-		return $this->toEntity($item);
+		$item = new VirtualEntity();
+		$item->setCategoryId($categoryId)
+			 ->setParentId($parentId)
+			 ->setHasLink(false)
+			 ->setPublished(true)
+			 ->setOpenInNewWindow(false);
+
+		return $item;
 	}
 }
