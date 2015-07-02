@@ -228,7 +228,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 		// Configure time bag now
 		$timeBag = clone $this->timeBag;
 		$timeBag->setTimestamp((int) $post['timestamp']);
-		
+
 		// And finally prepare post's entity
 		$entity = new PostEntity();
 		$entity->setImageBag($imageBag)
@@ -261,22 +261,15 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	 */
 	public function fetchDummy()
 	{
-		return $this->toEntity(array(
-			'id' => null,
-			'lang_id' => null,
-			'web_page_id' => null,
-			'category_id' => null,
-			'cover' => null,
-			'published' => true,
-			'seo' => true,
-			'title' => null,
-			'intro' => null,
-			'full' => null,
-			'slug' => null,
-			'timestamp' => time(),
-			'keywords' => null,
-			'meta_description' => null,
-		));
+		$timeBag = clone $this->timeBag;
+		$timeBag->setTimestamp(time());
+
+		$post = new PostEntity();
+		$post->setPublished(true)
+			 ->setSeo(true)
+			 ->setTimeBag($timeBag);
+
+		return $post;
 	}
 
 	/**

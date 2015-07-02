@@ -56,13 +56,6 @@ interface PostManagerInterface
 	public function getPaginator();
 
 	/**
-	 * Fetches dummy post bag
-	 * 
-	 * @return \Krystal\Stdlib\VirtualBag
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Returns an id of latest post
 	 * 
 	 * @return integer

@@ -32,13 +32,6 @@ interface CategoryManagerInterface
 	public function getLastId();
 
 	/**
-	 * Fetches dummy category entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetches all category bags
 	 * 
 	 * @return array|boolean

@@ -22,6 +22,6 @@ final class PostEntity extends VirtualEntity
 	 */
 	public function hasCover()
 	{
-		return $this->getCover() !== '';
+		return $this->getCover() != '';
 	}
 }
