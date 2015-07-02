@@ -97,23 +97,6 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 		return $entity;
 	}
 
-	/**
-	 * Fetches dummy user's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'login' => null,
-			'password_hash' => null,
-			'role' => null,
-			'email' => null,
-			'name' => null
-		));
-	}
-	
 	public function getId()
 	{
 		return $this->authManager->getId();

@@ -46,5 +46,4 @@ interface UserManagerInterface
 	 * @return boolean
 	 */
 	public function update(array $input);
-	
 }

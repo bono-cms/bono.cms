@@ -15,13 +15,6 @@ namespace Cms\Service;
 interface LanguageManagerInterface
 {
 	/**
-	 * Fetches dummy language bag
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Defines current language id
 	 * 
 	 * @param string $id Current language id to be set

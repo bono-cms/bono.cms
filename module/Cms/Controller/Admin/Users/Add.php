@@ -11,6 +11,8 @@
 
 namespace Cms\Controller\Admin\Users;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractUser
 {
 	/**
@@ -23,7 +25,7 @@ final class Add extends AbstractUser
 		$this->loadSharedPlugins();
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-			'user' => $this->getUserManager()->fetchDummy(),
+			'user' => new VirtualEntity(),
 			'title' => 'Add a user'
 		)));
 	}

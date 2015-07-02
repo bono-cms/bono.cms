@@ -42,25 +42,8 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
 	 */
 	private $storage;
 
-	/**
-	 * That default key stored in a mapper
-	 * 
-	 * @const string
-	 */
 	const LANGUAGE_DEFAULT_KEY = 'default_language_id';
-
-	/**
-	 * Default language key
-	 * 
-	 * @const string
-	 */
 	const LANGUAGE_CONTENT_STORAGE_KEY = 'lang_id';
-
-	/**
-	 * Key which represents interface code's value
-	 * 
-	 * @const string
-	 */
 	const LANGUAGE_INTERFACE_STORAGE_KEY = 'interface_lang_code';
 
 	/**
@@ -92,22 +75,6 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
 			->setCode(Filter::escape($language['code']));
 		
 		return $entity;
-	}
-
-	/**
-	 * Fetches dummy language entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'name' => null,
-			'published' => true,
-			'order' => null,
-			'code' => null
-		));
 	}
 
 	/**

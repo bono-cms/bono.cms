@@ -11,6 +11,8 @@
 
 namespace Cms\Controller\Admin\Languages;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractLanguage
 {
 	/**
@@ -22,10 +24,13 @@ final class Add extends AbstractLanguage
 	{
 		$this->loadSharedPlugins();
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		$language = new VirtualEntity();
+		$language->setPublished(true)
+				 ->setOrder(0);
 
+		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a language',
-			'language' => $this->getLanguageManager()->fetchDummy()
+			'language' => $language
 		)));
 	}
 
