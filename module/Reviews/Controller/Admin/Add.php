@@ -11,6 +11,8 @@
 
 namespace Reviews\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractReview
 {
 	/**
@@ -22,9 +24,13 @@ final class Add extends AbstractReview
 	{
 		$this->loadSharedPlugins();
 
+		$review = new VirtualEntity();
+		$review->setPublished(true)
+			   ->setTimestamp(time());
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add new review',
-			'review' => $this->getReviewsManager()->fetchDummy()
+			'review' => $review
 		)));
 	}
 

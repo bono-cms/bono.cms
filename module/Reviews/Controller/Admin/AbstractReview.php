@@ -101,6 +101,6 @@ abstract class AbstractReview extends AbstractController
 	 */
 	final protected function getReviewsManager()
 	{
-		return $this->moduleManager->getModule('Reviews')->getService('reviewsManager');
+		return $this->getModuleService('reviewsManager');
 	}
 }

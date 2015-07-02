@@ -78,24 +78,6 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 	}
 
 	/**
-	 * Fetches dummy review entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'timestamp' => time(),
-			'ip' => null,
-			'published' => true,
-			'name' => null,
-			'email' => null,
-			'content' => null
-		));
-	}
-
-	/**
 	 * Updates published state by their associated ids
 	 * 
 	 * @param array $pair
