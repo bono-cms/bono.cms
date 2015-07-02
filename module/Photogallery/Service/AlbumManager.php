@@ -109,28 +109,6 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	}
 
 	/**
-	 * Fetches dummy album entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'parent_id' => null,
-			'lang_id' => null,
-			'web_page_id' => null,
-			'title' => null,
-			'name' => null,
-			'description' => null,
-			'order' => null,
-			'keywords' => null,
-			'meta_description' => null,
-			'seo' => true
-		));
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	protected function toEntity(array $album)

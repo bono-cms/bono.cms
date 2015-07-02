@@ -11,6 +11,8 @@
 
 namespace Photogallery\Controller\Admin\Photo;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractPhoto
 {
 	/**
@@ -22,12 +24,16 @@ final class Add extends AbstractPhoto
 	{
 		$this->view->getPluginBag()
 				   ->load('preview');
-		
+
 		$this->loadSharedPlugins();
+
+		$photo = new VirtualEntity();
+		$photo->setPublished(true)
+			  ->setOrder(0);
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a photo',
-			'photo' => $this->getPhotoManager()->fetchDummy()
+			'photo' => $photo
 		)));
 	}
 

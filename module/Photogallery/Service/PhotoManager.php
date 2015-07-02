@@ -110,24 +110,6 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	}
 
 	/**
-	 * Fetches dummy photo's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'photo' => null,
-			'name' => null,
-			'album_id' => null,
-			'description' => null,
-			'order' => null,
-			'published' => true
-		));
-	}
-
-	/**
 	 * Fetches random published photo
 	 * 
 	 * @param string $albumId Optionally can be filtered by album id

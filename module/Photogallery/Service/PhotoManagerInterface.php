@@ -17,13 +17,6 @@ namespace Photogallery\Service;
 interface PhotoManagerInterface
 {
 	/**
-	 * Fetches dummy photo bag
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetches random published photo
 	 * 
 	 * @param string $albumId Optionally can be filtered by album id

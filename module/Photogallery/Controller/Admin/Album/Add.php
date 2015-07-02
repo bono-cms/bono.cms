@@ -11,6 +11,8 @@
 
 namespace Photogallery\Controller\Admin\Album;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractAlbum
 {
 	/**
@@ -21,10 +23,13 @@ final class Add extends AbstractAlbum
 	public function indexAction()
 	{
 		$this->loadSharedPlugins();
+		
+		$album = new VirtualEntity();
+		$album->setSeo(true);
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add an album',
-			'album' => $this->getAlbumManager()->fetchDummy()
+			'album' => $album
 		)));
 	}
 
