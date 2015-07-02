@@ -14,15 +14,6 @@ namespace Shop\Controller\Admin\Product;
 final class Edit extends AbstractProduct
 {
 	/**
-	 * Returns image form
-	 * 
-	 * @return \Shop
-	 */
-	private function getImageForm()
-	{
-	}
-
-	/**
 	 * Shows edit form
 	 * 
 	 * @param string $id Product id
@@ -36,8 +27,9 @@ final class Edit extends AbstractProduct
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'form' => $this->getForm($product),
+				'product' => $product,
 				'title' => 'Edit the product',
+				'photos' => $this->getProductManager()->fetchAllImagesById($id),
 			)));
 
 		} else {

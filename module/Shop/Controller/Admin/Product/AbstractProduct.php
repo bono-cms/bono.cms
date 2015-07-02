@@ -19,49 +19,6 @@ use Krystal\Validate\Pattern;
 abstract class AbstractProduct extends AbstractController
 {
 	/**
-	 * Builds and populates a form
-	 * 
-	 * @param $product
-	 * @return \Shop\View\Form\ProductForm
-	 */
-	protected function getForm($product = null)
-	{
-		$form = $this->makeForm('\Shop\View\Form\ProductForm');
-
-		// Categories are required for both add and edit forms. Therefore declaring as a global
-		$form->setData('categories', $this->getCategoryManager()->fetchAllAsTree());
-
-		// If that's an object, then its for edit form
-		if ($product) {
-
-			// On edit form, we also need to grab all available photos for a product
-			$form->setData('photos', $this->getProductManager()->fetchAllImagesById($product->getId()));
-			$form->populate(function() use ($product){
-				return array(
-
-					'id' => $product->getId(),
-					'cover' => $product->getCover(),
-					'web_page_id' => $product->getWebPageId(),
-					'title' => $product->getTitle(),
-					'regular_price' => $product->getPrice(),
-					'stoke_price' => $product->getStokePrice(),
-					'category_id' => $product->getCategoryId(),
-					'description' => $product->getDescription(),
-					'special_offer' => $product->getSpecialOffer(),
-					'order' => $product->getOrder(),
-					'published' => $product->getPublished(),
-					'seo' => $product->getSeo(),
-					'slug' => $product->getSlug(),
-					'keywords' => $product->getKeywords(),
-					'meta_description' => $product->getMetaDescription()
-				);
-			});
-		}
-
-		return $form;
-	}
-
-	/**
 	 * Returns configured validator instance
 	 * 
 	 * @param array $input Raw input data
@@ -102,12 +59,6 @@ abstract class AbstractProduct extends AbstractController
 	 */
 	final protected function getSharedVars(array $overrides)
 	{
-		$shop = $this->moduleManager->getModule('Shop');
-
-		// Grab a service
-		$productManager = $shop->getService('productManager');
-		//$treeBuilder = new TreeBuilder($shop->getService('categoryManager')->fetchAll());
-
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'name' => 'Shop',
@@ -120,8 +71,8 @@ abstract class AbstractProduct extends AbstractController
 		));
 
 		$vars = array(
-			//'categories' => $treeBuilder->render(new PhpArray('title')),
-			'config' => $shop->getService('configManager')->getEntity()
+			'categories' => $this->getCategoryManager()->fetchAllAsTree(),
+			'config' => $this->getModuleService('configManager')->getEntity()
 		);
 
 		return array_replace_recursive($vars, $overrides);
@@ -134,7 +85,7 @@ abstract class AbstractProduct extends AbstractController
 	 */
 	final protected function getProductManager()
 	{
-		return $this->moduleManager->getModule('Shop')->getService('productManager');
+		return $this->getModuleService('productManager');
 	}
 
 	/**
@@ -144,7 +95,7 @@ abstract class AbstractProduct extends AbstractController
 	 */
 	final protected function getCategoryManager()
 	{
-		return $this->moduleManager->getModule('Shop')->getService('categoryManager');
+		return $this->getModuleService('categoryManager');
 	}
 
 	/**

@@ -11,8 +11,6 @@
 
 namespace Shop\Controller\Admin;
 
-use Shop\View\Form\FilterForm;
-
 final class Browser extends AbstractBrowser
 {
 	/**
@@ -23,9 +21,6 @@ final class Browser extends AbstractBrowser
 	 */
 	public function indexAction($page = 1)
 	{
-		// Filtering form
-		$form = new FilterForm($this->request->getQuery());
-
 		if ($this->request->hasQuery('filter')) {
 
 			$data = $this->request->getQuery('filter');
@@ -45,9 +40,7 @@ final class Browser extends AbstractBrowser
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 
 			'paginator' => $paginator,
-			'products' => $products,
-			
-			'form' => $form
+			'products' => $products
 		)));
 	}
 
@@ -104,10 +97,10 @@ final class Browser extends AbstractBrowser
 	public function deleteAction()
 	{
 		if ($this->request->hasPost('id')) {
-
 			$id = $this->request->getPost('id');
 
 			if ($this->getProductManager()->removeById($id)) {
+
 				$this->flashMessenger->set('success', 'Selected product has been removed successfully');
 				return '1';
 			}

@@ -11,6 +11,8 @@
 
 namespace Shop\Controller\Admin\Product;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractProduct
 {
 	/**
@@ -22,9 +24,15 @@ final class Add extends AbstractProduct
 	{
 		$this->loadSharedPlugins();
 
+		$product = new VirtualEntity();
+		$product->setSeo(true)
+			    ->setPublished(true)
+				->setSpecialOffer(false)
+				->setTimestamp(time());
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a product',
-			'form' => $this->getForm()
+			'product' => $product
 		)));
 	}
 

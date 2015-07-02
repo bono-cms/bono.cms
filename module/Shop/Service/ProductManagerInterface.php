@@ -22,13 +22,6 @@ interface ProductManagerInterface
 	public function getBreadcrumbs(ProductEntity $product);
 
 	/**
-	 * Fetches dummy product's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetches all product's photo entities by its associated id
 	 * 
 	 * @param string $id Product id

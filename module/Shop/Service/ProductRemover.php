@@ -76,10 +76,7 @@ final class ProductRemover implements ProductRemoverInterface
 	 */
 	public function removeAllById($id)
 	{
-		$this->removeWebPageById($id);
-		$this->removeById($id);
-
-		return true;
+		return $this->removeWebPageById($id) && $this->removeById($id);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 
-<?php if ($form->hasData('categories')): ?>
+<?php if (!empty($categories)): ?>
 
 <form>
 	
@@ -15,15 +15,16 @@
 	  <div role="tabpanel" class="tab-pane active" id="product">
 		<div class="well clearfix">
 			
-			<?php $form->show('id'); ?>
-			<?php $form->show('cover'); ?>
-			<?php $form->show('web_page_id'); ?>
+			<input type="hidden" name="product[id]" value="<?php echo $product->getId(); ?>" />
+			<input type="hidden" name="product[cover]" value="<?php echo $product->getCover(); ?>" />
+			<input type="hidden" name="product[web_page_id]" value="<?php echo $product->getWebPageId(); ?>" />
+			
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group">
-						<?php $form->show('title'); ?>
+						<input type="text" name="product[title]" class="form-control" value="<?php echo $product->getTitle(); ?>" placeholder="<?php $this->show('Product title'); ?>" />
 						<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 					</div>
 				</div>
@@ -33,17 +34,18 @@
 				<label class="col-lg-2 control-label"><?php $this->show('Price'); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group">
-						<?php $form->show('regular_price'); ?>
+						<input type="number" min="1" step="0.01" name="product[regular_price]" class="form-control" value="<?php echo $product->getPrice(); ?>" placeholder="<?php $this->show('Price of the product to be added'); ?>" />
 						<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
 					</div>
 				</div>
 			</div>
 			
+			
 			<div class="form-group clearfix <?php echo !$config->getStokePriceEnabled() ? 'hidden' : ''; ?>">
 				<label class="col-lg-2 control-label"><?php $this->show('Stoke price'); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group">
-						<?php $form->show('stoke_price'); ?>
+						<input type="number" name="product[stoke_price]" class="form-control" value="<?php echo $product->getStokePrice(); ?>" placeholder="<?php $this->show('Stoke price'); ?>" />
 						<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
 					</div>
 				</div>
@@ -52,7 +54,13 @@
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Category'); ?></label>
 				<div class="col-lg-10">
-					<?php $form->show('category_id'); ?>
+					<select name="product[category_id]" class="form-control">
+						
+						<?php foreach ($categories as $id => $title): ?>
+						<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $product->getCategoryId()); ?>><?php echo $title; ?></option>
+						<?php endforeach; ?>
+						
+					</select>
 				</div>
 			</div>
 			
@@ -60,8 +68,7 @@
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 				<div class="col-lg-10">
-					
-					<?php $form->show('description'); ?>
+					<textarea name="product[description]" rows="7" class="form-control"><?php echo $product->getDescription(); ?></textarea>
 				</div>
 			</div>
 			
@@ -70,7 +77,8 @@
 				<label class="col-lg-2 control-label"><?php $this->show('Special offer'); ?></label>
 				<div class="col-lg-10">
 					
-					<?php $form->show('special_offer'); ?>
+					<input type="hidden" name="product[special_offer]" value="0" />
+					<input type="checkbox" name="product[special_offer]" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($product->getSpecialOffer()); ?>/>
 				</div>
 			</div>
 			
@@ -80,8 +88,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<?php $form->show('order'); ?>
-							
+							<input type="number" name="product[order]" class="form-control" value="<?php echo $product->getOrder(); ?>" placeholder="<?php $this->show('Order of the product to be sorted'); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -91,8 +98,8 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 					<div class="col-lg-10">
-						
-						<?php $form->show('published'); ?>
+						<input type="hidden" name="product[published]" value="0" />
+						<input type="checkbox" name="product[published]" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($product->getPublished()); ?>/>
 					</div>
 				</div>
 				
@@ -100,9 +107,8 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 					<div class="col-lg-10">
-						
-						<?php $form->show('seo'); ?>
-						
+						<input type="hidden" name="product[seo]" value="0" />
+						<input type="checkbox" name="product[seo]" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($product->getSeo()); ?>/>
 					</div>
 				</div>
 				
@@ -111,9 +117,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							
-							<?php $form->show('slug'); ?>
-							
+							<input type="text" name="product[slug]" class="form-control" value="<?php echo $product->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this product. By default is taken from a title'); ?>" />
 							<span class="input-group-addon">
 								<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
 							</span>
@@ -126,8 +130,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<?php $form->show('keywords'); ?>
-							
+							<input type="text" name="product[keywords]" class="form-control" value="<?php echo $product->getKeywords(); ?>" placeholder="<?php $this->show('Keywords used for search engines'); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
 						</div>
 					</div>
@@ -137,15 +140,14 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 					<div class="col-lg-10">
-						
-						<?php $form->show('meta_description'); ?>
+						<textarea name="product[meta_description]" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $product->getMetaDescription(); ?></textarea>
 					</div>
 				</div>
 				
 			</div>
 		</div>
 
-		<?php if ($form->isNewRecord()): ?>
+		<?php if (!$product->getId()): ?>
 
 		<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> <?php $this->show('Add'); ?></button>
 		<button data-button="add-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
@@ -189,8 +191,8 @@
 					
 					<tbody data-container="image">
 						
-						<?php if (!empty($form->hasData('photos'))): ?>
-						<?php foreach ($form->getData('photos') as $photo): ?>
+						<?php if (!empty($photos)): ?>
+						<?php foreach ($photos as $photo): ?>
 						
 						<tr>
 							<td>
@@ -207,13 +209,13 @@
 							</td>
 							
 							<td class="text-center">
-								<input type="radio" name="photos[cover]" value="<?php echo $photo->getImage(); ?>" <?php $this->getHelper()->checkOnDemand($form->getInput('cover') == $photo->getImage()); ?>/>
+								<input type="radio" name="photos[cover]" value="<?php echo $photo->getImage(); ?>" <?php $this->getHelper()->checkOnDemand($product->getCover() == $photo->getImage()); ?>/>
 							</td>
 							
 							<td class="text-center">
 								<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Replace this image'); ?>" data-button="edit" data-image="<?php echo $photo->getImage(); ?>" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
 								
-								<?php if ($form->getInput('cover') != $photo->getImage()): ?>
+								<?php if ($product->getCover() != $photo->getImage()): ?>
 								<input name="photos[toDelete][<?php echo $photo->getId(); ?>]" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Check if you want to remove this image'); ?>" type="checkbox" /> <?php $this->show('Remove'); ?>
 								<?php endif; ?>
 								

@@ -315,6 +315,6 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	 */
 	public function deleteById($id)
 	{
-		return $this->deleteByPk('id', $id);
+		return $this->deleteByPk($id);
 	}
 }

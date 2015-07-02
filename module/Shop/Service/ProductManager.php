@@ -192,34 +192,6 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	}
 
 	/**
-	 * Fetches dummy product's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'web_page_id' => null,
-			'lang_id' => null,
-			'id' => null,
-			'cover' => null,
-			'category_id' => null,
-			'title' => null,
-			'special_offer' => false,
-			'regular_price' => null,
-			'stoke_price' => null,
-			'description' => null,
-			'published' => true,
-			'order' => null,
-			'seo' => true,
-			'slug' => null,
-			'keywords' => null,
-			'meta_description' => null,
-			'timestamp' => time(),
-		));
-	}
-
-	/**
 	 * Prepares product's photos
 	 * 
 	 * @param array $images
@@ -338,8 +310,6 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	private function removeAllById($id)
 	{
 		return $this->productRemover->removeAllById($id);
-		// Finally
-		return true;
 	}
 
 	/**

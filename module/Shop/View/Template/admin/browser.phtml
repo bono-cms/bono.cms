@@ -49,20 +49,33 @@
 							<th data-sortable="true" data-column="seo" class="text-center"><?php $this->show('SEO'); ?></th>
 							<th class="text-center"><?php $this->show('Actions'); ?></th>
 						</tr>
-
+						
 						<tr>
 							<th></th>
-							<th><?php $form->show('id'); ?></th>
+							<th>
+								<input type="number" name="filter[id]" min="1" class="form-control col-md-1" />
+							</th>
 							<th></th>
-							<th><?php $form->show('title'); ?></th>
+							<th>
+								<input type="text" name="filter[title]" class="form-control" />
+							</th>
 							<th class="col-lg-2"></th>
 							<th></th>
-							<th><?php $form->show('price'); ?></th>
-							<th class="text-center"><?php $form->show('published'); ?></th>
-							<th class="text-center"><?php $form->show('seo'); ?></th>
+							<th>
+								<input type="text" name="filter[price]" class="form-control" />
+							</th>
+							<th class="text-center">
+								<input type="hidden" name="filter[published]" value="0" />
+								<input type="checkbox" name="filter[published]" value="1" />
+							</th>
+							<th class="text-center">
+								<input type="hidden" name="filter[seo]" value="0" />
+								<input type="checkbox" name="filter[seo]" value="1" />
+							</th>
+							
 							<th></th>
 						</tr>
-
+						
 					</thead>
 
 					<?php if (!empty($products)):?>
