@@ -11,6 +11,8 @@
 
 namespace QA\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractQa
 {
 	/**
@@ -22,9 +24,14 @@ final class Add extends AbstractQa
 	{
 		$this->loadSharedPlugins();
 
+		$qa = new VirtualEntity();
+		$qa->setTimestampAsked(time())
+		   ->setTimestampAnswered(time())
+		   ->setPublished(true);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a pair',
-			'qa' => $this->getQaManager()->fetchDummy()
+			'qa' => $qa
 		)));
 	}
 

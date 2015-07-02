@@ -64,28 +64,8 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 			  ->setTimestampAnswered((int) $qa['timestamp_answered'])
 			  ->setDateAsked(strtotime($qa['timestamp_asked']))
 			  ->setDateAnswered(strtotime($qa['timestamp_answered']));
-		
-		return $entity;
-	}
 
-	/**
-	 * Fetches dummy QA entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'lang_id' => null,
-			'question' => null,
-			'answer' => null,
-			'questioner' => null,
-			'answerer' => null,
-			'published' => true,
-			'timestamp_asked' => time(),
-			'timestamp_answered' => time()
-		));
+		return $entity;
 	}
 
 	/**

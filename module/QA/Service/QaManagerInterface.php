@@ -14,13 +14,6 @@ namespace QA\Service;
 interface QaManagerInterface
 {
 	/**
-	 * Fetches dummy QA entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Delete QA pairs by their associated ids
 	 * 
 	 * @param array $ids
