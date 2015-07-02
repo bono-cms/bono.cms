@@ -11,6 +11,8 @@
 
 namespace Team\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractMember
 {
 	/**
@@ -22,9 +24,12 @@ final class Add extends AbstractMember
 	{
 		$this->loadSharedPlugins();
 
+		$member = new VirtualEntity();
+		$member->setPublished(true);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a member',
-			'member' => $this->getTeamManager()->fetchDummy(),
+			'member' => $member,
 		)));
 	}
 

@@ -14,13 +14,6 @@ namespace Team\Service;
 interface TeamManagerInterface
 {
 	/**
-	 * Returns dummy member's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Returns prepared paginator's instance
 	 * 
 	 * @return \Krystal\Paginate\Paginator

@@ -78,23 +78,6 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 	}
 
 	/**
-	 * Returns dummy member's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => 0,
-			'name' => null,
-			'description' => null,
-			'photo' => '',
-			'published' => true,
-			'order' => null
-		));
-	}
-
-	/**
 	 * Returns prepared paginator's instance
 	 * 
 	 * @return \Krystal\Paginate\Paginator

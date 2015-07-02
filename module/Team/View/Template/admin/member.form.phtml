@@ -28,7 +28,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Photo'); ?></label>
 			<div class="col-lg-10">
 				
-				<?php if ($member->getPhoto() !== ''): ?>
+				<?php if ($member->getPhoto()): ?>
 				<img class="img-responsive" src="<?php echo $member->getImageBag()->getUrl('400x200');?>" />
 				
 				<?php else: ?>
