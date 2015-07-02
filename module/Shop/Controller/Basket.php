@@ -21,7 +21,7 @@ final class Basket extends AbstractShopController
 	 */
 	public function indexAction($id)
 	{
-		$pageManager = $this->moduleManager->getModule('Pages')->getService('pageManager');
+		$pageManager = $this->getService('Pages', 'pageManager');
 
 		$page = $pageManager->fetchById($id);
 
@@ -39,9 +39,99 @@ final class Basket extends AbstractShopController
 			));
 
 		} else {
-			// Returning false will trigger 404 error
+
 			return false;
 		}
+	}
+
+	/**
+	 * Recounts the price with its new quantity for one product
+	 * 
+	 * @return string
+	 */
+	public function recountAction()
+	{
+		if ($this->request->hasPost('id', 'qty')) {
+
+			$id = $this->request->getPost('id');
+			$qty = $this->request->getPost('qty');
+
+			$basketManager = $this->getBasketManager();
+
+			$basketManager->recount($id, $qty);
+			$basketManager->save();
+
+			return json_encode(array(
+				'product' => $basketManager->getProductStat($id),
+				'all' => $this->getBasketManager()->getAllStat()
+			));
+		}
+	}
+
+	/**
+	 * Returns common basket statistic as JSON string (so that we can easily read it on client-side)
+	 * 
+	 * @return string
+	 */
+	public function getStatAction()
+	{
+		return json_encode($this->getBasketManager()->getAllStat());
+	}
+
+	/**
+	 * Adds a product id into a basket with its quantity
+	 * 
+	 * @return string
+	 */
+	public function addAction()
+	{
+		if ($this->request->hasPost('id', 'qty')) {
+
+			$id = $this->request->getPost('id');
+			$qty = $this->request->getPost('qty');
+
+			// Grab basket manager to add it
+			$basketManager = $this->getBasketManager();
+			$basketManager->add($id, $qty);
+			$basketManager->save();
+
+			return json_encode($basketManager->getAllStat());
+		}
+	}
+
+	/**
+	 * Makes an order
+	 * 
+	 * @return string
+	 */
+	public function deleteAction()
+	{
+		if ($this->request->hasPost('id')) {
+
+			$id = $this->request->getPost('id');
+
+			$basketManager = $this->getBasketManager();
+			$basketManager->removeById($id);
+			$basketManager->save();
+
+			return json_encode($basketManager->getAllStat());
+		}
+	}
+
+	/**
+	 * Clears the basket
+	 * 
+	 * @return string
+	 */
+	public function clearAction()
+	{
+		$basketManager = $this->getBasketManager();
+		$basketManager->clear();
+		$basketManager->save();
+
+		$this->flashMessenger->set('success', 'Your basket has been cleared successfully');
+
+		return json_encode($basketManager->getAllStat());
 	}
 
 	/**
@@ -73,87 +163,6 @@ final class Basket extends AbstractShopController
 	 */
 	private function getBasketManager()
 	{
-		return $this->moduleManager->getModule('Shop')->getService('basketManager');
-	}
-
-	/**
-	 * Recounts the price with its new quantity for one product
-	 * 
-	 * @return string
-	 */
-	public function recountAction()
-	{
-		$id = $this->request->getPost('id');
-		$qty = $this->request->getPost('qty');
-
-		$basketManager = $this->getBasketManager();
-
-		$basketManager->recount($id, $qty);
-		$basketManager->save();
-
-		return json_encode(array(
-			'product' => $basketManager->getProductStat($id),
-			'all' => $this->getBasketManager()->getAllStat()
-		));
-	}
-
-	/**
-	 * Returns common basket statistic as JSON string (so that we can easily read it on client-side)
-	 * 
-	 * @return string
-	 */
-	public function getStatAction()
-	{
-		return json_encode($this->getBasketManager()->getAllStat());
-	}
-
-	/**
-	 * Adds a product id into a basket with its quantity
-	 * 
-	 * @return string
-	 */
-	public function addAction()
-	{
-		$id = $this->request->getPost('id');
-		$qty = $this->request->getPost('qty');
-
-		// Grab basket manager to add it
-		$basketManager = $this->getBasketManager();
-		$basketManager->add($id, $qty);
-		$basketManager->save();
-
-		return json_encode($basketManager->getAllStat());
-	}
-
-	/**
-	 * Makes an order
-	 * 
-	 * @return string
-	 */
-	public function deleteAction()
-	{
-		$id = $this->request->getPost('id');
-
-		$basketManager = $this->getBasketManager();
-		$basketManager->removeById($id);
-		$basketManager->save();
-
-		return json_encode($basketManager->getAllStat());
-	}
-
-	/**
-	 * Clears the basket
-	 * 
-	 * @return string
-	 */
-	public function clearAction()
-	{
-		$basketManager = $this->getBasketManager();
-		$basketManager->clear();
-		$basketManager->save();
-
-		$this->flashMessenger->set('success', 'Your basket has been cleared successfully');
-
-		return json_encode($basketManager->getAllStat());
+		return $this->getModuleService('basketManager');
 	}
 }

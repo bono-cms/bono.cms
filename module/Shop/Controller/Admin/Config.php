@@ -81,7 +81,7 @@ final class Config extends AbstractController
 	 */
 	private function getConfigManager()
 	{
-		return $this->moduleManager->getModule('Shop')->getService('configManager');
+		return $this->getModuleService('configManager');
 	}
 
 	/**

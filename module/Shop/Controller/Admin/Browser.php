@@ -11,7 +11,11 @@
 
 namespace Shop\Controller\Admin;
 
-final class Browser extends AbstractBrowser
+use Cms\Controller\Admin\AbstractController;
+use Krystal\Tree\AdjacencyList\TreeBuilder;
+use Krystal\Tree\AdjacencyList\Render\PhpArray;
+
+final class Browser extends AbstractController
 {
 	/**
 	 * Shows a table
@@ -72,21 +76,24 @@ final class Browser extends AbstractBrowser
 	 */
 	public function saveAction()
 	{
-		// Grab request data
-		$prices = $this->request->getPost('price');
-		$published = $this->request->getPost('published');
-		$seo = $this->request->getPost('seo');
+		if ($this->request->hasPost('price', 'published', 'seo')) {
 
-		// Grab a manager
-		$productManager = $this->getProductManager();
+			// Grab request data
+			$prices = $this->request->getPost('price');
+			$published = $this->request->getPost('published');
+			$seo = $this->request->getPost('seo');
 
-		$this->flashMessenger->set('success', 'Settings have been updated successfully');
+			// Grab a manager
+			$productManager = $this->getProductManager();
 
-		$productManager->updatePrices($prices);
-		$productManager->updatePublished($published);
-		$productManager->updateSeo($seo);
+			$this->flashMessenger->set('success', 'Settings have been updated successfully');
 
-		return '1';
+			$productManager->updatePrices($prices);
+			$productManager->updatePublished($published);
+			$productManager->updateSeo($seo);
+
+			return '1';
+		}
 	}
 
 	/**
@@ -150,5 +157,65 @@ final class Browser extends AbstractBrowser
 				return '1';
 			}
 		}
+	}
+	
+	/**
+	 * Loads shared plugins
+	 * 
+	 * @return void
+	 */
+	final protected function loadSharedPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->load('datepicker')
+				   ->load('lightbox')
+				   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
+	}
+
+	/**
+	 * Returns shared variables
+	 * 
+	 * @param array $vars
+	 * @return array
+	 */
+	final protected function getSharedVars(array $overrides)
+	{
+		$treeBuilder = new TreeBuilder($this->getModuleService('categoryManager')->fetchAll());
+		$this->view->getBreadcrumbBag()->add(array(
+			array(
+				'name' => 'Shop',
+				'link' => '#'
+			)
+		));
+
+		$vars = array(
+			'currency' => $this->getModuleService('configManager')->getEntity()->getCurrency(),
+			'orders' => $this->getModuleService('orderManager')->fetchLatest(4),
+			'title' => 'Shop',
+			'taskManager' => $this->getModuleService('taskManager'),
+			'categories' => $treeBuilder->render(new PhpArray('title'))
+		);
+
+		return array_replace_recursive($vars, $overrides);
+	}
+
+	/**
+	 * Returns prepared product manager
+	 * 
+	 * @return \Shop\Service\ProductManager
+	 */
+	final protected function getProductManager()
+	{
+		return $this->getModuleService('productManager');
+	}
+
+	/**
+	 * Returns template path
+	 * 
+	 * @return string
+	 */
+	final protected function getTemplatePath()
+	{
+		return 'browser';
 	}
 }

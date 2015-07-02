@@ -27,7 +27,7 @@ final class Order extends AbstractShopController
 		if ($formValidator->isValid($this->request->getPost())) {
 
 			// Grab a service which does everything behind the scenes
-			$orderManager = $this->moduleManager->getModule('Shop')->getService('orderManager');
+			$orderManager = $this->getModuleService('orderManager');
 
 			if ($orderManager->make($this->request->getPost())) {
 

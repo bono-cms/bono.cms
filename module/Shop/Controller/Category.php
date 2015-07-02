@@ -27,16 +27,15 @@ final class Category extends AbstractShopController
 	 */
 	public function indexAction($id, $pageNumber = 1, $code = null, $slug = null)
 	{
-		$shop = $this->moduleManager->getModule('Shop');
-
-		$categoryManager = $shop->getService('categoryManager');
+		$categoryManager = $this->getModuleService('categoryManager');
 		$category = $categoryManager->fetchById($id);
 
 		// If $category isn't false, then right id is supplied, $category itself a bag
 		if ($category !== false) {
+
 			$this->loadPlugins($categoryManager->getBreadcrumbs($category));
 
-			$productManager = $shop->getService('productManager');
+			$productManager = $this->getModuleService('productManager');
 
 			// Grab and configure pagination component
 			$paginator = $productManager->getPaginator();
@@ -54,7 +53,7 @@ final class Category extends AbstractShopController
 				$this->getCategorySortProvider()->getData()
 			);
 
-			// Done. Now just render it
+			// Done. Now just render them
 			return $this->view->render($this->getConfig()->getCategoryTemplate(), array(
 
 				'paginator' => $paginator,
@@ -133,12 +132,15 @@ final class Category extends AbstractShopController
 	 */
 	public function changePerPageCountAction()
 	{
-		// Grab new per page count from request
-		$count = $this->request->getPost('count');
+		if ($this->request->hasPost('count')) {
 
-		$this->getPerPageCountProvider()->setPerPageCount($count);
+			// Grab new per page count from request
+			$count = $this->request->getPost('count');
 
-		return '1';
+			$this->getPerPageCountProvider()->setPerPageCount($count);
+
+			return '1';
+		}
 	}
 
 	/**
@@ -148,10 +150,13 @@ final class Category extends AbstractShopController
 	 */
 	public function changeSortAction()
 	{
-		$sort = $this->request->getPost('sort');
-		$this->getCategorySortProvider()->setSortOption($sort);
-		
-		return '1';
+		if ($this->request->hasPost('sort')) {
+
+			$sort = $this->request->getPost('sort');
+			$this->getCategorySortProvider()->setSortOption($sort);
+
+			return '1';
+		}
 	}
 
 	/**

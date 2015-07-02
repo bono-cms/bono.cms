@@ -69,7 +69,7 @@ abstract class AbstractCategory extends AbstractController
 	 */
 	final protected function getCategoryManager()
 	{
-		return $this->moduleManager->getModule('Shop')->getService('categoryManager');
+		return $this->getModuleService('categoryManager');
 	}
 
 	/**

@@ -22,11 +22,12 @@ final class Product extends AbstractShopController
 	public function indexAction($id)
 	{
 		// Grab a service
-		$productManager = $this->getShopModule()->getService('productManager');
+		$productManager = $this->getModuleService('productManager');
 		$product = $productManager->fetchById($id);
 
 		// If $product isn't false, then its an entity
 		if ($product !== false) {
+
 			// Load required plugins for view
 			$this->loadPlugins($productManager->getBreadcrumbs($product));
 
@@ -77,7 +78,7 @@ final class Product extends AbstractShopController
 	private function getWithRecent($id)
 	{
 		if ($this->getConfig()->getMaxRecentAmount() > 0) {
-			return $this->getShopModule()->getService('recentProduct')->getWithRecent($id);
+			return $this->getModuleService('recentProduct')->getWithRecent($id);
 
 		} else {
 			// If that functionality is disabled, then dummy empty array is returned

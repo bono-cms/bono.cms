@@ -32,6 +32,6 @@ abstract class AbstractShopController extends AbstractController
 	 */
 	final protected function getConfig()
 	{
-		return $this->getShopModule()->getService('configManager')->getEntity();
+		return $this->getModuleService('configManager')->getEntity();
 	}
 }
