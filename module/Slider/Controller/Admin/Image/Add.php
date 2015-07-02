@@ -11,6 +11,8 @@
 
 namespace Slider\Controller\Admin\Image;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractImage
 {
 	/**
@@ -22,10 +24,14 @@ final class Add extends AbstractImage
 	{
 		$this->view->getPluginBag()->load('preview')
 								   ->appendScript($this->getWithAssetPath('/admin/image.add.js'));
-		
+
+		$image = new VirtualEntity();
+		$image->setPublished(true)
+			  ->setOrder(0);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a slider',
-			'image' => $this->getImageManager()->fetchDummy()
+			'image' => $image
 		)));
 	}
 

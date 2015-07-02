@@ -140,7 +140,7 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 		$imageBag = clone $this->getUploader($image['category_id'])->getImageBag();
 		$imageBag->setId($image['id'])
 				 ->setCover($image['image']);
-		
+
 		$entity = new ImageBag(false);
 		$entity->setImageBag($imageBag)
 			->setId((int) $image['id'])
@@ -152,28 +152,8 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 			->setPublished((bool) $image['published'])
 			->setLink(Filter::escape($image['link']))
 			->setCover(Filter::escape($image['image']));
-		
-		return $entity;
-	}
 
-	/**
-	 * Fetches dummy image's entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'category_id' => null,
-			'name' => null,
-			'description' => null,
-			'order' => null,
-			'published' => true,
-			'cover' => null,
-			'link' => null,
-			'image' => null,
-		));
+		return $entity;
 	}
 
 	/**
@@ -297,7 +277,7 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 			
 		}
 
-		// Now, it's time to remove records themselves
+		// @TODO: Now, it's time to remove records themselves
 		//$this->imageMapper->deleteAllByCategoryId($categoryId);
 		return true;
 	}
@@ -387,16 +367,16 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 	/**
 	 * Adds a slider
 	 * 
-	 * @param array $form Form data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function add(array $form)
+	public function add(array $input)
 	{
-		if (!empty($form['files'])) {
-			$form = $this->prepareInput($form);
+		if (!empty($input['files'])) {
+			$input = $this->prepareInput($input);
 
-			$file =& $form['files']['file'];
-			$data =& $form['data'];
+			$file =& $input['files']['file'];
+			$data =& $input['data'];
 
 			$data['image'] = $file[0]->getName();
 			$uploader = $this->getUploader($data['category_id']);
@@ -412,22 +392,22 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 	/**
 	 * Updates a slider
 	 * 
-	 * @param array $form Form data
-	 * @return boolean Depending on success
+	 * @param array $input Raw input data
+	 * @return boolean
 	 */
-	public function update(array $form)
+	public function update(array $input)
 	{
-		$data =& $form['data'];
+		$data =& $input['data'];
 
 		// Handle image
-		if (!empty($form['files'])) {
+		if (!empty($input['files'])) {
 			$uploader = $this->getUploader($data['category_id']);
 
 			// First of all, we need to remove old one
 			if ($uploader->delete($data['id'], $data['image'])) {
-				$form = $this->prepareInput($form);
+				$input = $this->prepareInput($input);
 
-				$file = $form['files']['file'];
+				$file = $input['files']['file'];
 
 				// Now override old image with a new one and start uploading
 				$data['image'] = $file[0]->getName();

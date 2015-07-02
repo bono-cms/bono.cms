@@ -69,22 +69,6 @@ final class CategoryManager extends AbstractManager
 	}
 
 	/**
-	 * Fetches dummy category's entity
-	 * 
-	 * @return Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'name' => null,
-			'class' => null,
-			'width' => null,
-			'height' => null
-		));
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	protected function toEntity(array $category)

@@ -21,13 +21,6 @@ interface CategoryManagerInterface
 	public function getLastId();
 
 	/**
-	 * Fetches dummy category bag
-	 * 
-	 * @return Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetch a category bag by associated id
 	 * 
 	 * @param string $id
