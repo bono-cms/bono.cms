@@ -11,7 +11,9 @@
 
 namespace Slider\Controller\Admin;
 
-final class Browser extends AbstractBrowser
+use Cms\Controller\Admin\AbstractController;
+
+final class Browser extends AbstractController
 {
 	/**
 	 * Shows a table
@@ -27,7 +29,6 @@ final class Browser extends AbstractBrowser
 		$paginator->setUrl('/admin/module/slider/page/%s');
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-
 			'title' => 'Slider',
 			'images' => $this->getImageManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
 			'paginator' => $paginator
@@ -123,7 +124,7 @@ final class Browser extends AbstractBrowser
 	/**
 	 * Saves settings
 	 * 
-	 * @return string The response
+	 * @return string
 	 */
 	public function saveAction()
 	{
@@ -142,4 +143,79 @@ final class Browser extends AbstractBrowser
 			}
 		}
 	}
+
+	/**
+	 * Returns template path
+	 * 
+	 * @return string
+	 */
+	private function getTemplatePath()
+	{
+		return 'browser';
+	}
+
+	/**
+	 * Loads shared plugins
+	 * 
+	 * @return void
+	 */
+	private function loadSharedPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
+	}
+
+	/**
+	 * Returns image manager
+	 * 
+	 * @return \Slider\Service\ImageManager
+	 */
+	private function getImageManager()
+	{
+		return $this->getModuleService('imageManager');
+	}
+
+	/**
+	 * Returns category manager
+	 * 
+	 * @return \Slider\Service\CategoryManager
+	 */
+	private function getCategoryManager()
+	{
+		return $this->getModuleService('categoryManager');
+	}
+	
+	/**
+	 * Returns task manager
+	 * 
+	 * @return \Slider\Service\TaskManager
+	 */
+	private function getTaskManager()
+	{
+		return $this->getModuleService('taskManager');
+	}
+
+	/**
+	 * Returns shared variables
+	 * 
+	 * @param array $overrides
+	 * @return array
+	 */
+	private function getSharedVars(array $overrides)
+	{
+		$this->view->getBreadcrumbBag()->add(array(
+			array(
+				'name' => 'Slider',
+				'link' => '#'
+			)
+		));
+
+		$vars = array(
+			'title' => 'Slider',
+			'taskManager' => $this->getTaskManager(),
+			'categories' => $this->getCategoryManager()->fetchAll(),
+		);
+
+		return array_replace_recursive($vars, $overrides);
+	}	
 }

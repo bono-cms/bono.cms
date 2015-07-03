@@ -32,8 +32,9 @@ final class Edit extends AbstractImage
 				'title' => 'Edit the slider',
 				'image' => $image
 			)));
-			
+
 		} else {
+
 			return false;
 		}
 	}

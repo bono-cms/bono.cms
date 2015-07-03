@@ -63,9 +63,9 @@ abstract class AbstractImage extends AbstractController
 				'link' => '#'
 			)
 		));
-		
+
 		$vars = array(
-			'categories' => $this->moduleManager->getModule('Slider')->getService('categoryManager')->fetchAll()
+			'categories' => $this->getModuleService('categoryManager')->fetchAll()
 		);
 
 		return array_replace_recursive($vars, $overrides);
@@ -78,7 +78,7 @@ abstract class AbstractImage extends AbstractController
 	 */
 	final protected function getImageManager()
 	{
-		return $this->moduleManager->getModule('Slider')->getService('imageManager');
+		return $this->getModuleService('imageManager');
 	}
 
 	/**
