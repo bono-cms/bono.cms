@@ -11,7 +11,7 @@
 
 namespace News\Controller\Admin;
 
-final class Browser extends AbstractBrowser
+final class Browser extends AbstractAdminController
 {
 	/**
 	 * Shows all posts
@@ -135,5 +135,50 @@ final class Browser extends AbstractBrowser
 				return '1';
 			}
 		}
+	}
+
+	/**
+	 * Loads shared plugins
+	 * 
+	 * @return void
+	 */
+	private function loadSharedPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
+	}
+
+	/**
+	 * Return shared variables
+	 * 
+	 * @param array $overrides
+	 * @return array
+	 */
+	private function getSharedVars(array $overrides)
+	{
+		$this->view->getBreadcrumbBag()->add(array(
+			array(
+				'link' => '#',
+				'name' => 'News'
+			)
+		));
+
+		$vars = array(
+			'title' => 'News',
+			'categories' => $this->getCategoryManager()->fetchAll(),
+			'taskManager' => $this->getTaskManager(),
+		);
+
+		return array_replace_recursive($vars, $overrides);
+	}
+
+	/**
+	 * Returns template path
+	 * 
+	 * @return string
+	 */
+	private function getTemplatePath()
+	{
+		return 'browser';
 	}
 }
