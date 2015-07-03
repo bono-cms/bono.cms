@@ -169,7 +169,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 		$imageBag = clone $this->imageManager->getImageBag();
 		$imageBag->setId((int) $category['id'])
 				 ->setCover($category['cover']);
-		
+
 		$entity = new CategoryEntity();
 		$entity->setId((int) $category['id'])
 			->setImageBag($imageBag)
@@ -185,31 +185,8 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
 			->setMetaDescription(Filter::escape($category['meta_description']))
 			->setCover(Filter::escape($category['cover']));
-		
-		return $entity;
-	}
 
-	/**
-	 * Fetches dummy category's entity
-	 * 
-	 * @return \Shop\Service\CategoryEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'parent_id' => null,
-			'lang_id' => null,
-			'web_page_id' => null,
-			'title' => null,
-			'description' => null,
-			'order' => null,
-			'seo' => true,
-			'slug' => null,
-			'keywords' => null,
-			'meta_description' => null,
-			'cover' => null,
-		));
+		return $entity;
 	}
 
 	/**
@@ -241,12 +218,12 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	{
 		// First, we need to parse raw form data
 		$input = $this->prepareInput($input);
-		
+
 		$category =& $input['data']['category'];
 
 		// Allow to remove a cover, only it case it exists and checkbox was checked
 		if (isset($category['remove_cover']) && !empty($category['cover'])) {
-			
+
 			// Remove a cover, but not a dir itself
 			$this->imageManager->delete($category['id']);
 			$category['cover'] = '';
@@ -273,7 +250,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 		}
 
 		$this->webPageManager->update($category['web_page_id'], $category['slug']);
-		$this->categoryMapper->update(ArrayUtils::arrayWithout($category, array('slug', 'menu')));
+		$this->categoryMapper->update(ArrayUtils::arrayWithout($category, array('slug', 'menu', 'remove_cover')));
 
 		if ($this->hasMenuWidget() && isset($input['data']['menu'])) {
 			$this->updateMenuItem($category['web_page_id'], $category['title'], $input['data']['menu']);
@@ -296,7 +273,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 
 		// Cover is always empty by default
 		$category['cover'] = '';
-		
+
 		// If we have a cover, then we need to upload it
 		if (!empty($input['files']['file'])) {
 			// Override empty cover's value now

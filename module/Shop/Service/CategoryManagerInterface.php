@@ -36,13 +36,6 @@ interface CategoryManagerInterface
 	public function getLastId();
 
 	/**
-	 * Fetches dummy category's entity
-	 * 
-	 * @return \Shop\Service\CategoryEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Updates a category
 	 * 
 	 * @param array $input Raw input data

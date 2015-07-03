@@ -11,6 +11,8 @@
 
 namespace Shop\Controller\Admin\Category;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractCategory
 {
 	/**
@@ -22,10 +24,10 @@ final class Add extends AbstractCategory
 	{
 		$this->loadSharedPlugins();
 		$this->view->getPluginBag()->load('preview');
-
+		
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a category',
-			'category' => $this->getCategoryManager()->fetchDummy()
+			'category' => new VirtualEntity()
 		)));
 	}
 
@@ -37,19 +39,19 @@ final class Add extends AbstractCategory
 	public function addAction()
 	{
 		$formValidator = $this->getValidator($this->request->getPost('category'), $this->request->getFiles());
-		
+
 		if ($formValidator->isValid()) {
-			
+
 			$categoryManager = $this->getCategoryManager();
-			
+
 			if ($categoryManager->add($this->request->getAll())) {
-				
+
 				$this->flashMessenger->set('success', 'A category has been added successfully');
 				return $categoryManager->getLastId();
 			}
-			
+
 		} else {
-			
+
 			return $formValidator->getErrors();
 		}
 	}
