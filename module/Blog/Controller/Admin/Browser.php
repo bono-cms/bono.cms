@@ -11,7 +11,7 @@
 
 namespace Blog\Controller\Admin;
 
-final class Browser extends AbstractBrowser
+final class Browser extends AbstractAdminController
 {
 	/**
 	 * Shows a table
@@ -141,5 +141,50 @@ final class Browser extends AbstractBrowser
 
 			return '1';
 		}
+	}
+
+	/**
+	 * Returns template path
+	 * 
+	 * @return string
+	 */
+	private function getTemplatePath()
+	{
+		return 'browser';
+	}
+
+	/**
+	 * Loads shared plugins
+	 * 
+	 * @return void
+	 */
+	private function loadSharedPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
+	}
+
+	/**
+	 * Returns shared variables
+	 * 
+	 * @param array $overrides
+	 * @return array
+	 */
+	private function getSharedVars(array $overrides)
+	{
+		$this->view->getBreadcrumbBag()->add(array(
+			array(
+				'name' => 'Blog',
+				'link' => '#'
+			)
+		));
+
+		$vars = array(
+			'title' => 'Blog',
+			'taskManager' => $this->getTaskManager(),
+			'categories' => $this->getCategoryManager()->fetchAll()
+		);
+
+		return array_replace_recursive($vars, $overrides);
 	}
 }
