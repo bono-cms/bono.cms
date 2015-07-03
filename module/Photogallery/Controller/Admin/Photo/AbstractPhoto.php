@@ -83,7 +83,7 @@ abstract class AbstractPhoto extends AbstractController
 	 */
 	final protected function getPhotoManager()
 	{
-		return $this->moduleManager->getModule('Photogallery')->getService('photoManager');
+		return $this->getModuleService('photoManager');
 	}
 
 	/**

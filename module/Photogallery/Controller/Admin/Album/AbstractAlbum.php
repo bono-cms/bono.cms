@@ -72,7 +72,7 @@ abstract class AbstractAlbum extends AbstractController
 	 */
 	final protected function getAlbumManager()
 	{
-		return $this->moduleManager->getModule('Photogallery')->getService('albumManager');
+		return $this->getModuleService('albumManager');
 	}
 
 	/**

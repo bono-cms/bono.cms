@@ -11,7 +11,11 @@
 
 namespace Photogallery\Controller\Admin;
 
-final class Browser extends AbstractBrowser
+use Cms\Controller\Admin\AbstractController;
+use Krystal\Tree\AdjacencyList\TreeBuilder;
+use Krystal\Tree\AdjacencyList\Render\PhpArray;
+
+final class Browser extends AbstractController
 {
 	/**
 	 * Shows a table
@@ -132,21 +136,89 @@ final class Browser extends AbstractBrowser
 	public function deleteSelectedAction()
 	{
 		if ($this->request->hasPost('toDelete')) {
-			
+
 			$ids = array_keys($this->request->getPost('toDelete'));
 			$this->getPhotoManager()->deleteByIds($ids);
-			
+
 			$flashKey = 'success';
 			$flashMessage = 'Selected photos have been removed successfully';
-		
+
 		} else {
-			
+
 			$flashKey = 'warning';
 			$flashMessage = 'You should select at least one photo to remove';
 		}
-		
+
 		$this->flashMessenger->set($flashKey, $flashMessage);
-		
 		return '1';
 	}
+
+	/**
+	 * Loads shared plugins
+	 * 
+	 * @return void
+	 */
+	private function loadSharePlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/browser.js'))
+				   ->load('zoom');
+	}
+
+	/**
+	 * Returns shared variables
+	 * 
+	 * @param array $overrides
+	 * @return array
+	 */
+	private function getSharedVars(array $overrides)
+	{
+		$treeBuilder = new TreeBuilder($this->getAlbumManager()->fetchAll());
+		$title = 'Photogallery';
+
+		$this->view->getBreadcrumbBag()->add(array(
+			array(
+				'link' => '#',
+				'name' => $title
+			)
+		));
+
+		$vars = array(
+			'taskManager' => $this->getModuleService('taskManager'),
+			'albums' => $treeBuilder->render(new PhpArray('title')),
+			'title' => $title
+		);
+
+		return array_replace_recursive($vars, $overrides);
+	}
+
+	/**
+	 * Returns template path
+	 * 
+	 * @return string
+	 */
+	private function getTemplatePath()
+	{
+		return 'browser';
+	}
+
+	/**
+	 * Returns Photo Manager
+	 * 
+	 * @return \Photogallery\Service\PhotoManager
+	 */
+	private function getPhotoManager()
+	{
+		return $this->getModuleService('photoManager');
+	}
+
+	/**
+	 * Returns Album Manager
+	 * 
+	 * @return \Photogallery\Service\AlbumManager
+	 */
+	private function getAlbumManager()
+	{
+		return $this->getModuleService('albumManager');
+	}	
 }
