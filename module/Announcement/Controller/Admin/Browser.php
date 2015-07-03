@@ -11,7 +11,7 @@
 
 namespace Announcement\Controller\Admin;
 
-final class Browser extends AbstractBrowser
+final class Browser extends AbstractAdminController
 {
 	/**
 	 * Shows a table
@@ -141,5 +141,49 @@ final class Browser extends AbstractBrowser
 
 			return '1';
 		}
+	}
+
+	/**
+	 * Returns template path
+	 * 
+	 * @return string
+	 */
+	private function getTemplatePath()
+	{
+		return 'browser';
+	}
+
+	/**
+	 * Returns shared variables
+	 * 
+	 * @param array $overrides
+	 * @return array
+	 */
+	private function getSharedVars(array $overrides)
+	{
+		$this->view->getBreadcrumbBag()->add(array(
+			array(
+				'link' => '#',
+				'name' => 'Announcement'
+			)
+		));
+
+		$vars = array(
+			'categories' => $this->getCategoryManager()->fetchAll(),
+			'title' => 'Announcements',
+		);
+
+		return array_replace_recursive($vars, $overrides);
+	}
+
+	/**
+	 * Loads shared plugins
+	 * 
+	 * @return void
+	 */
+	private function loadSharedPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
 	}
 }
