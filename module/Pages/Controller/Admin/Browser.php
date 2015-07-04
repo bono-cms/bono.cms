@@ -117,9 +117,13 @@ final class Browser extends AbstractController
 	 */
 	public function saveAction()
 	{
-		if ($this->request->hasPost('default')) {
+		if ($this->request->hasPost('default', 'seo')) {
 
-			if ($this->getPageManager()->makeDefault($this->request->getPost('default'))) {
+			// Grab request data
+			$default = $this->request->getPost('default');
+			$seo = $this->request->getPost('seo');
+
+			if ($this->getPageManager()->makeDefault($default) && $this->getPageManager()->updateSeo($seo)) {
 
 				$this->flashMessenger->set('success', 'Settings have been saved successfully');
 				return '1';
