@@ -11,10 +11,12 @@
 
 namespace Blog\Controller;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Category extends AbstractBlogController
 {
 	/**
-	 * Renders blog's category
+	 * Renders blog category
 	 * 
 	 * @param string $id Blog category's id
 	 * @param integer $pageNumber Current page number
@@ -42,7 +44,6 @@ final class Category extends AbstractBlogController
 			}
 
 			return $this->view->render($config->getCategoryTemplate(), array(
-				
 				'page' => $category,
 				'category' => $category,
 				'posts' => $posts,
@@ -61,7 +62,7 @@ final class Category extends AbstractBlogController
 	 * @param \Krystal\Stdlib\VirtualEntity $category
 	 * @return void
 	 */
-	private function loadPlugins($category)
+	private function loadPlugins(VirtualEntity $category)
 	{
 		$this->loadSitePlugins();
 		$this->view->getBreadcrumbBag()
