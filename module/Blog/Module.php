@@ -17,7 +17,7 @@ use Blog\Service\PostManager;
 use Blog\Service\CategoryManager;
 use Blog\Service\TaskManager;
 use Blog\Service\ConfigManager;
-use Blog\Service\BlogSiteService;
+use Blog\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -48,7 +48,7 @@ final class Module extends AbstractCmsModule
 		$postManager = new PostManager($postMapper, $categoryMapper, $webPageManager, $historyManager);
 		$categoryManager = new CategoryManager($categoryMapper, $postMapper, $webPageManager, $historyManager, $this->getMenuWidget());
 
-		$siteService = new BlogSiteService($categoryMapper, $postMapper, $webPageManager);
+		$siteService = new SiteService($categoryMapper, $postMapper, $webPageManager);
 
 		return array(
 			'siteService' => $siteService,

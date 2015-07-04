@@ -17,7 +17,7 @@ use Blog\Storage\CategoryMapperInterface;
 use Blog\Storage\PostMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 
-final class BlogSiteService extends AbstractManager
+final class SiteService extends AbstractManager implements SiteServiceInterface
 {
 	/**
 	 * Any-compliant category mapper
@@ -72,7 +72,7 @@ final class BlogSiteService extends AbstractManager
 	}
 
 	/**
-	 * Return array of categories with count of posts
+	 * Returns an array of categories with count of posts
 	 * 
 	 * @return array
 	 */
