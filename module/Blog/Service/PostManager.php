@@ -222,6 +222,16 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	}
 
 	/**
+	 * Fetches randomly published post entity
+	 * 
+	 * @return \Krystal\Stdlib\VirtualEntity
+	 */
+	public function fetchRandomPublished()
+	{
+		return $this->prepareResult($this->postMapper->fetchRandomPublished());
+	}
+
+	/**
 	 * Fetches all posts filtered by pagination
 	 * 
 	 * @param boolean $published Whether to fetch only published records

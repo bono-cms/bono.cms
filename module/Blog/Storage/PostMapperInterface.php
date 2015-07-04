@@ -89,6 +89,13 @@ interface PostMapperInterface
 	public function deleteByCategoryId($categoryId);
 
 	/**
+	 * Fetches randomly published post
+	 * 
+	 * @return array
+	 */
+	public function fetchRandomPublished();
+
+	/**
 	 * Fetches all published posts
 	 * 
 	 * @return array

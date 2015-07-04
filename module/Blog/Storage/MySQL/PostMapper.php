@@ -46,8 +46,13 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 			$db->andWhereEquals('category_id', $categoryId);
 		}
 
-		$db->orderBy($sort)
-		   ->desc();
+		if ($sort !== 'rand') {
+			$db->orderBy($sort)
+			   ->desc();
+		} else {
+			$db->orderBy()
+			   ->rand();
+		}
 
 		return $db;
 	}
@@ -215,6 +220,17 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	public function deleteByCategoryId($categoryId)
 	{
 		return $this->deleteByColumn('category_id', $categoryId);
+	}
+
+	/**
+	 * Fetches randomly published post
+	 * 
+	 * @return array
+	 */
+	public function fetchRandomPublished()
+	{
+		return $this->getSelectQuery(true, 'rand')
+					->query();
 	}
 
 	/**
