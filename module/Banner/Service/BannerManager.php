@@ -97,7 +97,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	 * 
 	 * @param string $page Current page
 	 * @param string $itemsPerPage Per page count
-	 * @return array Array of banner bags
+	 * @return array An array of banner entities
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
@@ -112,6 +112,17 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	public function fetchRandom()
 	{
 		return $this->prepareResult($this->bannerMapper->fetchRandom());
+	}
+
+	/**
+	 * Fetches banner's entity by its associated id
+	 * 
+	 * @param string $id Banner id
+	 * @return boolean|\Krystal\Stdlib\VirtualEntity
+	 */
+	public function fetchById($id)
+	{
+		return $this->prepareResult($this->bannerMapper->fetchById($id));
 	}
 
 	/**
@@ -141,12 +152,11 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	public function add(array $form)
 	{
 		$form = $this->prepareInput($form);
-		
+
 		$data =& $form['data'];
-		
+
 		//@TODO: Here must be file uploading
 		if (1) {
-			
 			// Trace this action
 			$this->track('Banner "%s" has been uploaded', $data['name']);
 			return $this->bannerMapper->insert($data);
@@ -163,12 +173,12 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	{
 		$form = $this->prepareInput($input);
 		$data =& $form['data'];
-		
+
 		// If we have a banner
 		if (!empty($form['files'])) {
 			// Then we need to remove old one
 		}
-		
+
 		// Trace this move
 		$this->track('Banner %s has been updated', $data['name']);
 		return $this->bannerMapper->update($data);
@@ -221,16 +231,5 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 
 		$this->track('Batch removal of %s banner', count($ids));
 		return true;
-	}
-
-	/**
-	 * Fetches banner's entity by its associated id
-	 * 
-	 * @param string $id Banner id
-	 * @return boolean|\Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchById($id)
-	{
-		return $this->prepareResult($this->bannerMapper->fetchById($id));
 	}
 }

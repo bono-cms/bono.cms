@@ -33,7 +33,7 @@ interface BannerManagerInterface
 	 * 
 	 * @param string $page Current page
 	 * @param string $itemsPerPage Per page count
-	 * @return array Array of banner bags
+	 * @return array An array of banner entities
 	 */
 	public function fetchAllByPage($page, $itemsPerPage);
 
@@ -43,6 +43,14 @@ interface BannerManagerInterface
 	 * @return \Krystal\Stdlib\VirtualEntity
 	 */
 	public function fetchRandom();
+
+	/**
+	 * Fetches banner's entity by its associated id
+	 * 
+	 * @param string $id Banner id
+	 * @return boolean|\Krystal\Stdlib\VirtualEntity|boolean
+	 */
+	public function fetchById($id);
 
 	/**
 	 * Adds a banner
@@ -75,12 +83,4 @@ interface BannerManagerInterface
 	 * @return boolean
 	 */
 	public function deleteByIds(array $ids);
-
-	/**
-	 * Fetches a banner bag by its associated id
-	 * 
-	 * @param string $id Banner id
-	 * @return boolean|\Krystal\Stdlib\VirtualEntity|boolean
-	 */
-	public function fetchById($id);
 }
