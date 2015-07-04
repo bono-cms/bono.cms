@@ -63,7 +63,7 @@ final class BasketManager implements BasketManagerInterface
 	 * State initialization
 	 * 
 	 * @param \Shop\Storage\ProductMapperInterface $productMapper
-	 * @param \Admin\Service\WebPageManagerInterface $webPageManager
+	 * @param \Cms\Service\WebPageManagerInterface $webPageManager
 	 * @param \Krystal\Image\ImageBag $imageBag
 	 * @param \Krystal\Text\Storage\JsonStorage $storage
 	 * @param \Krystal\Text\CollectionManagerInterface $collection
