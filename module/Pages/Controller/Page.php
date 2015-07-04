@@ -23,14 +23,14 @@ final class Page extends AbstractPagesController
 	 */
 	public function indexAction($id)
 	{
-		// If id is null, then we fetch default page
+		// If id is null, then a default page must be fetched
 		if (is_null($id)) {
 			$page = $this->getPageManager()->fetchDefault();
 		} else {
 			$page = $this->getPageManager()->fetchById($id);
 		}
 
-		// If $page isn't false, then right $id supplied
+		// If $page isn't false, then the right $id is supplied
 		if ($page !== false) {
 
 			$this->loadSitePlugins();
@@ -46,44 +46,9 @@ final class Page extends AbstractPagesController
 			return false;
 		}
 	}
-	
-	/**
-	 * Grabs template name
-	 * 
-	 * @param $page
-	 * @return string
-	 */
-	private function grabTemplateName($page)
-	{
-		if (trim($page->getTemplate()) !== '') {
-			return $page->getTemplate();
-		} else {
-			return 'pages-page';
-		}
-	}
 
 	/**
-	 * Loads breadcrumb by page's entity
-	 * 
-	 * @param $page
-	 * @return void
-	 */
-	private function loadBreadcrumbsByPageEntity($page)
-	{
-		// Breadcrumb bag
-		$breadcrumbBag = $this->view->getBreadcrumbBag();
-
-		// If page isn't default, then we append a breadcrumb
-		if (!$page->getDefault()) {
-			$breadcrumbBag->add($this->getPageManager()->getBreadcrumbs($page));
-		} else {
-			// Otherwise we should never have breadcrumbs
-			$breadcrumbBag->clear();
-		}
-	}
-
-	/**
-	 * Not found action
+	 * Displays "404: Not found" page
 	 * 
 	 * @return string
 	 */
@@ -96,14 +61,47 @@ final class Page extends AbstractPagesController
 				'link' => '#'
 			)
 		));
-		
+
 		//@TODO That needs to be in response
-		header("HTTP/1.0 404 Not Found");		
-		
-		//@TODO 404
+		header("HTTP/1.0 404 Not Found");
+
 		return $this->view->render('pages-404', array(
 			'title' => '404',
 			'page' => new VirtualEntity()
 		));
+	}
+
+	/**
+	 * Grabs template name
+	 * 
+	 * @param \Krystal\Stdlib\VirtualEntity $page
+	 * @return string
+	 */
+	private function grabTemplateName(VirtualEntity $page)
+	{
+		if (trim($page->getTemplate()) !== '') {
+			return $page->getTemplate();
+		} else {
+			return 'pages-page';
+		}
+	}
+
+	/**
+	 * Loads breadcrumb by page's entity
+	 * 
+	 * @param \Krystal\Stdlib\VirtualEntity $page
+	 * @return void
+	 */
+	private function loadBreadcrumbsByPageEntity(VirtualEntity $page)
+	{
+		$breadcrumbBag = $this->view->getBreadcrumbBag();
+
+		// If page isn't default, then we append a breadcrumb
+		if (!$page->getDefault()) {
+			$breadcrumbBag->add($this->getPageManager()->getBreadcrumbs($page));
+		} else {
+			// Otherwise we should never have breadcrumbs
+			$breadcrumbBag->clear();
+		}
 	}
 }
