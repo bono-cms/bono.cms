@@ -195,8 +195,9 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 			->setKeywords(Filter::escape($post['keywords']))
 			->setMetaDescription(Filter::escape($post['meta_description']))
 			->setDate(date($this->getTimeFormat(), $entity->getTimestamp()))
+			->setPermanentUrl('/module/blog/post/'.$entity->getId())
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()));
-		
+
 		return $entity;
 	}
 

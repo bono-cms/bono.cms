@@ -132,8 +132,9 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 			->setOrder((int) $category['order'])
 			->setKeywords(Filter::escape($category['keywords']))
 			->setMetaDescription(Filter::escape($category['meta_description']))
+			->setPermanentUrl('/module/blog/category/'.$entity->getId())
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()));
-		
+
 		return $entity;
 	}
 
