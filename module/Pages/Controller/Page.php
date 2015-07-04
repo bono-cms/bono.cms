@@ -11,6 +11,8 @@
 
 namespace Pages\Controller;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Page extends AbstractPagesController
 {
 	/**
@@ -101,7 +103,7 @@ final class Page extends AbstractPagesController
 		//@TODO 404
 		return $this->view->render('pages-404', array(
 			'title' => '404',
-			'page' => $this->getPageManager()->fetchDummy()
+			'page' => new VirtualEntity()
 		));
 	}
 }
