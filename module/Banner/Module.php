@@ -13,6 +13,7 @@ namespace Banner;
 
 use Cms\AbstractCmsModule;
 use Banner\Service\BannerManager;
+use Banner\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -21,8 +22,12 @@ final class Module extends AbstractCmsModule
 	 */
 	public function getServiceProviders()
 	{
+		$bannerManager = new BannerManager($this->getMapper('/Banner/Storage/MySQL/BannerMapper'), $this->getHistoryManager());
+		$siteService = new SiteService($bannerManager);
+
 		return array(
-			'bannerManager' => new BannerManager($this->getMapper('/Banner/Storage/MySQL/BannerMapper'), $this->getHistoryManager())
+			'bannerManager' => $bannerManager,
+			'siteService' => $siteService
 		);
 	}
 }
