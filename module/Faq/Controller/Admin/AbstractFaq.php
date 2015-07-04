@@ -27,7 +27,8 @@ abstract class AbstractFaq extends AbstractAdminController
 			'input' => array(
 				'source' => $input,
 				'definition' => array(
-					'question' => new Pattern\Title()
+					'question' => new Pattern\Title(),
+					'answer' => new Pattern\Content()
 				)
 			)
 		));
