@@ -76,6 +76,21 @@ final class BannerMapper extends AbstractMapper implements BannerMapperInterface
 	}
 
 	/**
+	 * Fetches random banner
+	 * 
+	 * @return array
+	 */
+	public function fetchRandom()
+	{
+		return $this->db->select('*')
+						->from(static::getTableName())
+						->whereEquals('lang_id', $this->getLangId())
+						->orderBy()
+						->rand()
+						->query();
+	}
+
+	/**
 	 * Fetches banner's data by its associated id
 	 * 
 	 * @param string $id Banner id

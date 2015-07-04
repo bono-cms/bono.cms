@@ -38,6 +38,13 @@ interface BannerManagerInterface
 	public function fetchAllByPage($page, $itemsPerPage);
 
 	/**
+	 * Fetches random banner's entity
+	 * 
+	 * @return \Krystal\Stdlib\VirtualEntity
+	 */
+	public function fetchRandom();
+
+	/**
 	 * Adds a banner
 	 * 
 	 * @param array $input Raw form input

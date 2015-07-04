@@ -105,6 +105,16 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	}
 
 	/**
+	 * Fetches random banner's entity
+	 * 
+	 * @return \Krystal\Stdlib\VirtualEntity
+	 */
+	public function fetchRandom()
+	{
+		return $this->prepareResult($this->bannerMapper->fetchRandom());
+	}
+
+	/**
 	 * Prepares an input before sending it to a mapper
 	 * 
 	 * @param array $input Raw form data

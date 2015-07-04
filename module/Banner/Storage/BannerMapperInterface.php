@@ -47,6 +47,13 @@ interface BannerMapperInterface
 	public function fetchAllByPage($page, $itemsPerPage);
 
 	/**
+	 * Fetches random banner
+	 * 
+	 * @return array
+	 */
+	public function fetchRandom();
+
+	/**
 	 * Fetches banner's data by its associated id
 	 * 
 	 * @param string $id Banner id
