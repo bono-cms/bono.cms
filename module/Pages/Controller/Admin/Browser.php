@@ -38,34 +38,6 @@ final class Browser extends AbstractController
 	}
 
 	/**
-	 * Returns page manager
-	 * 
-	 * @return \Pages\Service\PageManager
-	 */
-	private function getPageManager()
-	{
-		return $this->moduleManager->getModule('Pages')->getService('pageManager');
-	}
-
-	/**
-	 * Loads required plugins for view
-	 * 
-	 * @return void
-	 */
-	private function loadPlugins()
-	{
-		$this->view->getPluginBag()
-				   ->appendScript($this->getWithAssetPath('/admin/page.browser.js'));
-		
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'link' => '#',
-				'name' => 'Pages'
-			)
-		));
-	}
-	
-	/**
 	 * Deletes selected page by its associated id
 	 * 
 	 * @return string
@@ -100,7 +72,7 @@ final class Browser extends AbstractController
 			$this->getPageManager()->deleteByIds($ids);
 
 		} else {
-			
+
 			// Nothing to delete
 			$type = 'warning';
 			$message = 'You have not checked any page you want to remove';
@@ -129,5 +101,33 @@ final class Browser extends AbstractController
 				return '1';
 			}
 		}
+	}
+
+	/**
+	 * Returns page manager
+	 * 
+	 * @return \Pages\Service\PageManager
+	 */
+	private function getPageManager()
+	{
+		return $this->getModuleService('pageManager');
+	}
+
+	/**
+	 * Loads required plugins for view
+	 * 
+	 * @return void
+	 */
+	private function loadPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/page.browser.js'));
+
+		$this->view->getBreadcrumbBag()->add(array(
+			array(
+				'link' => '#',
+				'name' => 'Pages'
+			)
+		));
 	}
 }
