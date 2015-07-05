@@ -187,8 +187,9 @@ final class AnnounceManager extends AbstractManager implements AnnounceManagerIn
 			->setKeywords(Filter::escape($announce['keywords']))
 			->setMetaDescription(Filter::escape($announce['meta_description']))
 			->setCover($announce['cover'])
+			->setPermanentUrl('/module/announcement/'.$entity->getId())
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()));
-		
+
 		return $entity;
 	}
 
