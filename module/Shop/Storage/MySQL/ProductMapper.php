@@ -43,6 +43,10 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 			$db->andWhereEquals('published', '1');
 		}
 
+		if ($categoryId !== null) {
+			$db->andWhereEquals('category_id', $categoryId);
+		}
+
 		$db->orderBy($order);
 
 		if ($desc == true) {
