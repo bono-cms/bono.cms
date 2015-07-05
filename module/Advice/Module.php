@@ -12,6 +12,7 @@
 namespace Advice;
 
 use Advice\Service\AdviceManager;
+use Advice\Service\SiteService;
 use Cms\AbstractCmsModule;
 
 final class Module extends AbstractCmsModule
@@ -21,8 +22,12 @@ final class Module extends AbstractCmsModule
 	 */
 	public function getServiceProviders()
 	{
+		$adviceManager = new AdviceManager($this->getMapper('/Advice/Storage/MySQL/AdviceMapper'), $this->getHistoryManager());
+		$siteService = new SiteService($adviceManager);
+
 		return array(
-			'adviceManager' => new AdviceManager($this->getMapper('/Advice/Storage/MySQL/AdviceMapper'), $this->getHistoryManager())
+			'adviceManager' => $adviceManager,
+			'siteService' => $siteService
 		);
 	}
 }

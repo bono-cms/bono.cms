@@ -38,6 +38,23 @@ interface AdviceManagerInterface
 	public function fetchRandom();
 
 	/**
+	 * Fetches advice's entity by its associated id
+	 * 
+	 * @param string $id
+	 * @return array
+	 */
+	public function fetchById($id);
+
+	/**
+	 * Fetches advice entities filtered by pagination
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Items per page count
+	 * @return array
+	 */
+	public function fetchAllByPage($page, $itemsPerPage);
+
+	/**
 	 * Returns prepared paginator's instance
 	 * 
 	 * @return \Krystal\Paginate\Paginator
@@ -68,27 +85,10 @@ interface AdviceManagerInterface
 	public function update(array $input);
 
 	/**
-	 * Fetches advice entities filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Items per page count
-	 * @return array
-	 */
-	public function fetchAllByPage($page, $itemsPerPage);
-
-	/**
 	 * Deletes an advice by its associated id
 	 * 
 	 * @param string $id Advice id
 	 * @return boolean
 	 */
 	public function deleteById($id);
-
-	/**
-	 * Fetches advice's entity by its associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id);
 }

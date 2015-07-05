@@ -101,6 +101,29 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 	}
 
 	/**
+	 * Fetches advice's entity by its associated id
+	 * 
+	 * @param string $id
+	 * @return array
+	 */
+	public function fetchById($id)
+	{
+		return $this->prepareResult($this->adviceMapper->fetchById($id));
+	}
+
+	/**
+	 * Fetches all advice entities filtered by pagination
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Items per page count
+	 * @return array
+	 */
+	public function fetchAllByPage($page, $itemsPerPage)
+	{
+		return $this->prepareResults($this->adviceMapper->fetchAllByPage($page, $itemsPerPage));
+	}
+
+	/**
 	 * Returns prepared paginator's instance
 	 * 
 	 * @return \Krystal\Paginate\Paginator
@@ -145,18 +168,6 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 	}
 
 	/**
-	 * Fetches all advice entities filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Items per page count
-	 * @return array
-	 */
-	public function fetchAllByPage($page, $itemsPerPage)
-	{
-		return $this->prepareResults($this->adviceMapper->fetchAllByPage($page, $itemsPerPage));
-	}
-
-	/**
 	 * Deletes an advice by its associated id
 	 * 
 	 * @param string $id Advice id
@@ -193,16 +204,5 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 		
 		$this->track('Batch removal of %s advices', count($ids));
 		return true;
-	}
-
-	/**
-	 * Fetches advice's entity by its associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id)
-	{
-		return $this->prepareResult($this->adviceMapper->fetchById($id));
 	}
 }
