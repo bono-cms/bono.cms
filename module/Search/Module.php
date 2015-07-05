@@ -19,14 +19,6 @@ use Search\Service\ConfigManager;
 final class Module extends AbstractCmsModule
 {
 	/**
-	 * {@inheritDoc}
-	 */
-	public function getConfigData()
-	{
-		return include(__DIR__ . '/Config/module.config.php');
-	}
-
-	/**
 	 * Returns prepared configuration service
 	 * 
 	 * @return \Pages\Service\ConfigManager
@@ -42,6 +34,8 @@ final class Module extends AbstractCmsModule
 	}
 
 	/**
+	 * Returns mappers that should be attached to the search
+	 * 
 	 * @return array
 	 */
 	private function grabMappers(array $collection)
@@ -92,11 +86,11 @@ final class Module extends AbstractCmsModule
 	public function getServiceProviders()
 	{
 		$searchMapper = $this->getMapper('/Search/Storage/MySQL/SearchMapper');
-		
+
 		foreach ($this->grabMappers($this->getAttachedMappers()) as $mapper) {
 			$searchMapper->append($this->getMapper($mapper));
 		}
-		
+
 		return array(
 			'configManager' => $this->getConfigManager(),
 			'searchManager' => new SearchManager($searchMapper, $this->getWebPageManager())
