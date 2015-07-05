@@ -28,6 +28,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	 * Returns shared select
 	 * 
 	 * @param boolean $published
+	 * @param string $categoryId
 	 * @return \Krystal\Db\Sql\Db
 	 */
 	private function getSelectQuery($published, $categoryId = null)
@@ -35,7 +36,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 		$db = $this->db->select('*')
 					   ->from(static::getTableName())
 					   ->whereEquals('lang_id', $this->getLangId());
-		
+
 		if ($categoryId !== null) {
 			$db->andWhereEquals('category_id', $categoryId);
 		}
