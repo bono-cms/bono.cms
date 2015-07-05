@@ -46,9 +46,11 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Loads basket service
+	 * 
+	 * @return void
 	 */
-	public function bootstrap()
+	private function loadBasket()
 	{
 		// For brevity
 		$mm = $this->moduleManager;
@@ -76,5 +78,26 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
 		$this->view->addVariable('basket', $basket)
 				   ->getPluginBag()
 				   ->appendScript('/module/Shop/Assets/basket.module.js');
+		
+	}
+
+	/**
+	 * Loads shop service
+	 * 
+	 * @return void
+	 */
+	private function loadShop()
+	{
+		$siteService = $this->moduleManager->getModule('Shop')->getService('siteService');
+		$this->view->addVariable('shop', $siteService);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function bootstrap()
+	{
+		$this->loadBasket();
+		$this->loadShop();
 	}
 }

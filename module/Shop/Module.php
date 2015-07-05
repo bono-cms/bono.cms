@@ -16,6 +16,7 @@ use Shop\Service\CategoryManager;
 use Shop\Service\TaskManager;
 use Shop\Service\OrderManager;
 use Shop\Service\ProductRemover;
+use Shop\Service\SiteService;
 
 final class Module extends AbstractShopModule
 {
@@ -39,6 +40,8 @@ final class Module extends AbstractShopModule
 		$basketManager = $this->getBasketManager($productMapper, $productImageManager->getImageBag());
 		$basketManager->load();
 
+		$config = $this->getConfigManager();
+		
 		$productRemover = new ProductRemover($productMapper, $imageMapper, $webPageManager, $productImageManager);
 		
 		// Build category manager
@@ -62,9 +65,12 @@ final class Module extends AbstractShopModule
 			$productRemover
 		);
 
+		$siteService = new SiteService($productManager, $config->getEntity());
+
 		return array(
 
-			'configManager' => $this->getConfigManager(),
+			'siteService' => $siteService,
+			'configManager' => $config,
 			'orderManager' => new OrderManager($orderInfoMapper, $orderProductMapper, $basketManager, $this->getNotificationManager(), $this->getMailer()),
 			'recentProduct' => $this->getRecentProduct($productManager),
 			'basketManager' => $basketManager,
