@@ -16,28 +16,10 @@ use Cms\AbstractCmsModule;
 final class Module extends AbstractCmsModule
 {
 	/**
-	 * {@inheritDoc}}
-	 */
-	public function getRoutes()
-	{
-		return include(__DIR__ . '/Config/routes.php');
-	}
-
-	/**
-	 * {@inheritDoc}}
-	 */
-	public function getServiceProviders()
-	{
-		return array();
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function getConfigData()
 	{
-		return array(
-			
-		);
+		return array();
 	}
 }
