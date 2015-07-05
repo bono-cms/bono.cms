@@ -1,3 +1,6 @@
+
+<?php if (!empty($categories)): ?>
+
 <form>
 	<div class="well clearfix">
 		
@@ -147,3 +150,15 @@
 	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
 	
 </form>
+
+<?php else: ?>
+
+<div class="well">
+
+	<div class="center-block">
+		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('In order to add a new announce, you have to create at least on category'); ?></h2>
+	</div>
+
+</div>
+
+<?php endif; ?>
