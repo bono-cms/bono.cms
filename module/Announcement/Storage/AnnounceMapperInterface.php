@@ -62,6 +62,15 @@ interface AnnounceMapperInterface
 	public function fetchById($id);
 
 	/**
+	 * Updates the sort order
+	 * 
+	 * @param string $id PK's value
+	 * @param string $order New sort order
+	 * @return boolean
+	 */
+	public function updateOrderById($id, $order);
+
+	/**
 	 * Updates announce's seo value
 	 * 
 	 * @param string $id Advice id

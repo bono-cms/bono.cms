@@ -36,6 +36,7 @@
 					<th class="text-center"><?php $this->show('#'); ?></th>
 					<th class="text-center"><?php $this->show('Name'); ?></th>
 					<th class="text-center"><?php $this->show('Category'); ?></th>
+					<th class="text-center"><?php $this->show('Order'); ?></th>
 					<th class="text-center"><?php $this->show('Published'); ?></th>
 					<th class="text-center"><?php $this->show('SEO'); ?></th>
 					<th class="text-center"><?php $this->show('Actions'); ?></th>
@@ -43,8 +44,11 @@
 			</thead>
 			
 			<?php if (!empty($announces)): ?>
+			
 			<tbody>
+				
 				<?php foreach ($announces as $announce): ?>
+				
 				<tr>
 					<td class="text-center">
 						<input type="checkbox" name="toDelete[<?php echo $announce->getId(); ?>]" />
@@ -52,6 +56,9 @@
 					<td class="text-center text-muted"><?php echo $announce->getId(); ?></td>
 					<td class="text-center"><?php echo $announce->getName(); ?></td>
 					<td class="text-center"><?php echo $announce->getCategoryName(); ?></td>
+					<td class="col-lg-1">
+						<input type="number" min="0" class="form-control" name="order[<?php echo $announce->getId(); ?>]" value="<?php echo $announce->getOrder(); ?>" />
+					</td>
 					<td class="text-center">
 						<input type="hidden" name="published[<?php echo $announce->getId(); ?>]" value="0" />
 						<input type="checkbox" name="published[<?php echo $announce->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($announce->getPublished()); ?> />
@@ -66,7 +73,9 @@
 						<a data-button="delete" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this announce'); ?>" data-id="<?php echo $announce->getId(); ?>" data-category="announce" href="#"><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
 				</tr>
+				
 				<?php endforeach; ?>
+				
 			</tbody>
 			<?php endif; ?>
 			

@@ -60,16 +60,18 @@ final class Browser extends AbstractAdminController
 	 */
 	public function saveAction()
 	{
-		if ($this->request->hasPost('seo', 'published')) {
+		if ($this->request->hasPost('seo', 'published', 'order')) {
 
 			$published = $this->request->getPost('published');
 			$seo = $this->request->getPost('seo');
+			$orders = $this->request->getPost('order');
 
 			// Grab a service
 			$announceManager = $this->getAnnounceManager();
 
 			$announceManager->updatePublished($published);
 			$announceManager->updateSeo($seo);
+			$announceManager->updateOrders($orders);
 
 			$this->flashMessenger->set('success', 'Announce settings have been updated successfully');
 

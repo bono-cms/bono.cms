@@ -24,6 +24,14 @@ interface AnnounceManagerInterface
 	public function getBreadcrumbs(VirtualEntity $announce);
 
 	/**
+	 * Updates orders by their associated ids
+	 * 
+	 * @param array $pair
+	 * @return boolean
+	 */
+	public function updateOrders(array $pair);
+
+	/**
 	 * Updates published state by associated announce ids
 	 * 
 	 * @param array $pair

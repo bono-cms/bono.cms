@@ -112,6 +112,18 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 	}
 
 	/**
+	 * Updates the sort order
+	 * 
+	 * @param string $id PK's value
+	 * @param string $order New sort order
+	 * @return boolean
+	 */
+	public function updateOrderById($id, $order)
+	{
+		return $this->updateColumnByPk($id, 'order', $order);
+	}
+
+	/**
 	 * Updates SEO value
 	 * 
 	 * @param string $id

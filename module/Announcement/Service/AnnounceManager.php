@@ -112,6 +112,23 @@ final class AnnounceManager extends AbstractManager implements AnnounceManagerIn
 	}
 
 	/**
+	 * Updates orders by their associated ids
+	 * 
+	 * @param array $pair
+	 * @return boolean
+	 */
+	public function updateOrders(array $pair)
+	{
+		foreach ($pair as $id => $order) {
+			if (!$this->announceMapper->updateOrderById($id, $order)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Updates published state by associated announce ids
 	 * 
 	 * @param array $pair
