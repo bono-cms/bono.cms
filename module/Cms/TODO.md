@@ -5,7 +5,7 @@ TODO List
  * Instantiation of ConfigManager needs to be abstracted
  * Need to deprecate form providers and replace with config [ON HOLD]
  * Need to implement installation [ON HOLD]
- * Need to implement mailer functionality [ON HOLD]. And what about HTML messages with attachments?
+ * Mailer should support HTML messages with attachments
  * Deprecate array configuration
  * Need to implement slug validator
  * Instead of raw arrays, WebPageManager should return entities
@@ -20,7 +20,6 @@ TODO List
  * Add ability to change time-zones
  * New schematic for internalization (One-to-many relationships)
  * Implement in-line theme editor
- * Add core updates support
  * Add custom backgrounds support
  * Implement password recovery
  * Environment analyser. That should make test to ensure everything will be working. 
@@ -28,5 +27,5 @@ TODO List
  * Feature : Often used modules
  * In administration area, there should be a drop-down menu of modules for quick access
  * Drag and Drop for modules (changing orders)
- * In tables, there must be a filter (In browsers) and sort
+ * In tables, there must be a filter (In browsers) and sorter
  * Write CMS module manager. Should be able to disable and un-install modules
