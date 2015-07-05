@@ -15,6 +15,7 @@ use Site\Controller\AbstractController;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Validate\Pattern;
 use Krystal\Validate\Renderer\MessagesOnly as MessagesOnlyRenderer;
+use Krystal\Paginate\PaginatorInterface;
 
 final class Search extends AbstractController
 {
@@ -40,8 +41,8 @@ final class Search extends AbstractController
 			$config = $this->getConfig();
 
 			if ($formValidator->isValid()) {
-				// Search manager
-				$searchManager = $this->moduleManager->getModule('Search')->getService('searchManager');
+				
+				$searchManager = $this->getModuleService('searchManager');
 
 				// Override maximal description's length
 				$searchManager->setMaxDescriptionLength($config->getMaxDescriptionLength());
@@ -103,6 +104,7 @@ final class Search extends AbstractController
 	{
 		// Default page number
 		$page = 1;
+
 		// Alter default page number if present
 		if ($this->request->hasQuery('page') && is_numeric($this->request->getQuery('page'))) {
 			$page = (int) $this->request->getQuery('page');
@@ -120,10 +122,8 @@ final class Search extends AbstractController
 	{
 		$entity = new VirtualEntity();
 		$entity->setTitle($this->translator->translate('Search results'))
-			 ->setMetaDescription(null)
-			 ->setKeywords(null)
-			 ->setWebPageId(null);
-		
+			 ->setMetaDescription(null);
+
 		return $entity;
 	}
 
@@ -134,7 +134,7 @@ final class Search extends AbstractController
 	 */
 	private function getConfig()
 	{
-		return $this->moduleManager->getModule('Search')->getService('configManager')->getEntity();
+		return $this->getModuleService('configManager')->getEntity();
 	}
 
 	/**
@@ -168,10 +168,10 @@ final class Search extends AbstractController
 	/**
 	 * Tweaks paginator's instance
 	 * 
-	 * @param $paginator
+	 * @param \Krystal\Paginate\PaginatorInterface $paginator
 	 * @return void
 	 */
-	private function tweakPaginator($paginator)
+	private function tweakPaginator(PaginatorInterface $paginator)
 	{
 		//@TODO Decorate it
 		$url =  '/search/?' . $this->request->buildQuery(array('page' => '%s'));
