@@ -27,237 +27,163 @@
 </div>
 
 
-<div class="row">
-	<div class="col-lg-8">
-		<?php $this->loadBlock('items-per-page', array('caption' => 'Products')); ?>
-		
-		
-		<form action="/admin/module/shop/" novalidate>
-			
-			<div class="table-responsive">
-				<table class="table table-hover table-bordered table-striped">
-					<thead>
-						<tr data-toggle="tooltip" title="Click on column to sort" data-placement="top">
-							<th class="text-center"><input type="checkbox" /></th>
-							<th class="text-center"><?php $this->show('#'); ?></th>
-							<th class="text-center"><?php $this->show('Cover'); ?></th>
-							<th data-sortable="true" data-column="title" class="text-center"><?php $this->show('Title'); ?> </th>
-							<th data-sortable="true" data-column="time" class="text-center"><?php $this->show('Date'); ?></th>
-							<th data-sortable="true" data-column="category_id" class="text-center"><?php $this->show('Category'); ?></th>
-							<th data-sortable="true" data-column="price" class="text-center"><?php $this->show('Price'); ?></th>
-							<th data-sortable="true" data-column="published" class="text-center"><?php $this->show('Published'); ?></th>
-							<th data-sortable="true" data-column="seo" class="text-center"><?php $this->show('SEO'); ?></th>
-							<th class="text-center"><?php $this->show('Actions'); ?></th>
-						</tr>
-						
-						<tr>
-							<th></th>
-							<th>
-								<input type="number" name="filter[id]" min="1" class="form-control col-md-1" />
-							</th>
-							<th></th>
-							<th>
-								<input type="text" name="filter[title]" class="form-control" />
-							</th>
-							<th class="col-lg-2"></th>
-							<th></th>
-							<th>
-								<input type="text" name="filter[price]" class="form-control" />
-							</th>
-							<th class="text-center">
-								<input type="hidden" name="filter[published]" value="0" />
-								<input type="checkbox" name="filter[published]" value="1" />
-							</th>
-							<th class="text-center">
-								<input type="hidden" name="filter[seo]" value="0" />
-								<input type="checkbox" name="filter[seo]" value="1" />
-							</th>
-							
-							<th></th>
-						</tr>
-						
-					</thead>
-
-					<?php if (!empty($products)):?>
-					<tbody>
-						
-						<?php foreach ($products as $product): ?>
-						<tr>
-							<td class="text-center">
-								<input type="checkbox" name="toDelete[<?php echo $product->getId(); ?>]" />
-							</td>
-							<td class="text-center text-muted"><?php echo $product->getId(); ?></td>
-							
-							<td data-selectable="true">
-								<a data-lightbox="<?php printf('image-%s', $product->getId()); ?>" href="<?php echo $product->getImageBag()->getUrl('original'); ?>"><img class="img-responsive center-block" src="<?php echo $product->getImageBag()->getUrl('120x120'); ?>" /></a>
-							</td>
-							
-							<td data-selectable="true" class="text-center"><?php echo $product->getTitle(); ?></td>
-							<td class="text-center"><?php echo date('d-m-Y', $product->getTimestamp()); ?></td>
-							<td class="text-center"><?php echo $product->getCategoryName(); ?></td>
-							<td class="text-center col-md-2">
-								<input type="number" min="0" name="price[<?php echo $product->getId(); ?>]" value="<?php echo $product->getPrice(); ?>" class="form-control center-block" />
-							</td>
-							<td class="text-center">
-								<input type="hidden" name="published[<?php echo $product->getId(); ?>]" value="0" />
-								<input type="checkbox" name="published[<?php echo $product->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($product->getPublished()); ?>/>
-							</td>
-							<td class="text-center">
-								<input type="hidden" name="seo[<?php echo $product->getId(); ?>]" value="0" />
-								<input type="checkbox" name="seo[<?php echo $product->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($product->getSeo()); ?>/>
-							</td>
-							<td class="text-center">
-								<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this product on site'); ?>" data-button="view" href="<?php echo $product->getUrl(); ?>" target="_blank"><i class="glyphicon glyphicon-search"></i></a>
-								<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this product'); ?>" data-button="edit" href="<?php echo $this->url('Shop:Admin:Product:Edit@indexAction', $product->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-								<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this product'); ?>" data-button="delete" data-category="product" data-id="<?php echo $product->getId(); ?>" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-							</td>
-						</tr>
-						
-						<?php endforeach; ?>
-						
-					</tbody>
-					<?php endif; ?>
-					
-				</table>
-
-				<div>
-					<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i> <?php $this->show('Filter'); ?></button>
-					<br />
-				</div>
-				
-				<div class="center-block" id="l" style="display:none;">
-					<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Loading'); ?></h2>
-				</div>
-				
-				<?php if (empty($products)): ?>
-				<div class="center-block">
-					<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No products'); ?></h2>
-				</div>
-				<?php endif; ?>
-				
-			</div>
-		</form>
-		
-		<?php $this->loadBlock('paginator'); ?>
-	</div>
+<div>
+	<?php $this->loadBlock('items-per-page', array('caption' => 'Products')); ?>
 	
-	
-	<div class="col-lg-4">
-		<div class="clearfix">
-			<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Categories'); ?> (<?php echo count($categories); ?>)</h4>
-			
+	<form action="<?php echo $this->url('Shop:Admin:Browser@indexAction'), '/'; ?>" novalidate>
+		
+		<div class="table-responsive">
 			<table class="table table-hover table-bordered table-striped">
 				<thead>
-					<tr>
+					<tr data-toggle="tooltip" title="Click on column to sort" data-placement="top">
+						<th class="text-center"><input type="checkbox" /></th>
 						<th class="text-center"><?php $this->show('#'); ?></th>
-						<th class="text-center"><?php $this->show('Name'); ?></th>
-						<th class="text-center"><?php $this->show('Amount of products'); ?></th>
+						<th class="text-center"><?php $this->show('Cover'); ?></th>
+						<th data-sortable="true" data-column="title" class="text-center"><?php $this->show('Title'); ?> </th>
+						<th data-sortable="true" data-column="time" class="text-center"><?php $this->show('Date'); ?></th>
+						<th data-sortable="true" data-column="category_id" class="text-center"><?php $this->show('Category'); ?></th>
+						<th data-sortable="true" data-column="price" class="text-center"><?php $this->show('Price'); ?></th>
+						<th data-sortable="true" data-column="published" class="text-center"><?php $this->show('Published'); ?></th>
+						<th data-sortable="true" data-column="seo" class="text-center"><?php $this->show('SEO'); ?></th>
 						<th class="text-center"><?php $this->show('Actions'); ?></th>
 					</tr>
-				</thead>
-				
-				<?php if (!empty($categories)): ?>
-				<tbody>
-					<?php foreach ($categories as $id => $category): ?>
 					
-					<tr <?php $this->getHelper()->addClassOnDemand(isset($currentCategoryId) && $currentCategoryId == $id, 'info'); ?>>
-						<td class="text-center text-muted"><?php echo $id; ?></td>
-						<td>
-							<a class="pull-left" href="<?php echo $this->url('Shop:Admin:Browser@categoryAction', $id); ?>">
-								<?php $this->getHelper()->wrapOnDemand(isset($currentCategoryId) && $currentCategoryId == $id, 'strong', $category); ?>
-							</a>
+					<tr>
+						<th></th>
+						<th>
+							<input type="number" name="filter[id]" min="1" class="form-control col-md-1" />
+						</th>
+						<th></th>
+						<th>
+							<input type="text" name="filter[title]" class="form-control" />
+						</th>
+						<th>
+							<input type="text" name="filter[date]" class="form-control" />
+						</th>
+						<th></th>
+						<th>
+							<input type="text" name="filter[price]" class="form-control" />
+						</th>
+						<th class="text-center">
+							<input type="hidden" name="filter[published]" value="0" />
+							<input type="checkbox" name="filter[published]" value="1" />
+						</th>
+						<th class="text-center">
+							<input type="hidden" name="filter[seo]" value="0" />
+							<input type="checkbox" name="filter[seo]" value="1" />
+						</th>
+						
+						<th></th>
+					</tr>
+					
+				</thead>
+
+				<?php if (!empty($products)):?>
+				<tbody>
+					
+					<?php foreach ($products as $product): ?>
+					<tr>
+						<td class="text-center">
+							<input type="checkbox" name="toDelete[<?php echo $product->getId(); ?>]" />
+						</td>
+						<td class="col-lg-1 text-center text-muted"><?php echo $product->getId(); ?></td>
+						
+						<td data-selectable="true">
+							<a data-lightbox="<?php printf('image-%s', $product->getId()); ?>" href="<?php echo $product->getImageBag()->getUrl('original'); ?>"><img class="img-responsive center-block" src="<?php echo $product->getImageBag()->getUrl('120x120'); ?>" /></a>
 						</td>
 						
-						<td class="text-center col-md-1"><?php echo $taskManager->getProductCountByCategoryId($id); ?></td>
+						<td data-selectable="true" class="text-center"><?php echo $product->getTitle(); ?></td>
+						<td class="text-center"><?php echo date('d-m-Y', $product->getTimestamp()); ?></td>
+						<td class="text-center"><?php echo $product->getCategoryName(); ?></td>
+						<td class="text-center col-lg-2">
+							<input type="number" min="0" name="price[<?php echo $product->getId(); ?>]" value="<?php echo $product->getPrice(); ?>" class="form-control center-block" />
+						</td>
 						<td class="text-center">
-							<a target="_blank" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this category'); ?>" data-button="view" href="<?php echo $taskManager->fetchByCategoryId($id)->getUrl(); ?>"><i class="glyphicon glyphicon-search"></i></a>
-							<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this category'); ?>" data-button="edit" href="<?php echo $this->url('Shop:Admin:Category:Edit@indexAction', $id); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-							<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this category'); ?>" data-button="delete" data-button="delete" data-category="category" data-id="<?php echo $id; ?>" href="#"><i class="glyphicon glyphicon-remove"></i></a>
+							<input type="hidden" name="published[<?php echo $product->getId(); ?>]" value="0" />
+							<input type="checkbox" name="published[<?php echo $product->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($product->getPublished()); ?>/>
+						</td>
+						<td class="text-center">
+							<input type="hidden" name="seo[<?php echo $product->getId(); ?>]" value="0" />
+							<input type="checkbox" name="seo[<?php echo $product->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($product->getSeo()); ?>/>
+						</td>
+						<td class="text-center">
+							<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this product on site'); ?>" data-button="view" href="<?php echo $product->getUrl(); ?>" target="_blank"><i class="glyphicon glyphicon-search"></i></a>
+							<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this product'); ?>" data-button="edit" href="<?php echo $this->url('Shop:Admin:Product:Edit@indexAction', $product->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+							<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this product'); ?>" data-button="delete" data-category="product" data-id="<?php echo $product->getId(); ?>" href="#"><i class="glyphicon glyphicon-remove"></i></a>
 						</td>
 					</tr>
+					
 					<?php endforeach; ?>
+					
 				</tbody>
 				<?php endif; ?>
 				
 			</table>
+
+			<div>
+				<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i> <?php $this->show('Filter'); ?></button>
+				<br />
+			</div>
 			
-			<?php if (empty($categories)): ?>
+			<div class="center-block" id="l" style="display:none;">
+				<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Loading'); ?></h2>
+			</div>
+			
+			<?php if (empty($products)): ?>
 			<div class="center-block">
-				<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
+				<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No products'); ?></h2>
 			</div>
 			<?php endif; ?>
 			
 		</div>
-	</div>
+	</form>
+	
+	<?php $this->loadBlock('paginator'); ?>
 </div>
 
 
-<div class="table-responsive">
-	<h4><i class="glyphicon glyphicon-shopping-cart"></i> <?php $this->show('Recent orders'); ?></h4>
+<div class="clearfix">
+	<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Categories'); ?> (<?php echo count($categories); ?>)</h4>
 	
 	<table class="table table-hover table-bordered table-striped">
 		<thead>
 			<tr>
 				<th class="text-center"><?php $this->show('#'); ?></th>
-				<th class="text-center"><?php $this->show('Date'); ?></th>
-				<th class="text-center"><?php $this->show('Customer'); ?></th>
-				<th class="text-center"><?php $this->show('Phone'); ?></th>
-				<th class="text-center"><?php $this->show('Address'); ?></th>
-				<th class="text-center"><?php $this->show('Comment'); ?></th>
-				<th class="text-center"><?php $this->show('Delivery type'); ?></th>
-				<th class="text-center"><?php $this->show('Qty'); ?></th>
-				<th class="text-center"><?php $this->show('Total price'); ?></th>
+				<th class="text-center"><?php $this->show('Name'); ?></th>
+				<th class="text-center"><?php $this->show('Amount of products'); ?></th>
 				<th class="text-center"><?php $this->show('Actions'); ?></th>
 			</tr>
 		</thead>
 		
-		<?php if (!empty($orders)): ?>
+		<?php if (!empty($categories)): ?>
 		<tbody>
+			<?php foreach ($categories as $id => $category): ?>
 			
-			<?php foreach ($orders as $order): ?>
-			
-			<tr>
-				<td class="text-center text-muted"><?php echo $order->getId(); ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>"><?php echo $order->getDate(); ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>"><?php echo $order->getName(); ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>"><?php echo $order->getPhone(); ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>"><?php echo $order->getAddress(); ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>"><?php echo $order->getComment(); ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>"><?php echo $order->getDelivery(); ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>"><?php echo $order->getQty(); ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>"><?php echo $order->getTotalPrice(), PHP_EOL, $currency; ?></td>
-				<td class="text-center <?php $this->getHelper()->addOnDemand($order->getApproved(), 'text-muted'); ?>">
-					
-					<?php if (!$order->getApproved()):?>
-					<a data-toggle="tooltip" data-placement="left" title="<?php $this->show('Approve this order'); ?>" data-button="approve" href="#" data-id="<?php echo $order->getId(); ?>"><i class="glyphicon glyphicon-ok"></i></a>
-					<?php endif; ?>
-					
-					<a data-toggle="tooltip" data-placement="left" title="<?php $this->show('Remove this order'); ?>" data-button="delete" data-category="order" data-id="<?php echo $order->getId(); ?>" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-					<a data-toggle="tooltip" data-placement="left" title="<?php $this->show('View purchased products'); ?>" data-button="details" href="<?php echo $this->url('Shop:Admin:Order@detailsAction', $order->getId()); ?>"><i class="glyphicon glyphicon-th-list"></i></a>
+			<tr <?php $this->getHelper()->addClassOnDemand(isset($currentCategoryId) && $currentCategoryId == $id, 'info'); ?>>
+				<td class="text-center text-muted"><?php echo $id; ?></td>
+				<td>
+					<a class="pull-left" href="<?php echo $this->url('Shop:Admin:Browser@categoryAction', $id); ?>">
+						<?php $this->getHelper()->wrapOnDemand(isset($currentCategoryId) && $currentCategoryId == $id, 'strong', $category); ?>
+					</a>
+				</td>
+				
+				<td class="text-center col-md-1"><?php echo $taskManager->getProductCountByCategoryId($id); ?></td>
+				<td class="text-center">
+					<a target="_blank" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this category'); ?>" data-button="view" href="<?php echo $taskManager->fetchByCategoryId($id)->getUrl(); ?>"><i class="glyphicon glyphicon-search"></i></a>
+					<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this category'); ?>" data-button="edit" href="<?php echo $this->url('Shop:Admin:Category:Edit@indexAction', $id); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this category'); ?>" data-button="delete" data-button="delete" data-category="category" data-id="<?php echo $id; ?>" href="#"><i class="glyphicon glyphicon-remove"></i></a>
 				</td>
 			</tr>
-			
 			<?php endforeach; ?>
-			
 		</tbody>
 		<?php endif; ?>
 		
 	</table>
 	
-	<?php if (empty($orders)): ?>
-	
+	<?php if (empty($categories)): ?>
 	<div class="center-block">
-	  <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No orders'); ?></h2>
+		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
 	</div>
-	
-	<?php else: ?>
-	
-	<?php if (count($orders) > 3): ?>
-	<br />
-	
-	<a class="btn btn-default" href="<?php echo $this->url('Shop:Admin:Order@listAction'); ?>"><i class="glyphicon glyphicon-time"></i> <?php $this->show('View all'); ?></a>
-	
-	<?php endif; ?>
 	<?php endif; ?>
 	
 </div>

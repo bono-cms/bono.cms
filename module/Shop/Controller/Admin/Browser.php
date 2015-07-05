@@ -189,8 +189,6 @@ final class Browser extends AbstractController
 		));
 
 		$vars = array(
-			'currency' => $this->getModuleService('configManager')->getEntity()->getCurrency(),
-			'orders' => $this->getModuleService('orderManager')->fetchLatest(4),
 			'title' => 'Shop',
 			'taskManager' => $this->getModuleService('taskManager'),
 			'categories' => $treeBuilder->render(new PhpArray('title'))
