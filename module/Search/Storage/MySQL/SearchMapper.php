@@ -154,10 +154,8 @@ final class SearchMapper extends AbstractMapper implements SearchMapperInterface
 	private function getQuery($keyword, $page, $itemsPerPage)
 	{
 		// First of all, we need to tweak pagination
-		$this->paginator->setTotalAmount($this->countAll($keyword))
-						->setItemsPerPage($itemsPerPage)
-						->setCurrentPage($page);
-		
+		$this->paginator->tweak($this->countAll($keyword), $itemsPerPage, $page);
+
 		// Just a reference
 		$qb = $this->db->getQueryBuilder();
 
