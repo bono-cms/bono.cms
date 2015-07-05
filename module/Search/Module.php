@@ -79,6 +79,9 @@ final class Module extends AbstractCmsModule
 			),
 			'Blog' => array(
 				'/Blog/Storage/MySQL/SearchMapper'
+			),
+			'Announcement' => array(
+				'/Announcement/Storage/MySQL/SearchMapper'
 			)
 		);
 	}
