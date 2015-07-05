@@ -20,7 +20,7 @@ final class Main extends AbstractController
 	 */
 	public function homeAction()
 	{
-		$controller = 'Pages:Home@indexAction';
+		$controller = 'Pages:Page@homeAction';
 		//$controller = 'Blog:Home@indexAction';
 		return $this->dispatcher->forward($controller);
 	}

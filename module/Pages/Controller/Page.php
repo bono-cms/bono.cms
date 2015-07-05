@@ -70,6 +70,34 @@ final class Page extends AbstractPagesController
 			'page' => new VirtualEntity()
 		));
 	}
+	
+	/**
+	 * Displays a home page
+	 * 
+	 * @return string
+	 */
+	public function homeAction()
+	{
+		$pageManager = $this->getPageManager();
+		$page = $pageManager->fetchDefault();
+
+		if ($page !== false) {
+
+			$this->loadSitePlugins();
+
+			// Clear all breadcrumbs
+			$this->view->getBreadcrumbBag()->clear();
+
+			return $this->view->render('pages-home', array(
+				'page' => $page
+			));
+
+		} else {
+
+			// Returning false from a controller's action triggers 404 error automatically
+			return false;
+		}
+	}
 
 	/**
 	 * Grabs template name
