@@ -32,9 +32,7 @@ final class Post extends AbstractController
 			$this->view->getBreadcrumbBag()
 					   ->add($postManager->getBreadcrumbs($post));
 
-			$config = $this->getModuleService('configManager')->getEntity();
-
-			return $this->view->render($config->getPostTemplate(), array(
+			return $this->view->render('news-post', array(
 				'page' => $post,
 				'post' => $post
 			));

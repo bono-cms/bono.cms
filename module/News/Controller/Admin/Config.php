@@ -71,9 +71,7 @@ final class Config extends AbstractAdminController
 					'cover_height' => new Pattern\ImageHeight(),
 					'cover_width' => new Pattern\ImageWidth(),
 					'thumb_height' => new Pattern\ImageHeight(),
-					'thumb_width' => new Pattern\ImageWidth(),
-					'category_template' => new Pattern\TemplateName(),
-					'post_template' => new Pattern\TemplateName(),
+					'thumb_width' => new Pattern\ImageWidth()
 				)
 			)
 		));

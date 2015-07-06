@@ -45,7 +45,7 @@ final class Category extends AbstractController
 			$paginator = $postManager->getPaginator();
 			$this->preparePaginator($paginator, $code, $slug, $pageNumber);
 
-			return $this->view->render($config->getCategoryTemplate(), array(
+			return $this->view->render('news-category', array(
 				'paginator' => $paginator,
 				'posts' => $posts,
 				'page' => $page
