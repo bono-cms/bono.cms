@@ -70,7 +70,7 @@ final class Search extends AbstractController
 				);
 			}
 
-			return $this->view->render($config->getTemplate(), $vars);
+			return $this->view->render('search', $vars);
 
 		} else {
 

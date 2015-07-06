@@ -92,7 +92,6 @@ final class Config extends AbstractController
 				'source' => $input,
 				'definition' => array(
 					'per_page_count' => new Pattern\PerPageCount(),
-					'template' => new Pattern\TemplateName()
 				)
 			)
 		));

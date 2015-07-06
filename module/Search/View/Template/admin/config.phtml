@@ -11,23 +11,6 @@
 			</div>
 		</div>
 		
-		<?php if ($extendedMode): ?>
-		<div class="form-group clearfix">
-			<label class="col-lg-2 control-label"><?php $this->show('Template'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-					<input type="text" name="template" class="form-control" value="<?php echo $config->getTemplate(); ?>" />
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-				<span class="help-block"><?php $this->show('Framework-compliant template name for site'); ?></span>
-			</div>
-		</div>
-		
-		<?php else: ?>
-		<input type="hidden" name="template" value="<?php echo $config->getTemplate(); ?>" />
-		
-		<?php endif; ?>
-		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Maximal description length'); ?></label>
 			<div class="col-lg-10">
@@ -38,7 +21,6 @@
 				<span class="help-block"><?php $this->show('Maximal length for description text when displaying results on site'); ?></span>
 			</div>
 		</div>
-		
 	</div>
 
 	<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>

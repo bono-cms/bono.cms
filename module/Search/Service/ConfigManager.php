@@ -23,7 +23,6 @@ final class ConfigManager extends AbstractConfigManager
 	{
 		$entity = $this->getEntity();
 		$entity->setPerPageCount((int) $this->get('per_page_count', 5))
-			   ->setTemplate(Filter::escape($this->get('template', 'search')))
 			   ->setMaxDescriptionLength((int) $this->get('max_description_length', 100));
 	}
 }
