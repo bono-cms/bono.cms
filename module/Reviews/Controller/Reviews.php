@@ -30,7 +30,7 @@ final class Reviews extends AbstractController
 		$paginator = $reviewManager->getPaginator();
 		$this->preparePaginator($paginator);
 
-		return $this->view->render($config->getTemplate(), array(
+		return $this->view->render('reviews', array(
 			'reviews' => $reviewManager->fetchAllPublishedByPage($page, $config->getPerPageCount()),
 			'paginator' => $paginator
 		));

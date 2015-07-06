@@ -28,26 +28,6 @@
 						<span class="help-block"><?php $this->show('How many reviews you want to be displayed per page on site?'); ?></span>
 					</div>
 				</div>
-				
-				<?php if ($extendedMode): ?>
-				
-				<div class="form-group clearfix">
-					<label class="col-lg-2 control-label"><?php $this->show('Template'); ?></label>
-					<div class="col-lg-10">
-						<div class="input-group">
-							<input type="text" name="template" class="form-control" value="<?php echo $config->getTemplate(); ?>" />
-							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-						</div>
-						<span class="help-block"><?php $this->show('Template name for rendering on the site'); ?></span>
-					</div>
-				</div>
-				
-				<?php else: ?>
-				
-				<input type="hidden" name="template" value="<?php echo $config->getTemplate(); ?>" />
-				
-				<?php endif; ?>
-				
 			</div>
 		</div>
 		<!--/Common-->

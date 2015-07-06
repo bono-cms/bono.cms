@@ -23,7 +23,6 @@ final class ConfigManager extends AbstractConfigManager
 	{
 		$entity = $this->getEntity();
 		$entity->setEnabledModeration((bool) $this->get('enable_moderation', true))
-			   ->setPerPageCount((int) $this->get('per_page_count', 5))
-			   ->setTemplate(Filter::escape($this->get('template', 'reviews')));
+			   ->setPerPageCount((int) $this->get('per_page_count', 5));
 	}
 }
