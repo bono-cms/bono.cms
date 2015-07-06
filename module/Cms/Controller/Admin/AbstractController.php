@@ -11,6 +11,7 @@
 
 namespace Cms\Controller\Admin;
 
+use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Form\Providers\PerPageCount;
 use Cms\View\RoleHelper;
@@ -76,6 +77,17 @@ abstract class AbstractController extends AbstractAuthAwareController
 	final protected function disableLanguageCheck()
 	{
 		$this->languageCheck = false;
+	}
+	
+	/**
+	 * Calls filter() method in provided service
+	 * 
+	 * @param \Krystal\Db\Filter\FilterableServiceInterface $service
+	 * @return array
+	 */
+	final protected function getFilter(FilterableServiceInterface $service)
+	{
+		return $this->getQueryFilter('filter', $service, $this->getSharedPerPageCount());
 	}
 
 	/**
