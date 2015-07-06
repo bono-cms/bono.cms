@@ -14,9 +14,34 @@ namespace Shop\Controller\Admin;
 use Cms\Controller\Admin\AbstractController;
 use Krystal\Tree\AdjacencyList\TreeBuilder;
 use Krystal\Tree\AdjacencyList\Render\PhpArray;
+use Krystal\Db\Filter\QueryContainer;
 
 final class Browser extends AbstractController
 {
+	/**
+	 * Applies the filter
+	 * 
+	 * @return string
+	 */
+	public function filterAction()
+	{
+		$records = $this->getFilter($this->getProductManager());
+
+		if ($records !== false) {
+			$this->loadSharedPlugins();
+
+			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+				'paginator' => $this->getProductManager()->getPaginator(),
+				'products' => $records
+			)));
+
+		} else {
+
+			// None selected, so no need to apply a filter
+			return $this->indexAction();
+		}
+	}
+
 	/**
 	 * Shows a table
 	 * 
@@ -25,16 +50,7 @@ final class Browser extends AbstractController
 	 */
 	public function indexAction($page = 1)
 	{
-		if ($this->request->hasQuery('filter')) {
-
-			$data = $this->request->getQuery('filter');
-			$products = $this->getProductManager()->filter($data, 1, $this->getSharedPerPageCount());
-
-		} else {
-
-			// By default we show latest
-			$products = $this->getProductManager()->fetchAllByPage($page, $this->getSharedPerPageCount());
-		}
+		$products = $this->getProductManager()->fetchAllByPage($page, $this->getSharedPerPageCount());
 
 		$paginator = $this->getProductManager()->getPaginator();
 		$paginator->setUrl('/admin/module/shop/page/%s');
@@ -44,7 +60,7 @@ final class Browser extends AbstractController
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 
 			'paginator' => $paginator,
-			'products' => $products
+			'products' => $products,
 		)));
 	}
 
@@ -191,7 +207,8 @@ final class Browser extends AbstractController
 		$vars = array(
 			'title' => 'Shop',
 			'taskManager' => $this->getModuleService('taskManager'),
-			'categories' => $treeBuilder->render(new PhpArray('title'))
+			'categories' => $treeBuilder->render(new PhpArray('title')),
+			'filter' => new QueryContainer($this->request->getQuery('filter'))
 		);
 
 		return array_replace_recursive($vars, $overrides);

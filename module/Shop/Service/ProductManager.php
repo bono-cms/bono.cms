@@ -15,6 +15,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Security\Filter;
+use Krystal\Db\Filter\FilterableServiceInterface;
 use Menu\Contract\MenuAwareManager;
 use Shop\Storage\ProductMapperInterface;
 use Shop\Storage\ImageMapperInterface;
@@ -23,7 +24,7 @@ use Cms\Service\AbstractManager;
 use Cms\Service\HistoryManagerInterface;
 use Cms\Service\WebPageManagerInterface;
 
-final class ProductManager extends AbstractManager implements ProductManagerInterface, MenuAwareManager
+final class ProductManager extends AbstractManager implements ProductManagerInterface, FilterableServiceInterface, MenuAwareManager
 {
 	/**
 	 * Any compliant product mapper
@@ -104,7 +105,7 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	}
 
 	/**
-	 * Filters data
+	 * Filters the input
 	 * 
 	 * @param array $input Raw input data
 	 * @param integer $page

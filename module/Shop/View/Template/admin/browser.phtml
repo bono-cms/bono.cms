@@ -30,7 +30,7 @@
 <div>
 	<?php $this->loadBlock('items-per-page', array('caption' => 'Products')); ?>
 	
-	<form action="<?php echo $this->url('Shop:Admin:Browser@indexAction'), '/'; ?>" novalidate>
+	<form action="<?php echo $this->url('Shop:Admin:Browser@filterAction', null); ?>" novalidate>
 		
 		<div class="table-responsive">
 			<table class="table table-hover table-bordered table-striped">
@@ -51,18 +51,18 @@
 					<tr>
 						<th></th>
 						<th>
-							<input type="number" name="filter[id]" min="1" class="form-control col-md-1" />
+							<input type="number" name="filter[id]" min="1" class="form-control col-md-1" value="<?php echo $filter->get('id'); ?>" />
 						</th>
 						<th></th>
 						<th>
-							<input type="text" name="filter[title]" class="form-control" />
+							<input type="text" name="filter[title]" class="form-control" value="<?php echo $filter->get('title'); ?>" />
 						</th>
 						<th>
 							<input type="text" name="filter[date]" class="form-control" />
 						</th>
 						<th></th>
 						<th>
-							<input type="text" name="filter[price]" class="form-control" />
+							<input type="text" name="filter[price]" class="form-control" value="<?php echo $filter->get('price'); ?>" />
 						</th>
 						<th class="text-center">
 							<input type="hidden" name="filter[published]" value="0" />
