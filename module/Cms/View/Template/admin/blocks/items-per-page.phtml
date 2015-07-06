@@ -1,5 +1,5 @@
 
-<?php if (isset($paginator)): ?>
+<?php if (isset($paginator) && $paginator->hasPages()): ?>
 
 <div class="per-page-container">
 	<h4 class="inline"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show($caption); ?> 
@@ -24,4 +24,9 @@
 	<div class="clearfix"></div>
 	
 </div>
+
+<?php else: ?>
+
+<br />
+
 <?php endif; ?>
