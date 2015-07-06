@@ -100,7 +100,6 @@ final class Config extends AbstractController
 					'max_img_width' => new Pattern\ImageWidth(),
 					'photos_per_page' => new Pattern\PerPageCount(),
 					'quality' => new Pattern\ImageQuality(),
-					'template' => new Pattern\TemplateName(),
 					'thumb_height' => new Pattern\ThumbHeight(),
 					'thumb_width' => new Pattern\ThumbWidth()
 				)

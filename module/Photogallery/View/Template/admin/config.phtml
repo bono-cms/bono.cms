@@ -32,20 +32,6 @@
 					</div>
 				</div>
 				
-				
-				<div class="form-group clearfix">
-					<label class="col-lg-2 control-label"><?php $this->show("Album's template"); ?></label>
-					<div class="col-lg-10">
-						<div class="input-group">
-							<input type="text" name="template" class="form-control" value="<?php echo $config->getTemplate(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
-							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-						</div>
-						<span class="help-block"><?php $this->show("Album's template file"); ?></span>
-					</div>
-				</div>
-
-				
-				
 				<?php if ($extendedMode): ?>
 				
 				<div class="form-group clearfix">

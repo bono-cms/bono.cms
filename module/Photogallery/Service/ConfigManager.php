@@ -23,7 +23,6 @@ final class ConfigManager extends AbstractConfigManager
 	{
 		$entity = $this->getEntity();
 		$entity->setPerPageCount((int) $this->get('photos_per_page', 5))
-			   ->setTemplate(Filter::escape($this->get('template')))
 			   ->setWidth((float) $this->get('thumb_width', 200))
 			   ->setHeight((float) $this->get('thumb_height', 200))
 			   ->setMaxHeight((float) $this->get('max_img_height', 200))

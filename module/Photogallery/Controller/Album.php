@@ -51,7 +51,7 @@ final class Album extends AbstractController
 		$this->view->getBreadcrumbBag()->add($photoManager->getBreadcrumbs($page));
 		$this->loadSitePlugins();
 
-		return $this->view->render($config->getTemplate(), array(
+		return $this->view->render('album', array(
 			'page' => $page,
 			'paginator' => $paginator,
 			'photos' => $photoManager->fetchAllPublishedByAlbumIdAndPage($albumId, $pageNumber, $config->getPerPageCount()),
