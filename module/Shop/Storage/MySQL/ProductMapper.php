@@ -88,6 +88,10 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 						->whereLike('title', '%'.$input['title'].'%', true)
 						->andWhereEquals('id', $input['id'], true)
 						->andWhereEquals('regular_price', $input['price'], true)
+						->andWhereEquals('published', $input['published'], true)
+						->andWhereEquals('seo', $input['seo'], true)
+						->orderBy('id')
+						->desc()
 						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
