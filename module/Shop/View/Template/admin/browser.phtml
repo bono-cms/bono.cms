@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\Widget\BooleanWidget;
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
 
 <div class="btn-toolbar">
 	<div class="btn-group">
@@ -26,8 +32,8 @@
 	</div>
 </div>
 
-
 <div>
+	
 	<?php $this->loadBlock('items-per-page', array('caption' => 'Products')); ?>
 	
 	<form action="<?php echo $this->url('Shop:Admin:Browser@filterAction', null); ?>" novalidate>
@@ -35,16 +41,16 @@
 		<div class="table-responsive">
 			<table class="table table-hover table-bordered table-striped">
 				<thead>
-					<tr data-toggle="tooltip" title="Click on column to sort" data-placement="top">
+					<tr>
 						<th class="text-center"><input type="checkbox" /></th>
 						<th class="text-center"><?php $this->show('#'); ?></th>
 						<th class="text-center"><?php $this->show('Cover'); ?></th>
-						<th data-sortable="true" data-column="title" class="text-center"><?php $this->show('Title'); ?> </th>
-						<th data-sortable="true" data-column="time" class="text-center"><?php $this->show('Date'); ?></th>
-						<th data-sortable="true" data-column="category_id" class="text-center"><?php $this->show('Category'); ?></th>
-						<th data-sortable="true" data-column="price" class="text-center"><?php $this->show('Price'); ?></th>
-						<th data-sortable="true" data-column="published" class="text-center"><?php $this->show('Published'); ?></th>
-						<th data-sortable="true" data-column="seo" class="text-center"><?php $this->show('SEO'); ?></th>
+						<th class="text-center"><?php $this->show('Title'); ?> </th>
+						<th class="text-center"><?php $this->show('Date'); ?></th>
+						<th class="text-center"><?php $this->show('Category'); ?></th>
+						<th class="text-center"><?php $this->show('Price'); ?></th>
+						<th class="text-center"><?php $this->show('Published'); ?></th>
+						<th class="text-center"><?php $this->show('SEO'); ?></th>
 						<th class="text-center"><?php $this->show('Actions'); ?></th>
 					</tr>
 					
@@ -64,13 +70,13 @@
 						<th>
 							<input type="text" name="filter[price]" class="form-control" value="<?php echo $filter->get('price'); ?>" />
 						</th>
+						
 						<th class="text-center">
-							<input type="hidden" name="filter[published]" value="0" />
-							<input type="checkbox" name="filter[published]" value="1" />
+							<?php echo BooleanWidget::render(array('name' => 'filter[published]', 'class' => 'form-control'), $filter->get('published'), $this->getTranslator()); ?>
 						</th>
+						
 						<th class="text-center">
-							<input type="hidden" name="filter[seo]" value="0" />
-							<input type="checkbox" name="filter[seo]" value="1" />
+							<?php echo BooleanWidget::render(array('name' => 'filter[seo]', 'class' => 'form-control'), $filter->get('seo'), $this->getTranslator()); ?>
 						</th>
 						
 						<th></th>
@@ -87,24 +93,20 @@
 							<input type="checkbox" name="toDelete[<?php echo $product->getId(); ?>]" />
 						</td>
 						<td class="col-lg-1 text-center text-muted"><?php echo $product->getId(); ?></td>
-						
 						<td data-selectable="true">
 							<a data-lightbox="<?php printf('image-%s', $product->getId()); ?>" href="<?php echo $product->getImageBag()->getUrl('original'); ?>"><img class="img-responsive center-block" src="<?php echo $product->getImageBag()->getUrl('120x120'); ?>" /></a>
 						</td>
-						
 						<td data-selectable="true" class="text-center"><?php echo $product->getTitle(); ?></td>
 						<td class="text-center"><?php echo date('d-m-Y', $product->getTimestamp()); ?></td>
 						<td class="text-center"><?php echo $product->getCategoryName(); ?></td>
 						<td class="text-center col-lg-2">
-							<input type="number" min="0" name="price[<?php echo $product->getId(); ?>]" value="<?php echo $product->getPrice(); ?>" class="form-control center-block" />
+							<input type="number" class="form-control center-block" min="0" name="price[<?php echo $product->getId(); ?>]" value="<?php echo $product->getPrice(); ?>" />
 						</td>
 						<td class="text-center">
-							<input type="hidden" name="published[<?php echo $product->getId(); ?>]" value="0" />
-							<input type="checkbox" name="published[<?php echo $product->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($product->getPublished()); ?>/>
+							<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $product->getId())), $product->getPublished()); ?>
 						</td>
 						<td class="text-center">
-							<input type="hidden" name="seo[<?php echo $product->getId(); ?>]" value="0" />
-							<input type="checkbox" name="seo[<?php echo $product->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($product->getSeo()); ?>/>
+							<?php echo CheckBoxWidget::render(array('name' => sprintf('seo[%s]', $product->getId())), $product->getSeo()); ?>
 						</td>
 						<td class="text-center">
 							<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this product on site'); ?>" data-button="view" href="<?php echo $product->getUrl(); ?>" target="_blank"><i class="glyphicon glyphicon-search"></i></a>
@@ -187,12 +189,3 @@
 	<?php endif; ?>
 	
 </div>
-
-
-<style>
-
-[data-sortable='true'] {
-  cursor:pointer;
-}
-
-</style>
