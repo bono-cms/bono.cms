@@ -77,6 +77,14 @@ interface ProductMapperInterface
 	public function countAllByCategoryId($categoryId);
 
 	/**
+	 * Increments view count by product's id
+	 * 
+	 * @param string $id Product id
+	 * @return boolean
+	 */
+	public function incrementViewCount($id);
+
+	/**
 	 * Updates a price by associated id
 	 * 
 	 * @param string $id Product's id

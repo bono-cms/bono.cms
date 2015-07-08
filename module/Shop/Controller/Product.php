@@ -31,12 +31,17 @@ final class Product extends AbstractShopController
 			// Load required plugins for view
 			$this->loadPlugins($productManager->getBreadcrumbs($product));
 
-			return $this->view->render($this->getConfig()->getProductTemplate(), array(
+			$response = $this->view->render($this->getConfig()->getProductTemplate(), array(
 				// Image bags of current product
 				'images' => $productManager->fetchAllPublishedImagesById($id),
 				'page' => $product,
 				'product' => $product,
 			));
+
+			// After product is viewed, it's time to increment its view count
+			$productManager->incrementViewCount($id);
+
+			return $response;
 
 		} else {
 

@@ -247,6 +247,19 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	}
 
 	/**
+	 * Increments view count by product's id
+	 * 
+	 * @param string $id Product id
+	 * @return boolean
+	 */
+	public function incrementViewCount($id)
+	{
+		return $this->db->increment(static::getTableName(), 'views')
+						->whereEquals('id', $id)
+						->execute();
+	}
+
+	/**
 	 * Updates a price by associated id
 	 * 
 	 * @param string $id Product's id

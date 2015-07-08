@@ -188,7 +188,8 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 			->setCover(Filter::escape($product['cover']))
 			->setTimestamp((int) $product['timestamp'])
 			->setPermanentUrl('/module/shop/product/'.$entity->getId())
-			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()));
+			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
+			->setViewCount((int) $product['views']);
 
 		return $entity;
 	}
@@ -250,6 +251,17 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	{
 		$images = $this->imageMapper->fetchAllByProductId($id);
 		return $this->preparePhotos($id, $images);
+	}
+
+	/**
+	 * Increments view count by product's id
+	 * 
+	 * @param string $id Product id
+	 * @return boolean
+	 */
+	public function incrementViewCount($id)
+	{
+		return $this->productMapper->incrementViewCount($id);
 	}
 
 	/**

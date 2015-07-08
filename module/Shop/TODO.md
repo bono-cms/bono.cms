@@ -12,7 +12,6 @@ TODO List
  * Add optional announce description for products
  * Product ratings 
  * Product reviews
- * Product views counts
  * Mostly Viewed Products
  * Best-sellers
  * Product attributes

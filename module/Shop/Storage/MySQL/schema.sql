@@ -83,7 +83,8 @@ CREATE TABLE `bono_module_shop_products` (
 	`keywords` TEXT NOT NULL COMMENT 'Keywords for search engines',
 	`meta_description` TEXT NOT NULL COMMENT 'Meta-description for search engines',
 	`cover` varchar(254) NOT NULL COMMENT 'Basename of image file',
-	`timestamp` INT(10) NOT NULL COMMENT 'Timestamp of added data'
+	`timestamp` INT(10) NOT NULL COMMENT 'Timestamp of added data',
+	`views` INT NOT NULL COMMENT 'View couter'
 	
 ) DEFAULT CHARSET = UTF8;
 

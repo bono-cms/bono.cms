@@ -38,6 +38,14 @@ interface ProductManagerInterface
 	public function fetchAllPublishedImagesById($id);
 
 	/**
+	 * Increments view count by product's id
+	 * 
+	 * @param string $id Product id
+	 * @return boolean
+	 */
+	public function incrementViewCount($id);
+
+	/**
 	 * Updates prices by their associated ids and values
 	 * 
 	 * @param array $pair
