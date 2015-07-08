@@ -587,6 +587,18 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	}
 
 	/**
+	 * Returns minimal product's price associated with provided category id
+	 * It's aware only of published products
+	 * 
+	 * @param string $categoryId
+	 * @return float
+	 */
+	public function getMinCategoryPriceCount($categoryId)
+	{
+		return (float) $this->productMapper->getMinCategoryPriceCount($categoryId);
+	}
+
+	/**
 	 * Fetches all published product entities associated with given category id
 	 * 
 	 * @param string $categoryId

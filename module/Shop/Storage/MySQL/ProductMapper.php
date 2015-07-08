@@ -97,6 +97,23 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	}
 
 	/**
+	 * Returns minimal product's price associated with provided category id
+	 * It's aware only of published products
+	 * 
+	 * @param string $categoryId
+	 * @return string
+	 */
+	public function getMinCategoryPriceCount($categoryId)
+	{
+		return $this->db->select()
+						->min('regular_price', 'min_price')
+						->from(static::getTableName())
+						->whereEquals('published', '1')
+						->andWhereEquals('category_id', $categoryId)
+						->query('min_price');
+	}
+
+	/**
 	 * Fetches all published products with maximal view counts
 	 * 
 	 * @param integer $limit Fetching limit

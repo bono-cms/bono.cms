@@ -14,6 +14,14 @@ namespace Shop\Service;
 interface SiteServiceInterface
 {
 	/**
+	 * Returns minimal product's price associated with provided category id
+	 * 
+	 * @param string $categoryId
+	 * @return float
+	 */
+	public function getMinCategoryPriceCount($categoryId);
+
+	/**
 	 * Returns an array of entities with products that have maximal view count
 	 * 
 	 * @param integer $limit

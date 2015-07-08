@@ -128,6 +128,15 @@ interface ProductMapperInterface
 	public function insert(array $data);
 
 	/**
+	 * Returns minimal product's price associated with provided category id
+	 * It's aware only of published products
+	 * 
+	 * @param string $categoryId
+	 * @return string
+	 */
+	public function getMinCategoryPriceCount($categoryId);
+
+	/**
 	 * Fetches all published products with maximal view counts
 	 * 
 	 * @param integer $limit Fetching limit
