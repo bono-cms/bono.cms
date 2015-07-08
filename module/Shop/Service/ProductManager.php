@@ -57,14 +57,14 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	/**
 	 * Web page manager for managing slugs
 	 * 
-	 * @var \Admin\Service\WebPageManagerInterface
+	 * @var \Cms\Service\WebPageManagerInterface
 	 */
 	private $webPageManager;
 
 	/**
 	 * History manager to keep tracks
 	 * 
-	 * @var \Admin\Service\HistoryManagerInterface
+	 * @var \Cms\Service\HistoryManagerInterface
 	 */
 	private $historyManager;
 
@@ -81,9 +81,9 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	 * @param \Shop\Storage\ProductMapperInterface $productMapper
 	 * @param \Shop\Storage\ImageMapperInterface $imageMapper
 	 * @param \Shop\Storage\CategoryMapperInterface $categoryMapper
-	 * @param \Admin\Service\WebPageManagerInterface $webPageManager
+	 * @param \Cms\Service\WebPageManagerInterface $webPageManager
 	 * @param \Krystal\Image\Tool\ImageManagerInterface $imageManager
-	 * @param \Admin\Service\HistoryManagerInterface $historyManager
+	 * @param \Cms\Service\HistoryManagerInterface $historyManager
 	 * @return void
 	 */
 	public function __construct(
@@ -470,7 +470,7 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 				foreach ($changedImages as $imageId => $fileBag) {
 					// First of all we need to remove old image
 					if ($this->imageManager->delete($productId, $this->imageMapper->fetchFileNameById($imageId))) {
-						
+
 						$this->filterFileInput($fileBag);
 						$this->imageManager->upload($productId, $fileBag);
 						$this->imageMapper->updateFileNameById($imageId, $fileBag[0]->getName());
@@ -549,7 +549,7 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 			if (!empty($value) && strpos($dataType, 'image_') !== false) {
 				// Grab a changed image id
 				$id = str_replace('image_', '', $dataType);
-				
+
 				$result[$id] = $value;
 			}
 		}
