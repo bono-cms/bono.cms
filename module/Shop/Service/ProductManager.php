@@ -426,6 +426,10 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 
 		// Short-cuts
 		$product =& $input['data']['product'];
+
+		// Initial view count
+		$product['views'] = 0;
+
 		$files =& $input['files']['file'];
 
 		// Insert should be first, because we need to provide an id
