@@ -182,6 +182,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 			->setSeo((bool) $category['seo'])
 			->setSlug(Filter::escape($this->webPageManager->fetchSlugByWebPageId($category['web_page_id'])))
 			->setKeywords(Filter::escape($category['keywords']))
+			->setPermanentUrl('/module/shop/category/'.$entity->getId())
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
 			->setMetaDescription(Filter::escape($category['meta_description']))
 			->setCover(Filter::escape($category['cover']));

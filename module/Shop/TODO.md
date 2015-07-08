@@ -8,7 +8,6 @@ TODO List
  * Starting price in category
  * Closes by price
  * Write decent statistic
- * need to append getPermamentUrl() in bags
  * Fetch random() must be everywhere in mappers
  * Implement a cache layer for basket
  * Add quality support for images?

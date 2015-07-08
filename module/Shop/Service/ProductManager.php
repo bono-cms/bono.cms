@@ -187,8 +187,9 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 			->setMetaDescription(Filter::escape($product['meta_description']))
 			->setCover(Filter::escape($product['cover']))
 			->setTimestamp((int) $product['timestamp'])
+			->setPermanentUrl('/module/shop/product/'.$entity->getId())
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()));
-			
+
 		return $entity;
 	}
 
