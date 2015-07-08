@@ -4,6 +4,8 @@ CHANGELOG
 1.2
 ---
 
+ * Implemented support for "Mostly Viewed Products". Added `getProductsWithMaxViewCount()` to `SiteService` 
+ * Added support views count
  * Minor improvements in code base
  * Added support for permanent URLs. Now each product's entity has `getPermanentUrl()` method
  * Added `SiteService`, which is called `$shop`. Moved all related functionality there as well

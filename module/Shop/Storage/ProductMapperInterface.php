@@ -128,6 +128,15 @@ interface ProductMapperInterface
 	public function insert(array $data);
 
 	/**
+	 * Fetches all published products with maximal view counts
+	 * 
+	 * @param integer $limit Fetching limit
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @return array
+	 */
+	public function fetchAllPublishedWithMaxViewCount($limit, $categoryId = null);
+
+	/**
 	 * Fetches product's data by its associated id
 	 * 
 	 * @param string $id Product id

@@ -97,6 +97,29 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	}
 
 	/**
+	 * Fetches all published products with maximal view counts
+	 * 
+	 * @param integer $limit Fetching limit
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @return array
+	 */
+	public function fetchAllPublishedWithMaxViewCount($limit, $categoryId = null)
+	{
+		$db = $this->db->select('*')
+					   ->from(static::getTableName())
+					   ->whereEquals('lang_id', $this->getLangId())
+					   ->andWhereEquals('published', '1');
+
+		if ($categoryId !== null) {
+			$db->andWhereEquals('category_id', $categoryId);
+		}
+
+		return $db->andWhereGreaterThan('views', '0')
+				  ->limit($limit)
+				  ->queryAll();
+	}
+
+	/**
 	 * Fetches product's data by its associated id
 	 * 
 	 * @param string $id Product id

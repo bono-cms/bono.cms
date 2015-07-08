@@ -108,6 +108,15 @@ interface ProductManagerInterface
 	public function update(array $input);
 
 	/**
+	 * Fetches all published product entities with maximal view counts
+	 * 
+	 * @param integer $limit Fetching limit
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @return array
+	 */
+	public function fetchAllPublishedWithMaxViewCount($limit, $categoryId = null);
+
+	/**
 	 * Fetches all published product entities associated with given category id
 	 * 
 	 * @param string $categoryId

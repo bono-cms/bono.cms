@@ -14,6 +14,15 @@ namespace Shop\Service;
 interface SiteServiceInterface
 {
 	/**
+	 * Returns an array of entities with products that have maximal view count
+	 * 
+	 * @param integer $limit
+	 * @param string $categoryId Optionally can be filtered by category id
+	 * @return array
+	 */
+	public function getProductsWithMaxViewCount($limit, $categoryId = null);
+
+	/**
 	 * Returns an array of entities of recent products
 	 * 
 	 * @param string $id Current product id to be excluded
