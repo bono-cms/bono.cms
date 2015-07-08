@@ -34,11 +34,11 @@
 		
 		<div class="clearfix"></div>
 		
-		<?php if (!empty($recent)): ?>
+		<?php if ($shop->getRecentProducts($product->getId())): ?>
 		<div class="clearfix" style="margin-top:59px;">
 			<h1 class="text-muted"><small><i class="glyphicon glyphicon-tasks"></i> <?php $this->show('Recently viewed'); ?>: </small></h1>
 			
-			<?php $this->loadBlock('product-block', array('products' => $recent)); ?>
+			<?php $this->loadBlock('product-block', array('products' => $shop->getRecentProducts($product->getId()))); ?>
 		</div>
 		<?php endif; ?>
 	</div>

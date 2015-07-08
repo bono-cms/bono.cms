@@ -65,14 +65,13 @@ final class Module extends AbstractShopModule
 			$productRemover
 		);
 
-		$siteService = new SiteService($productManager, $config->getEntity());
+		$siteService = new SiteService($productManager, $this->getRecentProduct($productManager), $config->getEntity());
 
 		return array(
 
 			'siteService' => $siteService,
 			'configManager' => $config,
 			'orderManager' => new OrderManager($orderInfoMapper, $orderProductMapper, $basketManager, $this->getNotificationManager(), $this->getMailer()),
-			'recentProduct' => $this->getRecentProduct($productManager),
 			'basketManager' => $basketManager,
 			'taskManager' => new TaskManager($productMapper, $categoryManager),
 			'productManager' => $productManager,

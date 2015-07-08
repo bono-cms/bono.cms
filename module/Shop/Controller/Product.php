@@ -32,10 +32,6 @@ final class Product extends AbstractShopController
 			$this->loadPlugins($productManager->getBreadcrumbs($product));
 
 			return $this->view->render($this->getConfig()->getProductTemplate(), array(
-
-				// Get all recent products we have so far
-				'recent' => $this->getWithRecent($product->getId()),
-
 				// Image bags of current product
 				'images' => $productManager->fetchAllPublishedImagesById($id),
 				'page' => $product,
@@ -67,22 +63,5 @@ final class Product extends AbstractShopController
 		// Alter breadcrumbs in view
 		$this->view->getBreadcrumbBag()
 				   ->add($breadcrumbs);
-	}
-
-	/**
-	 * Returns recent products
-	 * 
-	 * @param string $id Current id to be handled
-	 * @return array
-	 */
-	private function getWithRecent($id)
-	{
-		if ($this->getConfig()->getMaxRecentAmount() > 0) {
-			return $this->getModuleService('recentProduct')->getWithRecent($id);
-
-		} else {
-			// If that functionality is disabled, then dummy empty array is returned
-			return array();
-		}
 	}
 }
