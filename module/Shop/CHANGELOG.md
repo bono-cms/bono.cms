@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Set cookie lifetime for recent products to 631139040 seconds
  * Added support for starting prices in category. This functionality is implemented in `SiteService::getMinCategoryPriceCount`
  * Implemented support for "Mostly Viewed Products". Added `getProductsWithMaxViewCount()` to `SiteService` 
  * Added support for views count

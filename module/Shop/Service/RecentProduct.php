@@ -160,7 +160,7 @@ final class RecentProduct implements RecentProductInterface
 	public function save()
 	{
 		$data = $this->csvLimitedTool->getValues();
-		$this->storage->set(self::STORAGE_KEY, $data, 86400);
+		$this->storage->set(self::STORAGE_KEY, $data, 631139040);
 
 		return true;
 	}

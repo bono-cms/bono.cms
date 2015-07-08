@@ -3,7 +3,6 @@ TODO List
 =========
 
  * Bug with sorting categories on site?!?
- * Fix this: `$this->storage->set(self::STORAGE_KEY, $data, 86400)` in `RecentProduct`, i.e the ttl is tightly-coupled;
  * Closes by price
  * Write decent statistic
  * Add quality support for images
