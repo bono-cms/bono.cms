@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
 
 <?php if (!empty($categories)): ?>
 
@@ -33,7 +39,7 @@
 				<select name="category_id" class="form-control">
 					
 					<?php foreach ($categories as $category): ?>
-					<option value="<?php echo $category->getId(); ?>" <?php $this->getHelper()->selectOnDemand($category->getId() == $announce->getCategoryId()); ?>><?php echo $category->getName(); ?></option>
+					<option value="<?php echo $category->getId(); ?>" <?php HtmlHelper::selectOnDemand($category->getId() == $announce->getCategoryId()); ?>><?php echo $category->getName(); ?></option>
 					<?php endforeach; ?>
 					
 				</select>
@@ -60,7 +66,7 @@
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
 					<input type="hidden" name="published" value="0" />
-					<input type="checkbox" name="published" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($announce->getPublished()); ?>/>
+					<input type="checkbox" name="published" value="1" class="form-control" <?php HtmlHelper::checkOnDemand($announce->getPublished()); ?>/>
 				</div>
 			</div>
 			
@@ -68,8 +74,14 @@
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="seo" value="0" />
-					<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($announce->getSeo()); ?> />
+					
+					<?php echo CheckBoxWidget::render(array(
+
+						'name' => 'seo', 
+						'class' => 'form-control'
+
+					), $announce->getSeo()); ?>
+					
 				</div>
 			</div>
 			
