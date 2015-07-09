@@ -27,7 +27,6 @@ final class Edit extends AbstractBlock
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'editing' => true,
 				'title' => 'Edit the block',
 				'block' => $block
 			)));
@@ -56,6 +55,7 @@ final class Edit extends AbstractBlock
 			}
 
 		} else {
+
 			return $formValidator->getErrors();
 		}
 	}

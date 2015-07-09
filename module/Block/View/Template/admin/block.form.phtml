@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <form>
 	<div class="well clearfix">
 		<input type="hidden" name="id" value="<?php echo $block->getId(); ?>" />
@@ -6,7 +12,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="name" class="form-control" value="<?php echo $block->getName(); ?>" placeholder="<?php $this->show("Block's name"); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?>/>
+					<input type="text" name="name" class="form-control" value="<?php echo $block->getName(); ?>" placeholder="<?php $this->show("Block's name"); ?>" <?php HtmlHelper::makeReadOnlyOnDemand(!$extendedMode); ?>/>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -39,7 +45,7 @@
 		
 	</div>
 	
-	<?php if (isset($editing)): ?>
+	<?php if ($block->getId()): ?>
 	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
 	
 	<?php else: ?>
@@ -48,4 +54,5 @@
 	<?php endif; ?>
 	
 	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+	
 </form>
