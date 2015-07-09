@@ -1,3 +1,11 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Widget\DropdownWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <form>
 	
 	<ul class="nav nav-tabs" role="tablist">
@@ -43,11 +51,14 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Controller'); ?></label>
 						<div class="col-lg-10">
-							<select name="controller" class="form-control">
-								<?php foreach ($controllers as $controller): ?>
-								<option value="<?php echo $controller; ?>" <?php $this->getHelper()->selectOnDemand($controller == $page->getController()); ?>><?php echo $controller; ?></option>
-								<?php endforeach; ?>
-							</select>
+							
+							<?php echo DropdownWidget::render(array(
+								
+								'class' => 'form-control', 
+								'name' => 'controller'
+								
+							), $controllers, $page->getController(), false); ?>
+							
 						</div>
 					</div>
 					
@@ -66,8 +77,15 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Protect'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="protected" value="0" />
-							<input type="checkbox" name="protected" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getProtected()); ?> title="If you protect the page you are going to created, them users that use only simple mode will not be able to remove it" />
+							
+							<?php echo CheckBoxWidget::render(array(
+								
+								'name' => 'protected', 
+								'class' => 'form-control',
+								'placeholder' => $this->translate('If you protect the page you are going to created, them users that use only simple mode will not be able to remove it')
+								
+							), $page->getProtected()); ?>
+							
 						</div>
 					</div>
 					
@@ -80,17 +98,31 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="makeDefault" value="0" />
-							<input type="checkbox" name="makeDefault" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getDefault()); ?> title="Whether it should be home page or not" />
+
+							<?php echo CheckBoxWidget::render(array(
+								
+								'name' => 'makeDefault', 
+								'class' => 'form-control',
+								'placeholder' => $this->translate('Whether it should be home page or not')
+								
+							), $page->getProtected()); ?>
+							
 						</div>
 					</div>
 					<?php endif; ?>
 					
+					
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="seo" value="0" />
-							<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($page->getSeo()); ?> />
+							
+							<?php echo CheckBoxWidget::render(array(
+								
+								'name' => 'seo', 
+								'class' => 'form-control'
+								
+							), $page->getSeo()); ?>
+							
 						</div>
 					</div>
 					
@@ -100,7 +132,6 @@
 						<div class="col-lg-10">
 							<div class="input-group">
 								<input type="text" name="slug" class="form-control" value="<?php echo $page->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
-								
 								<span class="input-group-addon">
 									<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
 								</span>

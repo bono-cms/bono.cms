@@ -16,31 +16,22 @@ use Site\Controller\AbstractController;
 abstract class AbstractPagesController extends AbstractController
 {
 	/**
-	 * Returns page module
-	 * 
-	 * @return \Pages\Module
-	 */
-	final protected function getPagesModule()
-	{
-		return $this->moduleManager->getModule('Pages');
-	}
-
-	/**
 	 * Returns configuration entity
 	 * 
 	 * @return \Krystal\Stdlib\VirtualEntity
 	 */
 	final protected function getConfig()
 	{
-		return $this->getPagesModule()->getService('configManager')->getEntity();
+		return $this->getModuleService('configManager')->getEntity();
 	}
 
 	/**
+	 * Returns page manager
 	 * 
-	 * @return \Pages\Service\Page
+	 * @return \Pages\Service\PageManager
 	 */
 	final protected function getPageManager()
 	{
-		return $this->getPagesModule()->getService('pageManager');
+		return $this->getModuleService('pageManager');
 	}
 }

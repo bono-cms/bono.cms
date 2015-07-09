@@ -25,7 +25,8 @@ final class Add extends AbstractPage
 		$this->loadSharedPlugins();
 
 		$page = new VirtualEntity();
-		$page->setSeo(true);
+		$page->setSeo(true)
+			 ->setController('Pages:Page@indexAction');
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a page',

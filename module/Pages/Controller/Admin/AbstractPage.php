@@ -28,7 +28,13 @@ abstract class AbstractPage extends AbstractController
 		$routes = $this->moduleManager->getRoutes();
 		$mapManager = new MapManager($routes);
 
-		return $mapManager->getControllers();
+		$result = array();
+
+		foreach ($mapManager->getControllers() as $controller) {
+			$result[$controller] = $controller;
+		}
+
+		return $result;
 	}
 
 	/**
