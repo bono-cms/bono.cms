@@ -1,3 +1,10 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Widget\DropdownWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
 
 <?php if (!empty($categories)): ?>
 
@@ -10,9 +17,9 @@
 	
 	
 	<div class="tab-content">
-		
+
 	  <!--Product tab-->
-	  <div role="tabpanel" class="tab-pane active" id="product">
+	<div role="tabpanel" class="tab-pane active" id="product">
 		<div class="well clearfix">
 			
 			<input type="hidden" name="product[id]" value="<?php echo $product->getId(); ?>" />
@@ -54,13 +61,7 @@
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Category'); ?></label>
 				<div class="col-lg-10">
-					<select name="product[category_id]" class="form-control">
-						
-						<?php foreach ($categories as $id => $title): ?>
-						<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $product->getCategoryId()); ?>><?php echo $title; ?></option>
-						<?php endforeach; ?>
-						
-					</select>
+					<?php echo DropdownWidget::render(array('name' => 'product[category_id]', 'class' => 'form-control'), $categories, $product->getCategoryId(), false); ?>
 				</div>
 			</div>
 			
@@ -73,12 +74,10 @@
 			</div>
 			
 			
-			<div class="form-group clearfix <?php $this->getHelper()->addOnDemand($config->getSpecialSupport(), 'hidden'); ?>">
+			<div class="form-group clearfix <?php HtmlHelper::addOnDemand($config->getSpecialSupport(), 'hidden'); ?>">
 				<label class="col-lg-2 control-label"><?php $this->show('Special offer'); ?></label>
 				<div class="col-lg-10">
-					
-					<input type="hidden" name="product[special_offer]" value="0" />
-					<input type="checkbox" name="product[special_offer]" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($product->getSpecialOffer()); ?>/>
+					<?php echo CheckBoxWidget::render(array('name' => 'product[special_offer]', 'class' => 'form-control'), $product->getSpecialOffer()); ?>
 				</div>
 			</div>
 			
@@ -98,8 +97,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 					<div class="col-lg-10">
-						<input type="hidden" name="product[published]" value="0" />
-						<input type="checkbox" name="product[published]" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($product->getPublished()); ?>/>
+						<?php echo CheckBoxWidget::render(array('name' => 'product[published]', 'class' => 'form-control'), $product->getPublished()); ?>
 					</div>
 				</div>
 				
@@ -107,8 +105,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 					<div class="col-lg-10">
-						<input type="hidden" name="product[seo]" value="0" />
-						<input type="checkbox" name="product[seo]" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($product->getSeo()); ?>/>
+						<?php echo CheckBoxWidget::render(array('name' => 'product[seo]', 'class' => 'form-control'), $product->getSeo()); ?>
 					</div>
 				</div>
 				
@@ -204,19 +201,18 @@
 							</td>
 							
 							<td class="text-center">
-								<input type="hidden" name="photos[published][<?php echo $photo->getId(); ?>]" value="0" />
-								<input type="checkbox" name="photos[published][<?php echo $photo->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($photo->getPublished()); ?>/>
+								<?php echo CheckBoxWidget::render(array('name' => sprintf('photos[published][%s]', $photo->getId())), $photo->getPublished()); ?>
 							</td>
 							
 							<td class="text-center">
-								<input type="radio" name="photos[cover]" value="<?php echo $photo->getImage(); ?>" <?php $this->getHelper()->checkOnDemand($product->getCover() == $photo->getImage()); ?>/>
+								<input type="radio" name="photos[cover]" value="<?php echo $photo->getImage(); ?>" <?php HtmlHelper::checkOnDemand($product->getCover() == $photo->getImage()); ?>/>
 							</td>
 							
 							<td class="text-center">
 								<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Replace this image'); ?>" data-button="edit" data-image="<?php echo $photo->getImage(); ?>" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
 								
 								<?php if ($product->getCover() != $photo->getImage()): ?>
-								<input name="photos[toDelete][<?php echo $photo->getId(); ?>]" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Check if you want to remove this image'); ?>" type="checkbox" /> <?php $this->show('Remove'); ?>
+								<input type="checkbox" name="photos[toDelete][<?php echo $photo->getId(); ?>]" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Check if you want to remove this image'); ?>" /> <?php $this->show('Remove'); ?>
 								<?php endif; ?>
 								
 								<input type="file" accept="image/x-png, image/gif, image/jpeg" class="hidden" name="<?php printf('image_%s', $photo->getId()); ?>" />
@@ -242,9 +238,9 @@
 <?php else: ?>
 
 <div class="well">
- <div class="center-block">
-  <h2 class="text-muted text-center"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Before you add a product, you need to create at least one category'); ?></h2>
- </div>
+	<div class="center-block">
+		<h2 class="text-muted text-center"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Before you add a product, you need to create at least one category'); ?></h2>
+	</div>
 </div>
 
 <?php endif; ?>

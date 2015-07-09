@@ -1,7 +1,16 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Widget\DropdownWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <form>
+	
 	<ul class="nav nav-tabs" role="tablist">
-	 <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><span class="fa fa-home fa-fw"></span> <?php $this->show('Common'); ?></a></li>
-	 <li role="presentation"><a href="#maintenance" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-picture"></span> <?php $this->show('Images'); ?></a></li>
+		<li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><span class="fa fa-home fa-fw"></span> <?php $this->show('Common'); ?></a></li>
+		<li role="presentation"><a href="#maintenance" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-picture"></span> <?php $this->show('Images'); ?></a></li>
 	</ul>
 	
 	
@@ -15,8 +24,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Activate stoke price support'); ?></label>
 					<div class="col-lg-10">
-						<input type="hidden" name="stoke_price_enabled" value="0" />
-						<input type="checkbox" name="stoke_price_enabled" class="form-control" value="1" <?php $this->getHelper()->checkOnDemand($config->getStokePriceEnabled()); ?> />
+						<?php echo CheckBoxWidget::render(array('name' => 'stoke_price_enabled', 'class' => 'form-control'), $config->getStokePriceEnabled()); ?>
 					</div>
 				</div>
 				
@@ -24,8 +32,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Activate special offer support'); ?></label>
 					<div class="col-lg-10">
-						<input type="hidden" name="special_support" value="0" />
-						<input type="checkbox" name="special_support" class="form-control" value="1" <?php $this->getHelper()->checkOnDemand($config->getSpecialSupport()); ?> />
+						<?php echo CheckBoxWidget::render(array('name' => 'special_support', 'class' => 'form-control'), $config->getSpecialSupport()); ?>
 					</div>
 				</div>
 				
@@ -81,14 +88,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("User's storage type"); ?></label>
 					<div class="col-lg-10">
-						
-						<select class="form-control" name="basket_storage_type">
-							
-							<?php foreach ($config->getBasketStorageTypes() as $id => $description): ?>
-							<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $config->getBasketStorageType()); ?>><?php $this->show($description); ?></option>
-							<?php endforeach; ?>
-							
-						</select>
+						<?php echo DropdownWidget::render(array('name' => 'basket_storage_type', 'class' => 'form-control'), $this->getTranslator()->translateArray($config->getBasketStorageTypes()), $config->getBasketStorageType(), false); ?>
 					</div>
 				</div>
 				
