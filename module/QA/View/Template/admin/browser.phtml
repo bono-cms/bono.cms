@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
+
 <div class="btn-toolbar">
 	<div class="btn-group">
 	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -54,8 +60,7 @@
 					<td class="text-center"><?php echo $qa->getQuestioner(); ?></td>
 					<td class="text-center"><?php echo $qa->getAnswerer(); ?></td>
 					<td class="text-center">
-						<input type="hidden" name="published[<?php echo $qa->getId(); ?>]" value="0" />
-						<input type="checkbox" name="published[<?php echo $qa->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($qa->getPublished()); ?>/>
+						<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $qa->getId())), $qa->getPublished()); ?>
 					</td>
 					<td class="text-center">
 						<a data-button="edit" href="<?php echo $this->url('QA:Admin:Edit@indexAction', $qa->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this pair'); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
