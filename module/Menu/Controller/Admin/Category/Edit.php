@@ -28,7 +28,6 @@ final class Edit extends AbstractCategory
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 				'category' => $category,
-				'editing' => true,
 				'title' => 'Edit the category'
 			)));
 
