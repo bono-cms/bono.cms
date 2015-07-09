@@ -1,3 +1,10 @@
+<?php
+
+use Krystal\Form\Widget\DropdownWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <form>
 	<ul class="nav nav-tabs" role="tablist">
 	 <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
@@ -37,14 +44,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("Language support"); ?></label>
 					<div class="col-lg-10">
-						
-						<select class="form-control" name="language_support">
-							
-							<?php foreach ($config->getLanguageSupportOptions() as $optionId => $optionName): ?>
-							<option value="<?php echo $optionId; ?>" <?php $this->getHelper()->selectOnDemand($config->getLanguageSupport() == $optionId); ?>><?php $this->show($optionName); ?></option>
-							<?php endforeach; ?>
-							
-						</select>
+						<?php echo DropdownWidget::render(array('name' => 'language_support', 'class' => 'form-control'), $config->getLanguageSupportOptions(), $config->getLanguageSupport(), false); ?>
 					</div>
 				</div>
 				
@@ -65,7 +65,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show("Maximal image height"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" name="max_img_height" class="form-control" value="<?php echo $config->getMaxHeight(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<input type="number" name="max_img_height" class="form-control" value="<?php echo $config->getMaxHeight(); ?>" <?php HtmlHelper::makeReadOnlyOnDemand(!$extendedMode); ?> />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Maximal allowed height for photos on site. 0 - do not take into account'); ?></span>
@@ -77,7 +77,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show("Maximal image width"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" name="max_img_width" class="form-control" value="<?php echo $config->getMaxWidth(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<input type="number" name="max_img_width" class="form-control" value="<?php echo $config->getMaxWidth(); ?>" <?php HtmlHelper::makeReadOnlyOnDemand(!$extendedMode); ?> />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Maximal allowed width for photos on site. 0 - do not take into account'); ?></span>
@@ -89,7 +89,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show("Thumb's height"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" name="thumb_height" class="form-control" value="<?php echo $config->getHeight(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<input type="number" name="thumb_height" class="form-control" value="<?php echo $config->getHeight(); ?>" <?php HtmlHelper::makeReadOnlyOnDemand(!$extendedMode); ?> />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Desired thumbs height when viewing on site'); ?></span>
@@ -101,7 +101,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show("Thumb's width"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" name="thumb_width" class="form-control" value="<?php echo $config->getWidth(); ?>" <?php $this->getHelper()->makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<input type="number" name="thumb_width" class="form-control" value="<?php echo $config->getWidth(); ?>" <?php HtmlHelper::makeReadOnlyOnDemand(!$extendedMode); ?> />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Desired thumbs width when viewing on site'); ?></span>

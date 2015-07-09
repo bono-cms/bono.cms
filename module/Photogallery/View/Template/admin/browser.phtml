@@ -1,3 +1,10 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <div class="btn-toolbar">
 	<div class="btn-group">
 	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -57,8 +64,7 @@
 					<td class="text-center"><?php echo $photo->getName(); ?></td>
 					<td class="text-center"><?php echo $photo->getAlbumName(); ?></td>
 					<td class="text-center">
-						<input type="hidden" name="published[<?php echo $photo->getId(); ?>]" value="0" />
-						<input type="checkbox" name="published[<?php echo $photo->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($photo->getPublished()); ?> />
+						<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $photo->getId())), $photo->getPublished()); ?>
 					</td>
 					<td class="text-center col-md-1">
 						<input type="number" class="form-control" min="0" name="order[<?php echo $photo->getId(); ?>]" value="<?php echo $photo->getOrder(); ?>" />
@@ -106,11 +112,13 @@
 			<?php foreach ($albums as $id => $title): ?>
 			<tr>
 				<td class="text-center text-muted"><?php echo $id; ?></td>
+				
 				<td class="text-center">
 					<a href="<?php echo $this->url('Photogallery:Admin:Browser@albumAction', $id); ?>">
-						<?php $this->getHelper()->wrapOnDemand(isset($albumId) && $albumId == $id, 'strong', $title); ?>
+						<?php HtmlHelper::wrapOnDemand(isset($albumId) && $albumId == $id, 'strong', $title); ?>
 					</a>
 				</td>
+				
 				<td class="text-center"><?php echo $taskManager->getCountByAlbumId($id); ?></td>
 				<td class="text-center">
 					<a data-button="view" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this album on site'); ?>" target="_blank" href="<?php echo $taskManager->fetchByAlbumId($id)->getUrl(); ?>"><i class="glyphicon glyphicon-search"></i></a>

@@ -1,3 +1,10 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Widget\DropdownWidget;
+
+?>
+
 <form>
 	<?php if (count($albums) != 0): ?>
 	
@@ -20,11 +27,7 @@
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Album'); ?></label>
 			<div class="col-lg-10">
-				<select name="album_id" class="form-control">
-					<?php foreach ($albums as $id => $title): ?>
-					<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $photo->getAlbumId()); ?>><?php echo $title; ?></option>
-					<?php endforeach; ?>
-				</select>
+				<?php echo DropdownWidget::render(array('name' => 'album_id', 'class' => 'form-control'), $albums, $photo->getAlbumId(), false); ?>
 			</div>
 		</div>
 		
@@ -56,8 +59,7 @@
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="published" value="0" />
-					<input type="checkbox" name="published" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($photo->getPublished()); ?> />
+					<?php echo CheckBoxWidget::render(array('name' => 'published'), $photo->getPublished()); ?>
 				</div>
 			</div>
 			
@@ -102,10 +104,10 @@
 	<?php else: ?>
 
 	<div class="well">
-	 <blockquote>
-	  <p class="text-muted"><?php $this->show('You can not upload photos before you create a photo album!'); ?></p>
-	  <small><a href="<?php echo $this->url('Photogallery:Admin:Album:Add@indexAction'); ?>"><?php $this->show('Click here to create a new one'); ?></a></small>
-	 </blockquote>
+		<blockquote>
+			<p class="text-muted"><?php $this->show('You can not upload photos before you create a photo album!'); ?></p>
+			<small><a href="<?php echo $this->url('Photogallery:Admin:Album:Add@indexAction'); ?>"><?php $this->show('Click here to create a new one'); ?></a></small>
+		</blockquote>
 	</div>
 
 	<?php endif; ?>

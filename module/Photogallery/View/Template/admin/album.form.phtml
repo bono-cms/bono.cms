@@ -1,3 +1,10 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Widget\DropdownWidget;
+
+?>
+
 <form>
 	<ul class="nav nav-tabs" role="tablist">
 	 <li role="presentation" class="active"><a href="#page" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Album'); ?></a></li>
@@ -27,17 +34,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Parent album'); ?></label>
 					<div class="col-lg-10">
-						<select name="parent_id" class="form-control">
-							<option value="0">— <?php $this->show('None'); ?> —</option>
-							
-							<?php if (!empty($albums)): ?>
-							
-							<?php foreach ($albums as $id => $title): ?>
-							<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $album->getParentId()); ?>><?php echo $title; ?></option>
-							<?php endforeach; ?>
-							
-							<?php endif; ?>
-						</select>
+						<?php echo DropdownWidget::render(array('name' => 'parent_id', 'class' => 'form-control'), $albums, $album->getParentId(), '— '.$this->translate('None').' —'); ?>
 					</div>
 				</div>
 				
@@ -109,8 +106,7 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="seo" value="0" />
-							<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($album->getSeo()); ?> />
+							<?php echo CheckBoxWidget::render(array('name' => 'seo', 'class' => 'form-control'), $album->getSeo()); ?>
 						</div>
 					</div>
 					
