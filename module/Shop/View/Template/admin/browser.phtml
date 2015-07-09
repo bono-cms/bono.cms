@@ -2,6 +2,7 @@
 
 use Krystal\Form\Widget\BooleanWidget;
 use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Widget\DropdownWidget;
 
 ?>
 
@@ -66,7 +67,9 @@ use Krystal\Form\Widget\CheckBoxWidget;
 						<th>
 							<input type="text" name="filter[date]" class="form-control" />
 						</th>
-						<th></th>
+						<th>
+							<?php echo DropdownWidget::render(array('name' => 'filter[category_id]', 'class' => 'form-control'), $categories, $filter->get('category_id')); ?>
+						</th>
 						<th>
 							<input type="text" name="filter[price]" class="form-control" value="<?php echo $filter->get('price'); ?>" />
 						</th>
