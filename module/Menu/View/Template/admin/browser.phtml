@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <div class="row">
 	
 	<!-- Context menu for items -->
@@ -56,13 +62,13 @@
 					  <div class="col-lg-10">
 						<select name="web_page_id" class="chosen-select form-control" id="chosenSelect">
 							<option value="#"><?php $this->show('None'); ?></option>
-							<option value="0" <?php $this->getHelper()->selectOnDemand($item->getWebPageId() == '0'); ?>><?php $this->show('Custom link'); ?></option>
+							<option value="0" <?php HtmlHelper::selectOnDemand($item->getWebPageId() == '0'); ?>><?php $this->show('Custom link'); ?></option>
 							
 							<?php foreach ($links as $module => $collection): ?>
 							
 							<optgroup label="<?php $this->show($module); ?>">
 								<?php foreach ($collection as $container): ?>
-								<option value="<?php echo $container['id']; ?>" <?php $this->getHelper()->selectOnDemand($container['id'] == $item->getWebPageId()); ?>><?php echo $container['title']; ?></option>
+								<option value="<?php echo $container['id']; ?>" <?php HtmlHelper::selectOnDemand($container['id'] == $item->getWebPageId()); ?>><?php echo $container['title']; ?></option>
 								<?php endforeach; ?>
 							</optgroup>
 							
@@ -91,7 +97,7 @@
 							<?php if (!empty($items)): ?>
 							
 							<?php foreach ($items as $target => $title): ?>
-							<option value="<?php echo $target; ?>" <?php $this->getHelper()->selectOnDemand($item->getParentId() == $target); ?>><?php echo $title; ?></option>
+							<option value="<?php echo $target; ?>" <?php HtmlHelper::selectOnDemand($item->getParentId() == $target); ?>><?php echo $title; ?></option>
 							<?php endforeach; ?>
 							
 							<?php endif; ?>
@@ -117,7 +123,7 @@
 						<div class="checkbox">
 						  <label>
 							<input type="hidden" name="published" value="0" />
-							<input type="checkbox" name="published" value="1" <?php $this->getHelper()->checkOnDemand($item->getPublished()); ?>/>
+							<input type="checkbox" name="published" value="1" <?php HtmlHelper::checkOnDemand($item->getPublished()); ?>/>
 						  </label>
 						</div>
 					  </div>
@@ -130,7 +136,7 @@
 						<div class="checkbox">
 						  <label>
 							<input type="hidden" name="open_in_new_window" value="0" />
-							<input type="checkbox" name="open_in_new_window" value="1" <?php $this->getHelper()->checkOnDemand($item->getOpenInNewWindow()); ?>/>
+							<input type="checkbox" name="open_in_new_window" value="1" <?php HtmlHelper::checkOnDemand($item->getOpenInNewWindow()); ?>/>
 						  </label>
 						</div>
 					  </div>

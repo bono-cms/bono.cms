@@ -1,3 +1,8 @@
+<?php
+
+use Krystal\Form\HtmlHelper;
+
+?>
 
 <input type="hidden" name="menu[attached]" value='<?php echo $attached; ?>' />
 
@@ -25,7 +30,7 @@
 			<select name="menu[widget][category_id][]" class="form-control" data-widget="menu-category">
 				
 				<?php foreach ($categories as $categoryBag): ?>
-				<option value="<?php echo $categoryBag->getId(); ?>" <?php $this->getHelper()->selectOnDemand($categoryBag->getId() == $item->getCategoryId()); ?>><?php echo $categoryBag->getName(); ?></option>
+				<option value="<?php echo $categoryBag->getId(); ?>" <?php HtmlHelper::selectOnDemand($categoryBag->getId() == $item->getCategoryId()); ?>><?php echo $categoryBag->getName(); ?></option>
 				<?php endforeach; ?>
 				
 			</select>
@@ -38,8 +43,9 @@
 		<div class="col-lg-10">
 			
 			<select name="menu[widget][parent_id][]" class="form-control" data-widget="menu-parent-item">
+
 				<?php foreach ($parentItems as $id => $title): ?>
-				<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $item->getParentId()); ?>><?php echo $title; ?></option>
+				<option value="<?php echo $id; ?>" <?php HtmlHelper::selectOnDemand($id == $item->getParentId()); ?>><?php echo $title; ?></option>
 				<?php endforeach; ?>
 				
 			</select>
@@ -53,7 +59,7 @@
 			
 			<select name="menu[widget][published][]" class="form-control">
 				<?php foreach ($publishOptions as $value => $title): ?>
-				<option value="<?php echo $value; ?>" <?php $this->getHelper()->selectOnDemand($value == $item->getPublished()); ?>><?php $this->show($title); ?></option>
+				<option value="<?php echo $value; ?>" <?php HtmlHelper::selectOnDemand($value == $item->getPublished()); ?>><?php $this->show($title); ?></option>
 				<?php endforeach; ?>
 				
 			</select>
@@ -67,7 +73,7 @@
 			
 			<select name="menu[widget][open_in_new_window][]" class="form-control">
 				<?php foreach ($newWindowOptions as $value => $title): ?>
-				<option value="<?php echo $value; ?>" <?php $this->getHelper()->selectOnDemand($value == $item->getOpenInNewWindow()); ?>><?php $this->show($title); ?></option>
+				<option value="<?php echo $value; ?>" <?php HtmlHelper::selectOnDemand($value == $item->getOpenInNewWindow()); ?>><?php $this->show($title); ?></option>
 				<?php endforeach; ?>
 				
 			</select>
