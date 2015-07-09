@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
+
 <form>
 	<div class="well clearfix">
 		
@@ -20,13 +26,13 @@
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 			<div class="col-lg-10">
-				<input type="hidden" name="published" value="0" />
-				<input type="checkbox" name="published" class="form-control" value="1" <?php $this->getHelper()->checkOnDemand($advice->getPublished()); ?>/>
+				<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $advice->getPublished()); ?>
 			</div>
 		</div>
+		
 	</div>
 	
-	<?php if (isset($editing)): ?>
+	<?php if ($advice->getId()): ?>
 	
 	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
 	<button data-button="save-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
