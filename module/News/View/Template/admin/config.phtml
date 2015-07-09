@@ -1,10 +1,12 @@
 <form>
+
 	<ul class="nav nav-tabs" role="tablist">
-	 <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
-	 <?php if ($extendedMode): ?>
-	 <li role="presentation"><a href="#additional" role="tab" data-toggle="tab"><i class="fa fa-th fa-fw"></i> <?php $this->show('Additional'); ?></a></li>
-	 <?php endif; ?>
+		<li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
+		<?php if ($extendedMode): ?>
+		<li role="presentation"><a href="#additional" role="tab" data-toggle="tab"><i class="fa fa-th fa-fw"></i> <?php $this->show('Additional'); ?></a></li>
+		<?php endif; ?>
 	</ul>
+	
 	
 	<div class="tab-content clearfix">
 		<div class="tab-pane fade in active" id="common" role="tabpanel">
@@ -64,8 +66,6 @@
 		<div class="tab-pane" id="additional" role="tabpanel">
 			<div class="well clearfix">
 				
-				
-				<!--Cover full height-->
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("Cover quality"); ?></label>
 					<div class="col-lg-10">
@@ -76,10 +76,8 @@
 						<span class="help-block"><?php $this->show('Image quality for covers'); ?></span>
 					</div>
 				</div>
-				<!--/Cover full height-->
 				
 				
-				<!--Cover full height-->
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Cover height'); ?></label>
 					<div class="col-lg-10">
@@ -90,10 +88,8 @@
 						<span class="help-block"><?php $this->show('The height of post covers'); ?></span>
 					</div>
 				</div>
-				<!--/Cover full height-->
 				
 				
-				<!--Cover full width-->
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Cover width'); ?></label>
 					<div class="col-lg-10">
@@ -104,10 +100,8 @@
 						<span class="help-block"><?php $this->show('The width of post covers'); ?></span>
 					</div>
 				</div>
-				<!--/Cover full width-->
 				
-
-				<!--Cover thumb height-->
+				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("Thumb's height"); ?></label>
 					<div class="col-lg-10">
@@ -118,10 +112,8 @@
 						<span class="help-block"><?php $this->show('The height of post thumb images'); ?></span>
 					</div>
 				</div>
-				<!--/Cover thumb height-->
 				
 				
-				<!--Cover thumb width-->
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("Thumb's width"); ?></label>
 					<div class="col-lg-10">
@@ -132,7 +124,6 @@
 						<span class="help-block"><?php $this->show('The width of post thumb images'); ?></span>
 					</div>
 				</div>
-				<!--/Cover thumb width-->
 				
 			</div>
 		</div>
