@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
 
 <?php if (!empty($categories)): ?>
 
@@ -24,7 +30,7 @@
 				<select name="category_id" class="form-control">
 					
 					<?php foreach ($categories as $category): ?>
-					<option value="<?php echo $category->getId(); ?>" <?php $this->getHelper()->selectOnDemand($image->getCategoryId() == $category->getId()); ?>><?php echo $category->getName(); ?></option>
+					<option value="<?php echo $category->getId(); ?>" <?php HtmlHelper::selectOnDemand($image->getCategoryId() == $category->getId()); ?>><?php echo $category->getName(); ?></option>
 					<?php endforeach; ?>
 					
 				</select>
@@ -82,8 +88,12 @@
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="published" value="0" />
-					<input type="checkbox" name="published" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($image->getPublished()); ?>/>
+					<?php echo CheckBoxWidget::render(array(
+
+						'name' => 'published', 
+						'class' => 'form-control'
+
+					), $image->getPublished()); ?>
 				</div>
 			</div>
 			
