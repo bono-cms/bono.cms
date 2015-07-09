@@ -1,3 +1,10 @@
+<?php
+
+use Krystal\Form\Widget\DropdownWidget;
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
+
 <form>
 	
 	<ul class="nav nav-tabs" role="tablist">
@@ -15,8 +22,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Keep the track of latest activity'); ?></label>
 					<div class="col-lg-10">
-						<input type="hidden" name="keep_track" value="0" />
-						<input type="checkbox" class="form-control" name="keep_track" value="1" <?php $this->getHelper()->checkOnDemand($config->getKeepTrack()); ?> />
+						<?php echo CheckBoxWidget::render(array('name' => 'keep_track', 'class' => 'form-control'), $config->getKeepTrack()); ?>
 					</div>
 				</div>
 				
@@ -55,8 +61,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Site is down for maintenance'); ?></label>
 					<div class="col-lg-10">
-						<input type="hidden" name="site_enabled" />
-						<input type="checkbox" name="site_enabled" class="form-control" <?php $this->getHelper()->checkOnDemand($config->getSiteEnabled()); ?> />
+						<?php echo CheckBoxWidget::render(array('name' => 'site_enabled', 'class' => 'form-control'), $config->getSiteEnabled()); ?>
 					</div>
 				</div>
 				
@@ -81,8 +86,7 @@
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("Try using server's native mailer"); ?></label>
 					<div class="col-lg-10">
-						<input type="hidden" name="use_smtp_driver" value="0" />
-						<input type="checkbox" name="use_smtp_driver" value="1" id="smtpDriver" class="form-control" <?php $this->getHelper()->checkOnDemand($config->getUseSmtpDriver()); ?> />
+						<?php echo CheckBoxWidget::render(array('name' => 'use_smtp_driver', 'class' => 'form-control'), $config->getUseSmtpDriver()); ?>
 					</div>
 				</div>
 				
@@ -91,9 +95,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('Secure layer'); ?> (SSL/TLS)</label>
 					<div class="col-lg-10">
 						<select class="form-control" name="smtp_secure_layer">
-							<?php foreach($config->getSmtpSecureLayers() as $id => $description): ?>
-							<option value="<?php echo $id; ?>" <?php $this->getHelper()->selectOnDemand($id == $config->getSmtpSecureLayer()); ?>><?php echo $description; ?></option>
-							<?php endforeach; ?>
+							<?php echo DropdownWidget::render(array('name' => 'smtp_secure_layer', 'class' => 'form-control'), $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), false); ?>
 						</select>
 						<span class="help-block"><?php $this->show('If your provided requires secure layer, choice required one here'); ?></span>
 					</div>

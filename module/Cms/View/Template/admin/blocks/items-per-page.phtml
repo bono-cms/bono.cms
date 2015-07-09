@@ -1,3 +1,8 @@
+<?php
+
+use Krystal\Form\HtmlHelper;
+
+?>
 
 <?php if (isset($paginator) && $paginator->hasPages()): ?>
 
@@ -14,7 +19,7 @@
 		<select data-button="per-page-changer">
 			
 			<?php foreach($perPageCounts as $count): ?>
-			<option value="<?php echo $count->getValue(); ?>" <?php $this->getHelper()->selectOnDemand($count->isCurrent()); ?>><?php echo $count->getName(); ?></option>
+			<option value="<?php echo $count->getValue(); ?>" <?php HtmlHelper::selectOnDemand($count->isCurrent()); ?>><?php echo $count->getName(); ?></option>
 			<?php endforeach; ?>
 			
 		</select>
