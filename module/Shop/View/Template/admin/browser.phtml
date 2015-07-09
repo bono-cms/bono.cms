@@ -3,6 +3,7 @@
 use Krystal\Form\Widget\BooleanWidget;
 use Krystal\Form\Widget\CheckBoxWidget;
 use Krystal\Form\Widget\DropdownWidget;
+use Krystal\Form\HtmlHelper;
 
 ?>
 
@@ -64,13 +65,13 @@ use Krystal\Form\Widget\DropdownWidget;
 						<th>
 							<input type="text" name="filter[title]" class="form-control" value="<?php echo $filter->get('title'); ?>" />
 						</th>
-						<th>
+						<th class="date-col">
 							<input type="text" name="filter[date]" class="form-control" />
 						</th>
 						<th>
 							<?php echo DropdownWidget::render(array('name' => 'filter[category_id]', 'class' => 'form-control'), $categories, $filter->get('category_id')); ?>
 						</th>
-						<th>
+						<th class="price-col">
 							<input type="text" name="filter[price]" class="form-control" value="<?php echo $filter->get('price'); ?>" />
 						</th>
 						
@@ -96,13 +97,13 @@ use Krystal\Form\Widget\DropdownWidget;
 							<input type="checkbox" name="toDelete[<?php echo $product->getId(); ?>]" />
 						</td>
 						<td class="col-lg-1 text-center text-muted"><?php echo $product->getId(); ?></td>
-						<td data-selectable="true">
+						<td>
 							<a data-lightbox="<?php printf('image-%s', $product->getId()); ?>" href="<?php echo $product->getImageBag()->getUrl('original'); ?>"><img class="img-responsive center-block" src="<?php echo $product->getImageBag()->getUrl('120x120'); ?>" /></a>
 						</td>
-						<td data-selectable="true" class="text-center"><?php echo $product->getTitle(); ?></td>
+						<td class="text-center"><?php echo $product->getTitle(); ?></td>
 						<td class="text-center"><?php echo date('d-m-Y', $product->getTimestamp()); ?></td>
 						<td class="text-center"><?php echo $product->getCategoryName(); ?></td>
-						<td class="text-center col-lg-2">
+						<td>
 							<input type="number" class="form-control center-block" min="0" name="price[<?php echo $product->getId(); ?>]" value="<?php echo $product->getPrice(); ?>" />
 						</td>
 						<td class="text-center">
@@ -164,15 +165,15 @@ use Krystal\Form\Widget\DropdownWidget;
 		<tbody>
 			<?php foreach ($categories as $id => $category): ?>
 			
-			<tr <?php $this->getHelper()->addClassOnDemand(isset($currentCategoryId) && $currentCategoryId == $id, 'info'); ?>>
+			<tr <?php HtmlHelper::addClassOnDemand(isset($currentCategoryId) && $currentCategoryId == $id, 'info'); ?>>
 				<td class="text-center text-muted"><?php echo $id; ?></td>
 				<td>
 					<a class="pull-left" href="<?php echo $this->url('Shop:Admin:Browser@categoryAction', $id); ?>">
-						<?php $this->getHelper()->wrapOnDemand(isset($currentCategoryId) && $currentCategoryId == $id, 'strong', $category); ?>
+						<?php HtmlHelper::wrapOnDemand(isset($currentCategoryId) && $currentCategoryId == $id, 'strong', $category); ?>
 					</a>
 				</td>
 				
-				<td class="text-center col-md-1"><?php echo $taskManager->getProductCountByCategoryId($id); ?></td>
+				<td class="text-center"><?php echo $taskManager->getProductCountByCategoryId($id); ?></td>
 				<td class="text-center">
 					<a target="_blank" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this category'); ?>" data-button="view" href="<?php echo $taskManager->fetchByCategoryId($id)->getUrl(); ?>"><i class="glyphicon glyphicon-search"></i></a>
 					<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this category'); ?>" data-button="edit" href="<?php echo $this->url('Shop:Admin:Category:Edit@indexAction', $id); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -192,3 +193,16 @@ use Krystal\Form\Widget\DropdownWidget;
 	<?php endif; ?>
 	
 </div>
+
+
+<style>
+
+th.price-col {
+  width: 126px;
+}
+
+th.date-col {
+ width: 133px;
+}
+
+</style>
