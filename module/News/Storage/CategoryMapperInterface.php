@@ -14,6 +14,13 @@ namespace News\Storage;
 interface CategoryMapperInterface
 {
 	/**
+	 * Fetches as a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList();
+
+	/**
 	 * Deletes a category by its associated id
 	 * 
 	 * @param string $id Category id

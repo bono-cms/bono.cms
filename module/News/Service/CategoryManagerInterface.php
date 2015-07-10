@@ -32,6 +32,13 @@ interface CategoryManagerInterface
 	public function getLastId();
 
 	/**
+	 * Fetches categories as a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList();
+
+	/**
 	 * Fetches all category bags
 	 * 
 	 * @return array|boolean

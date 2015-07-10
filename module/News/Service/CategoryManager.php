@@ -143,6 +143,16 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	}
 
 	/**
+	 * Fetches categories as a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList()
+	{
+		return ArrayUtils::arrayList($this->categoryMapper->fetchList(), 'id', 'title');
+	}
+
+	/**
 	 * Fetches all category entities
 	 * 
 	 * @return array|boolean

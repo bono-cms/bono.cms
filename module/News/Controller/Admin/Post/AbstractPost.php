@@ -87,7 +87,7 @@ abstract class AbstractPost extends AbstractAdminController
 		));
 
 		$vars = array(
-			'categories' => $this->getCategoryManager()->fetchAll(),
+			'categories' => $this->getCategoryManager()->fetchList(),
 		);
 
 		return array_replace_recursive($vars, $overrides);
