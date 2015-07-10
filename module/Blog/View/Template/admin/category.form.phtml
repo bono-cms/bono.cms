@@ -1,3 +1,10 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <form>
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#page" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Category'); ?></a></li>
@@ -36,8 +43,7 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="seo" value="0" />
-							<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($category->getSeo()); ?> />
+							<?php echo CheckBoxWidget::render(array('name' => 'seo', 'class' => 'form-control'), $category->getSeo()); ?>
 						</div>
 					</div>
 					
@@ -88,7 +94,7 @@
 				
 			</div>
 			
-			<?php if (!isset($editing)): ?>
+			<?php if (!$category->getId()): ?>
 			<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
 			
 			<?php else: ?>

@@ -1,3 +1,10 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <?php if (!empty($categories)): ?>
 
 <form>
@@ -24,7 +31,7 @@
 				<select name="category_id" class="form-control">
 					
 					<?php foreach ($categories as $category): ?>
-					<option value="<?php echo $category->getId(); ?>" <?php $this->getHelper()->selectOnDemand($post->getCategoryId() == $category->getId()); ?>><?php echo $category->getTitle(); ?></option>
+					<option value="<?php echo $category->getId(); ?>" <?php HtmlHelper::selectOnDemand($post->getCategoryId() == $category->getId()); ?>><?php echo $category->getTitle(); ?></option>
 					<?php endforeach; ?>
 					
 				</select>
@@ -61,29 +68,30 @@
 				</div>
 			</div>
 			
+			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Enable comments'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="comments" value="0" />
-					<input type="checkbox" name="comments" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($post->getComments()); ?>/>
+					<?php echo CheckBoxWidget::render(array('name' => 'comments', 'class' => 'form-control'), $post->getComments()); ?>
 				</div>
 			</div>
+			
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php echo $this->translate('Published'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="published" value="0" />
-					<input type="checkbox" name="published" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($post->getPublished()); ?>/>
+					<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $post->getPublished()); ?>
 				</div>
 			</div>
+			
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php echo $this->translate('Enable SEO'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="seo" value="0" />
-					<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($post->getSeo()); ?> />
+					<?php echo CheckBoxWidget::render(array('name' => 'seo', 'class' => 'form-control'), $post->getSeo()); ?>
 				</div>
 			</div>
+			
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
@@ -96,6 +104,7 @@
 					</div>
 				</div>
 			</div>
+			
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
@@ -118,7 +127,7 @@
 	</div>
 	
 	
-	<?php if (isset($editing)): ?>
+	<?php if ($post->getId()): ?>
 	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
 	<button data-button="save-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Save & Create new'); ?></button>
 	
@@ -136,9 +145,9 @@
 <?php else: ?>
 
 <div class="well">
- <div class="center-block">
-  <h2 class="text-muted text-center"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Before you add a post, you need to create at least one category'); ?></h2>
- </div>
+	<div class="center-block">
+		<h2 class="text-muted text-center"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Before you add a post, you need to create at least one category'); ?></h2>
+	</div>
 </div>
 
 <?php endif; ?>

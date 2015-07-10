@@ -27,11 +27,10 @@ final class Edit extends AbstractPost
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'editing' => true,
 				'title' => 'Edit the post',
 				'post' => $post
 			)));
-			
+
 		} else {
 
 			return false;

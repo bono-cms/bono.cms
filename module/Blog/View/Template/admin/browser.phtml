@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
+
 <div class="btn-toolbar">
 	<div class="btn-group">
 	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -5,13 +11,12 @@
 		<span class="caret"></span>
 	  </button>
 	  <ul class="dropdown-menu">
-		 <li><a href="<?php echo $this->url('Blog:Admin:Post:Add@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Add a post'); ?></a></li>
-		 <li><a href="<?php echo $this->url('Blog:Admin:Category:Add@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Add category'); ?></a></li>
-		 <li><a href="<?php echo $this->url('Blog:Admin:Config@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Configuration'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Blog:Admin:Post:Add@indexAction'); ?>"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Add a post'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Blog:Admin:Category:Add@indexAction'); ?>"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Add category'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Blog:Admin:Config@indexAction'); ?>"><i class="glyphicon glyphicon-th"></i> <?php $this->show('Configuration'); ?></a></li>
 		 <li class="divider"></li>
 		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
 		 
-
 		 <?php if (!empty($posts)):?>
 		 <li><a href="#" data-button="save-changes"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <li><a href="#" data-button="remove-selected"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
@@ -57,20 +62,14 @@
 					<td class="text-center"><?php echo date('d-m-Y', $post->getTimestamp()); ?></td>
 					<td class="text-center"><?php echo $post->getCategoryTitle(); ?></td>
 					<td class="text-center">
-						<input type="hidden" name="published[<?php echo $post->getId(); ?>]" value="0" />
-						<input type="checkbox" name="published[<?php echo $post->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($post->getPublished()); ?> />
+						<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $post->getId())), $post->getPublished()); ?>
 					</td>
-					
 					<td class="text-center">
-						<input type="hidden" name="comments[<?php echo $post->getId(); ?>]" value="0" />
-						<input type="checkbox" name="comments[<?php echo $post->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($post->getComments()); ?> />
+						<?php echo CheckBoxWidget::render(array('name' => sprintf('comments[%s]', $post->getId())), $post->getComments()); ?>
 					</td>
-					
 					<td class="text-center">
-						<input type="hidden" name="seo[<?php echo $post->getId(); ?>]" value="0" />
-						<input type="checkbox" name="seo[<?php echo $post->getId(); ?>]" value="1" <?php $this->getHelper()->checkOnDemand($post->getSeo()); ?>/>
+						<?php echo CheckBoxWidget::render(array('name' => sprintf('seo[%s]', $post->getId())), $post->getSeo()); ?>
 					</td>
-					
 					<td class="text-center">
 						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('View this post'); ?>" data-button="view" target="_blank" href="<?php echo $post->getUrl(); ?>"><i class="glyphicon glyphicon-search"></i></a>
 						<a data-button="edit" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this post'); ?>" href="<?php echo $this->url('Blog:Admin:Post:Edit@indexAction', $post->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -119,7 +118,7 @@
 					<a href="<?php echo $this->url('Blog:Admin:Browser@categoryAction', $category->getId()); ?>">
 						
 						<?php if (isset($categoryId) && $categoryId == $category->getId()): ?>
-						<b><?php echo $category->getTitle(); ?></b>
+						<strong><?php echo $category->getTitle(); ?></strong>
 						
 						<?php else: ?>
 						<?php echo $category->getTitle(); ?>
