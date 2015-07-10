@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
+
 <form>
 	
 	<input type="hidden" name="id" value="<?php echo $member->getId(); ?>" />
@@ -39,17 +45,17 @@
 				<br />
 				<br />
 				
-				<input type="file" name="file" />
+				<input type="file" name="file" accept="image/x-png, image/gif, image/jpeg" />
 			</div>
 		</div>
 		
 		
 		<div class="options">
+			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="published" value="0" />
-					<input type="checkbox" name="published" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($member->getPublished()); ?>/>
+					<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $member->getPublished()); ?>
 				</div>
 			</div>
 			
@@ -61,6 +67,7 @@
 			</div>
 			
 		</div>
+		
 	</div>
 	
 	

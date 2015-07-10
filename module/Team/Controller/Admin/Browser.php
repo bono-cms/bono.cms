@@ -16,7 +16,7 @@ use Cms\Controller\Admin\AbstractController;
 final class Browser extends AbstractController
 {
 	/**
-	 * Shows a table
+	 * Shows a grid
 	 * 
 	 * @param integer $page Current page
 	 * @return string
