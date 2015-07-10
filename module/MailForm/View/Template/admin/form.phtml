@@ -1,3 +1,8 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
 
 <form>
 	
@@ -54,8 +59,7 @@
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 						<div class="col-lg-10">
-							<input type="hidden" name="seo" value="0" />
-							<input type="checkbox" name="seo" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($form->getSeo()); ?> />
+							<?php echo CheckBoxWidget::render(array('name' => 'seo', 'class' => 'form-control'), $form->getSeo()); ?>
 						</div>
 					</div>
 					
