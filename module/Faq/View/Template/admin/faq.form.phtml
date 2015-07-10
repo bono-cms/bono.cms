@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
+
 <form>
 	<div class="well clearfix">
 		
@@ -17,7 +23,7 @@
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Answer'); ?></label>
 			<div class="col-lg-10">
-				<textarea name="answer" rows="7" class="form-control"><?php echo $faq->getAnswer(); ?></textarea>
+				<textarea name="answer" rows="7"><?php echo $faq->getAnswer(); ?></textarea>
 			</div>
 		</div>
 		
@@ -27,8 +33,7 @@
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="published" value="0" />
-					<input type="checkbox" name="published" value="1" class="form-control" <?php $this->getHelper()->checkOnDemand($faq->getPublished()); ?>/>
+					<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $faq->getPublished()); ?>
 				</div>
 			</div>
 			
@@ -46,7 +51,7 @@
 		</div>
 	</div>
 	
-	<?php if (isset($editing)): ?>
+	<?php if ($faq->getId()): ?>
 	
 	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
 	<button data-button="save-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
