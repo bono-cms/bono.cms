@@ -16,7 +16,7 @@ final class Edit extends AbstractReview
 	/**
 	 * Shows edit form
 	 * 
-	 * @param string $id Reviews's id
+	 * @param string $id Reviews id
 	 * @return string
 	 */
 	public function indexAction($id)
@@ -27,7 +27,6 @@ final class Edit extends AbstractReview
 			$this->loadSharedPlugins();
 
 			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'editing' => true,
 				'title' => 'Edit the review',
 				'review' => $review
 			)));
@@ -49,13 +48,12 @@ final class Edit extends AbstractReview
 		if ($formValidator->isValid()) {
 
 			if ($this->getReviewsManager()->update($this->getContainer())) {
-				
 				$this->flashMessenger->set('success', 'The review has been updated successfully');
 				return '1';
 			}
-			
+
 		} else {
-			
+
 			return $formValidator->getErrors();
 		}
 	}

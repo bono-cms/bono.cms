@@ -1,7 +1,6 @@
 
 $(function() {
 	
-	// Handle delete button
 	$.delete({
 		categories : {
 			main : {
@@ -26,20 +25,20 @@ $(function() {
 		});
 	});
 	
+	
 	$("[data-button='save-changes']").click(function(event) {
 		event.preventDefault();
 		$.ajax({
 			url		: "/admin/module/reviews/save.ajax",
 			data	: $("form").serialize(),
 			success : function(response) {
-				if (response != "1") {
-					console.log(response);
+				if (response == "1") {
+					window.location.reload();
 				} else {
 					$.showErrors(response);
 				}
 			}
 		});
 	});
-	
 	
 });

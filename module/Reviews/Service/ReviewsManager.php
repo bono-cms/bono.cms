@@ -91,7 +91,7 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 			}
 		}
 
-		$this->historyManager->write('Reviews', sprintf('Batch update of %s reviews', count($pair)));
+		$this->historyManager->write('Reviews', 'Batch update of %s reviews', count($pair));
 		return true;
 	}
 	

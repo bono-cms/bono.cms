@@ -33,8 +33,7 @@ final class Browser extends AbstractController
 			)
 		));
 
-		// Grab a service
-		$reviewsManager = $this->moduleManager->getModule('Reviews')->getService('reviewsManager');
+		$reviewsManager = $this->getModuleService('reviewsManager');
 
 		$paginator = $reviewsManager->getPaginator();
 		$paginator->setUrl('/admin/module/reviews/page/%s');
@@ -49,45 +48,47 @@ final class Browser extends AbstractController
 	}
 
 	/**
-	 * Delete selected records
+	 * Removes a review by its associated id
 	 * 
 	 * @return string
 	 */
 	public function deleteAction()
 	{
-		$id = $this->request->getPost('id');
-		
-		// Grab a service
-		$reviewsManager = $this->moduleManager->getModule('Reviews')->getService('reviewsManager');
-		$this->flashMessenger->set('success', 'A review has been removed successfully');
-		
-		return $reviewsManager->deleteById($id) ? '1' : '0';
+		if ($this->request->hasPost('id')) {
+
+			$id = $this->request->getPost('id');
+
+			$reviewsManager = $this->getModuleService('reviewsManager');
+			$this->flashMessenger->set('success', 'A review has been removed successfully');
+
+			return $reviewsManager->deleteById($id) ? '1' : '0';
+		}
 	}
 
 	/**
-	 * Delete selected records
+	 * Batch removal of reviews by their associated ids
 	 * 
 	 * @return string
 	 */
 	public function deleteSelectedAction()
 	{
 		if ($this->request->hasPost('toDelete')) {
-			
+
 			$ids = array_keys($this->request->getPost('toDelete'));
-			
-			// Grab a service
-			$reviewsManager = $this->moduleManager->getModule('Reviews')->getService('reviewsManager');
+
+			// Grab the service
+			$reviewsManager = $this->getModuleService('reviewsManager');
 			$reviewsManager->deleteByIds($ids);
-			
+
 			$flashKey = 'success';
 			$flashMessage = 'Selected reviews have been successfully removed';
-			
+
 		} else {
-			
+
 			$flashKey = 'warning';
 			$flashMessage = 'You should select at least one review to remove';
 		}
-		
+
 		$this->flashMessenger->set($flashKey, $flashMessage);
 		return '1';
 	}
@@ -99,14 +100,17 @@ final class Browser extends AbstractController
 	 */
 	public function saveAction()
 	{
-		$published = $this->request->getPost('published');
-		
-		// Grab a service
-		$reviewsManager = $this->moduleManager->getModule('Reviews')->getService('reviewsManager');
-		$reviewsManager->updatePublished($published);
-		
-		$this->flashMessenger->set('success', 'Settings have been successfully saved');
-		
-		return '1';
+		if ($this->request->hasPost('published')) {
+
+			$published = $this->request->getPost('published');
+
+			// Grab the service
+			$reviewsManager = $this->getModuleService('reviewsManager');
+			$reviewsManager->updatePublished($published);
+
+			$this->flashMessenger->set('success', 'Settings have been successfully saved');
+
+			return '1';
+		}
 	}
 }
