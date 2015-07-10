@@ -11,16 +11,14 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		<span class="caret"></span>
 	  </button>
 	  <ul class="dropdown-menu">
-		 <li><a href="<?php echo $this->url('Announcement:Admin:Announce:Add@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Add new announce'); ?></a></li>
-		 <li><a href="<?php echo $this->url('Announcement:Admin:Category:Add@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Add a category'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Announcement:Admin:Announce:Add@indexAction'); ?>"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Add new announce'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Announcement:Admin:Category:Add@indexAction'); ?>"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Add a category'); ?></a></li>
 		 <li class="divider"></li>
 		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
-		 
 		 <?php if (!empty($announces)): ?>
 		 <li><a data-button="save-changes" href="#"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <li><a data-button="remove-selected" href="#"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
 		 <?php else: ?>
-		 
 		 <li class="disabled"><a><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <li class="disabled"><a><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
 		 
