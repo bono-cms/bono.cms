@@ -2,7 +2,6 @@
 TODO List
 =========
 
- * Bug with sorting categories on site?!?
  * Closes by price
  * Write decent statistic
  * Add quality support for images

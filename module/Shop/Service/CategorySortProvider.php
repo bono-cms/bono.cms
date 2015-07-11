@@ -32,8 +32,8 @@ final class CategorySortProvider extends DataSorter
 		parent::__construct('cat_sort', self::SORT_ORDER, array(
 			self::SORT_ORDER => 'By position',
 			self::SORT_TITLE => 'By title',
-			self::SORT_PRICE_DESC => 'By price - from lower to higher',
-			self::SORT_PRICE_ASC => 'By price - from higher to lower',
+			self::SORT_PRICE_ASC => 'By price - from lower to higher',
+			self::SORT_PRICE_DESC => 'By price - from higher to lower',
 			self::SORT_TIMESTAMP_DESC => 'By date added - from newest to oldest',
 			self::SORT_TIMESTAMP_ASC => 'By date added - from oldest to newest'
 		));
