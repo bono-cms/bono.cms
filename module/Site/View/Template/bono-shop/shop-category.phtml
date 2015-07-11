@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Form\HtmlHelper;
+
+?>
+
 <h1 class="text-muted"><?php echo $category->getTitle(); ?> (<?php echo $paginator->getTotalAmount(); ?>)</h1>
 
 <div class="container">
@@ -7,7 +13,7 @@
 			<label><?php $this->show('Sort method'); ?>: </label>
 			<select data-category-option="sort">
 				<?php foreach ($sortOptions as $sort): ?>
-				<option value="<?php echo $sort->getValue(); ?>" <?php $this->getHelper()->selectOnDemand($sort->isCurrent()); ?>><?php $this->show($sort->getName()); ?></option>
+				<option value="<?php echo $sort->getValue(); ?>" <?php HtmlHelper::selectOnDemand($sort->isCurrent()); ?>><?php $this->show($sort->getName()); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
@@ -18,7 +24,7 @@
 			<select data-category-option="per-page-count">
 				
 				<?php foreach ($perPageCounts as $option): ?>
-				<option value="<?php echo $option->getValue(); ?>" <?php $this->getHelper()->selectOnDemand($option->isCurrent()); ?>><?php echo $option->getName(); ?></option>
+				<option value="<?php echo $option->getValue(); ?>" <?php HtmlHelper::selectOnDemand($option->isCurrent()); ?>><?php echo $option->getName(); ?></option>
 				<?php endforeach; ?>
 				
 			</select>
