@@ -39,6 +39,13 @@ interface CategoryManagerInterface
 	public function removeById($id);
 
 	/**
+	 * Fetches as a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList();
+
+	/**
 	 * Fetches category's entity by its associated id
 	 * 
 	 * @param string $id

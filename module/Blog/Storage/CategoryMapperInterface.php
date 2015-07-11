@@ -14,6 +14,13 @@ namespace Blog\Storage;
 interface CategoryMapperInterface
 {
 	/**
+	 * Fetches as a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList();
+
+	/**
 	 * Inserts a category
 	 * 
 	 * @param array $data Category data
