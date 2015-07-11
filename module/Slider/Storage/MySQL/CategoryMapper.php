@@ -45,7 +45,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function fetchIdByClass($class)
 	{
-		return $this->fetchOneColumn('id', 'class', $class);
+		return $this->findColumnByPk('class', $class);
 	}
 
 	/**
@@ -86,22 +86,14 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	}
 
 	/**
-	 * Inserts a category
+	 * Adds a category
 	 * 
 	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function insert(array $input)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'lang_id' => $this->getLangId(),
-			'name'    => $input['name'],
-			'class'	  => $input['class'],
-			'width'   => $input['width'],
-			'height'  => $input['height']
-
-		))->execute();
+		return $this->persist($this->getWithLang($input));
 	}
 
 	/**
@@ -112,15 +104,7 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	 */
 	public function update(array $input)
 	{
-		return $this->db->update(static::getTableName(), array(
-
-			'name'		=> $input['name'],
-			'class'		=> $input['class'],
-			'width'		=> $input['width'],
-			'height'	=> $data['height'],
-
-		))->whereEquals('id', $input['id'])
-		  ->execute();
+		return $this->persist($input);
 	}
 
 	/**
