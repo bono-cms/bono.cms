@@ -13,7 +13,7 @@ $(function(){
 		updatePerPageCount : function(count, done){
 			$.ajax({
 				type : "POST",
-				url : "/module/shop/category/change-per-page-count.ajax",
+				url : "/module/shop/category/do/change-per-page-count.ajax",
 				data : {
 					count : count
 				},
@@ -42,7 +42,7 @@ $(function(){
 		updateSort : function(sort, done){
 			$.ajax({
 				type : "POST",
-				url : "/module/shop/category/change-sort-action.ajax",
+				url : "/module/shop/category/do/change-sort-action.ajax",
 				data : {
 					sort : sort
 				},
