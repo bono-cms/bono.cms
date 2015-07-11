@@ -141,7 +141,7 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 		$imageBag->setId($image['id'])
 				 ->setCover($image['image']);
 
-		$entity = new ImageBag(false);
+		$entity = new ImageEntity(false);
 		$entity->setImageBag($imageBag)
 			->setId((int) $image['id'])
 			->setCategoryId((int) $image['category_id'])

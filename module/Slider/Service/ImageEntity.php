@@ -13,7 +13,7 @@ namespace Slider\Service;
 
 use Krystal\Stdlib\VirtualEntity;
 
-final class ImageBag extends VirtualEntity
+final class ImageEntity extends VirtualEntity
 {
 	/**
 	 * Tells whether a slide image has a link
