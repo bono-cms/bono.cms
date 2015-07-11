@@ -14,6 +14,13 @@ namespace Slider\Service;
 interface CategoryManagerInterface
 {
 	/**
+	 * Fetches as a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList();
+
+	/**
 	 * Returns last category id
 	 * 
 	 * @return integer

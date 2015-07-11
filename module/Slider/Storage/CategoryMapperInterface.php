@@ -14,6 +14,13 @@ namespace Slider\Storage;
 interface CategoryMapperInterface
 {
 	/**
+	 * Fetches a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList();
+
+	/**
 	 * Fetches category's id by its associated class name
 	 * 
 	 * @param string $class Category's class name

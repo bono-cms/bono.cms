@@ -65,7 +65,7 @@ abstract class AbstractImage extends AbstractController
 		));
 
 		$vars = array(
-			'categories' => $this->getModuleService('categoryManager')->fetchAll()
+			'categories' => $this->getModuleService('categoryManager')->fetchList()
 		);
 
 		return array_replace_recursive($vars, $overrides);

@@ -1,7 +1,7 @@
 <?php
 
 use Krystal\Form\Widget\CheckBoxWidget;
-use Krystal\Form\HtmlHelper;
+use Krystal\Form\Widget\DropdownWidget;
 
 ?>
 
@@ -27,13 +27,7 @@ use Krystal\Form\HtmlHelper;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Category'); ?></label>
 			<div class="col-lg-10">
-				<select name="category_id" class="form-control">
-					
-					<?php foreach ($categories as $category): ?>
-					<option value="<?php echo $category->getId(); ?>" <?php HtmlHelper::selectOnDemand($image->getCategoryId() == $category->getId()); ?>><?php echo $category->getName(); ?></option>
-					<?php endforeach; ?>
-					
-				</select>
+				<?php echo DropdownWidget::render(array('name' => 'category_id', 'class' => 'form-control'), $categories, $image->getCategoryId(), false); ?>
 			</div>
 		</div>
 		
