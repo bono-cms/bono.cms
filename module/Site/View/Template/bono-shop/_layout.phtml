@@ -1,3 +1,8 @@
+<?php
+
+use Krystal\Form\HtmlHelper;
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +16,7 @@
  
  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
  <link rel="stylesheet" href="<?php echo $stylesheet; ?>" media="all" />
- <?php endforeach; ?>	
+ <?php endforeach; ?>
  
  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
  <!--[if lt IE 9]>
@@ -45,7 +50,7 @@
 		  <ul class="nav navbar-nav navbar-right">
 			<li>
 			 <a href="<?php echo $basket->getUrl(); ?>"><i class="glyphicon glyphicon-shopping-cart"></i> <?php $this->show('Basket'); ?> 
-			 (<?php $this->show('Total products'); ?><label data-basket-label="total-products-qty"> <?php echo $basket->getTotalQty(); ?>, </label>
+			 (<?php $this->show('Total products'); ?> <label data-basket-label="total-products-qty"> <?php echo $basket->getTotalQty(); ?></label>, 
 			 <label data-basket-label="total-products-price"><?php echo $basket->getTotalPrice(); ?></label> <?php echo $basket->getCurrency(); ?>)
 			 </a>
 			</li>
@@ -59,14 +64,14 @@
 	  <!-- Indicators -->
 	  <ol class="carousel-indicators">
        <?php foreach($slider->getAll('main') as $index => $slide): ?>
-       <li data-target="#carousel-example-generic" data-slide-to="<?php echo $index; ?>" <?php $this->getHelper()->addClassOnDemand($index == 0, 'active'); ?>></li>
+       <li data-target="#carousel-example-generic" data-slide-to="<?php echo $index; ?>" <?php HtmlHelper::addClassOnDemand($index == 0, 'active'); ?>></li>
        <?php endforeach; ?>
 	  </ol>
 	  
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
 		<?php foreach ($slider->getAll('main') as $index => $slide): ?>
-		<div class="item <?php $this->getHelper()->addOnDemand($index == 0, 'active'); ?>">
+		<div class="item <?php HtmlHelper::addOnDemand($index == 0, 'active'); ?>">
 		  <img src="<?php echo $slide->getImageBag()->getUrl('1600x356'); ?>" alt="<?php echo $slide->getName(); ?>" />
 		  <div class="carousel-caption">
 			<h3><?php echo $slide->getName(); ?></h3>
