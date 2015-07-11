@@ -71,6 +71,8 @@ use Krystal\Form\HtmlHelper;
 			</div>
 		</div>
 		
+		<?php if (!$language->getId()): ?>
+		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
 			<div class="col-lg-10">
@@ -84,6 +86,8 @@ use Krystal\Form\HtmlHelper;
 
 			</div>
 		</div>
+		
+		<?php endif; ?>
 		
 	</div>
 	
