@@ -14,6 +14,13 @@ namespace Announcement\Service;
 interface CategoryManagerInterface
 {
 	/**
+	 * Fetches as a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList();
+
+	/**
 	 * Fetches category data by its associated id
 	 * 
 	 * @param string $id Category id

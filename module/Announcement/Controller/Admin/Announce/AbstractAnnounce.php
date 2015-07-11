@@ -57,7 +57,7 @@ abstract class AbstractAnnounce extends AbstractAdminController
 		));
 
 		$vars = array(
-			'categories' => $this->getModuleService('categoryManager')->fetchAll()
+			'categories' => $this->getModuleService('categoryManager')->fetchList()
 		);
 
 		return array_replace_recursive($vars, $overrides);

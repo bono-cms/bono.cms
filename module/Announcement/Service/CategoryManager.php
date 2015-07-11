@@ -16,6 +16,7 @@ use Cms\Service\HistoryManagerInterface;
 use Announcement\Storage\AnnounceMapperInterface;
 use Announcement\Storage\CategoryMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 
 final class CategoryManager extends AbstractManager implements CategoryManagerInterface
@@ -79,6 +80,16 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 			->setClass(Filter::escape($category['class']));
 		
 		return $entity;
+	}
+
+	/**
+	 * Fetches as a list
+	 * 
+	 * @return array
+	 */
+	public function fetchList()
+	{
+		return ArrayUtils::arrayList($this->categoryMapper->fetchList(), 'id', 'name');
 	}
 
 	/**
