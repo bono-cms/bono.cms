@@ -94,7 +94,7 @@ use Krystal\Form\HtmlHelper;
 					<?php endif; ?>
 					
 					
-					<?php if (!isset($editing)): ?>
+					<?php if (!$page->getId()): ?>
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
 						<div class="col-lg-10">
