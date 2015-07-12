@@ -12,11 +12,33 @@
 namespace Pages\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
+use Krystal\Db\Filter\QueryContainer;
 
 final class Browser extends AbstractController
 {
 	/**
-	 * Shows a table
+	 * Applies a filter
+	 * 
+	 * @return string
+	 */
+	public function filterAction()
+	{
+		$records = $this->getFilter($this->getPageManager());
+
+		if ($records !== false) {
+			$this->loadPlugins();
+
+			return $this->view->render($this->getGridTemplate(), $this->getWithSharedVars($records));
+
+		} else {
+
+			// None selected, so no need to apply a filter
+			return $this->indexAction();
+		}
+	}
+
+	/**
+	 * Shows a grid
 	 * 
 	 * @param string $page Current page
 	 * @return string
@@ -27,14 +49,11 @@ final class Browser extends AbstractController
 
 		$pageManager = $this->getPageManager();;
 
+		// Alter paginator's state
 		$paginator = $pageManager->getPaginator();
 		$paginator->setUrl('/admin/module/pages/browse/%s');
 
-		return $this->view->render('browser', array(
-			'title' => 'Pages',
-			'pages' => $pageManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
-			'paginator'	=> $paginator,
-		));
+		return $this->view->render($this->getGridTemplate(), $this->getWithSharedVars($pageManager->fetchAllByPage($page, $this->getSharedPerPageCount())));
 	}
 
 	/**
@@ -129,5 +148,31 @@ final class Browser extends AbstractController
 				'name' => 'Pages'
 			)
 		));
+	}
+
+	/**
+	 * Returns shared grid's path
+	 * 
+	 * @return string
+	 */
+	private function getGridTemplate()
+	{
+		return 'browser';
+	}
+
+	/**
+	 * Returns an array with shared variables for filter and index actions
+	 * 
+	 * @param array $pages
+	 * @return array
+	 */
+	private function getWithSharedVars(array $pages)
+	{
+		return array(
+			'paginator' => $this->getPageManager()->getPaginator(),
+			'pages' => $pages,
+			'filter' => new QueryContainer($this->request->getQuery('filter')),
+			'title' => 'Pages'
+		);
 	}
 }

@@ -20,8 +20,9 @@ use Menu\Contract\MenuAwareManager;
 use Menu\Service\MenuWidgetInterface;
 use Krystal\Security\Filter;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Db\Filter\FilterableServiceInterface;
 
-final class PageManager extends AbstractManager implements PageManagerInterface, MenuAwareManager
+final class PageManager extends AbstractManager implements PageManagerInterface, FilterableServiceInterface, MenuAwareManager
 {
 	/**
 	 * Any compliant page mapper
@@ -85,6 +86,19 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 	public function fetchWebPageIdById($id)
 	{
 		return $this->pageMapper->fetchWebPageIdById($id);
+	}
+
+	/**
+	 * Filters the input
+	 * 
+	 * @param array $input Raw input data
+	 * @param integer $page
+	 * @param integer $itemsPerPage
+	 * @return array
+	 */
+	public function filter(array $input, $page, $itemsPerPage)
+	{
+		return $this->prepareResults($this->pageMapper->filter($input, $page, $itemsPerPage));
 	}
 
 	/**

@@ -71,6 +71,27 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	}
 
 	/**
+	 * Filters the input and returns a result-set
+	 * 
+	 * @param array $input Raw input data
+	 * @param integer $page
+	 * @param integer $itemsPerPage
+	 * @return array
+	 */ 
+	public function filter(array $input, $page, $itemsPerPage)
+	{
+		return $this->db->select('*')
+						->from(static::getTableName())
+						->whereLike('title', '%'.$input['title'].'%', true)
+						->andWhereEquals('id', $input['id'], true)
+						->andWhereEquals('seo', $input['seo'], true)
+						->orderBy('id')
+						->desc()
+						->paginate($page, $itemsPerPage)
+						->queryAll();
+	}
+
+	/**
 	 * Fetches all pages filtered by pagination
 	 * 
 	 * @param string $page Current page id
