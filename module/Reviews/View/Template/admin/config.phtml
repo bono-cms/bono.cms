@@ -1,20 +1,24 @@
+<?php
+
+use Krystal\Form\Widget\CheckBoxWidget;
+
+?>
 <form>
 	
 	<ul class="nav nav-tabs" role="tablist">
-	 <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
+		<li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
 	</ul>
 	
 	<div class="tab-content">
 		
-		<!--Common tab-->
 		<div class="tab-pane fade in active" id="common" role="tabpanel">
 			<div class="well clearfix">
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Enable moderation'); ?></label>
 					<div class="col-lg-10">
-						<input type="hidden" name="enable_moderation" value="0" />
-						<input type="checkbox" class="form-control" name="enable_moderation" value="1" <?php $this->getHelper()->checkOnDemand($config->getEnabledModeration()); ?> />
+						
+						<?php echo CheckBoxWidget::render(array('name' => 'enable_moderation', 'class' => 'form-control'), $config->getEnabledModeration()); ?>
 					</div>
 				</div>
 				
@@ -30,7 +34,6 @@
 				</div>
 			</div>
 		</div>
-		<!--/Common-->
 		
 	</div>
 	
