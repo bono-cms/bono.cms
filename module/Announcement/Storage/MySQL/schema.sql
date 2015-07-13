@@ -14,8 +14,7 @@ CREATE TABLE `bono_module_announcement_announces` (
 	`published` varchar(1) NOT NULL,
 	`seo` varchar(1) NOT NULL,
 	`keywords` TEXT NOT NULL,
-	`meta_description` TEXT NOT NULL,
-	`cover` varchar(254) NOT NULL
+	`meta_description` TEXT NOT NULL
 	
 ) DEFAULT CHARSET = UTF8;
 

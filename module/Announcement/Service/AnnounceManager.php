@@ -203,7 +203,6 @@ final class AnnounceManager extends AbstractManager implements AnnounceManagerIn
 			->setSlug($this->webPageManager->fetchSlugByWebPageId($announce['web_page_id']))
 			->setKeywords(Filter::escape($announce['keywords']))
 			->setMetaDescription(Filter::escape($announce['meta_description']))
-			->setCover($announce['cover'])
 			->setPermanentUrl('/module/announcement/'.$entity->getId())
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()));
 
@@ -222,16 +221,7 @@ final class AnnounceManager extends AbstractManager implements AnnounceManagerIn
 		if (empty($input['slug'])) {
 			$input['slug'] = $input['title'];
 		}
-		
-		if (!empty($container->file)) {
-			//$container->cover = $container->file[0]->getName();
-		} else {
-			//$container->cover = '';
-		}
-		
-		//@todo this
-		$input['cover'] = '';
-		
+
 		$input['slug'] = $this->webPageManager->sluggify($input['slug']);
 		return $input;
 	}
