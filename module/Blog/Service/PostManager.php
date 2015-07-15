@@ -347,6 +347,18 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	}
 
 	/**
+	 * Removes a web page by post's associated id
+	 * 
+	 * @param string $id Post's id
+	 * @return boolean
+	 */
+	private function removeWebPageById($id)
+	{
+		$webPageId = $this->postMapper->fetchWebPageIdById($id);
+		return $this->webPageManager->deleteById($webPageId);
+	}
+
+	/**
 	 * Removes all by post's associated id
 	 * 
 	 * @param string $id Post's id
@@ -354,8 +366,10 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	 */
 	private function removeAllById($id)
 	{
-		$pr = new PostRemover($this->postMapper, $this->webPageManager);
-		return $pr->removeAllById($id);
+		$this->removeWebPageById($id);
+		$this->postMapper->deleteById($id);
+
+		return true;
 	}
 
 	/**
