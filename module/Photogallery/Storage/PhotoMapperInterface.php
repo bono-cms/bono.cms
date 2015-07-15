@@ -78,6 +78,14 @@ interface PhotoMapperInterface
 	public function countAllByAlbumId($albumId);
 
 	/**
+	 * Fetches photo ids by associated album id
+	 * 
+	 * @param string $albumId
+	 * @return array
+	 */
+	public function fetchPhotoIdsByAlbumId($albumId);
+
+	/**
 	 * Fetches a record by its associated id
 	 * 
 	 * @param string $id

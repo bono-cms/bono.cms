@@ -280,25 +280,22 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	/**
 	 * Removes an album by its associated id
 	 * 
-	 * @param string $id
+	 * @param string $albumId
 	 * @return boolean
 	 */
-	private function removeAlbumById($id)
+	private function removeAlbumById($albumId)
 	{
-		$this->albumMapper->deleteById($id);
-		$this->removeWebPage($id);
+		$this->albumMapper->deleteById($albumId);
+		$this->removeWebPage($albumId);
 
 		// Grab all photos associated with target album id
-		$photos = $this->photoMapper->fetchAllByAlbumId($id);
+		$photosIds = $this->photoMapper->fetchPhotoIdsByAlbumId($albumId);
 
 		// Do batch removal if album has at least one photo
-		if (!empty($photos)) {
-			foreach ($photos as $photo) {
-				// Photo id that belong in current album
-				$id = $photo['id'];
-
+		if (!empty($photosIds)) {
+			foreach ($photosIds as $photoId) {
 				// Remove a photo
-				$this->imageManager->delete($id) && $this->photoMapper->deleteById($id);
+				$this->imageManager->delete($photoId) && $this->photoMapper->deleteById($photoId);
 			}
 		}
 

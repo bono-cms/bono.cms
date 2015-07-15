@@ -149,6 +149,20 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	}
 
 	/**
+	 * Fetches photo ids by associated album id
+	 * 
+	 * @param string $albumId
+	 * @return array
+	 */
+	public function fetchPhotoIdsByAlbumId($albumId)
+	{
+		return $this->db->select('id')
+						->from(static::getTableName())
+						->whereEquals('album_id', $albumId)
+						->queryAll('id');
+	}
+
+	/**
 	 * Fetches a photo by its associated id
 	 * 
 	 * @param string $id Photo's id
