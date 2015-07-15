@@ -42,6 +42,7 @@ use Krystal\Form\HtmlHelper;
 					<th class="text-center"><?php $this->show('#'); ?></th>
 					<th class="text-center"><?php $this->show('Image'); ?></th>
 					<th class="text-center"><?php $this->show('Name'); ?></th>
+					<th class="text-center"><?php $this->show('Date'); ?></th>
 					<th class="text-center"><?php $this->show('Album'); ?></th>
 					<th class="text-center"><?php $this->show('Published'); ?></th>
 					<th class="text-center"><?php $this->show('Order'); ?></th>
@@ -62,6 +63,7 @@ use Krystal\Form\HtmlHelper;
 						<img class="img-responsive center-block" src="<?php echo $photo->getImageBag()->getUrl('400x200'); ?>" data-zoom-image="<?php echo $photo->getImageBag()->getUrl('original'); ?>" />
 					</td>
 					<td class="text-center"><?php echo $photo->getName(); ?></td>
+					<td class="text-center"><?php echo $photo->getDate(); ?></td>
 					<td class="text-center"><?php echo $photo->getAlbumName(); ?></td>
 					<td class="text-center">
 						<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $photo->getId())), $photo->getPublished()); ?>

@@ -28,8 +28,7 @@ CREATE TABLE `bono_module_photoalbum_photos` (
 	`photo` varchar(254) NOT NULL,
 	`order` INT NOT NULL COMMENT 'Sort order',
 	`description` TEXT NOT NULL,
-	`published` varchar(1) NOT NULL
+	`published` varchar(1) NOT NULL,
+	`date` INT NOT NULL COMMENT 'Timestamp of uploading'
 	
 ) DEFAULT CHARSET = UTF8;
-
-

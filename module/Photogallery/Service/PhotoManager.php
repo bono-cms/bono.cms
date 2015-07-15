@@ -104,7 +104,8 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 				 ->setPhoto(Filter::escape($photo['photo']))
 				 ->setDescription(Filter::escape($photo['description']))
 				 ->setOrder((int) $photo['order'])
-				 ->setPublished((bool) $photo['published']);
+				 ->setPublished((bool) $photo['published'])
+				 ->setDate(date('d/m/y', $photo['date']));
 
 		return $entity;
 	}
@@ -265,6 +266,7 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 		$file =& $input['files']['file'];
 
 		$data['photo'] = $file[0]->getName();
+		$data['date'] = time();
 
 		$this->track('A new photo "%s" has been uploaded', $data['name']);
 
