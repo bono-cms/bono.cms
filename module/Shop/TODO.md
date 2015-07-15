@@ -2,6 +2,7 @@
 TODO List
 =========
 
+ * Web page removal doesn't work in categories
  * Closes by price
  * Write decent statistic
  * Add quality support for images
