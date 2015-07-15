@@ -29,6 +29,7 @@ CREATE TABLE `bono_module_news_posts` (
 	`timestamp` INT(10) NOT NULL,
 	`keywords` TEXT NOT NULL,
 	`meta_description` TEXT NOT NULL,
-	`cover` varchar(254) NOT NULL
+	`cover` varchar(254) NOT NULL,
+	`views` INT NOT NULL
 
 ) DEFAULT CHARSET = UTF8;

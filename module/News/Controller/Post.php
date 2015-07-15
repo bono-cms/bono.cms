@@ -32,10 +32,15 @@ final class Post extends AbstractController
 			$this->view->getBreadcrumbBag()
 					   ->add($postManager->getBreadcrumbs($post));
 
-			return $this->view->render('news-post', array(
+			// Prepare the response
+			$response = $this->view->render('news-post', array(
 				'page' => $post,
 				'post' => $post
 			));
+
+			$postManager->incrementViewCount($id);
+
+			return $response;
 
 		} else {
 

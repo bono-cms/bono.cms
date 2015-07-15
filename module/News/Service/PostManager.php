@@ -123,6 +123,17 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	}
 
 	/**
+	 * Increments view count by post id
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	public function incrementViewCount($id)
+	{
+		return $this->postMapper->incrementViewCount($id);
+	}
+
+	/**
 	 * Update published by their associated ids
 	 * 
 	 * @param array $pair
@@ -312,6 +323,9 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	{
 		$input = $this->prepareInput($input);
 		$data =& $input['data'];
+
+		// By default there's 0 views
+		$data['views'] = 0;
 
 		// Handle cover
 		if (!empty($input['files']['file'])) {

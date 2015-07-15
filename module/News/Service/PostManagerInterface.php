@@ -25,6 +25,14 @@ interface PostManagerInterface
 	public function getBreadcrumbs(PostEntity $post);
 
 	/**
+	 * Increments view count by post id
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	public function incrementViewCount($id);
+
+	/**
 	 * Update published by their associated ids
 	 * 
 	 * @param array $pair

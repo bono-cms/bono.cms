@@ -30,6 +30,14 @@ interface PostMapperInterface
 	public function fetchAllIdsWithImagesByCategoryId($categoryId);
 
 	/**
+	 * Increments view count by post id
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	public function incrementViewCount($id);
+
+	/**
 	 * Update post's published state by its associated id
 	 * 
 	 * @param string $id Post id
