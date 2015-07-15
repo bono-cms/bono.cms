@@ -85,6 +85,43 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	}
 
 	/**
+	 * Gets category breadcrumbs with appends
+	 * 
+	 * @param string $id Category's id
+	 * @param array $appends
+	 * @return array
+	 */
+	private function getWithCategoryBreadcrumbsById($id, array $appends)
+	{
+		return array_merge($this->getCategoryBreadcrumbsById($id), $appends);
+	}
+
+	/**
+	 * Returns breadcrumbs for provided category id
+	 * 
+	 * @param string $id Category's id
+	 * @return array
+	 */
+	private function getCategoryBreadcrumbsById($id)
+	{
+		$category = $this->categoryMapper->fetchBcDataById($id);
+
+		// Additional security check
+		if (empty($category)) {
+			return array(
+				array()
+			);
+		}
+
+		return array(
+			array(
+				'name' => $category['title'],
+				'link' => $this->webPageManager->getUrlByWebPageId($category['web_page_id'])
+			)
+		);
+	}
+
+	/**
 	 * Returns breadcrumb collection
 	 * 
 	 * @param \Krystal\Stdlib\VirtualEntity $post
@@ -92,8 +129,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	 */
 	public function getBreadcrumbs(VirtualEntity $post)
 	{
-		$bm = new BreadcrumbMaker($this->webPageManager, $this->categoryMapper);
-		return $bm->getWithCategoryBreadcrumbsById($post->getCategoryId(), array(
+		return $this->getWithCategoryBreadcrumbsById($post->getCategoryId(), array(
 			array(
 				'name' => $post->getTitle(),
 				'link' => '#'
