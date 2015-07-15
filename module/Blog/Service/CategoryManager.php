@@ -149,6 +149,70 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	}
 
 	/**
+	 * Removes a category and its associated posts
+	 * 
+	 * @param string $id Category's id
+	 * @return boolean
+	 */
+	private function removeAllById($id)
+	{
+		return $this->removeCategoryById($id) && $this->removeAllPostsByCategoryId($id);
+	}
+
+	/**
+	 * Removes all web pages associated with category id
+	 * 
+	 * @param string $id Category's id
+	 * @return boolean
+	 */
+	private function removePostWebPagesByCategoryId($id)
+	{
+		$ids = $this->postMapper->fetchWebPageIdsByCategoryId($id);
+
+		if (!empty($ids)) {
+			foreach ($ids as $id) {
+				$this->webPageManager->deleteById($id);
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Removes web page associated with provided category id
+	 * 
+	 * @param string $id Category's id
+	 * @return boolean
+	 */
+	private function removeWebPageByCategoryId($id)
+	{
+		$webPageId = $this->categoryMapper->fetchWebPageIdById($id);
+		return $this->webPageManager->deleteById($webPageId);
+	}
+
+	/**
+	 * Removes a category by its associated id
+	 * 
+	 * @param string $id Category's id
+	 * @return boolean
+	 */
+	private function removeCategoryById($id)
+	{
+		return $this->removeWebPageByCategoryId($id) && $this->categoryMapper->deleteById($id);
+	}
+
+	/**
+	 * Removes all posts associated with provided category id
+	 * 
+	 * @param string $id Post's id
+	 * @return boolean
+	 */
+	private function removeAllPostsByCategoryId($id)
+	{
+		return $this->removePostWebPagesByCategoryId($id) && $this->postMapper->deleteByCategoryId($id);
+	}
+
+	/**
 	 * Removes a category by its associated id
 	 * 
 	 * @param string $id Category's id
@@ -156,11 +220,10 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	 */
 	public function removeById($id)
 	{
-		$cr = new CategoryRemover($this->categoryMapper, $this->postMapper, $this->webPageManager);
 		// Grab category's name before we remove it
 		$title = Filter::escape($this->categoryMapper->fetchTitleById($id));
 
-		if ($cr->removeAllById($id)) {
+		if ($this->removeAllById($id)) {
 			$this->track('Category "%s" has been removed', $title);
 			return true;
 
