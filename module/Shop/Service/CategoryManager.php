@@ -312,10 +312,61 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	 */
 	public function removeById($id)
 	{
-		$categoryRemover = new CategoryRemover($this->categoryMapper, $this->webPageManager, $this->imageManager, $this->productRemover);
-		$categoryRemover->removeAllById($id);
+		$this->removeWebPageById($id);
+		$this->removeCategoryById($id);
+		$this->removeChildNodes($id);
 
 		return true;
+	}
+
+	/**
+	 * Removes a category by its associated id (Including images if present)
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	private function removeCategoryById($id)
+	{
+		$this->categoryMapper->deleteById($id);
+		$this->imageManager->delete($id);
+
+		// Remove associated products
+		$this->productRemover->removeAllProductsByCategoryId($id);
+
+		return true;
+	}
+	
+	/**
+	 * Removes all child nodes
+	 * 
+	 * @param string $parentId Parent category's id
+	 * @return boolean
+	 */
+	private function removeChildNodes($parentId)
+	{
+		$treeBuilder = new TreeBuilder($this->categoryMapper->fetchAll());
+		$ids = $treeBuilder->findChildNodeIds($parentId);
+
+		// If there's at least one child id, then start working next
+		if (!empty($ids)) {
+			foreach ($ids as $id) {
+				$this->removeCategoryById($id);
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Removes category's web page
+	 * 
+	 * @param string $id Category id
+	 * @return boolean
+	 */
+	private function removeWebPageById($id)
+	{
+		$webPageId = $this->categoryMapper->fetchWebPageIdById($id);
+		return $this->webPageManager->deleteById($webPageId);
 	}
 
 	/**
