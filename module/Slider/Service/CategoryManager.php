@@ -18,7 +18,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 
-final class CategoryManager extends AbstractManager
+final class CategoryManager extends AbstractManager implements CategoryManagerInterface
 {
 	/**
 	 * Any compliant category mapper 
