@@ -271,8 +271,69 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	 */
 	private function removeAllById($id)
 	{
-		$cr = new CategoryRemover($this->categoryMapper, $this->postMapper, $this->imageManager, $this->webPageManager);
-		return $cr->removeAllById($id);
+		// The order of execution is important
+		$this->removeCategoryById($id);
+		$this->removeAllPostImagesByCategoryId($id);
+		$this->removeAllPostsById($id);
+
+		return true;
+	}
+
+	/**
+	 * Removes a category by its associated id
+	 * 
+	 * @param string $id Category's id
+	 * @return boolean
+	 */
+	private function removeCategoryById($id)
+	{
+		$webPageId = $this->categoryMapper->fetchWebPageIdById($id);
+
+		$this->webPageManager->deleteById($webPageId);
+		$this->categoryMapper->deleteById($id);
+
+		return true;
+	}
+
+	/**
+	 * Removes all post images associated with category id
+	 * 
+	 * @param string $id Category's id
+	 * @return boolean
+	 */
+	private function removeAllPostImagesByCategoryId($id)
+	{
+		$ids = $this->postMapper->fetchAllIdsWithImagesByCategoryId($id);
+
+		// Do the work, in case there's at least one id
+		if (!empty($ids)) {
+			foreach ($ids as $id) {
+				$this->imageManager->delete($id);
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Removes all posts associated with category id
+	 * 
+	 * @param string $id Category's id
+	 * @return boolean
+	 */
+	private function removeAllPostsById($id)
+	{
+		$webPageIds = $this->postMapper->fetchAllWebPageIdsByCategoryId($id);
+
+		// Remove associated web pages, first
+		foreach ($webPageIds as $webPageId) {
+			$this->webPageManager->deleteById($webPageId);
+		}
+
+		// And then remove all posts
+		$this->postMapper->deleteAllByCategoryId($id);
+
+		return true;
 	}
 
 	/**
