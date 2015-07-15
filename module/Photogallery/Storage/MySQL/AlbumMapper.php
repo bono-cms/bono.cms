@@ -70,8 +70,10 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	 */
 	public function fetchAll()
 	{
-		return $this->getSelectQuery()
-					->queryAll();
+		return $this->db->select('*')
+						->from(static::getTableName())
+						->whereEquals('lang_id', $this->getLangId())
+						->queryAll();
 	}
 
 	/**
@@ -94,17 +96,6 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	public function deleteById($id)
 	{
 		return $this->deleteByPk($id);
-	}
-
-	/**
-	 * Deletes all albums children by associated parent id
-	 * 
-	 * @param integer $parentId
-	 * @return boolean
-	 */
-	public function deleteAllByParentId($parentId)
-	{
-		return $this->deleteByColumn('parent_id', $parentId);
 	}
 
 	/**

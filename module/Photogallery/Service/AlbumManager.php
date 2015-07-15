@@ -22,6 +22,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Security\Filter;
+use Krystal\Tree\AdjacencyList\TreeBuilder;
 
 final class AlbumManager extends AbstractManager implements AlbumManagerInterface, MenuAwareManager
 {
@@ -236,18 +237,6 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	}
 
 	/**
-	 * Removes an album from web page collection
-	 * 
-	 * @param string $albumId
-	 * @return boolean
-	 */
-	private function removeWebPage($albumId)
-	{
-		$webPageId = $this->albumMapper->fetchWebPageIdById($albumId);
-		return $this->webPageManager->deleteById($webPageId);
-	}
-
-	/**
 	 * Deletes a whole album by its id including all its photos
 	 * 
 	 * @param string $id Album's id
@@ -255,6 +244,48 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	 */
 	public function deleteById($id)
 	{
+		// Save the name into a variable, before an album is removed
+		$name = Filter::escape($this->albumMapper->fetchNameById($id));
+
+		// Do remove now
+		$this->removeAlbumById($id);
+		$this->removeChildAlbumsByParentId($id);
+
+		$this->track('The album "%s" has been removed', $name);
+
+		return true;
+	}
+
+	/**
+	 * Removes child albums that belong to provided id
+	 * 
+	 * @param string $parentId
+	 * @return boolean
+	 */
+	private function removeChildAlbumsByParentId($parentId)
+	{
+		$treeBuilder = new TreeBuilder($this->albumMapper->fetchAll());
+		$ids = $treeBuilder->findChildNodeIds($parentId);
+
+		// If there's at least one child id, then start working next
+		if (!empty($ids)) {
+			foreach ($ids as $id) {
+				$this->removeAlbumById($id);
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Removes an album by its associated id
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	private function removeAlbumById($id)
+	{
+		$this->albumMapper->deleteById($id);
 		$this->removeWebPage($id);
 
 		// Grab all photos associated with target album id
@@ -266,21 +297,24 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 				// Photo id that belong in current album
 				$id = $photo['id'];
 
-				$this->imageManager->delete($id);
-				$this->photoMapper->deleteById($id);
+				// Remove a photo
+				$this->imageManager->delete($id) && $this->photoMapper->deleteById($id);
 			}
 		}
 
-		$name = Filter::escape($this->albumMapper->fetchNameById($id));
-
-		// We, gotta write log firstly, because album still exists, so that we can fetch its name
-		$this->track('The album "%s" has been removed', $name);
-
-		// Now finally, remove the album
-		$this->albumMapper->deleteById($id);
-		$this->albumMapper->deleteAllByParentId($id);
-
 		return true;
+	}
+
+	/**
+	 * Removes an album from web page collection
+	 * 
+	 * @param string $albumId
+	 * @return boolean
+	 */
+	private function removeWebPage($albumId)
+	{
+		$webPageId = $this->albumMapper->fetchWebPageIdById($albumId);
+		return $this->webPageManager->deleteById($webPageId);
 	}
 
 	/**

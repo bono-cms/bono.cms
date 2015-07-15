@@ -53,14 +53,6 @@ interface AlbumMapperInterface
 	public function deleteById($id);
 
 	/**
-	 * Deletes all albums children by associated parent id
-	 * 
-	 * @pamra integer $parentId
-	 * @return boolean
-	 */
-	public function deleteAllByParentId($parentId);
-
-	/**
 	 * Fetches a record by its id
 	 * 
 	 * @param string $id
