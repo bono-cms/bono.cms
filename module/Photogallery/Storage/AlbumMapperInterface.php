@@ -53,6 +53,13 @@ interface AlbumMapperInterface
 	public function deleteById($id);
 
 	/**
+	 * Fetches breadcrumb data
+	 * 
+	 * @return array
+	 */
+	public function fetchBcData();
+
+	/**
 	 * Fetches a record by its id
 	 * 
 	 * @param string $id

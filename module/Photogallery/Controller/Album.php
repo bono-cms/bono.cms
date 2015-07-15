@@ -48,7 +48,7 @@ final class Album extends AbstractController
 		$page = $albumManager->fetchById($albumId);
 
 		// Append breadcrumbs to view now
-		$this->view->getBreadcrumbBag()->add($photoManager->getBreadcrumbs($page));
+		$this->view->getBreadcrumbBag()->add($albumManager->getBreadcrumbs($page));
 		$this->loadSitePlugins();
 
 		return $this->view->render('album', array(

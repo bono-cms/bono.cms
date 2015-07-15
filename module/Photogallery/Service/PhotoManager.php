@@ -71,22 +71,6 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	}
 
 	/**
-	 * Returns breadcrumbs
-	 * 
-	 * @param \Krystal\Stdlib\VirtualEntity $page
-	 * @return array
-	 */
-	public function getBreadcrumbs(VirtualEntity $page)
-	{
-		return array(
-			array(
-				'name' => $page->getTitle(),
-				'link' => '#'
-			)
-		);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	protected function toEntity(array $photo)

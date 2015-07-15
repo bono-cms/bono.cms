@@ -11,11 +11,21 @@
 
 namespace Photogallery\Service;
 
+use Krystal\Stdlib\VirtualEntity;
+
 /**
  * API for Album Manager
  */
 interface AlbumManagerInterface
 {
+	/**
+	 * Returns breadcrumbs
+	 * 
+	 * @param \Krystal\Stdlib\VirtualEntity $album
+	 * @return array
+	 */
+	public function getBreadcrumbs(VirtualEntity $album);
+
 	/**
 	 * Fetches all albums
 	 * 

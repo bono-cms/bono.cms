@@ -39,6 +39,19 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	}
 
 	/**
+	 * Fetches breadcrumb data
+	 * 
+	 * @return array
+	 */
+	public function fetchBcData()
+	{
+		return $this->db->select(array('title', 'web_page_id', 'lang_id', 'parent_id', 'id'))
+						->from(static::getTableName())
+						->whereEquals('lang_id', $this->getLangId())
+						->queryAll();
+	}
+
+	/**
 	 * Fetches a record by its id
 	 * 
 	 * @param string $id

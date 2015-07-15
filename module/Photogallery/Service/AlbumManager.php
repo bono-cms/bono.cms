@@ -23,6 +23,7 @@ use Krystal\Stdlib\ArrayUtils;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Security\Filter;
 use Krystal\Tree\AdjacencyList\TreeBuilder;
+use Krystal\Tree\AdjacencyList\BreadcrumbBuilder;
 
 final class AlbumManager extends AbstractManager implements AlbumManagerInterface, MenuAwareManager
 {
@@ -86,6 +87,17 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 		$this->webPageManager = $webPageManager;
 		$this->historyManager = $historyManager;
 		$this->setMenuWidget($menuWidget);
+	}
+
+	/**
+	 * Returns breadcrumbs
+	 * 
+	 * @param \Krystal\Stdlib\VirtualEntity $album
+	 * @return array
+	 */
+	public function getBreadcrumbs(VirtualEntity $album)
+	{
+		return $this->getBreadcrumbsById($album->getId());
 	}
 
 	/**
@@ -336,4 +348,23 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	{
 		return $this->historyManager->write('Photogallery', $message, $placeholder);
 	}
+
+	/**
+	 * Gets all breadcrumbs by associated id
+	 * 
+	 * @param string $id Category id
+	 * @return array
+	 */
+	private function getBreadcrumbsById($id)
+	{
+		$wm = $this->webPageManager;
+		$builder = new BreadcrumbBuilder($this->albumMapper->fetchBcData(), $id);
+
+		return $builder->makeAll(function($breadcrumb) use ($wm) {
+			return array(
+				'name' => $breadcrumb['title'],
+				'link' => $wm->getUrl($breadcrumb['web_page_id'], $breadcrumb['lang_id'])
+			);
+		});
+	}	
 }
