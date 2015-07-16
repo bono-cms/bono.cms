@@ -47,14 +47,21 @@ final class Album extends AbstractController
 		// Fetch page's entity
 		$page = $albumManager->fetchById($albumId);
 
-		// Append breadcrumbs to view now
-		$this->view->getBreadcrumbBag()->add($albumManager->getBreadcrumbs($page));
-		$this->loadSitePlugins();
+		if ($page !== false) {
 
-		return $this->view->render('album', array(
-			'page' => $page,
-			'paginator' => $paginator,
-			'photos' => $photoManager->fetchAllPublishedByAlbumIdAndPage($albumId, $pageNumber, $config->getPerPageCount()),
-		));
+			// Append breadcrumbs to view now
+			$this->view->getBreadcrumbBag()->add($albumManager->getBreadcrumbs($page));
+			$this->loadSitePlugins();
+
+			return $this->view->render('album', array(
+				'page' => $page,
+				'paginator' => $paginator,
+				'photos' => $photoManager->fetchAllPublishedByAlbumIdAndPage($albumId, $pageNumber, $config->getPerPageCount()),
+			));
+
+		} else {
+
+			return false;
+		}
 	}
 }
