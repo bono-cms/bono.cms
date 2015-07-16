@@ -16,16 +16,6 @@ use Site\Controller\AbstractController;
 final class Album extends AbstractController
 {
 	/**
-	 * Shows all available albums
-	 * 
-	 * @return void
-	 */
-	public function listAction()
-	{
-		//@todo
-	}
-
-	/**
 	 * View albums photos by its id
 	 * 
 	 * @param string $albumId Album id
@@ -53,11 +43,23 @@ final class Album extends AbstractController
 			$this->view->getBreadcrumbBag()->add($albumManager->getBreadcrumbs($page));
 			$this->loadSitePlugins();
 
-			return $this->view->render('album', array(
+			// Template variables
+			$vars = array(
 				'page' => $page,
 				'paginator' => $paginator,
 				'photos' => $photoManager->fetchAllPublishedByAlbumIdAndPage($albumId, $pageNumber, $config->getPerPageCount()),
-			));
+			);
+
+			// Try to find child nodes
+			$children = $albumManager->fetchChildrenByParentId($albumId);
+
+			// If we have at least one nested album
+			if (!empty($children)) {
+				// Then append them to view templates as well
+				$vars['albums'] = $children;
+			}
+
+			return $this->view->render('album', $vars);
 
 		} else {
 

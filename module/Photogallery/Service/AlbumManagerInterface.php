@@ -27,6 +27,14 @@ interface AlbumManagerInterface
 	public function getBreadcrumbs(VirtualEntity $album);
 
 	/**
+	 * Fetches children by parent id
+	 * 
+	 * @param string $parentId
+	 * @return array
+	 */
+	public function fetchChildrenByParentId($parentId);
+
+	/**
 	 * Fetches all albums
 	 * 
 	 * @return array

@@ -52,6 +52,20 @@ final class AlbumMapper extends AbstractMapper implements AlbumMapperInterface
 	}
 
 	/**
+	 * Fetches child albums by parent id
+	 * 
+	 * @param string $parentId
+	 * @return array
+	 */
+	public function fetchChildrenByParentId($parentId)
+	{
+		return $this->db->select('*')
+						->from(static::getTableName())
+						->whereEquals('parent_id', $parentId)
+						->queryAll();
+	}
+
+	/**
 	 * Fetches a record by its id
 	 * 
 	 * @param string $id

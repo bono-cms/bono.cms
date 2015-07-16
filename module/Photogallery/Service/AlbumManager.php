@@ -112,6 +112,17 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	}
 
 	/**
+	 * Fetches children by parent id
+	 * 
+	 * @param string $parentId
+	 * @return array
+	 */
+	public function fetchChildrenByParentId($parentId)
+	{
+		return $this->prepareResults($this->albumMapper->fetchChildrenByParentId($parentId));
+	}
+
+	/**
 	 * Fetches all albums
 	 * 
 	 * @return array

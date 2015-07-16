@@ -60,6 +60,14 @@ interface AlbumMapperInterface
 	public function fetchBcData();
 
 	/**
+	 * Fetches child albums by parent id
+	 * 
+	 * @param string $parentId
+	 * @return array
+	 */
+	public function fetchChildrenByParentId($parentId);
+
+	/**
 	 * Fetches a record by its id
 	 * 
 	 * @param string $id
