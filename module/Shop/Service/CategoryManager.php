@@ -312,7 +312,6 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	 */
 	public function removeById($id)
 	{
-		$this->removeWebPageById($id);
 		$this->removeCategoryById($id);
 		$this->removeChildNodes($id);
 
@@ -327,6 +326,8 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	 */
 	private function removeCategoryById($id)
 	{
+		$this->removeWebPageById($id);
+
 		$this->categoryMapper->deleteById($id);
 		$this->imageManager->delete($id);
 
