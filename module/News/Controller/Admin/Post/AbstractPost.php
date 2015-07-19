@@ -32,8 +32,21 @@ abstract class AbstractPost extends AbstractAdminController
 					'title' => new Pattern\Title(),
 					'intro' => new Pattern\IntroText(),
 					'full'	=> new Pattern\FullText(),
+					'date' => array(
+						'required' => true,
+						'rules' => array(
+							'NotEmpty' => array(
+								'message' => 'Date can not be blank'
+							),
+							'DateFormatMatch' => array(
+								'value' => 'm/d/Y',
+								'message' => 'Wrong date format supplied'
+							)
+						)
+					)
 				)
 			),
+
 			'file' => array(
 				'source' => $files,
 				'definition' => array(
