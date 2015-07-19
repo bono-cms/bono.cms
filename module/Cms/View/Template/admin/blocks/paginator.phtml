@@ -5,7 +5,7 @@
 	  <ul class="pagination">
 		<?php if ($paginator->hasPreviousPage()): ?>
 		<li>
-		  <a href="<?php echo $paginator->getUrl($paginator->getPreviousPage()); ?>" aria-label="Previous">
+		  <a href="<?php echo $paginator->getPreviousPageUrl(); ?>" aria-label="Previous">
 			<span aria-hidden="true"> &laquo; <?php $this->show('Previous'); ?></span>
 		  </a>
 		</li>
@@ -28,7 +28,7 @@
 		
 		<?php if ($paginator->hasNextPage()): ?>
 		<li class="next" aria-label="Next">
-		 <a href="<?php echo $paginator->getUrl($paginator->getNextPage()); ?>">
+		 <a href="<?php echo $paginator->getNextPageUrl(); ?>">
 		  <span aria-hidden="true"><?php $this->show('Next'); ?> &raquo;</span>
 		 </a>
 		</li>
