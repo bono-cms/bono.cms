@@ -1,0 +1,65 @@
+
+<form>
+	
+	<div class="panel panel-primary">
+	  <div class="panel-heading">
+		<h3 class="panel-title"><i class="glyphicon glyphicon-wrench"></i> <?php $this->show('Installation wizard'); ?></h3>
+	  </div>
+	  <div class="panel-body">
+		<p>
+			In order to install the system, just provide following data. 
+			Bono CMS is distributed under <a href="http://www.gnu.org/licenses/quick-guide-gplv3.html">GPL licence</a>. 
+			By installing the system, you'd agree to the license automatically.
+			If you don't agree don't install and don't use it.
+		</p>
+	  </div>
+	</div>
+	
+	<br />
+	
+	<div class="form-group clearfix">
+		<label class="col-lg-2 control-label"><?php $this->show('Host'); ?></label>
+		<div class="col-lg-10">
+			<div class="input-group">
+				<input type="text" name="db[host]" class="form-control" placeholder="<?php $this->show('The path to remote host, where MySQL installed'); ?>" />
+				<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="form-group clearfix">
+		<label class="col-lg-2 control-label"><?php $this->show('Database'); ?></label>
+		<div class="col-lg-10">
+			<div class="input-group">
+				<input type="text" name="db[name]" class="form-control" placeholder="<?php $this->show('Database name. It must be created before'); ?>" />
+				<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="form-group clearfix">
+		<label class="col-lg-2 control-label"><?php $this->show('User'); ?></label>
+		<div class="col-lg-10">
+			<div class="input-group">
+				<input type="text" name="db[user]" class="form-control" placeholder="<?php $this->show('Database user'); ?>" />
+				<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="form-group clearfix">
+		<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
+		<div class="col-lg-10">
+			<div class="input-group">
+				<input type="text" name="db[password]" class="form-control" placeholder="<?php $this->show('Password'); ?>" />
+				<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			</div>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-hdd"></i> <?php $this->show('Install'); ?></button>
+	
+</form>
+
