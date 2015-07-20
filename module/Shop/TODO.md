@@ -2,24 +2,24 @@
 TODO List
 =========
 
- * Closes by price
  * Write decent statistic
+
+ 
+Planned
+=======
+
+This should be implemented in next versions.
+
+ * Closes by price
+ * Add optional announce description for products
  * Add quality support for images
  * Add support for watermarks too
- * Add optional announce description for products
  * Product ratings 
  * Product reviews
  * Best-sellers
  * Product attributes
  * Attached products
  * Add currencies support
-
- 
-Planned
-=======
-
-Note: This functionality should be available in 2.x versions
-
  * Move basket into own Shop module, so that it can be used without "Pages" module
  * Basket products for later buying
  * Products to compare
