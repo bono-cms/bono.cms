@@ -16,6 +16,8 @@ use Cms\Service\HistoryManagerInterface;
 use Banner\Storage\BannerMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Security\Filter;
+use Krystal\Http\FileTransfer\DirectoryBagInterface;
+use Krystal\Http\FileTransfer\UrlPathGeneratorInterface;
 
 final class BannerManager extends AbstractManager implements BannerManagerInterface
 {
@@ -25,6 +27,20 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	 * @var \Banner\Storage\BannerMapperInterface
 	 */
 	private $banerMapper;
+
+	/**
+	 * Directory bag
+	 * 
+	 * @var \Krystal\Http\FileTransfer\DirectoryBagInterface
+	 */
+	private $dirBag;
+
+	/**
+	 * Generator for banner URL paths
+	 * 
+	 * @var \Krystal\Http\FileTransfer\UrlPathGeneratorInterface
+	 */
+	private $urlPathGenerator;
 
 	/**
 	 * History Manager to track latest activity
@@ -37,12 +53,20 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	 * State initialization
 	 * 
 	 * @param \Banner\Storage\BannerMapperInterface $banerMapper
+	 * @param \Krystal\Http\FileTransfer\DirectoryBagInterface $dirBag
 	 * @param \Cms\Service\HistoryManagerInterface $historyManager
+	 * @param \Krystal\Http\FileTransfer\UrlPathGeneratorInterface $urlPathGenerator
 	 * @return void
 	 */
-	public function __construct(BannerMapperInterface $bannerMapper, HistoryManagerInterface $historyManager)
-	{
+	public function __construct(
+		BannerMapperInterface $bannerMapper, 
+		DirectoryBagInterface $dirBag, 
+		UrlPathGeneratorInterface $urlPathGenerator, 
+		HistoryManagerInterface $historyManager
+	){
 		$this->bannerMapper = $bannerMapper;
+		$this->dirBag = $dirBag;
+		$this->urlPathGenerator = $urlPathGenerator;
 		$this->historyManager = $historyManager;
 	}
 
@@ -87,7 +111,8 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 		$entity->setId((int) $banner['id'])
 			->setName(Filter::escape($banner['name']))
 			->setLink(Filter::escape($banner['link']))
-			->setImage(Filter::escape($banner['image']));
+			->setImage(Filter::escape($banner['image']))
+			->setUrlPath($this->urlPathGenerator->getPath($entity->getId(), $entity->getImage()));
 
 		return $entity;
 	}
@@ -137,6 +162,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 		$data =& $input['data'];
 
 		if (!empty($file)) {
+			$this->filterFileInput($file);
 			$data['image'] = $file[0]->getName();
 		}
 
@@ -153,13 +179,23 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	{
 		$form = $this->prepareInput($form);
 
-		$data =& $form['data'];
+		if (!empty($form['files']['file'])) {
+			$data =& $form['data'];
 
-		//@TODO: Here must be file uploading
-		if (1) {
+			// In order to get last id, a record needs to be inserted first
+			$this->bannerMapper->insert($data);
+
+			// $this->getLastId() works now
+			$this->dirBag->upload($this->getLastId(), $form['files']['file']);
+
 			// Trace this action
 			$this->track('Banner "%s" has been uploaded', $data['name']);
-			return $this->bannerMapper->insert($data);
+			return true;
+
+		} else {
+
+			// No file
+			return false;
 		}
 	}
 
@@ -174,9 +210,16 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 		$form = $this->prepareInput($input);
 		$data =& $form['data'];
 
-		// If we have a banner
-		if (!empty($form['files'])) {
-			// Then we need to remove old one
+		// If we have a new banner
+		if (!empty($form['files']['file'])) {
+			$file = $form['files']['file'];
+
+			// Then we need to remove a previos one
+			$this->dirBag->remove($data['id'], $data['image']);
+			$this->dirBag->upload($data['id'], $file);
+
+			// Save new name now
+			$data['image'] = $file[0]->getName();
 		}
 
 		// Trace this move
@@ -192,8 +235,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	 */
 	private function delete($id)
 	{
-		//@TODO File also
-		return $this->bannerMapper->deleteById($id);
+		return $this->dirBag->remove($id) && $this->bannerMapper->deleteById($id);
 	}
 
 	/**
