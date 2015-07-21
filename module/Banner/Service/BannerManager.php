@@ -153,7 +153,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	/**
 	 * Prepares an input before sending it to a mapper
 	 * 
-	 * @param array $input Raw form data
+	 * @param array $input Raw input data
 	 * @return array
 	 */
 	private function prepareInput(array $input)
@@ -172,7 +172,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	/**
 	 * Adds a banner
 	 * 
-	 * @param array $input Raw form input
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function add(array $form)
@@ -202,7 +202,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	/**
 	 * Updates a banner
 	 * 
-	 * @param array $input Raw form input
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function update(array $input)
@@ -260,7 +260,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	/**
 	 * Delete banners by their associated ids
 	 * 
-	 * @param array $ids Array of banner ids
+	 * @param array $ids An array of banner ids
 	 * @return boolean
 	 */
 	public function deleteByIds(array $ids)
