@@ -111,7 +111,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 		$entity->setId((int) $banner['id'])
 			->setName(Filter::escape($banner['name']))
 			->setLink(Filter::escape($banner['link']))
-			->setImage(Filter::escape($banner['image']))
+			->setFile($banner['file'])
 			->setUrlPath($this->urlPathGenerator->getPath($entity->getId(), $entity->getImage()));
 
 		return $entity;
@@ -158,12 +158,12 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	 */
 	private function prepareInput(array $input)
 	{
-		$file =& $input['files']['file'];
+		$file =& $input['files']['banner'];
 		$data =& $input['data'];
 
 		if (!empty($file)) {
 			$this->filterFileInput($file);
-			$data['image'] = $file[0]->getName();
+			$data['file'] = $file[0]->getName();
 		}
 
 		return $input;
@@ -179,14 +179,14 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	{
 		$form = $this->prepareInput($form);
 
-		if (!empty($form['files']['file'])) {
+		if (!empty($form['files']['banner'])) {
 			$data =& $form['data'];
 
 			// In order to get last id, a record needs to be inserted first
 			$this->bannerMapper->insert($data);
 
 			// $this->getLastId() works now
-			$this->dirBag->upload($this->getLastId(), $form['files']['file']);
+			$this->dirBag->upload($this->getLastId(), $form['files']['banner']);
 
 			// Trace this action
 			$this->track('Banner "%s" has been uploaded', $data['name']);
@@ -207,19 +207,23 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	 */
 	public function update(array $input)
 	{
-		$form = $this->prepareInput($input);
-		$data =& $form['data'];
+		$data =& $input['data'];
 
 		// If we have a new banner
-		if (!empty($form['files']['file'])) {
-			$file = $form['files']['file'];
+		if (!empty($input['files']['banner'])) {
+			$file = $input['files']['banner'];
 
 			// Then we need to remove a previos one
-			$this->dirBag->remove($data['id'], $data['image']);
+			$this->dirBag->remove($data['id'], $data['file']);
+			
+			// Prepare a file input. Filter its name as well
+			$form = $this->prepareInput($input);
+			
+			// And finally upload a new one
 			$this->dirBag->upload($data['id'], $file);
 
 			// Save new name now
-			$data['image'] = $file[0]->getName();
+			$data['file'] = $file[0]->getName();
 		}
 
 		// Trace this move

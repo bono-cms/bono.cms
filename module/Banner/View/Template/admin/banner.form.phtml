@@ -2,7 +2,7 @@
 	<div class="well clearfix">
 		
 		<input type="hidden" name="id" value="<?php echo $banner->getId(); ?>" />
-		<input type="hidden" name="image" value="<?php echo $banner->getImage(); ?>" >
+		<input type="hidden" name="file" value="<?php echo $banner->getFile(); ?>" >
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
@@ -24,7 +24,7 @@
 				
 				<?php //TODO?: ?>
 				
-				<input type="file" name="file" />
+				<input type="file" name="banner" />
 			</div>
 		</div>
 	</div>
