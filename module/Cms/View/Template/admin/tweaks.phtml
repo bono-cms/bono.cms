@@ -94,9 +94,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Secure layer'); ?> (SSL/TLS)</label>
 					<div class="col-lg-10">
-						<select class="form-control" name="smtp_secure_layer">
-							<?php echo DropdownWidget::render(array('name' => 'smtp_secure_layer', 'class' => 'form-control'), $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), false); ?>
-						</select>
+						<?php echo DropdownWidget::render(array('name' => 'smtp_secure_layer', 'class' => 'form-control'), $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), false); ?>
 						<span class="help-block"><?php $this->show('If your provided requires secure layer, choice required one here'); ?></span>
 					</div>
 				</div>
