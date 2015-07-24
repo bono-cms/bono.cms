@@ -24,8 +24,8 @@ final class Module extends AbstractCmsModule
 	 */
 	public function getServiceProviders()
 	{
-		$dirBag = new DirectoryBag($this->appConfig->getUploadsDir() . '/module/banners');
-		$pathGenerator = new UrlPathGenerator('/uploads/module/banners');
+		$dirBag = new DirectoryBag($this->appConfig->getUploadsDir() . '/module/banner');
+		$pathGenerator = new UrlPathGenerator('/uploads/module/banner');
 
 		$bannerManager = new BannerManager($this->getMapper('/Banner/Storage/MySQL/BannerMapper'), $dirBag, $pathGenerator, $this->getHistoryManager());
 		$siteService = new SiteService($bannerManager);
