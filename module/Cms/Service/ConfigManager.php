@@ -39,8 +39,7 @@ final class ConfigManager extends AbstractConfigManager
 		));
 
 		// The rest
-		$entity->setTheme(Filter::escape($this->get('theme', 'default')))
-			   ->setNotificationEmail(Filter::escape($this->get('notification_email')))
+		$entity->setNotificationEmail(Filter::escape($this->get('notification_email')))
 			   ->setKeepTrack((bool) ($this->get('keep_track')))
 			   ->setSiteEnabled((bool) ($this->get('site_enabled')))
 			   // No need to escape this

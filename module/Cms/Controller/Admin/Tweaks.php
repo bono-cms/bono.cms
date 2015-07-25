@@ -94,8 +94,7 @@ final class Tweaks extends AbstractController
 			'input' => array(
 				'source' => $input,
 				'definition' => array(
-					'notification_email' => new Pattern\Email(),
-					'theme' => new Pattern\ThemeName()
+					'notification_email' => new Pattern\Email()
 				)
 			)
 		));
