@@ -12,9 +12,6 @@ use Krystal\Form\Widget\CheckBoxWidget;
 	  </button>
 	  <ul class="dropdown-menu">
 		 <li><a href="<?php echo $this->url('MailForm:Admin:Add@indexAction'); ?>"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Add new form'); ?></a></li>
-		 <?php if ($extendedMode): ?>
-		 <li><a href="<?php echo $this->url('Pages:Admin:Config@indexAction'); ?>"><i class="glyphicon glyphicon-th-large"></i> <?php $this->show('Configuration'); ?></a></li>
-		 <?php endif; ?>
 		 <li class="divider"></li>
 		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
 
