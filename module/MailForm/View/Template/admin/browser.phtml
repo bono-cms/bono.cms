@@ -41,7 +41,9 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<thead>
 				<tr>
 					<th class="text-center">
+						<?php if (!empty($forms)): ?>
 						<input type="checkbox" />
+						<?php endif; ?>
 					</th>
 					<th class="text-center"><?php $this->show('#'); ?></th>
 					<th class="text-center"><?php $this->show('Title'); ?></th>

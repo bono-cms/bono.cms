@@ -39,7 +39,11 @@ use Krystal\Form\HtmlHelper;
 		<table class="table table-hover table-bordered table-striped table-condensed">
 			<thead>
 				<tr>
-					<th class="text-center"><input type="checkbox" /></th>
+					<th class="text-center">
+						<?php if (!empty($images)): ?>
+						<input type="checkbox" />
+						<?php endif; ?>
+					</th>
 					<th class="text-center"><?php $this->show('#'); ?></th>
 					<th class="text-center"><?php $this->show('Preview'); ?></th>
 					<th class="text-center"><?php $this->show('Category'); ?></th>

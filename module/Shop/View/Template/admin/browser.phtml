@@ -44,7 +44,11 @@ use Krystal\Form\HtmlHelper;
 			<table class="table table-hover table-bordered table-striped">
 				<thead>
 					<tr>
-						<th class="text-center"><input type="checkbox" /></th>
+						<th class="text-center">
+							<?php if (!empty($products)):?>
+							<input type="checkbox" />
+							<?php endif; ?>
+						</th>
 						<th class="text-center"><?php $this->show('#'); ?></th>
 						<th class="text-center"><?php $this->show('Cover'); ?></th>
 						<th class="text-center"><?php $this->show('Title'); ?> </th>

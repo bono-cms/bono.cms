@@ -37,7 +37,9 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<thead>
 				<tr>
 					<th class="text-center">
+						<?php if (!empty($faqs)): ?>
 						<input type="checkbox" />
+						<?php endif; ?>
 					</th>
 					<th class="text-center"><?php $this->show('#'); ?></th>
 					<th class="text-center"><?php $this->show('Question'); ?></th>

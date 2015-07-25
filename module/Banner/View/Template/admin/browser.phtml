@@ -27,7 +27,9 @@
 			<thead>
 				<tr>
 					<th class="text-center">
+						<?php if (!empty($banners)): ?>
 						<input type="checkbox" />
+						<?php endif; ?>
 					</th>
 					<th class="text-center"><?php $this->show('#'); ?></th>
 					<th class="text-center"><?php $this->show('Name'); ?></th>
