@@ -20,6 +20,14 @@ use Krystal\InstanceManager\InstanceProvider;
 abstract class AbstractController extends BaseController
 {
 	/**
+	 * {@inheritDoc}
+	 */
+	protected function getResolverModuleName()
+	{
+		return 'Site';
+	}
+
+	/**
 	 * Returns site bootstrappers
 	 * 
 	 * @return array
@@ -74,7 +82,9 @@ abstract class AbstractController extends BaseController
 		static $cache = null;
 
 		if (is_null($cache)) {
-			$file = $this->view->getResolver()->resolve() . '/theme.config.php';
+
+			// Build a path to the configuration file
+			$file = $this->view->getResolver()->getWithThemePath('theme.config.php');
 
 			// Initial state
 			$config = array();
@@ -128,23 +138,14 @@ abstract class AbstractController extends BaseController
 		}
 
 		$this->view->addVariables(array(
-			//'posts' => $this->moduleManager->getModule('News')->getService('postManager')->fetchAllPublishedByCategoryId('4', 3),
-			//'languages' => $this->moduleManager->getModule('Admin')->getService('languageManager')->fetchAllPublished(),
+			//'languages' => $this->getService('Cms', 'languageManager')->fetchAllPublished(),
 		));
 
 		$instanceProvider = new InstanceProvider($this->getBootstrappers());
-		
+
 		foreach ($instanceProvider->getAll() as $bs) {
 			$bs->bootstrap();
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function getResolverModuleName()
-	{
-		return 'Site';
 	}
 
 	/**
@@ -165,11 +166,10 @@ abstract class AbstractController extends BaseController
 				'name' => $this->translator->translate('Home page')
 			)
 		));
-		
-		$config = $this->moduleManager->getModule('Cms')
-									  ->getService('configManager')
-									  ->getEntity();
-		
+
+		// Get core configuration entity of the system itself
+		$config = $this->getService('Cms', 'configManager')->getEntity();
+
 		// If site isn't enabled, then its down for maintenance
 		if ($config->getSiteEnabled()) {
 			die($config->getSiteDownReason());
