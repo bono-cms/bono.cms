@@ -70,7 +70,7 @@ use Krystal\Form\HtmlHelper;
 							<input type="text" name="filter[title]" class="form-control" value="<?php echo $filter->get('title'); ?>" />
 						</th>
 						<th class="date-col">
-							<input type="text" name="filter[date]" class="form-control" />
+							<input type="text" name="filter[date]" class="form-control" value="<?php echo $filter->get('date'); ?>" />
 						</th>
 						<th>
 							<?php echo DropdownWidget::render(array('name' => 'filter[category_id]', 'class' => 'form-control'), $categories, $filter->get('category_id')); ?>
@@ -105,7 +105,7 @@ use Krystal\Form\HtmlHelper;
 							<a data-lightbox="<?php printf('image-%s', $product->getId()); ?>" href="<?php echo $product->getImageBag()->getUrl('original'); ?>"><img class="img-responsive center-block" src="<?php echo $product->getImageBag()->getUrl('120x120'); ?>" /></a>
 						</td>
 						<td class="text-center"><?php echo $product->getTitle(); ?></td>
-						<td class="text-center"><?php echo date('d-m-Y', $product->getTimestamp()); ?></td>
+						<td class="text-center"><?php echo $product->getDate(); ?></td>
 						<td class="text-center"><?php echo $product->getCategoryName(); ?></td>
 						<td>
 							<input type="number" class="form-control center-block" min="0" name="price[<?php echo $product->getId(); ?>]" value="<?php echo $product->getPrice(); ?>" />

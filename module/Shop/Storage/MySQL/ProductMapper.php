@@ -86,6 +86,7 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 		return $this->db->select('*')
 						->from(static::getTableName())
 						->whereLike('title', '%'.$input['title'].'%', true)
+						->andWhereEquals('date', $input['date'], true)
 						->andWhereEquals('id', $input['id'], true)
 						->andWhereEquals('regular_price', $input['price'], true)
 						->andWhereEquals('category_id', $input['category_id'], true)

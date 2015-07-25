@@ -27,8 +27,7 @@ final class Add extends AbstractProduct
 		$product = new VirtualEntity();
 		$product->setSeo(true)
 			    ->setPublished(true)
-				->setSpecialOffer(false)
-				->setTimestamp(time());
+				->setSpecialOffer(false);
 
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a product',

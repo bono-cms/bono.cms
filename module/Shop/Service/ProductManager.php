@@ -166,7 +166,7 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 		$imageBag = clone $this->imageManager->getImageBag();
 		$imageBag->setId($product['id'])
 				 ->setCover($product['cover']);
-		
+
 		$entity = new ProductEntity();
 		$entity->setImageBag($imageBag)
 			->setId((int) $product['id'])
@@ -186,7 +186,7 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 			->setKeywords(Filter::escape($product['keywords']))
 			->setMetaDescription(Filter::escape($product['meta_description']))
 			->setCover(Filter::escape($product['cover']))
-			->setTimestamp((int) $product['timestamp'])
+			->setDate($product['date'])
 			->setPermanentUrl('/module/shop/product/'.$entity->getId())
 			->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
 			->setViewCount((int) $product['views']);
@@ -409,7 +409,6 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 
 		// Make it now look like a slug
 		$product['slug'] = $this->webPageManager->sluggify($product['slug']);
-		$product['timestamp'] = time();
 
 		return $input;
 	}
@@ -429,6 +428,8 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 
 		// Initial view count
 		$product['views'] = 0;
+		// For cross-database compatibility, the date must be generated here, not in the mapper
+		$product['date'] = date('Y-m-d', time());
 
 		$files =& $input['files']['file'];
 
