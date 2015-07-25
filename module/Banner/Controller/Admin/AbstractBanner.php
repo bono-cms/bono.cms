@@ -33,10 +33,10 @@ abstract class AbstractBanner extends AbstractAdminController
 					'link' => new Pattern\Url(),
 				)
 			),
-			'files' => array(
+			'file' => array(
 				'source' => $files,
 				'definition' => array(
-					'file' => new Pattern\File(array(
+					'banner' => new Pattern\File(array(
 						'required' => !$edit
 					))
 				)
