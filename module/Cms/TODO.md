@@ -10,8 +10,6 @@ TODO List
  * In $.delete implementation there must be ability to define custom messages
  * When site is down, there must be some kind of landing page instead of plain text. Think about it.
  * Add ability to change fav-icon in administration area (for the site)
- * Add ability to change WYSIWYG Editor
- * Add ability to change time-zones
  * New schematic for internalization (One-to-many relationship)
  * Implement in-line theme editor
  * Add custom backgrounds support
