@@ -68,19 +68,7 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert(static::getTableName(), array(
-
-			'name' => $data['name'],
-			'phone' => $data['phone'],
-			'address' => $data['address'],
-			'comment' => $data['comment'],
-			'delivery' => $data['delivery'],
-			'date' => $data['date'],
-			'approved' => $data['approved'],
-			'qty' => $data['qty'],
-			'total_price' => $data['total_price']
-
-		))->execute();
+		return $this->persist($data);
 	}
 
 	/**

@@ -15,6 +15,7 @@ use Cms\Service\AbstractManager;
 use Cms\Service\NotificationManagerInterface;
 use Cms\Service\MailerInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Db\Filter\FilterableServiceInterface;
 use Shop\Storage\OrderInfoMapperInterface;
 use Shop\Storage\OrderProductMapperInterface;
@@ -169,7 +170,6 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	public function make(array $input)
 	{
 		$defaults = array(
-			'timestamp' => time(),
 			// By default all orders are un-approved
 			'approved' => '0',
 			'qty' => $this->basketManager->getTotalQuantity(),
@@ -180,7 +180,7 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 		$data['date'] = date('Y-m-d', time());
 
 		// First of all, insert, because we need to obtain a last id
-		$this->orderInfoMapper->insert($data);
+		$this->orderInfoMapper->insert(ArrayUtils::arrayWithout($data, array('captcha')));
 
 		// Now obtain last id
 		$id = $this->orderInfoMapper->getLastId();
