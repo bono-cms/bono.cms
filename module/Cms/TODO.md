@@ -14,8 +14,6 @@ TODO List
  * Implement in-line theme editor
  * Add custom backgrounds support
  * Implement password recovery
- * Environment analyser. That should make test to ensure everything will be working. 
-   Which also should ensure that all languages have the same class.
  * In administration area, there should be a drop-down menu of modules for quick access
  * Drag and Drop for modules (changing orders)
  * Write CMS module manager. Should be able to disable and un-install modules
