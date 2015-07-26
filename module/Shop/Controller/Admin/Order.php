@@ -32,6 +32,7 @@ final class Order extends AbstractController
 		
 		return $this->view->render('orders', array(
 			
+			'config' => $this->getConfig(),
 			'title' => 'Orders',
 			'paginator' => $paginator,
 			'orders' => $orders,

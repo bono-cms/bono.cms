@@ -34,7 +34,7 @@
 				<td class="text-center"><?php echo $order->getComment(); ?></td>
 				<td class="text-center"><?php echo $order->getDelivery(); ?></td>
 				<td class="text-center"><?php echo $order->getQty(); ?></td>
-				<td class="text-center"><?php echo $order->getTotalPrice(); ?></td>
+				<td class="text-center"><?php echo $order->getTotalPrice(), PHP_EOL, $config->getCurrency(); ?></td>
 				<td class="text-center"><?php $this->show($order->getApproved() ? 'Yes' : 'No'); ?></td>
 				<td class="text-center">
 					<?php if (!$order->getApproved()):?>
