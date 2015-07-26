@@ -1,9 +1,9 @@
 <?php
 
 use Krystal\Form\Widget\BooleanWidget;
+use Krystal\Form\HtmlHelper;
 
 ?>
-
 
 <h2><i class="glyphicon glyphicon-user"></i> <?php $this->show('Orders'); ?> (<?php echo $paginator->getTotalAmount(); ?>)</h2>
 
@@ -66,7 +66,7 @@ use Krystal\Form\Widget\BooleanWidget;
 			<tbody>
 				
 				<?php foreach($orders as $order): ?>
-				<tr>
+				<tr <?php HtmlHelper::addClassOnDemand(!$order->getApproved(), 'warning'); ?>>
 					<td class="text-center text-muted"><?php echo $order->getId(); ?></td>
 					<td class="text-center"><?php echo $order->getDate(); ?></td>
 					<td class="text-center"><?php echo $order->getName(); ?></td>
