@@ -12,9 +12,31 @@
 namespace Shop\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
+use Krystal\Db\Filter\QueryContainer;
 
 final class Order extends AbstractController
 {
+	/**
+	 * Applies the filter
+	 * 
+	 * @return string
+	 */
+	public function filterAction()
+	{
+		$records = $this->getFilter($this->getOrderManager());
+
+		if ($records !== false) {
+
+			$this->loadPlugins();
+			return $this->view->render($this->getTemplatePath(), $this->getRecordsWithSharedVars($records, $this->getOrderManager()->getPaginator()));
+
+		} else {
+
+			// None selected, so no need to apply a filter
+			return $this->indexAction();
+		}
+	}
+
 	/**
 	 * Shows order's grid
 	 * 
@@ -23,9 +45,6 @@ final class Order extends AbstractController
 	 */
 	public function indexAction($page = 1)
 	{
-		$this->view->getPluginBag()
-				   ->appendScript($this->getWithAssetPath('/admin/orders.js'));
-
 		$orderManager = $this->getOrderManager();
 
 		$paginator = $orderManager->getPaginator();
@@ -34,13 +53,8 @@ final class Order extends AbstractController
 		// Grab all order entities
 		$orders = $orderManager->fetchAllByPage($page, $this->getSharedPerPageCount());
 
-		return $this->view->render('orders', array(
-			
-			'config' => $this->getConfig(),
-			'title' => 'Orders',
-			'paginator' => $paginator,
-			'orders' => $orders,
-		));
+		$this->loadPlugins();
+		return $this->view->render($this->getTemplatePath(), $this->getRecordsWithSharedVars($orders, $paginator));
 	}
 
 	/**
@@ -98,6 +112,45 @@ final class Order extends AbstractController
 		));
 	}
 
+	/**
+	 * Returns template path
+	 * 
+	 * @return string
+	 */
+	private function getTemplatePath()
+	{
+		return 'orders';
+	}
+
+	/**
+	 * Returns shared variables for the template to display
+	 * 
+	 * @param array $records
+	 * @param $paginator
+	 * @return array
+	 */
+	private function getRecordsWithSharedVars(array $records, $paginator)
+	{
+		return array(
+			'orders' => $records,
+			'paginator' => $paginator,
+			'config' => $this->getConfig(),
+			'title' => 'Orders',
+			'filter' => new QueryContainer($this->request->getQuery('filter'))
+		);
+	}
+
+	/**
+	 * Loads required view plugins
+	 * 
+	 * @return void
+	 */
+	private function loadPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/orders.js'));
+	}
+	
 	/**
 	 * Returns order manager
 	 * 

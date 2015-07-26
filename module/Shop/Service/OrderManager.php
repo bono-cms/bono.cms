@@ -15,10 +15,11 @@ use Cms\Service\AbstractManager;
 use Cms\Service\NotificationManagerInterface;
 use Cms\Service\MailerInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Db\Filter\FilterableServiceInterface;
 use Shop\Storage\OrderInfoMapperInterface;
 use Shop\Storage\OrderProductMapperInterface;
 
-final class OrderManager extends AbstractManager implements OrderManagerInterface
+final class OrderManager extends AbstractManager implements OrderManagerInterface, FilterableServiceInterface
 {
 	/**
 	 * Any compliant order information mapper
@@ -77,6 +78,19 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 		$this->basketManager = $basketManager;
 		$this->notificationManager = $notificationManager;
 		$this->mailer = $mailer;
+	}
+
+	/**
+	 * Filters the input
+	 * 
+	 * @param array $input Raw input data
+	 * @param integer $page
+	 * @param integer $itemsPerPage
+	 * @return array
+	 */
+	public function filter(array $input, $page, $itemsPerPage)
+	{
+		return $this->prepareResults($this->orderInfoMapper->filter($input, $page, $itemsPerPage));
 	}
 
 	/**

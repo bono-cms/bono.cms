@@ -25,6 +25,28 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	}
 
 	/**
+	 * Filters the input
+	 * 
+	 * @param array $input Raw input data
+	 * @param integer $page
+	 * @param integer $itemsPerPage
+	 * @return array
+	 */
+	public function filter(array $input, $page, $itemsPerPage)
+	{
+		return $this->db->select('*')
+						->from(static::getTableName())
+						->whereLike('name', '%'.$input['name'].'%', true)
+						->andWhereLike('phone', '%'.$input['phone'].'%', true)
+						->andWhereEquals('id', $input['id'], true)
+						->andWhereEquals('qty', $input['qty'], true)
+						->andWhereEquals('total_price', $input['total_price'], true)
+						->andWhereEquals('approved', $input['approved'], true)
+						->paginate($page, $itemsPerPage)
+						->queryAll();
+	}
+
+	/**
 	 * Returns shared select query
 	 * 
 	 * @return \Krystal\Db\Sql\Db
