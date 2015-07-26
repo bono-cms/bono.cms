@@ -23,6 +23,9 @@ final class Order extends AbstractController
 	 */
 	public function indexAction($page = 1)
 	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/orders.js'));
+
 		$orderManager = $this->getOrderManager();
 
 		$paginator = $orderManager->getPaginator();
