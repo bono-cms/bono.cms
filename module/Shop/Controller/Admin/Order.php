@@ -91,6 +91,7 @@ final class Order extends AbstractController
 
 		return $this->view->render('order-details', array(
 
+			'id' => $id,
 			'currency' => $this->getConfig()->getCurrency(),
 			'title' => 'Order products',
 			'details' => $details
