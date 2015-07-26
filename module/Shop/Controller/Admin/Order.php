@@ -30,9 +30,10 @@ final class Order extends AbstractController
 
 		$paginator = $orderManager->getPaginator();
 		$paginator->setUrl('/admin/module/shop/orders/page/%s');
-		
+
+		// Grab all order entities
 		$orders = $orderManager->fetchAllByPage($page, $this->getSharedPerPageCount());
-		
+
 		return $this->view->render('orders', array(
 			
 			'config' => $this->getConfig(),
@@ -103,11 +104,16 @@ final class Order extends AbstractController
 	 */
 	private function getOrderManager()
 	{
-		return $this->moduleManager->getModule('Shop')->getService('orderManager');
+		return $this->getModuleService('orderManager');
 	}
-	
+
+	/**
+	 * Returns configuration entity
+	 * 
+	 * @return \Krystal\Stdlib\VirtualEntity
+	 */
 	private function getConfig()
 	{
-		return $this->moduleManager->getModule('Shop')->getService('configManager')->getEntity();
+		return $this->getModuleService('configManager')->getEntity();
 	}
 }
