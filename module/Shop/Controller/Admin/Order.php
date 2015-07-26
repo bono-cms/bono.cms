@@ -21,7 +21,7 @@ final class Order extends AbstractController
 	 * @param string $page Current page number
 	 * @return string
 	 */
-	public function listAction($page = 1)
+	public function indexAction($page = 1)
 	{
 		$orderManager = $this->getOrderManager();
 
