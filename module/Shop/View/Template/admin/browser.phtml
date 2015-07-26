@@ -103,7 +103,7 @@ use Krystal\Form\HtmlHelper;
 						</td>
 						<td class="col-lg-1 text-center text-muted"><?php echo $product->getId(); ?></td>
 						<td>
-							<a data-lightbox="<?php printf('image-%s', $product->getId()); ?>" href="<?php echo $product->getImageBag()->getUrl('original'); ?>"><img class="img-responsive center-block" src="<?php echo $product->getImageBag()->getUrl('120x120'); ?>" /></a>
+							<a data-toggle="tooltip" data-placement="top" data-original-title="<?php $this->show('Click to zoom this image'); ?>" data-lightbox="<?php printf('image-%s', $product->getId()); ?>" href="<?php echo $product->getImageBag()->getUrl('original'); ?>"><img class="img-responsive center-block" src="<?php echo $product->getImageBag()->getUrl('120x120'); ?>" /></a>
 						</td>
 						<td class="text-center"><?php echo $product->getTitle(); ?></td>
 						<td class="text-center"><?php echo $product->getDate(); ?></td>
