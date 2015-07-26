@@ -67,6 +67,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	public function update($id, $slug, $controller = null)
 	{
 		$data = array(
+			'id' => $id,
 			'slug' => $slug
 		);
 
