@@ -30,7 +30,7 @@ final class Order extends AbstractController
 		
 		$orders = $orderManager->fetchAllByPage($page, $this->getSharedPerPageCount());
 		
-		return $this->view->render('order', array(
+		return $this->view->render('orders', array(
 			
 			'title' => 'Orders',
 			'paginator' => $paginator,
