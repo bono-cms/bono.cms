@@ -146,8 +146,7 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	{
 		$entity = new VirtualEntity();
 		$entity->setId($order['id'])
-				 ->setTimestamp($order['timestamp'])
-				 ->setDate(date('m.d.y', $entity->getTimestamp()))
+				 ->setDate($order['date'])
 				 ->setName($order['name'])
 				 ->setPhone($order['phone'])
 				 ->setAddress($order['address'])
@@ -178,6 +177,7 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 		);
 
 		$data = array_merge($input, $defaults);
+		$data['date'] = date('Y-m-d', time());
 
 		// First of all, insert, because we need to obtain a last id
 		$this->orderInfoMapper->insert($data);

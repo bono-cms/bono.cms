@@ -148,9 +148,10 @@ final class Order extends AbstractController
 	private function loadPlugins()
 	{
 		$this->view->getPluginBag()
+				   ->load('datepicker')
 				   ->appendScript($this->getWithAssetPath('/admin/orders.js'));
 	}
-	
+
 	/**
 	 * Returns order manager
 	 * 

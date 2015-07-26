@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS `bono_module_shop_orders_info`;
 CREATE TABLE `bono_module_shop_orders_info` (
 	
 	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique order id',
-	`timestamp` INT NOT NULL,
+	`date` DATE NOT NULL,
 	`name` varchar(255) NOT NULL COMMENT 'Name of customer',
 	`phone` varchar(254) NOT NULL COMMENT 'Phone of customer',
 	`address` TEXT NOT NULL COMMENT 'Destination address',

@@ -34,7 +34,9 @@ use Krystal\Form\Widget\BooleanWidget;
 					<th class="col-md-1">
 						<input type="number" min="1" class="form-control" name="filter[id]" value="<?php echo $filter->get('id'); ?>" />
 					</th>
-					<th></th>
+					<th>
+						<input type="text" name="filter[date]" class="form-control" value="<?php echo $filter->get('date'); ?>" />
+					</th>
 					<th>
 						<input type="text" class="form-control" name="filter[name]" value="<?php echo $filter->get('name'); ?>" />
 					</th>

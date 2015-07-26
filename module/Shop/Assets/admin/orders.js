@@ -1,6 +1,10 @@
 
 $(function(){
 
+	$("[name='filter[date]']").datepicker({
+		format : 'yyyy-mm-dd'
+	});
+
 	$.delete({
 		categories : {
 			order : {
