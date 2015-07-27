@@ -51,4 +51,21 @@ $(function() {
 		});
 	});
 	
+	
+	$("[data-button='statistic']").click(function(event){
+		event.preventDefault();
+		
+		$.ajax({
+			url : '/admin/module/shop/statistic.ajax',
+			beforeSend : function(){
+				// Empty function cancels loading div
+			},
+			success : function(response){
+				
+				$("#statistic-body").html(response);
+				$("#statistic-modal").modal();
+			}
+		});
+	});
+	
 });

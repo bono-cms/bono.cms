@@ -13,7 +13,7 @@ namespace Shop\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
 
-final class Stat extends AbstractController
+final class Statistic extends AbstractController
 {
 	/**
 	 * Default action
@@ -22,6 +22,8 @@ final class Stat extends AbstractController
 	 */
 	public function indexAction()
 	{
-		return 'todo';
+		return $this->view->disableLayout()->render('statistic', array(
+			'data' => array('key' => 'value')
+		));
 	}
 }
