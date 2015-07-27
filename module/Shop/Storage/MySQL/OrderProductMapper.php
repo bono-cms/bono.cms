@@ -20,7 +20,10 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'bono_module_shop_orders_products';
+	public static function getTableName()
+	{
+		return 'bono_module_shop_orders_products';
+	}
 
 	/**
 	 * Counts the sum of sold products
@@ -31,7 +34,7 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	{
 		return (float) $this->db->select()
 							    ->sum('price', 'count')
-								->from($this->table)
+								->from(self::getTableName())
 								->query('count');
 	}
 
@@ -44,7 +47,7 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	{
 		return (int) $this->db->select()
 							  ->sum('qty', 'count')
-							  ->from($this->table)
+							  ->from(self::getTableName())
 							  ->query('count');
 	}
 
@@ -57,7 +60,7 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	public function deleteAllByOrderId($id)
 	{
 		return $this->db->delete()
-						->from($this->table)
+						->from(self::getTableName())
 						->whereEquals('order_id', $id)
 						->execute();
 	}
@@ -70,7 +73,7 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert($this->table, array(
+		return $this->db->insert(self::getTableName(), array(
 			
 			'order_id' => $data['order_id'],
 			'product_id' => $data['product_id'],
@@ -91,7 +94,7 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	public function fetchAllDetailsByOrderId($id)
 	{
 		return $this->db->select('*')
-						->from($this->table)
+						->from(self::getTableName())
 						->whereEquals('order_id', $id)
 						->queryAll();
 	}
