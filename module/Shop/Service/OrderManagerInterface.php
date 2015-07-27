@@ -14,6 +14,14 @@ namespace Shop\Service;
 interface OrderManagerInterface
 {
 	/**
+	 * Counts all orders
+	 * 
+	 * @param boolean $approved Whether to count only approved orders
+	 * @return integer
+	 */
+	public function countAll($approved);
+
+	/**
 	 * Approves an order by its associated id
 	 * 
 	 * @param string $id Order's id

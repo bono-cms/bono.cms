@@ -95,6 +95,17 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	}
 
 	/**
+	 * Counts all orders
+	 * 
+	 * @param boolean $approved Whether to count only approved orders
+	 * @return integer
+	 */
+	public function countAll($approved)
+	{
+		return $this->orderInfoMapper->countAll($approved);
+	}
+
+	/**
 	 * Approves an order by its associated id
 	 * 
 	 * @param string $id Order's id

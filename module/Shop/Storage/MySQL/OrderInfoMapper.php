@@ -61,6 +61,25 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	}
 
 	/**
+	 * Counts all orders
+	 * 
+	 * @param boolean $approved Whether to count only approved orders
+	 * @return integer
+	 */
+	public function countAll($approved)
+	{
+		$db = $this->db->select()
+					   ->count('id', 'count')
+					   ->from(self::getTableName());
+
+		if ($approved === true) {
+			$db->whereEquals('approved', '1');
+		}
+
+		return $db->query('count');
+	}
+
+	/**
 	 * Adds new order data
 	 * 
 	 * @param array $data

@@ -14,6 +14,14 @@ namespace Shop\Storage;
 interface OrderInfoMapperInterface
 {
 	/**
+	 * Counts all orders
+	 * 
+	 * @param boolean $approved Whether to count only approved orders
+	 * @return integer
+	 */
+	public function countAll($approved);
+
+	/**
 	 * Adds new order data
 	 * 
 	 * @param array $data
