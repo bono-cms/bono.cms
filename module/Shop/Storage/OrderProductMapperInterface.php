@@ -14,6 +14,13 @@ namespace Shop\Storage;
 interface OrderProductMapperInterface
 {
 	/**
+	 * Counts total amount of sold products
+	 * 
+	 * @return integer
+	 */
+	public function getQtySumCount();
+
+	/**
 	 * Deletes all products associated with provided order's id
 	 * 
 	 * @param string $id Order's id

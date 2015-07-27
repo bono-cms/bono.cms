@@ -95,6 +95,16 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	}
 
 	/**
+	 * Counts total amount of sold products
+	 * 
+	 * @return integer
+	 */
+	public function getQtySumCount()
+	{
+		return $this->orderProductMapper->getQtySumCount();
+	}
+
+	/**
 	 * Counts all orders
 	 * 
 	 * @param boolean $approved Whether to count only approved orders

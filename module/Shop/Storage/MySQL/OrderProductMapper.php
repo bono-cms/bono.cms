@@ -23,6 +23,19 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	protected $table = 'bono_module_shop_orders_products';
 
 	/**
+	 * Counts total amount of sold products
+	 * 
+	 * @return integer
+	 */
+	public function getQtySumCount()
+	{
+		return $this->db->select()
+						->sum('qty', 'count')
+						->from($this->table)
+						->query('count');
+	}
+
+	/**
 	 * Deletes all products associated with provided order's id
 	 * 
 	 * @param string $id Order's id

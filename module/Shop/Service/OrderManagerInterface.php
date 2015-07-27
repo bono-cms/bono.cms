@@ -14,6 +14,13 @@ namespace Shop\Service;
 interface OrderManagerInterface
 {
 	/**
+	 * Counts total amount of sold products
+	 * 
+	 * @return integer
+	 */
+	public function getQtySumCount();
+
+	/**
 	 * Counts all orders
 	 * 
 	 * @param boolean $approved Whether to count only approved orders
