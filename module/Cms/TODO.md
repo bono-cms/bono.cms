@@ -7,7 +7,6 @@ TODO List
  * Mailer should support HTML messages with attachments
  * Need to implement slug validator
  * Config needs to be aware of History
- * In $.delete implementation there must be ability to define custom messages
  * When site is down, there must be some kind of landing page instead of plain text. Think about it.
  * Add ability to change fav-icon in administration area (for the site)
  * New schematic for internalization (One-to-many relationship)

@@ -191,6 +191,12 @@ $(function(){
 			
 			var category = $(this).data('category');
 			var id = $(this).data('id');
+			var message = $(this).data('message');
+			
+			// If there's a custom message, then display it instead of default one
+			if (message){
+				$(modalSelector).find('.modal-body').html(message);
+			}
 			
 			// Ensure both are provided
 			if (category == "undefined" || id == "undefined") {
