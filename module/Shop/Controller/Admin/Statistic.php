@@ -23,7 +23,27 @@ final class Statistic extends AbstractController
 	public function indexAction()
 	{
 		return $this->view->disableLayout()->render('statistic', array(
-			'data' => array('key' => 'value')
+			'data' => $this->getData()
 		));
+	}
+
+	/**
+	 * Returns statistic data
+	 * 
+	 * @return array
+	 */
+	private function getData()
+	{
+		$currency = $this->getModuleService('configManager')->getEntity()->getCurrency();
+
+		return array(
+			'Total categories' => $this->getModuleService('categoryManager')->countAll(),
+			'Total products' => $this->getModuleService('productManager')->countAll(),
+			'Currency' => $currency,
+			'Total orders' => $this->getModuleService('orderManager')->countAll(false),
+			'Approved orders' => $this->getModuleService('orderManager')->countAll(true),
+			'Total amount sold products' => $this->getModuleService('orderManager')->getQtySumCount(),
+			'Total sum of sold products' => $this->getModuleService('orderManager')->getPriceSumCount().PHP_EOL.$currency,
+		);
 	}
 }
