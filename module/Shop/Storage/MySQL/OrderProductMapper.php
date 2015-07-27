@@ -42,10 +42,10 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	 */
 	public function getQtySumCount()
 	{
-		return $this->db->select()
-						->sum('qty', 'count')
-						->from($this->table)
-						->query('count');
+		return (int) $this->db->select()
+							  ->sum('qty', 'count')
+							  ->from($this->table)
+							  ->query('count');
 	}
 
 	/**
