@@ -150,6 +150,19 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	}
 
 	/**
+	 * Counts all available products
+	 * 
+	 * @return integer
+	 */
+	public function countAll()
+	{
+		return (int) $this->db->select()
+							  ->count('id', 'count')
+							  ->from(self::getTableName())
+							  ->query('count');
+	}
+
+	/**
 	 * Fetches all product ids associated with provided category id
 	 * 
 	 * @param string $categoryId

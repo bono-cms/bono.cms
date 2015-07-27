@@ -172,6 +172,13 @@ interface ProductManagerInterface
 	public function fetchById($id);
 
 	/**
+	 * Counts all available products
+	 * 
+	 * @return integer
+	 */
+	public function countAll();
+
+	/**
 	 * Fetches latest product entities
 	 * 
 	 * @param integer $limit Limit for fetching

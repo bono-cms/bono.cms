@@ -154,6 +154,13 @@ interface ProductMapperInterface
 	public function fetchById($id);
 
 	/**
+	 * Counts all available products
+	 * 
+	 * @return integer
+	 */
+	public function countAll();
+
+	/**
 	 * Deletes all products associated with provided category id
 	 * 
 	 * @param string $categoryId

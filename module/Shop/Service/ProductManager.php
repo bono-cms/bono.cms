@@ -659,7 +659,17 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	{
 		return $this->prepareResult($this->productMapper->fetchById($id));
 	}
-	
+
+	/**
+	 * Counts all available products
+	 * 
+	 * @return integer
+	 */
+	public function countAll()
+	{
+		return $this->productMapper->countAll();
+	}
+
 	/**
 	 * Fetches latest product entities
 	 * 
