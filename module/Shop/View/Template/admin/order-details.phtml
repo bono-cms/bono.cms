@@ -1,9 +1,7 @@
 
-<h2><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Order details'); ?> <small># <?php echo $id; ?></small></h2>
+<h2><small># <?php echo $id; ?></small></h2>
 
 <div class="table-responsive">
-	<?php $this->loadBlock('items-per-page', array('caption' => 'Recent orders')); ?>
-
 	<table class="table table-hover table-bordered table-striped">
 		<thead>
 			<tr>
@@ -31,5 +29,3 @@
 
 	</table>
 </div>
-
-<a href="<?php echo $this->url('Shop:Admin:Order@indexAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-chevron-left"></i> <?php $this->show('Back'); ?></a>

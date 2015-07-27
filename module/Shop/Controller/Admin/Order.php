@@ -96,18 +96,17 @@ final class Order extends AbstractController
 	/**
 	 * Shows details for a given order id
 	 * 
-	 * @param string $id Order's id
+	 * @param string $id Order id
 	 * @return string
 	 */
 	public function detailsAction($id)
 	{
 		$details = $this->getOrderManager()->fetchAllDetailsByOrderId($id);
 
-		return $this->view->render('order-details', array(
+		return $this->view->disableLayout()->render('order-details', array(
 
 			'id' => $id,
 			'currency' => $this->getConfig()->getCurrency(),
-			'title' => 'Order products',
 			'details' => $details
 		));
 	}

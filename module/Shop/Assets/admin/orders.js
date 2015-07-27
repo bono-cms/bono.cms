@@ -33,4 +33,19 @@ $(function(){
 		});
 	});
 	
+	
+	$("[data-button='details']").click(function(event){
+		event.preventDefault();
+		
+		var id = $(this).data('order-id');
+		
+		$.ajax({
+			url : '/admin/module/shop/orders/details/' + id,
+			success : function(response){
+				$("#details-body").html(response);
+				$("#details-modal").modal();
+			}
+		});
+	});
+	
 });
