@@ -23,6 +23,19 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	protected $table = 'bono_module_shop_orders_products';
 
 	/**
+	 * Counts the sum of sold products
+	 * 
+	 * @return float
+	 */
+	public function getPriceSumCount()
+	{
+		return (float) $this->db->select()
+							    ->sum('price', 'count')
+								->from($this->table)
+								->query('count');
+	}
+
+	/**
 	 * Counts total amount of sold products
 	 * 
 	 * @return integer

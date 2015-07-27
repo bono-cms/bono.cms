@@ -14,6 +14,13 @@ namespace Shop\Service;
 interface OrderManagerInterface
 {
 	/**
+	 * Counts the sum of sold products
+	 * 
+	 * @return float
+	 */
+	public function getPriceSumCount();
+
+	/**
 	 * Counts total amount of sold products
 	 * 
 	 * @return integer

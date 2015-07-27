@@ -95,6 +95,16 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	}
 
 	/**
+	 * Counts the sum of sold products
+	 * 
+	 * @return float
+	 */
+	public function getPriceSumCount()
+	{
+		return $this->orderProductMapper->getPriceSumCount();
+	}
+
+	/**
 	 * Counts total amount of sold products
 	 * 
 	 * @return integer
