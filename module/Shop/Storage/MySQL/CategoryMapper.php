@@ -84,6 +84,19 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	}
 
 	/**
+	 * Counts all available categories
+	 * 
+	 * @return integer
+	 */
+	public function countAll()
+	{
+		return (int) $this->db->select()
+							  ->count('id', 'count')
+							  ->from(self::getTableName())
+							  ->query('count');
+	}
+
+	/**
 	 * Fetches category's data by its associated id
 	 * 
 	 * @param string $id

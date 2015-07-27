@@ -29,6 +29,13 @@ interface CategoryManagerInterface
 	public function fetchAll();
 
 	/**
+	 * Counts all available categories
+	 * 
+	 * @return integer
+	 */
+	public function countAll();
+
+	/**
 	 * Returns last category's id
 	 * 
 	 * @return integer

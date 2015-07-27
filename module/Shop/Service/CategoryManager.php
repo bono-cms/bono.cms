@@ -152,6 +152,16 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	}
 
 	/**
+	 * Counts all available categories
+	 * 
+	 * @return integer
+	 */
+	public function countAll()
+	{
+		return $this->categoryMapper->countAll();
+	}
+
+	/**
 	 * Returns last category's id
 	 * 
 	 * @return integer

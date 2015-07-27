@@ -53,6 +53,13 @@ interface CategoryMapperInterface
 	public function update(array $data);
 
 	/**
+	 * Counts all available categories
+	 * 
+	 * @return integer
+	 */
+	public function countAll();
+
+	/**
 	 * Fetches category's data by its associated id
 	 * 
 	 * @param string $id Category's id
