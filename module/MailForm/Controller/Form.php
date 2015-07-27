@@ -13,6 +13,7 @@ namespace MailForm\Controller;
 
 use Site\Controller\AbstractController;
 use Krystal\Validate\Pattern;
+use RuntimeException;
 
 final class Form extends AbstractController
 {
@@ -25,7 +26,7 @@ final class Form extends AbstractController
 	public function indexAction($id)
 	{
 		if ($this->request->isPost()) {
-			return $this->sendAction();
+			return $this->sendAction($id);
 
 		} else {
 			return $this->showAction($id);
@@ -77,24 +78,47 @@ final class Form extends AbstractController
 	}
 
 	/**
-	 * Returns prepared form validator
+	 * Returns a list of validation rules for dynamic forms
 	 * 
-	 * @param array $input Raw input data
-	 * @return \Krystal\Validate\ValidatorChain
+	 * @param array $input Raw post data
+	 * @return array
 	 */
-	private function getValidator(array $input)
+	private function getValidationRules(array $input)
 	{
-		return $this->validatorFactory->build(array(
-			'input' => array(
-				'source' => $input,
-				'definition' => array(
-					'name' => new Pattern\Name(),
-					'email' => new Pattern\Email(),
-					'message' => new Pattern\Message(),
-					'captcha' => new Pattern\Captcha($this->captcha)
+		return array(
+			'5' => array(
+				'input' => array(
+					'source' => $input,
+					'definition' => array(
+						'name' => new Pattern\Name(),
+						'email' => new Pattern\Email(),
+						'message' => new Pattern\Message(),
+						'captcha' => new Pattern\Captcha($this->captcha)
+					)
 				)
 			)
-		));
+		);
+	}
+
+	/**
+	 * Returns prepared form validator
+	 * 
+	 * @param string $id Form id
+	 * @param array $input Raw input data
+	 * @throws \RuntimeException if attempted to get non-attached validation rule
+	 * @return \Krystal\Validate\ValidatorChain
+	 */
+	private function getValidator($id, array $input)
+	{
+		$rules = $this->getValidationRules($input);
+
+		if (!isset($rules[$id])) {
+			throw new RuntimeException(sprintf('No validation rules found for %s id', $id));
+		} else {
+			$options = $rules[$id];
+		}
+
+		return $this->validatorFactory->build($options);
 	}
 
 	/**
@@ -110,11 +134,12 @@ final class Form extends AbstractController
 	/**
 	 * Sends a form
 	 * 
+	 * @param string $id Form id
 	 * @return string
 	 */
-	public function sendAction()
+	public function sendAction($id)
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($id, $this->request->getPost());
 
 		if ($formValidator->isValid()) {
 
