@@ -38,7 +38,7 @@
 
 
 <?php if (!empty($records) && $extendedMode): ?>
-<button data-button="remove" data-category="main" class="btn btn-default"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
+<button data-message="<?php $this->show('Do you really want to clear the history?'); ?>" data-button="remove" data-category="main" class="btn btn-default"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
 <?php endif; ?>
 
 <?php $this->loadBlock('paginator'); ?>
