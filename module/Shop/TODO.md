@@ -1,10 +1,3 @@
-
-TODO List
-=========
-
- * Write decent statistic
-
- 
 Planned
 =======
 
