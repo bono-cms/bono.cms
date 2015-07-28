@@ -66,23 +66,14 @@ final class OrderProductMapper extends AbstractMapper implements OrderProductMap
 	}
 
 	/**
-	 * Add an order
+	 * Adds an order
 	 * 
 	 * @param array $data
 	 * @return boolean
 	 */
 	public function insert(array $data)
 	{
-		return $this->db->insert(self::getTableName(), array(
-			
-			'order_id' => $data['order_id'],
-			'product_id' => $data['product_id'],
-			'name' => $data['name'],
-			'price' => $data['price'],
-			'sub_total_price' => $data['sub_total_price'],
-			'qty' => $data['qty']
-			
-		))->execute();
+		return $this->persist($data);
 	}
 
 	/**
