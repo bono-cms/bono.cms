@@ -22,7 +22,7 @@ module/Slider/Translations/
 module/Team/Translations/
 
 # Themes are ignored as well
-module/Site/View
+module/Site/View/
 
 config/
 data/
