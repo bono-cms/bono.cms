@@ -83,7 +83,7 @@ final class Form extends AbstractController
 
 	/**
 	 * Sends a form
-	 * 
+	 *  
 	 * @param string $id Form id
 	 * @return string
 	 */
@@ -93,14 +93,14 @@ final class Form extends AbstractController
 
 		if ($formValidator->isValid()) {
 
-			// Here need to send a message
-			if ($this->getFormManager()->send($this->request->getPost())) {
+			// It's time to send a message
+			if ($this->sendMessage($this->request->getPost())) {
 
 				$flashKey = 'success';
 				$flashMessage = 'Your message has been sent';
 
 			} else {
-				
+
 				$flashKey = 'warning';
 				$flashMessage = 'Could not send your message. Please again try later';
 			}
@@ -113,6 +113,39 @@ final class Form extends AbstractController
 
 			return $formValidator->getErrors();
 		}
+	}
+
+	/**
+	 * Prepares a view object to send messages
+	 * 
+	 * @return \Krystal\Application\View\ViewManager
+	 */
+	private function getMessageView()
+	{
+		// Special case, when override must be done
+		$resolver = $this->view->getResolver();
+		$resolver->setModule('MailForm')
+				 ->setTheme('messages');
+
+		$this->view->disableLayout();
+
+		return $this->view;
+	}
+
+	/**
+	 * Sends a message from the input
+	 * 
+	 * @param array $input
+	 * @return boolean
+	 */
+	private function sendMessage(array $input)
+	{
+		// Render the body firstly
+		$body = $this->getMessageView()->render('message', array(
+			'input' => $input
+		));
+
+		return $this->getFormManager()->send($input, $body);
 	}
 
 	/**

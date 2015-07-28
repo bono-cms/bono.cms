@@ -25,9 +25,10 @@ interface FormManagerInterface
 	 * Sends a form
 	 * 
 	 * @param array $input Raw input data
+	 * @param string $body Message body
 	 * @return boolean
 	 */
-	public function send(array $input);
+	public function send(array $input, $body);
 
 	/**
 	 * Fetches web page title by its associated id

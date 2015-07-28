@@ -97,23 +97,13 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	 * Sends a form
 	 * 
 	 * @param array $input Raw input data
+	 * @param string $body Message body
 	 * @return boolean
 	 */
-	public function send(array $input)
+	public function send(array $input, $body)
 	{
 		$subject = sprintf('You received a new message from %s <%s>', $input['name'], $input['email']);
-		return $this->mailer->send($subject, $this->getMessage($input));
-	}
-
-	/**
-	 * Prepares a message
-	 * 
-	 * @param array $input
-	 * @return string
-	 */
-	private function getMessage(array $input)
-	{
-		return $input['message'];
+		return $this->mailer->send($subject, $body);
 	}
 
 	/**
