@@ -63,7 +63,7 @@ abstract class AbstractLanguage extends AbstractController
 	 */
 	final protected function getLanguageManager()
 	{
-		return $this->getCmsModule()->getService('languageManager');
+		return $this->getService('Cms', 'languageManager');
 	}
 
 	/**

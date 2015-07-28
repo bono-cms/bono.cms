@@ -56,7 +56,7 @@ final class Notepad extends AbstractController
 	 */
 	private function getNotepadManager()
 	{
-		return $this->getCmsModule()->getService('notepadManager');
+		return $this->getService('Cms', 'notepadManager');
 	}
 
 	/**

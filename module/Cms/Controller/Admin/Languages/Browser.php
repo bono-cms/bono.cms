@@ -66,7 +66,7 @@ final class Browser extends AbstractController
 	 */
 	private function getLanguageManager()
 	{
-		return $this->getCmsModule()->getService('languageManager');
+		return $this->getService('Cms', 'languageManager');
 	}
 
 	/**

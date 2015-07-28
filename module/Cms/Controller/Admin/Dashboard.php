@@ -35,7 +35,7 @@ final class Dashboard extends AbstractController
 		return $this->view->render('dashboard', array_merge($this->getItems(), array(
 
 			'title' => 'Control panel',
-			'notifications' => $this->getCmsModule()->getService('notificationManager')->getUnviewedCount(),
+			'notifications' => $this->getService('Cms', 'notificationManager')->getUnviewedCount(),
 		)));
 	}
 
@@ -88,18 +88,18 @@ final class Dashboard extends AbstractController
 		$key = 'mode';
 
 		$target = $this->request->getPost($key);
-		$mode = $this->getCmsModule()->getService($key);
-		
+		$mode = $this->getService('Cms', 'mode');
+
 		switch ($target) {
 			case 'simple':
 				$mode->setSimple();
 			break;
-			
+
 			case 'advanced':
 				$mode->setAdvanced();
 			break;
 		}
-		
+
 		return '1';
 	}
 
@@ -124,7 +124,6 @@ final class Dashboard extends AbstractController
 	public function slugAction()
 	{
 		$title = $this->request->getPost('title');
-
-		return $this->getCmsModule()->getService('webPageManager')->sluggify($title);
+		return $this->getService('Cms', 'webPageManager')->sluggify($title);
 	}
 }

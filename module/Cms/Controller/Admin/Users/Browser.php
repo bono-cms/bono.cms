@@ -25,7 +25,7 @@ final class Browser extends AbstractController
 		$this->loadPlugins();
 
 		return $this->view->render('users/browser', array(
-			'users' => $this->getCmsModule()->getService('userManager')->fetchAll(),
+			'users' => $this->getService('Cms', 'userManager')->fetchAll(),
 			'title' => 'Users',
 		));
 	}
@@ -58,8 +58,7 @@ final class Browser extends AbstractController
 		if ($this->request->hasPost('id')) {
 			$id = $this->request->getPost('id');
 
-			// Grab a service
-			if ($this->getCmsModule()->getService('userManager')->deleteById($id)) {
+			if ($this->getService('Cms', 'userManager')->deleteById($id)) {
 
 				$this->flashMessenger->set('success', 'Selected user has been removed successfully');
 				return '1';

@@ -46,7 +46,7 @@ abstract class AbstractUser extends AbstractController
 	 */
 	final protected function getUserManager()
 	{
-		return $this->getCmsModule()->getService('userManager');
+		return $this->getService('Cms', 'userManager');
 	}
 
 	/**

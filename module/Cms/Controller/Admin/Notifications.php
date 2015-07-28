@@ -68,7 +68,7 @@ final class Notifications extends AbstractController
 	 */
 	private function getNotificationManager()
 	{
-		return $this->getCmsModule()->getService('notificationManager');
+		return $this->getService('Cms', 'notificationManager');
 	}
 
 	/**

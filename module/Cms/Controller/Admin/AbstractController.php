@@ -37,7 +37,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 */
 	protected function getAuthService()
 	{
-		return $this->getCmsModule()->getService('userManager');
+		return $this->getService('Cms', 'userManager');
 	}
 
 	/**
@@ -78,7 +78,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 	{
 		$this->languageCheck = false;
 	}
-	
+
 	/**
 	 * Calls filter() method in provided service
 	 * 
@@ -132,16 +132,6 @@ abstract class AbstractController extends AbstractAuthAwareController
 	}
 
 	/**
-	 * Returns CMS module
-	 * 
-	 * @return \Cms\Module
-	 */
-	final protected function getCmsModule()
-	{
-		return $this->moduleManager->getModule('Cms');
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	protected function bootstrap()
@@ -173,11 +163,9 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 */
 	final protected function loadAllShared()
 	{
-		$cms = $this->getCmsModule();
-
 		// Required services
-		$mode = $cms->getService('mode');
-		$languageManager = $cms->getService('languageManager');
+		$mode = $this->getService('Cms', 'mode');
+		$languageManager = $this->getService('Cms', 'languageManager');
 		$this->roleCheck($mode);
 		$this->extendedMode = !$mode->isSimple();
 		
@@ -188,18 +176,12 @@ abstract class AbstractController extends AbstractAuthAwareController
 			die($this->translator->translate("Error: You must have at least one published system's language for a content"));
 		}
 
+		// Shared variables for all templates
 		$this->view->addVariables(array(
-			// Application's language itself
 			'appConfig' => $this->appConfig,
-			
 			'extendedMode' => !$mode->isSimple(),
 			'mode' => $mode,
-			
 			'paramBag' => $this->paramBag,
-			
-			//'site' => $this->paramBag->get('site'),
-			
-			// Content languages
 			'languages' => $contentLanguages,
 			'currentLanguage' => $languageManager->fetchByCurrentId(),
 			'perPageCounts' => $this->getPerPageCountProvider()->getPerPageCountValues(),
@@ -227,17 +209,15 @@ abstract class AbstractController extends AbstractAuthAwareController
 		// Do tweak in case user is logged in
 		if ($this->sessionBag->has('user_id')) {
 			$userId = $this->sessionBag->get('user_id');
-			
-			$cms = $this->getCmsModule();
-			
-			// Grab administration config entity
-			$config = $cms->getService('configManager')->getEntity();
-			
-			$historyManager = $cms->getService('historyManager');
+
+			// Grab administration configuration entity
+			$config = $this->getService('Cms', 'configManager')->getEntity();
+
+			$historyManager = $this->getService('Cms', 'historyManager');
 			$historyManager->setUserId($userId);
 			$historyManager->setEnabled((bool) $config->getKeepTrack());
 
-			$cms->getService('notepadManager')->setUserId($userId);
+			$this->getService('Cms', 'notepadManager')->setUserId($userId);
 		}
 	}
 

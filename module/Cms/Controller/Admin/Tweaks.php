@@ -63,7 +63,7 @@ final class Tweaks extends AbstractController
 		$this->view->getPluginBag()
 				   ->load($this->getWysiwygPluginName())
 				   ->appendScript($this->getWithAssetPath('/admin/tweaks.js'));
-		
+
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'link' => '#',
@@ -79,7 +79,7 @@ final class Tweaks extends AbstractController
 	 */
 	private function getConfigManager()
 	{
-		return $this->getCmsModule()->getService('configManager');
+		return $this->getService('Cms', 'configManager');
 	}
 
 	/**
