@@ -34,12 +34,26 @@ final class SearchManager extends AbstractManager implements SearchManagerInterf
 	private $webPageManager;
 
 	/**
+	 * A keyword to be searched
+	 * 
+	 * @var string
+	 */
+	private $keyword;
+
+	/**
 	 * Maximal description's length for content
 	 * By default 100 (which is enough for most cases)
 	 * 
 	 * @var integer
 	 */
 	private $maxDescriptionLength = 100;
+
+	/**
+	 * A wrapper for the matching word
+	 * 
+	 * @const string 
+	 */
+	const HIGHLIGHT_PATTERN = '<b><em>%s</em></b>';
 
 	/**
 	 * State initialization
@@ -73,11 +87,22 @@ final class SearchManager extends AbstractManager implements SearchManagerInterf
 		$entity = new VirtualEntity();
 		$entity->setLangId($result['lang_id'])
 			   ->setWebPageId($result['web_page_id'])
-			   ->setTitle($result['title'])
-			   ->setContent($this->trimContent($result['content']))
+			   ->setTitle($this->highlight($result['title']))
+			   ->setContent($this->highlight($this->trimContent($result['content'])))
 			   ->setUrl($this->webPageManager->getUrl($entity->getWebPageId(), $entity->getLangId()));
 		
 		return $entity;
+	}
+
+	/**
+	 * Highlight a matching keyword in a string
+	 * 
+	 * @param string $text
+	 * @return string
+	 */
+	private function highlight($text)
+	{
+		return str_replace($this->keyword, sprintf(self::HIGHLIGHT_PATTERN, $this->keyword), $text);
 	}
 
 	/**
@@ -102,6 +127,7 @@ final class SearchManager extends AbstractManager implements SearchManagerInterf
 	 */
 	public function findByKeyword($keyword, $page, $itemsPerPage)
 	{
+		$this->keyword = $keyword;
 		return $this->prepareResults($this->searchMapper->queryAll($keyword, $page, $itemsPerPage));
 	}
 
