@@ -14,6 +14,14 @@ namespace MailForm\Service;
 interface FormManagerInterface
 {
 	/**
+	 * Fetches message view by associated form id
+	 * 
+	 * @param string $id Form id
+	 * @return string
+	 */
+	public function fetchMessageViewById($id);
+
+	/**
 	 * Updates SEO states by associated form ids
 	 * 
 	 * @param array $pair

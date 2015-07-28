@@ -27,7 +27,7 @@ final class Form extends AbstractController
 	private function getValidationRules(array $input)
 	{
 		return array(
-			'5' => array(
+			'1' => array(
 				'input' => array(
 					'source' => $input,
 					'definition' => array(
@@ -94,7 +94,7 @@ final class Form extends AbstractController
 		if ($formValidator->isValid()) {
 
 			// It's time to send a message
-			if ($this->sendMessage($this->request->getPost())) {
+			if ($this->sendMessage($id, $this->request->getPost())) {
 
 				$flashKey = 'success';
 				$flashMessage = 'Your message has been sent';
@@ -135,13 +135,16 @@ final class Form extends AbstractController
 	/**
 	 * Sends a message from the input
 	 * 
+	 * @param string $id Form id
 	 * @param array $input
 	 * @return boolean
 	 */
-	private function sendMessage(array $input)
+	private function sendMessage($id, array $input)
 	{
+		$template = $this->getFormManager()->fetchMessageViewById($id);
+
 		// Render the body firstly
-		$body = $this->getMessageView()->render('message', array(
+		$body = $this->getMessageView()->render($template, array(
 			'input' => $input
 		));
 

@@ -77,6 +77,17 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	}
 
 	/**
+	 * Fetches message view by associated form id
+	 * 
+	 * @param string $id Form id
+	 * @return string
+	 */
+	public function fetchMessageViewById($id)
+	{
+		return $this->formMapper->fetchMessageViewById($id);
+	}
+
+	/**
 	 * Updates SEO states by associated form ids
 	 * 
 	 * @param array $pair
@@ -133,6 +144,7 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 				->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
 				->setPermanentUrl('/module/mail-form/'.$entity->getId())
 				->setTemplate(Filter::escape($form['template']))
+				->setMessageView(Filter::escape($form['message_view']))
 				->setKeywords(Filter::escape($form['keywords']))
 				->setMetaDescription(Filter::escape($form['meta_description']));
 

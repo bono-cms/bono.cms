@@ -25,7 +25,8 @@ final class Add extends AbstractForm
 		$this->loadSharedPlugins();
 
 		$form = new VirtualEntity();
-		$form->setSeo(true);
+		$form->setSeo(true)
+			 ->setMessageView('message');
 
 		return $this->view->render('form', $this->getSharedVars(array(
 			'title' => 'Add a form',
