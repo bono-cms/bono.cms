@@ -1,19 +1,11 @@
-
-
-
 /**!
- * Copyright (c) 2014 D.D.Yang <daworld.ny@gmail.com>
+ * Copyright (c) 2015 David Yang <daworld.ny@gmail.com>
  */
 
 div.menu-widget-btn-container {
  margin-top: 16px;
  margin-bottom: 14px;
 }
-
-
-/**
- * Some additional CSS tweaks in addition to bootstrap 
- */
 
 body {
  font-size: 13px;
@@ -41,7 +33,6 @@ main {
  -khtml-border-radius : 18px;
 }
 
-/* add global transition */
 a > img {
  transition: opacity .7s;
  -webkit-transition: opacity .7s;
@@ -85,6 +76,7 @@ ul.pagination > li > a {
  -webkit-transition: opacity .4s;
  -moz-transition: opacity .4s;
 }
+
 ul.pagination > li > a:hover {
  opacity: 0.4;
 }
@@ -109,18 +101,6 @@ ul.pagination > li > a:hover {
  -webkit-transition: opacity .4s;
  -moz-transition: opacity .4s;
 }
-
-/*
-th {
- background-color: rgb(74, 71, 68);
- color: #fff;
- box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
-}
-
-td {
- vertical-align: middle !important;
-}
-*/
 /*Table*/
 
 /* Dashboard */
