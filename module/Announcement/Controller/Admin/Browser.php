@@ -73,7 +73,7 @@ final class Browser extends AbstractAdminController
 			$announceManager->updateSeo($seo);
 			$announceManager->updateOrders($orders);
 
-			$this->flashMessenger->set('success', 'Announce settings have been updated successfully');
+			$this->flashBag->set('success', 'Announce settings have been updated successfully');
 
 			return '1';
 		}
@@ -100,7 +100,7 @@ final class Browser extends AbstractAdminController
 			$flashMessage = 'You should select at least one announce to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -119,7 +119,7 @@ final class Browser extends AbstractAdminController
 			$announceManager = $this->getAnnounceManager();
 			$announceManager->deleteById($id);
 
-			$this->flashMessenger->set('success', 'The announces have been removed successfully');
+			$this->flashBag->set('success', 'The announces have been removed successfully');
 
 			return '1';
 		}
@@ -139,7 +139,7 @@ final class Browser extends AbstractAdminController
 			$categoryManager = $this->getCategoryManager();
 			$categoryManager->deleteById($id);
 
-			$this->flashMessenger->set('success', 'Selected category has been removed successfully');
+			$this->flashBag->set('success', 'Selected category has been removed successfully');
 
 			return '1';
 		}

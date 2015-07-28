@@ -66,7 +66,7 @@ final class Browser extends AbstractAdminController
 
 			if ($this->getBannerManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'A banner has been removed successfully');
+				$this->flashBag->set('success', 'A banner has been removed successfully');
 				return '1';
 			}
 		}
@@ -95,7 +95,7 @@ final class Browser extends AbstractAdminController
 			$flashMessage = 'You should select at least one banner to remove';
 		}
 		
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 }

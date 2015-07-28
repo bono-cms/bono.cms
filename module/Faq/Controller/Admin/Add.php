@@ -47,7 +47,7 @@ final class Add extends AbstractFaq
 			$faqManager = $this->getFaqManager();
 
 			if ($faqManager->add($this->request->getPost())) {
-				$this->flashMessenger->set('success', 'A faq has been created successfully');
+				$this->flashBag->set('success', 'A faq has been created successfully');
 				return $faqManager->getLastId();
 			}
 

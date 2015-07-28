@@ -71,7 +71,7 @@ final class Browser extends AbstractController
 			// Remove all images associated with provided category id
 			if ($this->getImageManager()->deleteAllByCategoryId($id) && $this->getCategoryManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'The category has been removed successfully');
+				$this->flashBag->set('success', 'The category has been removed successfully');
 				return '1';
 			}
 		}
@@ -89,7 +89,7 @@ final class Browser extends AbstractController
 
 			if ($this->getImageManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected slider has been removed successfully');
+				$this->flashBag->set('success', 'Selected slider has been removed successfully');
 				return '1';
 			}
 		}
@@ -117,7 +117,7 @@ final class Browser extends AbstractController
 			$flashMessage = 'You should select at least one image to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -138,7 +138,7 @@ final class Browser extends AbstractController
 
 			if ($imageManager->updatePublished($published) && $imageManager->updateOrders($orders)) {
 
-				$this->flashMessenger->set('success', 'Settings have been updated successfully');
+				$this->flashBag->set('success', 'Settings have been updated successfully');
 				return '1';
 			}
 		}

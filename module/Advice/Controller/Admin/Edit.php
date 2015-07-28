@@ -50,7 +50,7 @@ final class Edit extends AbstractAdvice
 
 			if ($this->getAdviceManager()->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'The advice has been updated successfully');
+				$this->flashBag->set('success', 'The advice has been updated successfully');
 				return '1';
 			}
 

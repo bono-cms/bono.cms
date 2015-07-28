@@ -82,7 +82,7 @@ final class Browser extends AbstractController
 
 			if ($photoManager->updatePublished($published) && $photoManager->updateOrders($orders)){
 
-				$this->flashMessenger->set('success', 'Settings have been updated successfully');
+				$this->flashBag->set('success', 'Settings have been updated successfully');
 				return '1';
 			}
 		}
@@ -104,7 +104,7 @@ final class Browser extends AbstractController
 
 			if ($albumManager->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected album has been removed successfully');
+				$this->flashBag->set('success', 'Selected album has been removed successfully');
 				return '1';
 			}
 		}
@@ -122,7 +122,7 @@ final class Browser extends AbstractController
 
 			if ($this->getPhotoManager()->deleteById($id)){
 
-				$this->flashMessenger->set('success', 'Selected photo has been removed successfully');
+				$this->flashBag->set('success', 'Selected photo has been removed successfully');
 				return '1';
 			}
 		}
@@ -149,7 +149,7 @@ final class Browser extends AbstractController
 			$flashMessage = 'You should select at least one photo to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 

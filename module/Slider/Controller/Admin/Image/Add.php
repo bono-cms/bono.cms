@@ -50,7 +50,7 @@ final class Add extends AbstractImage
 
 			if ($imageManager->add($this->request->getAll())) {
 
-				$this->flashMessenger->set('success', 'A slider has been added successfully');
+				$this->flashBag->set('success', 'A slider has been added successfully');
 				return $imageManager->getLastId();
 			}
 

@@ -48,7 +48,7 @@ final class Edit extends AbstractPage
 		if ($formValidator->isValid()) {
 			if ($this->getPageManager()->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'The page has been updated successfully');
+				$this->flashBag->set('success', 'The page has been updated successfully');
 				return '1';
 			}
 

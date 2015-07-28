@@ -44,7 +44,7 @@ final class Add extends AbstractUser
 			$userManager = $this->getUserManager();
 			$userManager->add($this->request->getPost());
 
-			$this->flashMessenger->set('success', 'A user has been created successfully');
+			$this->flashBag->set('success', 'A user has been created successfully');
 
 			return $userManager->getLastId();
 

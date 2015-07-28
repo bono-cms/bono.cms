@@ -51,7 +51,7 @@ final class Edit extends AbstractAlbum
 			$albumManager = $this->getAlbumManager();
 			$albumManager->update($this->request->getPost());
 
-			$this->flashMessenger->set('success', 'The album has been updated successfully');
+			$this->flashBag->set('success', 'The album has been updated successfully');
 
 			return '1';
 

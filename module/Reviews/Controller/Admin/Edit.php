@@ -48,7 +48,7 @@ final class Edit extends AbstractReview
 		if ($formValidator->isValid()) {
 
 			if ($this->getReviewsManager()->update($this->getContainer())) {
-				$this->flashMessenger->set('success', 'The review has been updated successfully');
+				$this->flashBag->set('success', 'The review has been updated successfully');
 				return '1';
 			}
 

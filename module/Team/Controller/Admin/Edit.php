@@ -50,7 +50,7 @@ final class Edit extends AbstractMember
 
 			if ($this->getTeamManager()->update($this->request->getAll())) {
 
-				$this->flashMessenger->set('success', 'The member has been updated successfully');
+				$this->flashBag->set('success', 'The member has been updated successfully');
 				return '1';
 			}
 

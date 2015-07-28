@@ -50,7 +50,7 @@ final class Edit extends AbstractBlock
 
 			if ($this->getBlockManager()->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'A block has been updated successfully');
+				$this->flashBag->set('success', 'A block has been updated successfully');
 				return '1';
 			}
 

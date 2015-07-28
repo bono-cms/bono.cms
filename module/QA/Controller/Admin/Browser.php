@@ -77,7 +77,7 @@ final class Browser extends AbstractController
 
 			if ($this->getQaManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected pair has been removed successfully');
+				$this->flashBag->set('success', 'Selected pair has been removed successfully');
 				return '1';
 			}
 		}
@@ -105,7 +105,7 @@ final class Browser extends AbstractController
 			$flashMessage = 'You should select at least one pair to remove';
 		}
 		
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -120,7 +120,7 @@ final class Browser extends AbstractController
 			$published = $this->request->getPost('published');
 
 			$this->getQaManager()->updatePublished($published);
-			$this->flashMessenger->set('success', 'Settings have been successfully');
+			$this->flashBag->set('success', 'Settings have been successfully');
 
 			return '1';
 		}

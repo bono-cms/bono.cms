@@ -47,7 +47,7 @@ final class Add extends AbstractAlbum
 			$albumManager = $this->getAlbumManager();
 			$albumManager->add($this->request->getPost());
 
-			$this->flashMessenger->set('success', 'An album has been created successfully');
+			$this->flashBag->set('success', 'An album has been created successfully');
 
 			return $albumManager->getLastId();
 

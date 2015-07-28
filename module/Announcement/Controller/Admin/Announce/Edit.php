@@ -50,7 +50,7 @@ final class Edit extends AbstractAnnounce
 
 			if ($announceManager->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'The announce has been updated successfully');
+				$this->flashBag->set('success', 'The announce has been updated successfully');
 				return '1';
 			}
 

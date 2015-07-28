@@ -50,7 +50,7 @@ final class Edit extends AbstractForm
 		if ($formValidator->isValid()) {
 
 			if ($this->getFormManager()->update($this->request->getPost())) {
-				$this->flashMessenger->set('success', 'The form has been updated successfully');
+				$this->flashBag->set('success', 'The form has been updated successfully');
 				return '1';
 			}
 

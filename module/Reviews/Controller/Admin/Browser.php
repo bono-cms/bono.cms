@@ -59,7 +59,7 @@ final class Browser extends AbstractController
 			$id = $this->request->getPost('id');
 
 			$reviewsManager = $this->getModuleService('reviewsManager');
-			$this->flashMessenger->set('success', 'A review has been removed successfully');
+			$this->flashBag->set('success', 'A review has been removed successfully');
 
 			return $reviewsManager->deleteById($id) ? '1' : '0';
 		}
@@ -89,7 +89,7 @@ final class Browser extends AbstractController
 			$flashMessage = 'You should select at least one review to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -108,7 +108,7 @@ final class Browser extends AbstractController
 			$reviewsManager = $this->getModuleService('reviewsManager');
 			$reviewsManager->updatePublished($published);
 
-			$this->flashMessenger->set('success', 'Settings have been successfully saved');
+			$this->flashBag->set('success', 'Settings have been successfully saved');
 
 			return '1';
 		}

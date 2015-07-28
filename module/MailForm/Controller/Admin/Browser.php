@@ -41,7 +41,7 @@ final class Browser extends AbstractController
 			$id = $this->request->getPost('id');
 
 			if ($this->getFormManager()->deleteById($id)) {
-				$this->flashMessenger->set('success', 'Selected form has been removed successfully');
+				$this->flashBag->set('success', 'Selected form has been removed successfully');
 				return '1';
 			}
 		}
@@ -68,7 +68,7 @@ final class Browser extends AbstractController
 			$flashMessage = 'You should select at least one form to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -84,7 +84,7 @@ final class Browser extends AbstractController
 
 			if ($this->getFormManager()->updateSeo($seo)) {
 
-				$this->flashMessenger->set('success', 'Settings have been updated successfully');
+				$this->flashBag->set('success', 'Settings have been updated successfully');
 				return '1';
 			}
 		}

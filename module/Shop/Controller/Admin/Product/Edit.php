@@ -51,7 +51,7 @@ final class Edit extends AbstractProduct
 
 			if ($this->getProductManager()->update($this->request->getAll())) {
 
-				$this->flashMessenger->set('success', 'The product has been updated successfully');
+				$this->flashBag->set('success', 'The product has been updated successfully');
 				return '1';
 			}
 

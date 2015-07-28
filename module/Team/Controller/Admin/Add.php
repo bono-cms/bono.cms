@@ -48,7 +48,7 @@ final class Add extends AbstractMember
 
 			if ($teamManager->add($this->request->getAll())) {
 
-				$this->flashMessenger->set('success', 'A member has been added successfully');
+				$this->flashBag->set('success', 'A member has been added successfully');
 				return $teamManager->getLastId();
 			}
 

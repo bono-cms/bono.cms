@@ -73,7 +73,7 @@ final class Browser extends AbstractAdminController
 			$flashMessage = 'You should select at least one FAQ to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -94,7 +94,7 @@ final class Browser extends AbstractAdminController
 			$faqManager->updatePublished($published);
 			$faqManager->updateOrders($orders);
 
-			$this->flashMessenger->set('success', 'Settings have been save successfully');
+			$this->flashBag->set('success', 'Settings have been save successfully');
 
 			return '1';
 		}
@@ -113,7 +113,7 @@ final class Browser extends AbstractAdminController
 
 			if ($this->getFaqManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'The FAQ has been removed successfully');
+				$this->flashBag->set('success', 'The FAQ has been removed successfully');
 				return '1';
 			}
 		}

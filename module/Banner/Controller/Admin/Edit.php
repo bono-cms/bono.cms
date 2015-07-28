@@ -50,7 +50,7 @@ final class Edit extends AbstractBanner
 
 			if ($this->getBannerManager()->update($this->request->getAll())) {
 
-				$this->flashMessenger->set('success', 'A banner has been updated successfully');
+				$this->flashBag->set('success', 'A banner has been updated successfully');
 				return '1';
 			}
 

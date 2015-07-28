@@ -60,7 +60,7 @@ final class Browser extends AbstractController
 
 			if ($this->getService('Cms', 'userManager')->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected user has been removed successfully');
+				$this->flashBag->set('success', 'Selected user has been removed successfully');
 				return '1';
 			}
 		}

@@ -49,7 +49,7 @@ final class Add extends AbstractProduct
 			$productManager = $this->getProductManager();
 			$productManager->add($this->request->getAll());
 
-			$this->flashMessenger->set('success', 'A product has been added successfully');
+			$this->flashBag->set('success', 'A product has been added successfully');
 
 			return $productManager->getLastId();
 

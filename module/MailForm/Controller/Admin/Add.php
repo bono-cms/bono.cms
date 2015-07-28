@@ -48,7 +48,7 @@ final class Add extends AbstractForm
 
 			if ($formManager->add($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'A form has been added successfully');
+				$this->flashBag->set('success', 'A form has been added successfully');
 				return $formManager->getLastId();
 			}
 

@@ -105,7 +105,7 @@ final class Form extends AbstractController
 				$flashMessage = 'Could not send your message. Please again try later';
 			}
 
-			$this->flashMessenger->set($flashKey, $flashMessage);
+			$this->flashBag->set($flashKey, $flashMessage);
 
 			return '1';
 

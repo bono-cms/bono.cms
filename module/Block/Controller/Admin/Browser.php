@@ -74,7 +74,7 @@ final class Browser extends AbstractAdminController
 			$flashMessage = 'You should select at least one block to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -90,7 +90,7 @@ final class Browser extends AbstractAdminController
 
 			if ($this->getBlockManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'A block has been removed successfully');
+				$this->flashBag->set('success', 'A block has been removed successfully');
 				return '1';
 			}
 		}

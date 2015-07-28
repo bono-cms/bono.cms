@@ -42,7 +42,7 @@ final class Config extends AbstractAdminController
 		if ($formValidator->isValid()) {
 
 			if ($this->getConfigManager()->write($this->request->getPost())) {
-				$this->flashMessenger->set('success', 'Configuration has been updated successfully');
+				$this->flashBag->set('success', 'Configuration has been updated successfully');
 				return '1';
 			}
 

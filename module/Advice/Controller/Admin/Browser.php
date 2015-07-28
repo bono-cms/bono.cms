@@ -68,7 +68,7 @@ final class Browser extends AbstractAdminController
 			$published = $this->request->getPost('published');
 
 			$this->getAdviceManager()->updatePublished($published);
-			$this->flashMessenger->set('success', 'Settings have been updated successfully');
+			$this->flashBag->set('success', 'Settings have been updated successfully');
 
 			return '1';
 		}
@@ -87,7 +87,7 @@ final class Browser extends AbstractAdminController
 
 			if ($this->getAdviceManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected advice has been removed successfully');
+				$this->flashBag->set('success', 'Selected advice has been removed successfully');
 				return '1';
 			}
 		}
@@ -114,7 +114,7 @@ final class Browser extends AbstractAdminController
 			$flashMessage = 'You should select at least one advice to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 }

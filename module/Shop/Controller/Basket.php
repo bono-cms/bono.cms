@@ -129,7 +129,7 @@ final class Basket extends AbstractShopController
 		$basketManager->clear();
 		$basketManager->save();
 
-		$this->flashMessenger->set('success', 'Your basket has been cleared successfully');
+		$this->flashBag->set('success', 'Your basket has been cleared successfully');
 
 		return json_encode($basketManager->getAllStat());
 	}

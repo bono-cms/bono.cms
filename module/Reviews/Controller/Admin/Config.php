@@ -43,7 +43,7 @@ final class Config extends AbstractController
 		if ($formValidator->isValid()) {
 
 			$this->getConfigManager()->write($this->request->getPost());
-			$this->flashMessenger->set('success', 'Settings have been saved');
+			$this->flashBag->set('success', 'Settings have been saved');
 
 			return '1';
 

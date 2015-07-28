@@ -49,7 +49,7 @@ final class Add extends AbstractQa
 
 			if ($qaManager->add($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'A pair has been added successfully');
+				$this->flashBag->set('success', 'A pair has been added successfully');
 				return $qaManager->getLastId();
 			}
 

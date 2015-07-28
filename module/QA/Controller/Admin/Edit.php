@@ -49,7 +49,7 @@ final class Edit extends AbstractQa
 
 			if ($this->getQaManager()->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'The pair has been updated successfully');
+				$this->flashBag->set('success', 'The pair has been updated successfully');
 				return '1';
 			}
 

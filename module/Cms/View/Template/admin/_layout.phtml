@@ -100,28 +100,28 @@
  </ul>
  <?php endif; ?>
 	
-	<?php if ($flashMessenger->has('success')):?>
+	<?php if ($flashBag->has('success')):?>
 	<div class="alert alert-dismissable alert-success">
 		<button type="button" class="close" data-dismiss="alert">x</button>
-		<strong><span class="glyphicon glyphicon-ok"></span> <?php $this->show($flashMessenger->get('success')); ?></strong>
+		<strong><span class="glyphicon glyphicon-ok"></span> <?php $this->show($flashBag->get('success')); ?></strong>
 	</div>
 	<?php endif; ?>
 	
-	<?php if ($flashMessenger->has('warning')): ?>
+	<?php if ($flashBag->has('warning')): ?>
 	
 	<div class="alert alert-dismissable alert-warning">
 		<button type="button" class="close" data-dismiss="alert">x</button>
 		<h4><?php $this->show('Warning!'); ?></h4>
-		<strong><span class="glyphicon glyphicon-exclamation-sign"></span> <?php $this->show($flashMessenger->get('warning')); ?></strong>
+		<strong><span class="glyphicon glyphicon-exclamation-sign"></span> <?php $this->show($flashBag->get('warning')); ?></strong>
 	</div>
 	
 	<?php endif; ?>
 	
 	
-	<?php if ($flashMessenger->has('info')): ?>
+	<?php if ($flashBag->has('info')): ?>
 	<div class="alert alert-dismissable alert-info">
 		<button type="button" class="close" data-dismiss="alert">x</button>
-		<strong><span class="glyphicon glyphicon-comment"></span> <?php $this->show($flashMessenger->get('info')); ?></strong>
+		<strong><span class="glyphicon glyphicon-comment"></span> <?php $this->show($flashBag->get('info')); ?></strong>
 	</div>
 	<?php endif; ?>
 

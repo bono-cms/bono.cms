@@ -69,7 +69,7 @@ final class Order extends AbstractController
 
 			if ($this->getOrderManager()->approveById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected order marked as approved now');
+				$this->flashBag->set('success', 'Selected order marked as approved now');
 				return '1';
 			}
 		}
@@ -87,7 +87,7 @@ final class Order extends AbstractController
 
 			if ($this->getOrderManager()->removeById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected order has been removed successfully');
+				$this->flashBag->set('success', 'Selected order has been removed successfully');
 				return '1';
 			}
 		}

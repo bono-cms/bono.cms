@@ -50,7 +50,7 @@ final class Edit extends AbstractPhoto
 
 		if ($formValidator->isValid()) {
 
-			$this->flashMessenger->set('success', 'The photo has been updated successfully');
+			$this->flashBag->set('success', 'The photo has been updated successfully');
 			return $this->getPhotoManager()->update($this->request->getAll()) ? '1' : '0';
 
 		} else {

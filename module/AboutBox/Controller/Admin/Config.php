@@ -42,7 +42,7 @@ final class Config extends AbstractController
 			$content = $this->request->getPost('content');
 
 			if ($this->getAboutBoxManager()->update($content)) {
-				$this->flashMessenger->set('success', 'About box has been updated successfully');
+				$this->flashBag->set('success', 'About box has been updated successfully');
 			}
 
 			return '1';

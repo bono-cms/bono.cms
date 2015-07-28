@@ -50,8 +50,8 @@ final class Item extends AbstractItem
 		}
 
 		if ($categoryId) {
-			if (!$this->flashMessenger->has('success')) {
-				$this->flashMessenger->set('info', 'Just drag and drop items the way you like. To get options, just do a right click on desired item');
+			if (!$this->flashBag->has('success')) {
+				$this->flashBag->set('info', 'Just drag and drop items the way you like. To get options, just do a right click on desired item');
 			}
 		}
 
@@ -118,7 +118,7 @@ final class Item extends AbstractItem
 		$itemManager = $this->getItemManager();
 
 		$itemManager->add($this->request->getPost());
-		$this->flashMessenger->set('success', 'An item has been created successfully!');
+		$this->flashBag->set('success', 'An item has been created successfully!');
 
 		return $itemManager->getLastId();
 	}
@@ -131,7 +131,7 @@ final class Item extends AbstractItem
 	public function updateAction()
 	{
 		$this->getItemManager()->update($this->request->getPost());
-		$this->flashMessenger->set('success', 'An item has been updated successfully!');
+		$this->flashBag->set('success', 'An item has been updated successfully!');
 
 		return '1';	
 	}
@@ -162,7 +162,7 @@ final class Item extends AbstractItem
 			$id = $this->request->getPost('id');
 
 			$this->getItemManager()->deleteById($id);
-			$this->flashMessenger->set('success', 'The item has been removed successfully!');
+			$this->flashBag->set('success', 'The item has been removed successfully!');
 
 			return '1';
 		}
@@ -183,7 +183,7 @@ final class Item extends AbstractItem
 			$categoryManager = $this->moduleManager->getModule('Menu')->getService('categoryManager');
 			$categoryManager->deleteById($id);
 
-			$this->flashMessenger->set('success', 'The category has been removed successfully');
+			$this->flashBag->set('success', 'The category has been removed successfully');
 
 			return '1';
 		}

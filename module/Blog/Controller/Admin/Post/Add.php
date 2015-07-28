@@ -51,7 +51,7 @@ final class Add extends AbstractPost
 
 			if ($postManager->add($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'A post has been created successfully');
+				$this->flashBag->set('success', 'A post has been created successfully');
 				return $postManager->getLastId();
 			}
 

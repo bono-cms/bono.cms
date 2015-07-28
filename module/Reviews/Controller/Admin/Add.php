@@ -49,7 +49,7 @@ final class Add extends AbstractReview
 
 			if ($reviewsManager->add($this->getContainer())) {
 
-				$this->flashMessenger->set('success', 'A review has been added successfully');
+				$this->flashBag->set('success', 'A review has been added successfully');
 				return $reviewsManager->getLastId();
 			}
 

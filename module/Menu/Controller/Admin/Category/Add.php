@@ -47,7 +47,7 @@ final class Add extends AbstractCategory
 			$categoryManager = $this->getCategoryManager();
 			$categoryManager->add($this->request->getPost());
 
-			$this->flashMessenger->set('success', 'Category has been created successfully');
+			$this->flashBag->set('success', 'Category has been created successfully');
 
 			return $categoryManager->getLastId();
 

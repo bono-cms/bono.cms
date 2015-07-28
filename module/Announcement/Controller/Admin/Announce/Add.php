@@ -49,7 +49,7 @@ final class Add extends AbstractAnnounce
 
 			if ($announceManager->add($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'An announce has been created successfully');
+				$this->flashBag->set('success', 'An announce has been created successfully');
 				return $announceManager->getLastId();
 			}
 

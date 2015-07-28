@@ -107,7 +107,7 @@ final class Browser extends AbstractController
 			$languageManager->updatePublished($published);
 			$languageManager->updateOrders($orders);
 
-			$this->flashMessenger->set('success', 'Settings have been updated successfully');
+			$this->flashBag->set('success', 'Settings have been updated successfully');
 
 			// Assuming success
 			return '1';
@@ -127,7 +127,7 @@ final class Browser extends AbstractController
 
 			if ($this->getLanguageManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected language has been removed successfully');
+				$this->flashBag->set('success', 'Selected language has been removed successfully');
 				return '1';
 			}
 		}

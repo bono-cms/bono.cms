@@ -50,7 +50,7 @@ final class Edit extends AbstractCategory
 
 			if ($this->getCategoryManager()->update($this->request->getAll())) {
 
-				$this->flashMessenger->set('success', 'The category has been updated successfully');
+				$this->flashBag->set('success', 'The category has been updated successfully');
 				return '1';
 			}
 

@@ -49,7 +49,7 @@ final class Reviews extends AbstractController
 			$data = array_merge($this->request->getPost(), $this->request->getClientIP())
 
 			if ($this->getReviewsManager()->send($data), $this->getConfig()->getEnabledModeration()) {
-				$this->flashMessenger->set('success', 'Your reviews has been sent! Thank you');
+				$this->flashBag->set('success', 'Your reviews has been sent! Thank you');
 			}
 
 			return '1';

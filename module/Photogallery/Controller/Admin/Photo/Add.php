@@ -51,7 +51,7 @@ final class Add extends AbstractPhoto
 			$photoManager = $this->getPhotoManager();
 			$photoManager->add($this->request->getAll());
 
-			$this->flashMessenger->set('success', 'A photo has been added successfully');
+			$this->flashBag->set('success', 'A photo has been added successfully');
 
 			return $photoManager->getLastId();
 

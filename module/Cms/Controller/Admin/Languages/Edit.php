@@ -50,7 +50,7 @@ final class Edit extends AbstractLanguage
 
 			if ($this->getLanguageManager()->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'The language has been updated successfully');
+				$this->flashBag->set('success', 'The language has been updated successfully');
 				return '1';
 			}
 

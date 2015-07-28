@@ -51,7 +51,7 @@ final class Edit extends AbstractUser
 
 			if ($this->getUserManager()->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'The user has been updated successfully');
+				$this->flashBag->set('success', 'The user has been updated successfully');
 				return '1';
 			}
 

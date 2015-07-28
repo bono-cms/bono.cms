@@ -83,7 +83,7 @@ final class Notifications extends AbstractController
 
 			if ($this->getNotificationManager()->deleteById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected notification has been removed successfully');
+				$this->flashBag->set('success', 'Selected notification has been removed successfully');
 				return '1';
 			}
 		}
@@ -98,7 +98,7 @@ final class Notifications extends AbstractController
 	{
 		if ($this->getNotificationManager()->clearAll()) {
 
-			$this->flashMessenger->set('success', 'All notifications have been removed');
+			$this->flashBag->set('success', 'All notifications have been removed');
 			return '1';
 		}
 	}

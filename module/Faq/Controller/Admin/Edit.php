@@ -50,7 +50,7 @@ final class Edit extends AbstractFaq
 
 			if ($this->getFaqManager()->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'The FAQ has been updated successfully');
+				$this->flashBag->set('success', 'The FAQ has been updated successfully');
 				return '1';
 			}
 

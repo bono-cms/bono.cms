@@ -70,7 +70,7 @@ final class Browser extends AbstractAdminController
 
 			if ($postManager->updatePublished($published) && $postManager->updateSeo($seo)) {
 
-				$this->flashMessenger->set('success', 'Settings have been saved successfully');
+				$this->flashBag->set('success', 'Settings have been saved successfully');
 				return '1';
 			}
 		}
@@ -88,7 +88,7 @@ final class Browser extends AbstractAdminController
 			$id = $this->request->getPost('id');
 
 			if ($this->getCategoryManager()->deleteById($id)) {
-				$this->flashMessenger->set('success', 'Selected category has been removed successfully');
+				$this->flashBag->set('success', 'Selected category has been removed successfully');
 				return '1';
 			}
 		}
@@ -116,7 +116,7 @@ final class Browser extends AbstractAdminController
 			$flashMessage = 'You should select at least one post to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -131,7 +131,7 @@ final class Browser extends AbstractAdminController
 			$id = $this->request->getPost('id');
 
 			if ($this->getPostManager()->deleteById($id)) {
-				$this->flashMessenger->set('success', 'Selected post has been removed successfully');
+				$this->flashBag->set('success', 'Selected post has been removed successfully');
 				return '1';
 			}
 		}

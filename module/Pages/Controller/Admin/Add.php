@@ -48,7 +48,7 @@ final class Add extends AbstractPage
 
 			if ($pageManager->add($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'A page has been created successfully');
+				$this->flashBag->set('success', 'A page has been created successfully');
 				return $pageManager->getLastId();
 			}
 

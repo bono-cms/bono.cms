@@ -52,7 +52,7 @@ final class History extends AbstractController
 
 		if ($historyManager->clear()) {
 
-			$this->flashMessenger->set('success', 'History has been cleared successfully');
+			$this->flashBag->set('success', 'History has been cleared successfully');
 			return '1';
 		}
 	}

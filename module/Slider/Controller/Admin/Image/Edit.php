@@ -52,7 +52,7 @@ final class Edit extends AbstractImage
 
 			if ($this->getImageManager()->update($this->request->getAll())) {
 
-				$this->flashMessenger->set('success', 'The slider has been updated successfully');
+				$this->flashBag->set('success', 'The slider has been updated successfully');
 				return '1';
 			}
 

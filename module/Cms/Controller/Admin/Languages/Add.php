@@ -49,7 +49,7 @@ final class Add extends AbstractLanguage
 
 			if ($languageManager->add($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'A language has been added successfully');
+				$this->flashBag->set('success', 'A language has been added successfully');
 				return $languageManager->getLastId();
 			}
 

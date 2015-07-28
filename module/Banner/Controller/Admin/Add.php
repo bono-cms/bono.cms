@@ -45,7 +45,7 @@ final class Add extends AbstractBanner
 
 			if ($bannerManager->add($this->request->getAll())) {
 
-				$this->flashMessenger->set('success', 'A banner has been added successfully');
+				$this->flashBag->set('success', 'A banner has been added successfully');
 				return $bannerManager->getLastId();
 			}
 

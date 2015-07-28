@@ -48,7 +48,7 @@ final class Add extends AbstractAdvice
 
 			if ($adviceManager->add($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'An advice has been created successfully');
+				$this->flashBag->set('success', 'An advice has been created successfully');
 				return $adviceManager->getLastId();
 			}
 

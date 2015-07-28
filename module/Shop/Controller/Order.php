@@ -31,7 +31,7 @@ final class Order extends AbstractShopController
 
 			if ($orderManager->make($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'Your order has been sent! We will contact you soon. Thank you!');
+				$this->flashBag->set('success', 'Your order has been sent! We will contact you soon. Thank you!');
 				return '1';
 			}
 

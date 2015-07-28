@@ -40,7 +40,7 @@ final class Config extends AbstractAdminController
 		if (1) {
 
 			$this->getConfigManager()->write($this->request->getPost());
-			$this->flashMessenger->set('success', "Blog's configuration has been updated successfully");
+			$this->flashBag->set('success', "Blog's configuration has been updated successfully");
 
 			return '1';
 		

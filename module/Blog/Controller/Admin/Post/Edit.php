@@ -50,7 +50,7 @@ final class Edit extends AbstractPost
 
 			if ($this->getPostManager()->update($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'A post has been updated successfully');
+				$this->flashBag->set('success', 'A post has been updated successfully');
 				return '1';
 			}
 

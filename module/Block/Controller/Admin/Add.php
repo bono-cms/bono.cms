@@ -45,7 +45,7 @@ final class Add extends AbstractBlock
 
 			if ($blockManager->add($this->request->getPost())) {
 
-				$this->flashMessenger->set('success', 'A block has been created successfully');
+				$this->flashBag->set('success', 'A block has been created successfully');
 				return $blockManager->getLastId();
 			}
 

@@ -67,7 +67,7 @@ final class Browser extends AbstractController
 			$id = $this->request->getPost('id');
 
 			$this->getPageManager()->deleteById($id);
-			$this->flashMessenger->set('success', 'Selected page has been removed successfully');
+			$this->flashBag->set('success', 'Selected page has been removed successfully');
 		}
 
 		return '1';
@@ -97,7 +97,7 @@ final class Browser extends AbstractController
 			$message = 'You have not checked any page you want to remove';
 		}
 
-		$this->flashMessenger->set($type, $message);
+		$this->flashBag->set($type, $message);
 		return '1';
 	}
 
@@ -116,7 +116,7 @@ final class Browser extends AbstractController
 
 			if ($this->getPageManager()->makeDefault($default) && $this->getPageManager()->updateSeo($seo)) {
 
-				$this->flashMessenger->set('success', 'Settings have been saved successfully');
+				$this->flashBag->set('success', 'Settings have been saved successfully');
 				return '1';
 			}
 		}

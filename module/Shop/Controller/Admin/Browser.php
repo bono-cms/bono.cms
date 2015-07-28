@@ -102,7 +102,7 @@ final class Browser extends AbstractController
 			// Grab a manager
 			$productManager = $this->getProductManager();
 
-			$this->flashMessenger->set('success', 'Settings have been updated successfully');
+			$this->flashBag->set('success', 'Settings have been updated successfully');
 
 			$productManager->updatePrices($prices);
 			$productManager->updatePublished($published);
@@ -124,7 +124,7 @@ final class Browser extends AbstractController
 
 			if ($this->getProductManager()->removeById($id)) {
 
-				$this->flashMessenger->set('success', 'Selected product has been removed successfully');
+				$this->flashBag->set('success', 'Selected product has been removed successfully');
 				return '1';
 			}
 		}
@@ -151,7 +151,7 @@ final class Browser extends AbstractController
 			$flashMessage = 'You should select at least one product to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -169,7 +169,7 @@ final class Browser extends AbstractController
 			$categoryManager = $this->moduleManager->getModule('Shop')->getService('categoryManager');
 
 			if ($categoryManager->removeById($id)) {
-				$this->flashMessenger->set('success', 'The category has been removed successfully');
+				$this->flashBag->set('success', 'The category has been removed successfully');
 				return '1';
 			}
 		}

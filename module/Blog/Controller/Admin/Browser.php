@@ -64,7 +64,7 @@ final class Browser extends AbstractAdminController
 			$id = $this->request->getPost('id');
 
 			$this->getPostManager()->removeById($id);
-			$this->flashMessenger->set('success', 'Selected post has been removed successfully');
+			$this->flashBag->set('success', 'Selected post has been removed successfully');
 
 			return '1';
 		}
@@ -82,7 +82,7 @@ final class Browser extends AbstractAdminController
 			$id = $this->request->getPost('id');
 
 			$this->getCategoryManager()->removeById($id);
-			$this->flashMessenger->set('success', 'Selected category has been removed successfully');
+			$this->flashBag->set('success', 'Selected category has been removed successfully');
 
 			return '1';
 		}
@@ -111,7 +111,7 @@ final class Browser extends AbstractAdminController
 			$flashMessage = 'You should select at least one blog post to remove';
 		}
 		
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 
@@ -137,7 +137,7 @@ final class Browser extends AbstractAdminController
 			$postManager->updatePublished($published);
 			$postManager->updateComments($comments);
 
-			$this->flashMessenger->set('success', 'Post settings have been updated');
+			$this->flashBag->set('success', 'Post settings have been updated');
 
 			return '1';
 		}

@@ -70,7 +70,7 @@ final class Notepad extends AbstractController
 
 		if ($this->getNotepadManager()->store($content)) {
 
-			$this->flashMessenger->set('success', 'Notepad has been updated successfully');
+			$this->flashBag->set('success', 'Notepad has been updated successfully');
 			return '1';
 		}
 	}

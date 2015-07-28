@@ -43,7 +43,7 @@ final class Tweaks extends AbstractController
 		if ($formValidator->isValid()) {
 
 			$this->getConfigManager()->write($this->request->getPost());
-			$this->flashMessenger->set('success', 'System settings have been updated successfully');
+			$this->flashBag->set('success', 'System settings have been updated successfully');
 
 			return '1';
 
