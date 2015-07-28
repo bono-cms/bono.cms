@@ -154,7 +154,7 @@ abstract class AbstractController extends BaseController
 	final protected function bootstrap()
 	{
 		$this->validatorFactory->setRenderer(new Renderer\StandardJson());
-		$this->view->setLayout('_layout');
+		$this->view->setLayout('__layout__');
 
 		$this->view->getBlockBag()
 				   ->setBlocksDir($this->appConfig->getModulesDir() . sprintf('/%s/View/Template/%s', 'Site', $this->getResolverThemeName()) . '/blocks/');

@@ -139,7 +139,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 		$this->view->getBlockBag()->setBlocksDir($this->appConfig->getModulesDir() . '/Cms/View/Template/admin/blocks/')
 								  ->addStaticBlock($this->appConfig->getModulesDir() . '/Menu/View/Template/admin', 'menu-widget');
 
-		$this->view->setLayout('_layout', 'Cms');
+		$this->view->setLayout('__layout__', 'Cms');
 		$this->loadAllShared();
 	}
 
