@@ -1,6 +1,7 @@
 <?php
 
 use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\HtmlHelper;
 
 ?>
 
@@ -28,9 +29,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					</div>
 				</div>
 
-				<?php if ($extendedMode): ?>
-
-				<div class="form-group clearfix">
+				<div class="form-group clearfix <?php HtmlHelper::addOnDemand(!$extendedMode, 'hidden'); ?>">
 					<label class="col-lg-2 control-label"><?php $this->show('Template'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
@@ -40,7 +39,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					</div>
 				</div>
 				
-				<div class="form-group clearfix">
+				<div class="form-group clearfix <?php HtmlHelper::addOnDemand(!$extendedMode, 'hidden'); ?>">
 					<label class="col-lg-2 control-label"><?php $this->show('Message view'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
@@ -49,13 +48,6 @@ use Krystal\Form\Widget\CheckBoxWidget;
 						</div>
 					</div>
 				</div>
-				
-				<?php else: ?>
-				
-				<input type="hidden" name="template" value="<?php echo $form->getTemplate(); ?>" />
-				<input type="hidden" name="message_view" value="<?php echo $form->getMessageView(); ?>" />
-				
-				<?php endif; ?>
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
