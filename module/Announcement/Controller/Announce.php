@@ -16,9 +16,9 @@ use Site\Controller\AbstractController;
 final class Announce extends AbstractController
 {
 	/**
-	 * Shows an announce
+	 * Renders an announce by its associated id
 	 * 
-	 * @param string $id Announce's id
+	 * @param string $id Announce id
 	 * @return string
 	 */
 	public function indexAction($id)
@@ -28,13 +28,11 @@ final class Announce extends AbstractController
 
 		if ($announce !== false) {
 			return $this->view->render('page', array(
-
 				'breadcrumbs' => $announceManager->getBreadcrumbs($announce),
 				'page' => $announce
 			));
 
 		} else {
-
 			return false;
 		}
 	}
