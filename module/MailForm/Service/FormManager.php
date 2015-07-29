@@ -188,6 +188,7 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 			$this->delete($id);
 		}
 
+		$this->track('Batch removal of %s mail forms', count($ids));
 		return true;
 	}
 
@@ -199,9 +200,15 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	 */
 	public function deleteById($id)
 	{
-		//@TODO Track here
-		
-		return $this->delete($id);
+		$title = $this->formMapper->fetchTitleById($id);
+
+		if ($this->delete($id)) {
+			$this->track('Mail form "%s" has been removed', $title);
+			return true;
+
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -265,6 +272,7 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 				}
 			}
 
+			$this->track('Mail form "%s" has been created', $input['title']);
 			return true;
 
 		} else {
@@ -292,10 +300,23 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 				$this->updateMenuItem($input['web_page_id'], $input['title'], $input['menu']);
 			}
 
+			$this->track('Mail form "%s" has been updated', $input['title']);
 			return true;
 
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Tracks activity
+	 * 
+	 * @param string $message
+	 * @param string $placeholder
+	 * @return boolean
+	 */
+	private function track($message, $placeholder = '')
+	{
+		return $this->historyManager->write('MailForm', $message, $placeholder);
 	}
 }
