@@ -14,6 +14,14 @@ namespace MailForm\Storage;
 interface FormMapperInterface
 {
 	/**
+	 * Fetches form title by its associated id
+	 * 
+	 * @param string $id Form id
+	 * @return string
+	 */
+	public function fetchTitleById($id);
+
+	/**
 	 * Fetches message view by associated form id
 	 * 
 	 * @param string $id Form id
