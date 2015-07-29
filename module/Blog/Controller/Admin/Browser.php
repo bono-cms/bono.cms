@@ -99,19 +99,14 @@ final class Browser extends AbstractAdminController
 
 			$ids = array_keys($this->request->getPost('toDelete'));
 
-			// Grab a service now
+			// Do remove now
 			$this->getPostManager()->removeByIds($ids);
-
-			$flashKey = 'success';
-			$flashMessage = 'Selected posts have been removed successfully';
+			$this->flashBag->set('success', 'Selected posts have been removed successfully');
 
 		} else {
-
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least one blog post to remove';
+			$this->flashBag->set('warning', 'You should select at least one blog post to remove');
 		}
-		
-		$this->flashBag->set($flashKey, $flashMessage);
+
 		return '1';
 	}
 

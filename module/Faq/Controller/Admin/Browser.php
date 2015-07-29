@@ -63,17 +63,12 @@ final class Browser extends AbstractAdminController
 		if ($this->request->hasPost('toDelete')) {
 
 			$this->getFaqManager()->deleteByIds(array_keys($this->request->getPost('toDelete')));
-
-			$flashKey = 'success';
-			$flashMessage = 'Selected FAQS have been removed successfully';
-
+			$this->flashBag->set('success', 'Selected FAQS have been removed successfully');
+			
 		} else {
-
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least one FAQ to remove';
+			$this->flashBag->set('warning', 'You should select at least one FAQ to remove');
 		}
 
-		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 

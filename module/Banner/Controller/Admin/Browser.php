@@ -83,19 +83,14 @@ final class Browser extends AbstractAdminController
 
 			$ids = array_keys($this->request->getPost('toDelete'));
 
-			// Grab a service
 			$this->getBannerManager()->deleteByIds($ids);
-
-			$flashKey = 'success';
-			$flashMessage = 'Selected banners have been removed successfully';
+			$this->flashBag->set('success', 'Selected banners have been removed successfully');
 
 		} else {
 
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least one banner to remove';
+			$this->flashBag->set('warning', 'You should select at least one banner to remove');
 		}
-		
-		$this->flashBag->set($flashKey, $flashMessage);
+
 		return '1';
 	}
 }

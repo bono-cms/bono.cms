@@ -105,16 +105,11 @@ final class Browser extends AbstractAdminController
 			$ids = array_keys($this->request->getPost('toDelete'));
 			$this->getAdviceManager()->deleteByIds($ids);
 
-			$flashKey = 'success';
-			$flashMessage = 'Selected advices have been removed successfully';
-
+			$this->flashBag->set('success', 'Selected advices have been removed successfully');
 		} else {
-
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least one advice to remove';
+			$this->flashBag->set('warning', 'You should select at least one advice to remove');
 		}
 
-		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 }

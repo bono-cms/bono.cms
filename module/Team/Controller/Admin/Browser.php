@@ -95,16 +95,12 @@ final class Browser extends AbstractController
 			$ids = array_keys($this->request->getPost('toDelete'));
 			$this->getTeamManager()->deleteByIds($ids);
 
-			$flashKey = 'success';
-			$flashMessage = 'Selected team member have been removed successfully';
+			$this->flashBag->set('success', 'Selected team member have been removed successfully');
 
 		} else {
-
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least one member to remove';
+			$this->flashBag->set('warning', 'You should select at least one member to remove');
 		}
 
-		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 

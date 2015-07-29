@@ -80,16 +80,11 @@ final class Browser extends AbstractController
 			$reviewsManager = $this->getModuleService('reviewsManager');
 			$reviewsManager->deleteByIds($ids);
 
-			$flashKey = 'success';
-			$flashMessage = 'Selected reviews have been successfully removed';
-
+			$this->flashBag->set('success', 'Selected reviews have been successfully removed');
 		} else {
-
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least one review to remove';
+			$this->flashBag->set('warning', 'You should select at least one review to remove');
 		}
 
-		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 

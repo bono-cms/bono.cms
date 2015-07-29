@@ -91,21 +91,15 @@ final class Browser extends AbstractController
 	public function deleteSelectedAction()
 	{
 		if ($this->request->hasPost('toDelete')) {
-			
+
 			$ids = array_keys($this->request->getPost('toDelete'));
-			
 			$this->getQaManager()->deleteByIds($ids);
-			
-			$flashKey = 'success';
-			$flashMessage = 'Selected pairs have been removed successfully';
-			
+
+			$this->flashBag->set('success', 'Selected pairs have been removed successfully');
 		} else {
-			
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least one pair to remove';
+			$this->flashBag->set('warning', 'You should select at least one pair to remove');
 		}
-		
-		$this->flashBag->set($flashKey, $flashMessage);
+
 		return '1';
 	}
 

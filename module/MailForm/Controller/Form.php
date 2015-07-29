@@ -95,17 +95,10 @@ final class Form extends AbstractController
 
 			// It's time to send a message
 			if ($this->sendMessage($id, $this->request->getPost())) {
-
-				$flashKey = 'success';
-				$flashMessage = 'Your message has been sent';
-
+				$this->flashBag->set('success', 'Your message has been sent');
 			} else {
-
-				$flashKey = 'warning';
-				$flashMessage = 'Could not send your message. Please again try later';
+				$this->flashBag->set('warning', 'Could not send your message. Please again try later');
 			}
-
-			$this->flashBag->set($flashKey, $flashMessage);
 
 			return '1';
 

@@ -107,17 +107,13 @@ final class Browser extends AbstractController
 			$ids = array_keys($this->request->getPost('toDelete'));
 
 			if ($this->getImageManager()->deleteByIds($ids)) {
-				$flashKey = 'success';
-				$flashMessage = 'Selected slides have been removed successfully';
+				$this->flashBag->set('success', 'Selected slides have been removed successfully');
 			}
-			
-		} else {
 
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least one image to remove';
+		} else {
+			$this->flashBag->set('warning', 'You should select at least one image to remove');
 		}
 
-		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 

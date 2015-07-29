@@ -83,21 +83,13 @@ final class Browser extends AbstractController
 		if ($this->request->hasPost('toDelete')) {
 
 			$ids = array_keys($this->request->getPost('toDelete'));
-
-			// Flash data
-			$type = 'success';
-			$message = 'Selected pages have been removed successfully';
-
 			$this->getPageManager()->deleteByIds($ids);
 
+			$this->flashBag->set('success', 'Selected pages have been removed successfully');
 		} else {
-
-			// Nothing to delete
-			$type = 'warning';
-			$message = 'You have not checked any page you want to remove';
+			$this->flashBag->set('warning', 'You have not checked any page you want to remove');
 		}
 
-		$this->flashBag->set($type, $message);
 		return '1';
 	}
 
