@@ -27,7 +27,7 @@
 
 <?php $this->show('Quantity'); ?> : <?php echo $product->getQty(); ?>
 
-<?php $this->show('Sub-total price'); ?>: <?php echo $product->getSubTotalPrice(); ?>
+<?php $this->show('Sub-total price'); ?>: <?php echo $product->getSubTotalPrice(), ' ', $currency; ?>
 
 <?php endforeach; ?>
 
@@ -35,4 +35,4 @@
 
 <?php $this->show('Total quantity of all products'); ?>: <?php echo $basketManager->getTotalQuantity(); ?>
 
-<?php $this->show('Total price'); ?>: <?php echo $basketManager->getTotalPrice(); ?>
+<?php $this->show('Total price'); ?>: <?php echo $basketManager->getTotalPrice(), ' ', $currency; ?>

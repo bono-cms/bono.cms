@@ -45,11 +45,14 @@ final class Order extends AbstractShopController
 	 */
 	private function makeOrder(array $input)
 	{
-		if ($this->getModuleService('orderManager')->make($input)) {
+		$orderManager = $this->getModuleService('orderManager');
+
+		if ($orderManager->make($input)) {
 
 			$letter = $this->getMessageView()->render('order', array(
 				'basketManager' => $this->getModuleService('basketManager'),
-				'input' => $input,
+				'currency' => $this->getModuleService('configManager')->getEntity()->getCurrency(),
+				'input' => $input
 			));
 
 			return $orderManager->notify($letter);
