@@ -16,7 +16,7 @@ use Krystal\Application\Controller\AbstractController;
 final class Captcha extends AbstractController
 {
 	/**
-	 * Renders Captcha
+	 * Renders the CAPTCHA
 	 * 
 	 * @return void
 	 */
