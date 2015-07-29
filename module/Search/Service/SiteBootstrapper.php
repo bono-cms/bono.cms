@@ -39,6 +39,6 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
 	 */
 	public function bootstrap()
 	{
-		$this->view->addVariable('search', new SearchSiteService());
+		$this->view->addVariable('search', new SiteService());
 	}
 }

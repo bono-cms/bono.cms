@@ -11,7 +11,7 @@
 
 namespace Search\Service;
 
-final class SearchSiteService
+final class SiteService implements SiteServiceInterface
 {
 	/**
 	 * Returns URL where requests should be send to
@@ -24,7 +24,7 @@ final class SearchSiteService
 	}
 
 	/**
-	 * Returns element's name which must contain query's data
+	 * Returns element name that must contain query data
 	 * 
 	 * @return string
 	 */
