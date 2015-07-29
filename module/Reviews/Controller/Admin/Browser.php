@@ -23,6 +23,29 @@ final class Browser extends AbstractController
 	 */
 	public function indexAction($page = 1)
 	{
+		$reviewsManager = $this->getModuleService('reviewsManager');
+
+		$paginator = $reviewsManager->getPaginator();
+		$paginator->setUrl('/admin/module/reviews/page/%s');
+
+		$this->loadPlugins();
+
+		return $this->view->render('browser', array(
+
+			'title' => 'Reviews',
+			'dateFormat' => $reviewsManager->getTimeFormat(),
+			'reviews'	=> $reviewsManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
+			'paginator'	=> $paginator,
+		));
+	}
+
+	/**
+	 * Loads required plugins for display
+	 * 
+	 * @return void
+	 */
+	private function loadPlugins()
+	{
 		$this->view->getPluginBag()
 				   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
 
@@ -31,19 +54,6 @@ final class Browser extends AbstractController
 				'name' => 'Reviews',
 				'link' => '#'
 			)
-		));
-
-		$reviewsManager = $this->getModuleService('reviewsManager');
-
-		$paginator = $reviewsManager->getPaginator();
-		$paginator->setUrl('/admin/module/reviews/page/%s');
-
-		return $this->view->render('browser', array(
-
-			'title' => 'Reviews',
-			'dateFormat' => $reviewsManager->getTimeFormat(),
-			'reviews'	=> $reviewsManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
-			'paginator'	=> $paginator,
 		));
 	}
 
