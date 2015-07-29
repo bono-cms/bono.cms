@@ -22,7 +22,7 @@ abstract class AbstractAdminController extends AbstractController
 	 */
 	final protected function getMenuWidget()
 	{
-		return $this->getService('Menu', 'menuWidget');
+		return $this->getModuleService('menuWidget');
 	}
 
 	/**
@@ -32,7 +32,7 @@ abstract class AbstractAdminController extends AbstractController
 	 */
 	final protected function getCategoryManager()
 	{
-		return $this->getService('Menu', 'categoryManager');
+		return $this->getModuleService('categoryManager');
 	}
 
 	/**
@@ -42,7 +42,7 @@ abstract class AbstractAdminController extends AbstractController
 	 */
 	final protected function getItemManager()
 	{
-		return $this->getService('Menu', 'itemManager');
+		return $this->getModuleService('itemManager');
 	}
 
 	/**
@@ -56,7 +56,7 @@ abstract class AbstractAdminController extends AbstractController
 
 		// Menu link builder is just prepared, but now configured yet. I.e it has no data yet
 		// So we'll be adding it here. If adding it in Module definition, then that would be extra overhead
-		$linkBuilder = $this->getService('Menu', 'linkBuilder');
+		$linkBuilder = $menu->getService('linkBuilder');
 		$linkBuilder->loadFromDefiniton($menu->getLinkDefinitions(), $this->moduleManager);
 
 		return $linkBuilder;
