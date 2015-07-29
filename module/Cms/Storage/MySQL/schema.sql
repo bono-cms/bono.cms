@@ -11,6 +11,8 @@ CREATE TABLE `bono_module_cms_webpages` (
 	
 ) DEFAULT CHARSET=UTF8;
 
+CREATE INDEX `webpage` ON `bono_module_cms_webpages`(slug) using HASH;
+
 
 DROP TABLE IF EXISTS `bono_module_cms_notepad`;
 CREATE TABLE `bono_module_cms_notepad` (
