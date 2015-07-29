@@ -70,10 +70,17 @@ interface OrderManagerInterface
 	 * Makes an order
 	 * 
 	 * @param array $input Raw input data
-	 * @param array $products Products from basket
 	 * @return boolean
 	 */
 	public function make(array $input);
+
+	/**
+	 * Notifies about new order
+	 * 
+	 * @param string $body
+	 * @return boolean
+	 */
+	public function notify($body);
 
 	/**
 	 * Fetches latest order entities

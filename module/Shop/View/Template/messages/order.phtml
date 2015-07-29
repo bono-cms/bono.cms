@@ -21,7 +21,7 @@ Comments:
 
 Delivery type : <?php echo $input['delivery']; ?>
 
-<?php foreach ($products as $product): ?>
+<?php foreach ($basketManager->getProducts() as $product): ?>
 
 Product : <?php echo $product->getTitle(); ?>
 
@@ -34,6 +34,6 @@ Sub-total price: <?php echo $product->getSubTotalPrice(); ?>
 
 ------------------------------------------
 
-Products total  quantity: <?php echo $this->basketManager->getTotalQuantity(); ?>
+Products total  quantity: <?php echo $basketManager->getTotalQuantity(); ?>
 
-Total price : <?php echo $this->basketManager->getTotalPrice(); ?>
+Total price : <?php echo $basketManager->getTotalPrice(); ?>

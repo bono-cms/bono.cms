@@ -22,23 +22,57 @@ final class Order extends AbstractShopController
 	 */
 	public function orderAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$input = $this->request->getPost();
+		$formValidator = $this->getValidator($input);
 
-		if ($formValidator->isValid($this->request->getPost())) {
+		if ($formValidator->isValid()) {
 
-			// Grab a service which does everything behind the scenes
-			$orderManager = $this->getModuleService('orderManager');
-
-			if ($orderManager->make($this->request->getPost())) {
-
+			if ($this->makeOrder($input)) {
 				$this->flashBag->set('success', 'Your order has been sent! We will contact you soon. Thank you!');
 				return '1';
 			}
 
 		} else {
-
 			return $formValidator->getErrors();
 		}
+	}
+
+	/**
+	 * Makes an order
+	 * 
+	 * @param array $input Raw input data
+	 * @return boolean
+	 */
+	private function makeOrder(array $input)
+	{
+		if ($this->getModuleService('orderManager')->make($input)) {
+
+			$letter = $this->getMessageView()->render('order', array(
+				'basketManager' => $this->getModuleService('basketManager'),
+				'input' => $input,
+			));
+
+			return $orderManager->notify($letter);
+
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns message view
+	 * 
+	 * @return string
+	 */
+	private function getMessageView()
+	{
+		// Special case, when override must be done
+		$resolver = $this->view->getResolver();
+		$resolver->setModule('Shop')
+				 ->setTheme('messages');
+
+		$this->view->disableLayout();
+		return $this->view;
 	}
 
 	/**

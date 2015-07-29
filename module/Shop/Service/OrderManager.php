@@ -195,7 +195,6 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	 * Makes an order
 	 * 
 	 * @param array $input Raw input data
-	 * @param array $products Products from basket
 	 * @return boolean
 	 */
 	public function make(array $input)
@@ -219,20 +218,26 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 		$products = $this->basketManager->getProducts();
 
 		if ($this->addProducts($id, $products)) {
-			
-			// Send notification email
-			$this->notify($input, $products);
-			
-			// Order is sent. Now clear the basket
+
+			// Order is saved. Now clear the basket
 			$this->basketManager->clear();
 			$this->basketManager->save();
 
-
 			return true;
-
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Notifies about new order
+	 * 
+	 * @param string $body
+	 * @return boolean
+	 */
+	public function notify($body)
+	{
+		return $this->notificationManager->notify('You have a new order from a customer') && $this->mailer->send('You have a new order', $body);
 	}
 
 	/**
@@ -269,23 +274,6 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	public function fetchLatest($limit)
 	{
 		return $this->prepareResults($this->orderInfoMapper->fetchLatest($limit));
-	}
-
-	/**
-	 * Notifies about new order
-	 * 
-	 * @param array $input
-	 * @return boolean
-	 */
-	private function notify(array $input, array $products)
-	{
-		$this->notificationManager->notify('You have a new order from a customer');
-
-		ob_start();
-		include(dirname(__DIR__)) . '/View/order.phtml';
-		$text = ob_get_clean();
-
-		return $this->mailer->send('You have a new order', $text);
 	}
 
 	/**
