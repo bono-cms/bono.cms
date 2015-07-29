@@ -101,6 +101,8 @@ final class FormMapper extends AbstractMapper implements FormMapperInterface
 		return $this->db->select('*')
 						->from(static::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
+						->orderBy('id')
+						->desc()
 						->queryAll();
 	}
 
