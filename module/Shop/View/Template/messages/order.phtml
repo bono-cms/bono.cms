@@ -1,39 +1,38 @@
 
-Hello there,
+<?php $this->show('Hello there!'); ?>
 
-You have a new order from : <?php echo $input['name']; ?>
+<?php $this->show('You have a new order from'); ?>: <?php echo $input['name']; ?>
 
-Contact information :
+<?php $this->show('Contact information'); ?>:
 
-Phone: <?php echo $input['phone']; ?>
+<?php $this->show('Phone'); ?>: <?php echo $input['phone']; ?>
 
-Address : <?php echo $input['address']; ?>
+<?php $this->show('Address'); ?>: <?php echo $input['address']; ?>
 
 <?php if (!empty($input['comment'])): ?>
 ------------------------------------------
 
-Comments:
+<?php $this->show('Comments'); ?>:
 
 <?php echo $input['comment']; ?>
 <?php endif; ?>
 
 ------------------------------------------
 
-Delivery type : <?php echo $input['delivery']; ?>
+<?php $this->show('Delivery type'); ?>: <?php echo $input['delivery']; ?>
 
 <?php foreach ($basketManager->getProducts() as $product): ?>
 
-Product : <?php echo $product->getTitle(); ?>
+<?php $this->show('Product'); ?>: <?php echo $product->getTitle(); ?>
 
-Quantity : <?php echo $product->getQty(); ?>
+<?php $this->show('Quantity'); ?> : <?php echo $product->getQty(); ?>
 
-Sub-total price: <?php echo $product->getSubTotalPrice(); ?>
-
+<?php $this->show('Sub-total price'); ?>: <?php echo $product->getSubTotalPrice(); ?>
 
 <?php endforeach; ?>
 
 ------------------------------------------
 
-Products total  quantity: <?php echo $basketManager->getTotalQuantity(); ?>
+<?php $this->show('Total quantity of all products'); ?>: <?php echo $basketManager->getTotalQuantity(); ?>
 
-Total price : <?php echo $basketManager->getTotalPrice(); ?>
+<?php $this->show('Total price'); ?>: <?php echo $basketManager->getTotalPrice(); ?>
