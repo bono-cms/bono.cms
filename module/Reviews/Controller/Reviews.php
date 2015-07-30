@@ -48,7 +48,7 @@ final class Reviews extends AbstractController
 		if ($formValidator->isValid()) {
 			$data = array_merge($this->request->getPost(), $this->request->getClientIP())
 
-			if ($this->getReviewsManager()->send($data), $this->getConfig()->getEnabledModeration()) {
+			if ($this->getReviewsManager()->send($data, $this->getConfig()->getEnabledModeration()) {
 				$this->flashBag->set('success', 'Your reviews has been sent! Thank you');
 			}
 
