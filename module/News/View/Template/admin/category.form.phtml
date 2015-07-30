@@ -2,13 +2,13 @@
 
 use Krystal\Form\HtmlHelper;
 use Krystal\Form\Widget\CheckBoxWidget;
-
+ 
 ?>
 
 <form>
 	<ul class="nav nav-tabs" role="tablist">
-	 <li role="presentation" class="active"><a href="#page" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Category'); ?></a></li>
-	 <li role="presentation"><a href="#menu" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Item in menu'); ?></a></li>
+		<li role="presentation" class="active"><a href="#page" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Category'); ?></a></li>
+		<li role="presentation"><a href="#menu" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Item in menu'); ?></a></li>
 	</ul>
 	
 	<div class="tab-content">
@@ -25,14 +25,12 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					</div>
 				</div>
 				
-				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
-					<div class="col-lg-10">				
+					<div class="col-lg-10">
 						<textarea name="category[description]"><?php echo $category->getDescription(); ?></textarea>
 					</div>
 				</div>
-				
 				
 				<div class="options">
 					
