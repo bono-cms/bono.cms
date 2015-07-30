@@ -45,11 +45,11 @@ final class Edit extends AbstractUser
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost(), true);
+		$formValidator = $this->getValidator($this->request->getPost('user'), true);
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getUserManager()->update($this->request->getPost())) {
+			if ($this->getUserManager()->update($this->request->getPost('user'))) {
 
 				$this->flashBag->set('success', 'The user has been updated successfully');
 				return '1';

@@ -37,12 +37,12 @@ final class Add extends AbstractUser
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('user'));
 
 		if ($formValidator->isValid()) {
 
 			$userManager = $this->getUserManager();
-			$userManager->add($this->request->getPost());
+			$userManager->add($this->request->getPost('user'));
 
 			$this->flashBag->set('success', 'A user has been created successfully');
 
