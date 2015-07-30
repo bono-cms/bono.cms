@@ -8,7 +8,7 @@ use Krystal\Form\HtmlHelper;
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="id" value="<?php echo $language->getId(); ?>" />
+		<input type="hidden" name="language[id]" value="<?php echo $language->getId(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
