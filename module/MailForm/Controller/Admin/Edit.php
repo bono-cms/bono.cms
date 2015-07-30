@@ -45,11 +45,11 @@ final class Edit extends AbstractForm
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('form'));
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getFormManager()->update($this->request->getPost())) {
+			if ($this->getFormManager()->update($this->request->getPost('form'))) {
 				$this->flashBag->set('success', 'The form has been updated successfully');
 				return '1';
 			}

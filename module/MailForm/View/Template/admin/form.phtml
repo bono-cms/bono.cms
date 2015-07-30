@@ -16,14 +16,14 @@ use Krystal\Form\HtmlHelper;
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="page" role="tabpanel">
 			<div class="well">
-				<input type="hidden" name="id" value="<?php echo $form->getId(); ?>" />
-				<input type="hidden" name="web_page_id" value="<?php echo $form->getWebPageId(); ?>" />
+				<input type="hidden" name="form[id]" value="<?php echo $form->getId(); ?>" />
+				<input type="hidden" name="form[web_page_id]" value="<?php echo $form->getWebPageId(); ?>" />
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $form->getTitle(); ?>" />
+							<input type="text" name="form[title]" class="form-control" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $form->getTitle(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -33,7 +33,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show('Template'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="template" class="form-control" placeholder="<?php $this->show('Framework template-view compliant file insiate site theme directory'); ?>" value="<?php echo $form->getTemplate(); ?>" />
+							<input type="text" name="form[template]" class="form-control" placeholder="<?php $this->show('Framework template-view compliant file insiate site theme directory'); ?>" value="<?php echo $form->getTemplate(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -43,7 +43,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show('Message view'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="message_view" class="form-control" placeholder="<?php $this->show('Framework-compliant template-view file'); ?>" value="<?php echo $form->getMessageView(); ?>" />
+							<input type="text" name="form[message_view]" class="form-control" placeholder="<?php $this->show('Framework-compliant template-view file'); ?>" value="<?php echo $form->getMessageView(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -52,7 +52,7 @@ use Krystal\Form\HtmlHelper;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 					<div class="col-lg-10">
-						<textarea name="description" rows="7" class="form-control"><?php echo $form->getDescription(); ?></textarea>
+						<textarea name="form[description]" rows="7" class="form-control"><?php echo $form->getDescription(); ?></textarea>
 					</div>
 				</div>
 				
@@ -62,7 +62,7 @@ use Krystal\Form\HtmlHelper;
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 						<div class="col-lg-10">
-							<?php echo CheckBoxWidget::render(array('name' => 'seo', 'class' => 'form-control'), $form->getSeo()); ?>
+							<?php echo CheckBoxWidget::render(array('name' => 'form[seo]', 'class' => 'form-control'), $form->getSeo()); ?>
 						</div>
 					</div>
 					
@@ -70,7 +70,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="slug" class="form-control" value="<?php echo $form->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
+								<input type="text" name="form[slug]" class="form-control" value="<?php echo $form->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
 								<span class="input-group-addon">
 									<a href="#" data-button="slug">
 										<i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i>
@@ -84,7 +84,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="keywords" class="form-control" value="<?php echo $form->getKeywords(); ?>" placeholder="<?php $this->show('Keywords used for search engines'); ?>" />
+								<input type="text" name="form[keywords]" class="form-control" value="<?php echo $form->getKeywords(); ?>" placeholder="<?php $this->show('Keywords used for search engines'); ?>" />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
 							</div>
 						</div>
@@ -94,7 +94,7 @@ use Krystal\Form\HtmlHelper;
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 						<div class="col-lg-10">
-							<textarea name="meta_description" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $form->getMetaDescription(); ?></textarea>
+							<textarea name="form[meta_description]" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $form->getMetaDescription(); ?></textarea>
 						</div>
 					</div>
 				</div>

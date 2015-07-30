@@ -41,12 +41,12 @@ final class Add extends AbstractForm
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('form'));
 
 		if ($formValidator->isValid()){
 			$formManager = $this->getFormManager();
 
-			if ($formManager->add($this->request->getPost())) {
+			if ($formManager->add($this->request->getPost('form'))) {
 
 				$this->flashBag->set('success', 'A form has been added successfully');
 				return $formManager->getLastId();

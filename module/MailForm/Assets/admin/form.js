@@ -1,6 +1,6 @@
 $(function(){
 
-	$.wysiwyg.init(['description']);
+	$.wysiwyg.init(['form[description]']);
 
 	/**
 	 * Adds a form
