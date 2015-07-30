@@ -40,13 +40,13 @@ final class Add extends AbstractFaq
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('faq'));
 
 		if ($formValidator->isValid()) {
 
 			$faqManager = $this->getFaqManager();
 
-			if ($faqManager->add($this->request->getPost())) {
+			if ($faqManager->add($this->request->getPost('faq'))) {
 				$this->flashBag->set('success', 'A faq has been created successfully');
 				return $faqManager->getLastId();
 			}

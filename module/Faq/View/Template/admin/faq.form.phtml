@@ -7,13 +7,13 @@ use Krystal\Form\Widget\CheckBoxWidget;
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="id" value="<?php echo $faq->getId(); ?>" />
+		<input type="hidden" name="faq[id]" value="<?php echo $faq->getId(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Question'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="question" class="form-control" value="<?php echo $faq->getQuestion(); ?>" placeholder="<?php $this->show('Question title'); ?>" />
+					<input type="text" name="faq[question]" class="form-control" value="<?php echo $faq->getQuestion(); ?>" placeholder="<?php $this->show('Question title'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -23,7 +23,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Answer'); ?></label>
 			<div class="col-lg-10">
-				<textarea name="answer" rows="7"><?php echo $faq->getAnswer(); ?></textarea>
+				<textarea name="faq[answer]"><?php echo $faq->getAnswer(); ?></textarea>
 			</div>
 		</div>
 		
@@ -33,16 +33,16 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
-					<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $faq->getPublished()); ?>
+					<?php echo CheckBoxWidget::render(array('name' => 'faq[published]', 'class' => 'form-control'), $faq->getPublished()); ?>
 				</div>
 			</div>
 			
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
-				<div class="col-lg-10">				
+				<div class="col-lg-10">
 					<div class="input-group">
-						<input type="number" name="order" class="form-control" value="<?php echo $faq->getOrder(); ?>" placeholder="<?php $this->show('Order of this question'); ?>" />
+						<input type="number" min="0" name="faq[order]" class="form-control" value="<?php echo $faq->getOrder(); ?>" placeholder="<?php $this->show('Order of this question'); ?>" />
 						<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 					</div>
 				</div>

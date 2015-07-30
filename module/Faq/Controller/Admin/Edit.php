@@ -44,11 +44,11 @@ final class Edit extends AbstractFaq
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('faq'));
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getFaqManager()->update($this->request->getPost())) {
+			if ($this->getFaqManager()->update($this->request->getPost('faq'))) {
 
 				$this->flashBag->set('success', 'The FAQ has been updated successfully');
 				return '1';

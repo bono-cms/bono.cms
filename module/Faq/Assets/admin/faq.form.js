@@ -1,7 +1,7 @@
 
 $(function() {
 	
-	$.wysiwyg.init(['answer']);
+	$.wysiwyg.init(['faq[answer]']);
 	
 	
 	function update(callback){
