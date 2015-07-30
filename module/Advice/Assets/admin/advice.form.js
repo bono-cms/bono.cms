@@ -1,7 +1,7 @@
 
 $(function() {
 	
-	$.wysiwyg.init(['content']);
+	$.wysiwyg.init(['advice[content]']);
 	
 	function add(callback){
 		$("form").send({

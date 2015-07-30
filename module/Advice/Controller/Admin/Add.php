@@ -40,13 +40,13 @@ final class Add extends AbstractAdvice
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('advice'));
 
 		if ($formValidator->isValid()) {
 
 			$adviceManager = $this->getAdviceManager();
 
-			if ($adviceManager->add($this->request->getPost())) {
+			if ($adviceManager->add($this->request->getPost('advice'))) {
 
 				$this->flashBag->set('success', 'An advice has been created successfully');
 				return $adviceManager->getLastId();

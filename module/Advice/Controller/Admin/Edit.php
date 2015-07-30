@@ -44,11 +44,11 @@ final class Edit extends AbstractAdvice
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('advice'));
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getAdviceManager()->update($this->request->getPost())) {
+			if ($this->getAdviceManager()->update($this->request->getPost('advice'))) {
 
 				$this->flashBag->set('success', 'The advice has been updated successfully');
 				return '1';
