@@ -18,14 +18,14 @@ abstract class AbstractQa extends AbstractController
 	/**
 	 * Returns prepared and configured validator's instance
 	 * 
-	 * @param array $post
-	 * @return Validator
+	 * @param array $input Raw input data
+	 * @return \Krystal\Validate\ValidatorChain
 	 */
-	final protected function getValidator(array $post)
+	final protected function getValidator(array $input)
 	{
 		return $this->validatorFactory->build(array(
 			'input' => array(
-				'source' => $post,
+				'source' => $input,
 				'definition' => array(
 					'question' => array(
 						'required' => true,
@@ -86,8 +86,6 @@ abstract class AbstractQa extends AbstractController
 	 */
 	final protected function getSharedVars(array $overrides)
 	{
-		$qa = $this->moduleManager->getModule('Qa');
-
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'link' => 'Qa:Admin:Browser@indexAction',
@@ -100,7 +98,7 @@ abstract class AbstractQa extends AbstractController
 		));
 
 		$vars = array(
-			'timeFormat' => $qa->getService('qaManager')->getTimeFormat()
+			'timeFormat' => $this->getQaManager()->getTimeFormat()
 		);
 
 		return array_replace_recursive($vars, $overrides);

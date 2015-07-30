@@ -23,9 +23,7 @@ final class Qa extends AbstractController
 	 */
 	public function indexAction()
 	{
-		// Grab a module
-		$module = $this->moduleManager->getModule('Qa');
-		$qaManager = $module->getService('qaManager');
+		$qaManager = $this->getModuleService('qaManager');
 
 		return $this->view->render('qa', array(
 			
