@@ -16,7 +16,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('Time format in list'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="text" name="time_format_in_list" class="form-control" value="<?php echo $config->getTimeFormatInList(); ?>" />
+							<input type="text" name="config[time_format_in_list]" class="form-control" value="<?php echo $config->getTimeFormatInList(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Date format when showing posts in a category'); ?></span>
@@ -28,7 +28,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show("Date format in post's page"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="text" name="time_format_in_post" class="form-control" value="<?php echo $config->getTimeFormatInPost(); ?>" />
+							<input type="text" name="config[time_format_in_post]" class="form-control" value="<?php echo $config->getTimeFormatInPost(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Date format when showing a post itself'); ?></span>
@@ -40,7 +40,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('Items to show per page'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="number" class="form-control" name="per_page_count" min="1" value="<?php echo $config->getPerPageCount(); ?>" />
+							<input type="number" class="form-control" name="config[per_page_count]" min="1" value="<?php echo $config->getPerPageCount(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Amount of posts to be shown in a category'); ?></span>
@@ -52,7 +52,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('In announcement block'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="number" class="form-control" name="block_per_page_count" min="1" value="<?php echo $config->getBlockPerPageCount(); ?>" />
+							<input type="number" class="form-control" name="config[block_per_page_count]" min="1" value="<?php echo $config->getBlockPerPageCount(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Amount of posts in announcement block'); ?></span>
@@ -70,7 +70,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show("Cover quality"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="number" name="cover_quality" class="form-control" value="<?php echo $config->getCoverQuality(); ?>" />
+							<input type="number" name="config[cover_quality]" class="form-control" value="<?php echo $config->getCoverQuality(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Image quality for covers'); ?></span>
@@ -82,7 +82,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('Cover height'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="number" name="cover_height" class="form-control" value="<?php echo $config->getCoverHeight(); ?>" />
+							<input type="number" name="config[cover_height]" class="form-control" value="<?php echo $config->getCoverHeight(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('The height of post covers'); ?></span>
@@ -94,7 +94,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show('Cover width'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="number" name="cover_width" class="form-control" value="<?php echo $config->getCoverWidth(); ?>" />
+							<input type="number" name="config[cover_width]" class="form-control" value="<?php echo $config->getCoverWidth(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('The width of post covers'); ?></span>
@@ -106,7 +106,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show("Thumb's height"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="number" name="thumb_height" class="form-control" value="<?php echo $config->getThumbHeight(); ?>" />
+							<input type="number" name="config[thumb_height]" class="form-control" value="<?php echo $config->getThumbHeight(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('The height of post thumb images'); ?></span>
@@ -118,7 +118,7 @@
 					<label class="col-lg-2 control-label"><?php $this->show("Thumb's width"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group date">
-							<input type="number" name="thumb_width" class="form-control" value="<?php echo $config->getThumbWidth(); ?>" />
+							<input type="number" name="config[thumb_width]" class="form-control" value="<?php echo $config->getThumbWidth(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('The width of post thumb images'); ?></span>

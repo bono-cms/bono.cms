@@ -356,7 +356,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	 */
 	private function prepareInput(array $input)
 	{
-		$data =& $input['data'];
+		$data =& $input['data']['post'];
 		$data['timestamp'] = strtotime($data['date']);
 
 		// Take a slug from a title if empty
@@ -377,7 +377,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	public function add(array $input)
 	{
 		$input = $this->prepareInput($input);
-		$data =& $input['data'];
+		$data =& $input['data']['post'];
 
 		// By default there's 0 views
 		$data['views'] = 0;
@@ -416,7 +416,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 	public function update(array $input)
 	{
 		$form = $this->prepareInput($input);
-		$post =& $form['data'];
+		$post =& $form['data']['post'];
 
 		// Allow to remove a cover, only it case it exists and checkbox was checked
 		if (isset($post['remove_cover']) && !empty($post['cover'])) {

@@ -1,8 +1,8 @@
 
 $(function() {
 	
-	$("[name='date']").datepicker();
-	$.wysiwyg.init(['full', 'intro']);
+	$("[name='post[date]'").datepicker();
+	$.wysiwyg.init(['post[full]', 'post[intro]']);
 	
 	
 	function update(callback) {

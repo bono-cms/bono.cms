@@ -38,7 +38,7 @@ final class Add extends AbstractPost
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost(), $this->request->getFiles());
+		$formValidator = $this->getValidator($this->request->getPost('post'), $this->request->getFiles());
 
 		if ($formValidator->isValid()) {
 			$postManager = $this->getPostManager();

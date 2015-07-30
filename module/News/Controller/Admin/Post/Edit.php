@@ -44,7 +44,7 @@ final class Edit extends AbstractPost
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost(), $this->request->getFiles());
+		$formValidator = $this->getValidator($this->request->getPost('post'), $this->request->getFiles());
 
 		if ($formValidator->isValid()) {
 
