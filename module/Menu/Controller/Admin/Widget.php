@@ -73,7 +73,7 @@ final class Widget extends AbstractItem
 
 		return $this->view->disableLayout()->render('widget', array(
 
-			'attached' => json_encode($menuWidget->getIdsFromBags($items)),
+			'attached' => json_encode($menuWidget->getIdsFromEntities($items)),
 			'items' => $items,
 			'categories' => $categories,
 

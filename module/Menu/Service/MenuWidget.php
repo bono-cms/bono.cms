@@ -46,12 +46,12 @@ final class MenuWidget extends AbstractItemService implements MenuWidgetInterfac
 	}
 
 	/**
-	 * Extracts only ids from item bags
+	 * Extracts only ids from item entities
 	 * 
-	 * @param array $items Item bags collection
+	 * @param array $items Item entities collection
 	 * @return array
 	 */
-	public function getIdsFromBags(array $items)
+	public function getIdsFromEntities(array $items)
 	{
 		$ids = array();
 
