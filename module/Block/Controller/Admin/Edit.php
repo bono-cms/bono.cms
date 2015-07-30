@@ -44,11 +44,11 @@ final class Edit extends AbstractBlock
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('block'));
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getBlockManager()->update($this->request->getPost())) {
+			if ($this->getBlockManager()->update($this->request->getPost('block'))) {
 
 				$this->flashBag->set('success', 'A block has been updated successfully');
 				return '1';

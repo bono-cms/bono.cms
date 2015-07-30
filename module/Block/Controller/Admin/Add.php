@@ -37,13 +37,13 @@ final class Add extends AbstractBlock
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('block'));
 
 		if ($formValidator->isValid()) {
 
 			$blockManager = $this->getBlockManager();
 
-			if ($blockManager->add($this->request->getPost())) {
+			if ($blockManager->add($this->request->getPost('block'))) {
 
 				$this->flashBag->set('success', 'A block has been created successfully');
 				return $blockManager->getLastId();
