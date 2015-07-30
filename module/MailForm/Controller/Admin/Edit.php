@@ -23,7 +23,7 @@ final class Edit extends AbstractForm
 	{
 		$form = $this->getFormManager()->fetchById($id);
 
-		// When $form isn't false, then its a form bag's instance
+		// if $form isn't false, then its must be entity object
 		if ($form !== false) {
 			$this->loadSharedPlugins();
 
