@@ -9,10 +9,10 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA\Storage\MySQL;
+namespace Qa\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
-use QA\Storage\QaMapperInterface;
+use Qa\Storage\QaMapperInterface;
 
 final class QaMapper extends AbstractMapper implements QaMapperInterface
 {

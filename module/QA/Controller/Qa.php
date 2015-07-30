@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA\Controller;
+namespace Qa\Controller;
 
 use Site\Controller\AbstractController;
 
@@ -24,7 +24,7 @@ final class Qa extends AbstractController
 	public function indexAction()
 	{
 		// Grab a module
-		$module = $this->moduleManager->getModule('QA');
+		$module = $this->moduleManager->getModule('Qa');
 		$qaManager = $module->getService('qaManager');
 
 		return $this->view->render('qa', array(

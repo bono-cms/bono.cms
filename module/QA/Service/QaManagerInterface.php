@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA\Service;
+namespace Qa\Service;
 
 interface QaManagerInterface
 {

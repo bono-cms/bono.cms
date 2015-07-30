@@ -9,10 +9,10 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA;
+namespace Qa;
 
 use Cms\AbstractCmsModule;
-Use QA\Service\QaManager;
+Use Qa\Service\QaManager;
 
 final class Module extends AbstractCmsModule
 {
@@ -22,7 +22,7 @@ final class Module extends AbstractCmsModule
 	public function getServiceProviders()
 	{
 		return array(
-			'qaManager' => new QaManager($this->getMapper('/QA/Storage/MySQL/QaMapper'), $this->getHistoryManager())
+			'qaManager' => new QaManager($this->getMapper('/Qa/Storage/MySQL/QaMapper'), $this->getHistoryManager())
 		);
 	}
 }

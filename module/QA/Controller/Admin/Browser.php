@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA\Controller\Admin;
+namespace Qa\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
 
@@ -44,7 +44,7 @@ final class Browser extends AbstractController
 	 */
 	private function getQaManager()
 	{
-		return $this->moduleManager->getModule('QA')->getService('qaManager');
+		return $this->moduleManager->getModule('Qa')->getService('qaManager');
 	}
 
 	/**

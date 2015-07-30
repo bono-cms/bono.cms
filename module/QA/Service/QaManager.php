@@ -9,11 +9,11 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA\Service;
+namespace Qa\Service;
 
 use Cms\Service\HistoryManagerInterface;
 use Cms\Service\AbstractManager;
-use QA\Storage\QaMapperInterface;
+use Qa\Storage\QaMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;

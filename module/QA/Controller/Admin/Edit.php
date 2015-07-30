@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA\Controller\Admin;
+namespace Qa\Controller\Admin;
 
 final class Edit extends AbstractQa
 {

@@ -11,7 +11,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		<span class="caret"></span>
 	  </button>
 	  <ul class="dropdown-menu">
-		 <li><a href="<?php echo $this->url('QA:Admin:Add@indexAction'); ?>"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Add a pair'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Qa:Admin:Add@indexAction'); ?>"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Add a pair'); ?></a></li>
 		 <li class="divider"></li>
 		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
 		 
@@ -65,7 +65,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 						<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $qa->getId())), $qa->getPublished()); ?>
 					</td>
 					<td class="text-center">
-						<a data-button="edit" href="<?php echo $this->url('QA:Admin:Edit@indexAction', $qa->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this pair'); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+						<a data-button="edit" href="<?php echo $this->url('Qa:Admin:Edit@indexAction', $qa->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this pair'); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
 						<a data-button="delete" href="#" data-category="main" data-id="<?php echo $qa->getId(); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this pair'); ?>"><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
 				</tr>

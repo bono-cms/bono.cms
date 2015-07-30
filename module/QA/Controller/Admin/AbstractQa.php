@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA\Controller\Admin;
+namespace Qa\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
 
@@ -86,11 +86,11 @@ abstract class AbstractQa extends AbstractController
 	 */
 	final protected function getSharedVars(array $overrides)
 	{
-		$qa = $this->moduleManager->getModule('QA');
+		$qa = $this->moduleManager->getModule('Qa');
 
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
-				'link' => 'QA:Admin:Browser@indexAction',
+				'link' => 'Qa:Admin:Browser@indexAction',
 				'name' => 'Questions and Answers'
 			),
 			array(

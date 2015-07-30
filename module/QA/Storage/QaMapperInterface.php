@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace QA\Storage;
+namespace Qa\Storage;
 
 interface QaMapperInterface
 {
