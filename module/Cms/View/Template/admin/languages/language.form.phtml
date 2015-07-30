@@ -14,7 +14,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="name" class="form-control" value="<?php echo $language->getName(); ?>" placeholder="<?php $this->show('The name of the language to be created'); ?>" />
+					<input type="text" name="language[name]" class="form-control" value="<?php echo $language->getName(); ?>" placeholder="<?php $this->show('The name of the language to be created'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -24,7 +24,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Code'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="code" class="form-control" value="<?php echo $language->getCode(); ?>" placeholder="<?php $this->show('Unique language identifier'); ?>" />
+					<input type="text" name="language[code]" class="form-control" value="<?php echo $language->getCode(); ?>" placeholder="<?php $this->show('Unique language identifier'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -34,7 +34,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Country'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<select name="flag" class="form-control">
+					<select name="language[flag]" class="form-control">
 						
 						<?php foreach ($countries as $code => $name): ?>
 						<option data-flag="<?php printf('famfamfam-flag-%s', $code); ?>" <?php HtmlHelper::selectOnDemand($code == $language->getCode()); ?> value="<?php echo $code; ?>"><?php echo $name; ?></option>
@@ -51,7 +51,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="number" min="0" name="order" class="form-control" value="<?php echo $language->getOrder(); ?>" placeholder="<?php $this->show('Language sort order in a list'); ?>" />
+					<input type="number" min="0" name="language[order]" class="form-control" value="<?php echo $language->getOrder(); ?>" placeholder="<?php $this->show('Language sort order in a list'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -63,7 +63,7 @@ use Krystal\Form\HtmlHelper;
 				
 				<?php echo CheckBoxWidget::render(array(
 
-					'name' => 'published', 
+					'name' => 'language[published]', 
 					'class' => 'form-control'
 
 				), $language->getPublished()); ?>
@@ -79,7 +79,7 @@ use Krystal\Form\HtmlHelper;
 
 				<?php echo CheckBoxWidget::render(array(
 
-					'name' => 'default', 
+					'name' => 'language[default]', 
 					'class' => 'form-control'
 
 				), $language->getDefault()); ?>

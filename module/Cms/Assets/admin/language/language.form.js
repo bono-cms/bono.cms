@@ -26,12 +26,12 @@ $(function() {
 		$("[data-container='flag']").attr('class', flag);
 		
 		if (useVal){
-			$("[name='code']").val($current.val());
+			$("[name='language[code]']").val($current.val());
 		}
 	}
 	
 	
-	$("[name='flag']").ready(function(){
+	$("[name='language[flag]']").ready(function(){
 		flag($(this), false);
 	}).change(function(){
 		flag($(this), true);

@@ -44,11 +44,11 @@ final class Edit extends AbstractLanguage
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('language'));
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getLanguageManager()->update($this->request->getPost())) {
+			if ($this->getLanguageManager()->update($this->request->getPost('language'))) {
 
 				$this->flashBag->set('success', 'The language has been updated successfully');
 				return '1';

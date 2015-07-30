@@ -41,13 +41,13 @@ final class Add extends AbstractLanguage
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('language'));
 
 		if ($formValidator->isValid()) {
 
 			$languageManager = $this->getLanguageManager();
 
-			if ($languageManager->add($this->request->getPost())) {
+			if ($languageManager->add($this->request->getPost('language'))) {
 
 				$this->flashBag->set('success', 'A language has been added successfully');
 				return $languageManager->getLastId();
