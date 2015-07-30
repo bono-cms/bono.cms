@@ -1,7 +1,7 @@
 
 $(function(){
 	
-	$.wysiwyg.init(['content']);
+	$.wysiwyg.init(['page[content]']);
 	
 	
 	function add(callback) {

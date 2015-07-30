@@ -19,14 +19,14 @@ use Krystal\Form\HtmlHelper;
 		<div class="tab-pane fade in active" id="page" role="tabpanel">
 			<div class="well clearfix">
 				
-				<input type="hidden" name="id" value="<?php echo $page->getId(); ?>" />
-				<input type="hidden" name="web_page_id" value="<?php echo $page->getWebPageId(); ?>" />
+				<input type="hidden" name="page[id]" value="<?php echo $page->getId(); ?>" />
+				<input type="hidden" name="page[web_page_id]" value="<?php echo $page->getWebPageId(); ?>" />
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $page->getTitle(); ?>" />
+							<input type="text" name="page[title]" class="form-control" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $page->getTitle(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -36,7 +36,7 @@ use Krystal\Form\HtmlHelper;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
 					<div class="col-lg-10">
-						<textarea name="content" rows="7" class="form-control"><?php echo $page->getContent(); ?></textarea>
+						<textarea name="page[content]" rows="7" class="form-control"><?php echo $page->getContent(); ?></textarea>
 					</div>
 				</div>
 				
@@ -55,7 +55,7 @@ use Krystal\Form\HtmlHelper;
 							<?php echo DropdownWidget::render(array(
 								
 								'class' => 'form-control', 
-								'name' => 'controller'
+								'name' => 'page[controller]'
 								
 							), $controllers, $page->getController(), false); ?>
 							
@@ -67,7 +67,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php $this->show('Template override'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="template" class="form-control" value="<?php echo $page->getTemplate(); ?>" placeholder="<?php $this->show('If you need another template which is different from default one, you can define its name here'); ?>" />
+								<input type="text" name="page[template]" class="form-control" value="<?php echo $page->getTemplate(); ?>" placeholder="<?php $this->show('If you need another template which is different from default one, you can define its name here'); ?>" />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 							</div>
 						</div>
@@ -80,7 +80,7 @@ use Krystal\Form\HtmlHelper;
 							
 							<?php echo CheckBoxWidget::render(array(
 								
-								'name' => 'protected', 
+								'name' => 'page[protected]', 
 								'class' => 'form-control',
 								'placeholder' => $this->translate('If you protect the page you are going to created, them users that use only simple mode will not be able to remove it')
 								
@@ -101,7 +101,7 @@ use Krystal\Form\HtmlHelper;
 
 							<?php echo CheckBoxWidget::render(array(
 								
-								'name' => 'makeDefault', 
+								'name' => 'page[makeDefault]', 
 								'class' => 'form-control',
 								'placeholder' => $this->translate('Whether it should be home page or not')
 								
@@ -118,7 +118,7 @@ use Krystal\Form\HtmlHelper;
 							
 							<?php echo CheckBoxWidget::render(array(
 								
-								'name' => 'seo', 
+								'name' => 'page[seo]', 
 								'class' => 'form-control'
 								
 							), $page->getSeo()); ?>
@@ -131,7 +131,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="slug" class="form-control" value="<?php echo $page->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
+								<input type="text" name="page[slug]" class="form-control" value="<?php echo $page->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
 								<span class="input-group-addon">
 									<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
 								</span>
@@ -144,7 +144,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="keywords" class="form-control" value="<?php echo $page->getKeywords(); ?>" placeholder="<?php $this->show('Keywords used for search engines'); ?>" />
+								<input type="text" name="page[keywords]" class="form-control" value="<?php echo $page->getKeywords(); ?>" placeholder="<?php $this->show('Keywords used for search engines'); ?>" />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
 							</div>
 						</div>
@@ -154,7 +154,7 @@ use Krystal\Form\HtmlHelper;
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 						<div class="col-lg-10">
-							<textarea name="meta_description" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $page->getMetaDescription(); ?></textarea>
+							<textarea name="page[meta_description]" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $page->getMetaDescription(); ?></textarea>
 						</div>
 					</div>
 					
