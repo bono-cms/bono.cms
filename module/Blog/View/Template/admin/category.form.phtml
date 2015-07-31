@@ -16,14 +16,15 @@ use Krystal\Form\HtmlHelper;
 		<div class="tab-pane fade in active" id="page" role="tabpanel">
 			<div class="well clearfix">
 				
-				<input type="hidden" name="id" value="<?php echo $category->getId(); ?>" />
+				<input type="hidden" name="category[id]" value="<?php echo $category->getId(); ?>" />
+				<input type="hidden" name="category[web_page_id]" value="<?php echo $category->getWebPageId(); ?>" />
 				<input type="hidden" name="web_page_id" value="<?php echo $category->getWebPageId(); ?>" />
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Category title'); ?>" value="<?php echo $category->getTitle(); ?>" />
+							<input type="text" name="category[title]" class="form-control" placeholder="<?php $this->show('Category title'); ?>" value="<?php echo $category->getTitle(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -33,7 +34,7 @@ use Krystal\Form\HtmlHelper;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 					<div class="col-lg-10">				
-						<textarea name="description"><?php echo $category->getDescription(); ?></textarea>
+						<textarea name="category[description]"><?php echo $category->getDescription(); ?></textarea>
 					</div>
 				</div>
 				
@@ -43,7 +44,7 @@ use Krystal\Form\HtmlHelper;
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 						<div class="col-lg-10">
-							<?php echo CheckBoxWidget::render(array('name' => 'seo', 'class' => 'form-control'), $category->getSeo()); ?>
+							<?php echo CheckBoxWidget::render(array('name' => 'category[seo]', 'class' => 'form-control'), $category->getSeo()); ?>
 						</div>
 					</div>
 					
@@ -52,7 +53,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="number" name="order" class="form-control" placeholder="<?php $this->show('Category order'); ?>" value="<?php echo $category->getOrder(); ?>" />
+								<input type="number" name="category[order]" class="form-control" placeholder="<?php $this->show('Category order'); ?>" value="<?php echo $category->getOrder(); ?>" />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 							</div>
 						</div>
@@ -63,7 +64,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="slug" class="form-control" placeholder="<?php $this->show('URL slug for this category. By default is taken from a title'); ?>" value="<?php echo $category->getSlug(); ?>" />
+								<input type="text" name="category[slug]" class="form-control" placeholder="<?php $this->show('URL slug for this category. By default is taken from a title'); ?>" value="<?php echo $category->getSlug(); ?>" />
 								<span class="input-group-addon">
 									<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
 								</span>
@@ -76,7 +77,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php echo $this->translate('Keywords'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="keywords" class="form-control" placeholder="<?php $this->show('Keywords used for search engines'); ?>" value="<?php echo $category->getKeywords(); ?>" />
+								<input type="text" name="category[keywords]" class="form-control" placeholder="<?php $this->show('Keywords used for search engines'); ?>" value="<?php echo $category->getKeywords(); ?>" />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
 							</div>
 						</div>
@@ -86,7 +87,7 @@ use Krystal\Form\HtmlHelper;
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Meta-Description'); ?></label>
 						<div class="col-lg-10">				
-							<textarea name="meta_description" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $category->getMetaDescription(); ?></textarea>
+							<textarea name="category[meta_description]" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $category->getMetaDescription(); ?></textarea>
 						</div>
 					</div>
 					

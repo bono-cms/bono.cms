@@ -1,7 +1,7 @@
 
 $(function() {
 	
-	$.wysiwyg.init(['description']);
+	$.wysiwyg.init(['category[description]']);
 	
 	
 	function update(callback){

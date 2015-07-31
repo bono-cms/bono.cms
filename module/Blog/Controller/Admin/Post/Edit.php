@@ -44,11 +44,11 @@ final class Edit extends AbstractPost
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('post'));
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getPostManager()->update($this->request->getPost())) {
+			if ($this->getPostManager()->update($this->request->getPost('post'))) {
 
 				$this->flashBag->set('success', 'A post has been updated successfully');
 				return '1';

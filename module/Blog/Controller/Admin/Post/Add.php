@@ -43,13 +43,13 @@ final class Add extends AbstractPost
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('post'));
 
 		if ($formValidator->isValid()) {
 
 			$postManager = $this->getPostManager();
 
-			if ($postManager->add($this->request->getPost())) {
+			if ($postManager->add($this->request->getPost('post'))) {
 
 				$this->flashBag->set('success', 'A post has been created successfully');
 				return $postManager->getLastId();
