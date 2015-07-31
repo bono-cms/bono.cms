@@ -6,8 +6,8 @@ use Krystal\Form\Widget\CheckBoxWidget;
 
 <form>
 	
-	<input type="hidden" name="id" value="<?php echo $member->getId(); ?>" />
-	<input type="hidden" name="photo" value="<?php echo $member->getPhoto(); ?>" />
+	<input type="hidden" name="team[id]" value="<?php echo $member->getId(); ?>" />
+	<input type="hidden" name="team[photo]" value="<?php echo $member->getPhoto(); ?>" />
 	
 	<div class="well clearfix">
 		
@@ -15,7 +15,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="name" class="form-control" placeholder="<?php $this->show("Member's name"); ?>" value="<?php echo $member->getName(); ?>" />
+					<input type="text" name="team[name]" class="form-control" placeholder="<?php $this->show("Member's name"); ?>" value="<?php echo $member->getName(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -25,7 +25,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 			<div class="col-lg-10">
-				<textarea name="description" rows="7" class="form-control"><?php echo $member->getDescription(); ?></textarea>
+				<textarea name="team[description]" rows="7" class="form-control"><?php echo $member->getDescription(); ?></textarea>
 			</div>
 		</div>
 		
@@ -55,14 +55,14 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
-					<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $member->getPublished()); ?>
+					<?php echo CheckBoxWidget::render(array('name' => 'team[published]', 'class' => 'form-control'), $member->getPublished()); ?>
 				</div>
 			</div>
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 				<div class="col-lg-10">
-					<input type="number" name="order" class="form-control" placeholder="<?php $this->show("Member's sort order"); ?>" value="<?php echo $member->getOrder(); ?>" />
+					<input type="number" name="team[order]" class="form-control" placeholder="<?php $this->show("Member's sort order"); ?>" value="<?php echo $member->getOrder(); ?>" />
 				</div>
 			</div>
 			

@@ -40,7 +40,7 @@ final class Add extends AbstractMember
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost(), $this->request->getFiles());
+		$formValidator = $this->getValidator($this->request->getPost('team'), $this->request->getFiles());
 
 		if ($formValidator->isValid()) {
 

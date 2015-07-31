@@ -44,7 +44,7 @@ final class Edit extends AbstractMember
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost(), $this->request->getFiles(), true);
+		$formValidator = $this->getValidator($this->request->getPost('team'), $this->request->getFiles(), true);
 
 		if ($formValidator->isValid()) {
 

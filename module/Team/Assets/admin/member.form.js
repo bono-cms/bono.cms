@@ -1,7 +1,7 @@
 
 $(function() {
 	
-	$.wysiwyg.init(['description']);
+	$.wysiwyg.init(['team[description]']);
 	
 	
 	function add(success) {

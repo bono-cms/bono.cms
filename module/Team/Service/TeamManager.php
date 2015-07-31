@@ -135,13 +135,16 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 			$file =& $input['files']['file'];
 			$this->filterFileInput($file);
 
-			// Append new photo key into data container
-			$input['data']['photo'] = $file[0]->getName();
+			// A reference to form data
+			$form =& $input['data']['team'];
 
-			$this->track('Member "%s" has been added', $input['data']['name']);
+			// Append new photo key into data container
+			$form['photo'] = $file[0]->getName();
+
+			$this->track('Member "%s" has been added', $form['name']);
 
 			// Insert must be first, so that we can get the last id
-			return $this->teamMapper->insert($input['data']) && $this->imageManager->upload($this->getLastId(), $file);
+			return $this->teamMapper->insert($form) && $this->imageManager->upload($this->getLastId(), $file);
 		}
 	}
 
@@ -154,7 +157,7 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 	public function update(array $input)
 	{
 		// Just a reference
-		$form =& $input['data'];
+		$form =& $input['data']['team'];
 
 		if (!empty($input['files'])) {
 
