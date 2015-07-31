@@ -60,19 +60,6 @@ $(function(){
 			}
 		}
 	};
-
-	$.refreshSlug = function(fromElement, targetElement){
-		$.ajax({
-			url : "/admin/kernel/generate-slug",
-			data : {
-				title : fromElement.val()
-			},
-			success : function(response){
-				targetElement.val(response);
-			}
-		});
-	};
-	
 	
 	$("a.mode-link").click(function(event){
 		event.preventDefault();
@@ -128,7 +115,15 @@ $(function(){
 	
 	$("[data-button='slug']").click(function(event){
 		event.preventDefault();
-		$.refreshSlug($("[name='title']"), $("[name='slug']"));
+		$.ajax({
+			url : "/admin/kernel/generate-slug",
+			data : {
+				title : $("[data-input='title']").val()
+			},
+			success : function(response){
+				$("[data-input='slug']").val(response);
+			}
+		});
 	});
 	
 	
