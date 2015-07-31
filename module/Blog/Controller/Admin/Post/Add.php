@@ -25,7 +25,7 @@ final class Add extends AbstractPost
 		$this->loadSharedPlugins();
 
 		$post = new VirtualEntity();
-		$post->setTimestamp(time())
+		$post->setDate(date('m/d/Y', time()))
 			 ->setPublished(true)
 			 ->setComments(true)
 			 ->setSeo(true);

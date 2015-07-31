@@ -33,7 +33,7 @@ use Krystal\Form\HtmlHelper;
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
-					<div class="col-lg-10">				
+					<div class="col-lg-10">
 						<textarea name="category[description]"><?php echo $category->getDescription(); ?></textarea>
 					</div>
 				</div>
@@ -86,7 +86,7 @@ use Krystal\Form\HtmlHelper;
 					
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Meta-Description'); ?></label>
-						<div class="col-lg-10">				
+						<div class="col-lg-10">
 							<textarea name="category[meta_description]" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $category->getMetaDescription(); ?></textarea>
 						</div>
 					</div>
