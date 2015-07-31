@@ -23,7 +23,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="form[title]" class="form-control" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $form->getTitle(); ?>" />
+							<input type="text" name="form[title]" class="form-control" data-input="title" placeholder="<?php $this->show('Page title'); ?>" value="<?php echo $form->getTitle(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -70,7 +70,7 @@ use Krystal\Form\HtmlHelper;
 						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="form[slug]" class="form-control" value="<?php echo $form->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
+								<input type="text" name="form[slug]" class="form-control" data-input="slug" value="<?php echo $form->getSlug(); ?>" placeholder="<?php $this->show('URL slug for this page. By default is taken from a title'); ?>" />
 								<span class="input-group-addon">
 									<a href="#" data-button="slug">
 										<i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i>

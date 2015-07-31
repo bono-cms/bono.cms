@@ -155,13 +155,6 @@ $(function() {
 	});
 	
 	
-	// Here we need special case
-	$("[data-button='slug']").off('click').click(function(event){
-		event.preventDefault();
-		$.refreshSlug($("[name='product[title]']"), $("[name='product[slug]']"));
-	});
-	
-	
 	$("[data-button='cancel']").click(function(event){
 		event.preventDefault();
 		window.location = '/admin/module/shop';

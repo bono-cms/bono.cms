@@ -18,7 +18,7 @@ use Krystal\Form\Widget\DropdownWidget;
 			<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="announce[title]" class="form-control" placeholder="<?php $this->show('Announce title'); ?>" value="<?php echo $announce->getTitle(); ?>" />
+					<input type="text" name="announce[title]" class="form-control" placeholder="<?php $this->show('Announce title'); ?>" data-input="title" value="<?php echo $announce->getTitle(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -94,7 +94,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group">
-						<input type="text" name="announce[slug]" class="form-control" placeholder="<?php $this->show('URL slug for this announce. By default is taken from a title'); ?>" value="<?php echo $announce->getSlug(); ?>" />
+						<input type="text" name="announce[slug]" class="form-control" data-input="slug" placeholder="<?php $this->show('URL slug for this announce. By default is taken from a title'); ?>" value="<?php echo $announce->getSlug(); ?>" />
 						<span class="input-group-addon">
 							<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh'); ?>"></i></a>
 						</span>

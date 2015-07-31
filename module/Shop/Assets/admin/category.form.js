@@ -25,12 +25,6 @@ $(function() {
 		});
 	}	
 	
-	$("[data-button='slug']").off('click').click(function(event){
-		event.preventDefault();
-		$.refreshSlug($("[name='category[title]']"), $("[name='category[slug]']"));
-	});
-	
-	
 	$("[data-button='add']").click(function(){
 		add(function(response){
 			if ($.isNumeric(response)) {

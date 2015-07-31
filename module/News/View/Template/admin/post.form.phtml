@@ -19,7 +19,7 @@ use Krystal\Form\Widget\DropdownWidget;
 			<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="post[title]" class="form-control" placeholder="<?php $this->show("Post's title"); ?>" value="<?php echo $post->getTitle(); ?>" />
+					<input type="text" name="post[title]" class="form-control" data-input="title" placeholder="<?php $this->show("Post's title"); ?>" value="<?php echo $post->getTitle(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -83,7 +83,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group">
-						<input type="text" name="post[slug]" class="form-control" placeholder="<?php $this->show('URL slug for this post. By default is taken from a title'); ?>" value="<?php echo $post->getSlug(); ?>" />
+						<input type="text" name="post[slug]" class="form-control" data-input="slug" placeholder="<?php $this->show('URL slug for this post. By default is taken from a title'); ?>" value="<?php echo $post->getSlug(); ?>" />
 						<span class="input-group-addon">
 							<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
 						</span>

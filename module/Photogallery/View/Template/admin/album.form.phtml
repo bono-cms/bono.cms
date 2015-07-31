@@ -24,7 +24,7 @@ use Krystal\Form\Widget\DropdownWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="album[name]" class="form-control" placeholder="<?php $this->show("Photoalbum's name"); ?>" value="<?php echo $album->getName(); ?>" />
+							<input type="text" name="album[name]" class="form-control" placeholder="<?php $this->show("Photoalbum's name"); ?>" data-input="title" value="<?php echo $album->getName(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -77,7 +77,7 @@ use Krystal\Form\Widget\DropdownWidget;
 						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="album[slug]" value="<?php echo $album->getSlug(); ?>" class="form-control" placeholder="<?php $this->show('URL slug for this album. By default is taken from a title'); ?>" />
+								<input type="text" name="album[slug]" value="<?php echo $album->getSlug(); ?>" class="form-control" data-input="slug" placeholder="<?php $this->show('URL slug for this album. By default is taken from a title'); ?>" />
 								<span class="input-group-addon">
 									<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" data-placement="left" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
 								</span>
