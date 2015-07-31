@@ -46,7 +46,7 @@ final class Edit extends AbstractImage
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost(), $this->request->getFiles(), true);
+		$formValidator = $this->getValidator($this->request->getPost('image'), $this->request->getFiles(), true);
 
 		if ($formValidator->isValid()) {
 

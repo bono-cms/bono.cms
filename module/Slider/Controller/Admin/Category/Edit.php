@@ -44,11 +44,11 @@ final class Edit extends AbstractCategory
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('category'));
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getCategoryManager()->update($this->request->getPost())) {
+			if ($this->getCategoryManager()->update($this->request->getPost('category'))) {
 
 				$this->flashBag->set('success', 'The category has been updated successfully');
 				return '1';

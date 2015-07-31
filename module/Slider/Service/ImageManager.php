@@ -353,7 +353,7 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 	private function prepareInput(array $input)
 	{
 		// Just references
-		$data =& $input['data'];
+		$data =& $input['data']['image'];
 		$file =& $input['files']['file'];
 
 		if (empty($data['name'])) {
@@ -376,7 +376,7 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 			$input = $this->prepareInput($input);
 
 			$file =& $input['files']['file'];
-			$data =& $input['data'];
+			$data =& $input['data']['image'];
 
 			$data['image'] = $file[0]->getName();
 			$uploader = $this->getUploader($data['category_id']);
@@ -397,7 +397,7 @@ final class ImageManager extends AbstractManager implements ImageManagerInterfac
 	 */
 	public function update(array $input)
 	{
-		$data =& $input['data'];
+		$data =& $input['data']['image'];
 
 		// Handle image
 		if (!empty($input['files'])) {

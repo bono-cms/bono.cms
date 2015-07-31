@@ -1,13 +1,13 @@
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="id" value="<?php echo $category->getId(); ?>" />
+		<input type="hidden" name="category[id]" value="<?php echo $category->getId(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="name" value="<?php echo $category->getName(); ?>" class="form-control" placeholder="<?php $this->show('Category name'); ?>" />
+					<input type="text" name="category[name]" value="<?php echo $category->getName(); ?>" class="form-control" placeholder="<?php $this->show('Category name'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -18,7 +18,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Class'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="class" value="<?php echo $category->getClass(); ?>" class="form-control" placeholder="<?php $this->show('Class to simplify rendering'); ?>" />
+					<input type="text" name="category[class]" value="<?php echo $category->getClass(); ?>" class="form-control" placeholder="<?php $this->show('Class to simplify rendering'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Width'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="number" name="width" value="<?php echo $category->getWidth(); ?>" class="form-control" placeholder="<?php $this->show('Desired width for slide images'); ?>" />
+					<input type="number" name="category[width]" value="<?php echo $category->getWidth(); ?>" class="form-control" placeholder="<?php $this->show('Desired width for slide images'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Height'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="number" name="height" value="<?php echo $category->getHeight(); ?>" class="form-control" placeholder="<?php $this->show('Desired height for slide images'); ?>" />
+					<input type="number" name="category[height]" value="<?php echo $category->getHeight(); ?>" class="form-control" placeholder="<?php $this->show('Desired height for slide images'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
