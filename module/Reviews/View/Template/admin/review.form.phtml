@@ -45,7 +45,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
 			<div class="col-lg-10">
-				<textarea id="content" name="review[content]" class="form-control"><?php echo $review->getContent(); ?></textarea>
+				<textarea name="review[content]"><?php echo $review->getContent(); ?></textarea>
 			</div>
 		</div>
 		
@@ -53,7 +53,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 			<div class="col-lg-10">
-				<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $review->getPublished()); ?>
+				<?php echo CheckBoxWidget::render(array('name' => 'review[published]', 'class' => 'form-control'), $review->getPublished()); ?>
 			</div>
 		</div>
 		

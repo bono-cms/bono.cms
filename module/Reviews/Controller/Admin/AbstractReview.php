@@ -80,7 +80,7 @@ abstract class AbstractReview extends AbstractController
 		$vars = array(
 			'dateFormat' => $this->getReviewsManager()->getTimeFormat(),
 		);
-		
+
 		return array_replace_recursive($vars, $overrides);
 	}
 
