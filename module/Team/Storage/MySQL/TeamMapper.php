@@ -44,7 +44,7 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function updateOrderById($id, $order)
 	{
-		return $this->updateColumnByPk('order', $order, $id);
+		return $this->updateColumnByPk($id, 'order', $order);
 	}
 
 	/**
@@ -56,7 +56,7 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 	 */
 	public function updatePublishedById($id, $published)
 	{
-		return $this->updateColumnByPk('published', $published, $id);
+		return $this->updateColumnByPk($id, 'published', $published);
 	}
 
 	/**
