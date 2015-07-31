@@ -43,12 +43,12 @@ final class Edit extends AbstractAnnounce
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('announce'));
 
 		if ($formValidator->isValid()) {
 			$announceManager = $this->getAnnounceManager();;
 
-			if ($announceManager->update($this->request->getPost())) {
+			if ($announceManager->update($this->request->getPost('announce'))) {
 
 				$this->flashBag->set('success', 'The announce has been updated successfully');
 				return '1';

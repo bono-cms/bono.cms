@@ -10,14 +10,15 @@ use Krystal\Form\Widget\DropdownWidget;
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="id" value="<?php echo $announce->getId(); ?>" />
+		<input type="hidden" name="announce[id]" value="<?php echo $announce->getId(); ?>" />
+		<input type="hidden" name="announce[web_page_id]" value="<?php echo $announce->getWebPageId(); ?>" />
 		<input type="hidden" name="web_page_id" value="<?php echo $announce->getWebPageId(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="title" class="form-control" placeholder="<?php $this->show('Announce title'); ?>" value="<?php echo $announce->getTitle(); ?>" />
+					<input type="text" name="announce[title]" class="form-control" placeholder="<?php $this->show('Announce title'); ?>" value="<?php echo $announce->getTitle(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -28,7 +29,7 @@ use Krystal\Form\Widget\DropdownWidget;
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group date">
-					<input type="text" name="name" class="form-control" placeholder="<?php $this->show('Name of this announce'); ?>" value="<?php echo $announce->getName(); ?>" />
+					<input type="text" name="announce[name]" class="form-control" placeholder="<?php $this->show('Name of this announce'); ?>" value="<?php echo $announce->getName(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil" data-toggle="tooltip"></i></span>
 				</div>
 			</div>
@@ -39,7 +40,7 @@ use Krystal\Form\Widget\DropdownWidget;
 			<label class="col-lg-2 control-label"><?php $this->show('Category'); ?></label>
 			<div class="col-lg-10">
 				
-				<?php echo DropdownWidget::render(array('name' => 'category_id', 'class' => 'form-control'), $categories, $announce->getCategoryId(), false); ?>
+				<?php echo DropdownWidget::render(array('name' => 'announce[category_id]', 'class' => 'form-control'), $categories, $announce->getCategoryId(), false); ?>
 			</div>
 		</div>
 		
@@ -47,7 +48,7 @@ use Krystal\Form\Widget\DropdownWidget;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Introduction'); ?></label>
 			<div class="col-lg-10">				
-				<textarea name="intro" class="form-control"><?php echo $announce->getIntro(); ?></textarea>
+				<textarea name="announce[intro]" class="form-control"><?php echo $announce->getIntro(); ?></textarea>
 			</div>
 		</div>
 		
@@ -55,7 +56,7 @@ use Krystal\Form\Widget\DropdownWidget;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Full text'); ?></label>
 			<div class="col-lg-10">
-				<textarea name="full" class="form-control"><?php echo $announce->getFull(); ?></textarea>
+				<textarea name="announce[full]" class="form-control"><?php echo $announce->getFull(); ?></textarea>
 			</div>
 		</div>
 		
@@ -65,7 +66,7 @@ use Krystal\Form\Widget\DropdownWidget;
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
-					<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $announce->getPublished()); ?>
+					<?php echo CheckBoxWidget::render(array('name' => 'announce[published]', 'class' => 'form-control'), $announce->getPublished()); ?>
 				</div>
 			</div>
 			
@@ -73,7 +74,7 @@ use Krystal\Form\Widget\DropdownWidget;
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 				<div class="col-lg-10">
-					<?php echo CheckBoxWidget::render(array('name' => 'seo', 'class' => 'form-control'), $announce->getSeo()); ?>
+					<?php echo CheckBoxWidget::render(array('name' => 'announce[seo]', 'class' => 'form-control'), $announce->getSeo()); ?>
 				</div>
 			</div>
 			
@@ -82,7 +83,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group">
-						<input type="number" name="order" class="form-control"  placeholder="<?php $this->show('Order of the announce to be created'); ?>" value="<?php echo $announce->getOrder(); ?>" />
+						<input type="number" name="announce[order]" class="form-control"  placeholder="<?php $this->show('Order of the announce to be created'); ?>" value="<?php echo $announce->getOrder(); ?>" />
 						<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 					</div>
 				</div>
@@ -93,7 +94,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group">
-						<input type="text" name="slug" class="form-control" placeholder="<?php $this->show('URL slug for this announce. By default is taken from a title'); ?>" value="<?php echo $announce->getSlug(); ?>" />
+						<input type="text" name="announce[slug]" class="form-control" placeholder="<?php $this->show('URL slug for this announce. By default is taken from a title'); ?>" value="<?php echo $announce->getSlug(); ?>" />
 						<span class="input-group-addon">
 							<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh'); ?>"></i></a>
 						</span>
@@ -106,7 +107,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group">
-						<input type="text" name="keywords" class="form-control"  placeholder="<?php $this->show('Keywords used for search engines'); ?>" value="<?php echo $announce->getKeywords() ;?>" />
+						<input type="text" name="announce[keywords]" class="form-control"  placeholder="<?php $this->show('Keywords used for search engines'); ?>" value="<?php echo $announce->getKeywords() ;?>" />
 						<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
 					</div>
 				</div>
@@ -116,7 +117,7 @@ use Krystal\Form\Widget\DropdownWidget;
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Meta-Description'); ?></label>
 				<div class="col-lg-10">
-					<textarea name="meta_description" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $announce->getMetaDescription(); ?></textarea>
+					<textarea name="announce[meta_description]" class="form-control" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $announce->getMetaDescription(); ?></textarea>
 				</div>
 			</div>
 			

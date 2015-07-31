@@ -41,13 +41,13 @@ final class Add extends AbstractAnnounce
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('announce'));
 
 		if ($formValidator->isValid()) {
 
 			$announceManager = $this->getAnnounceManager();
 
-			if ($announceManager->add($this->request->getPost())) {
+			if ($announceManager->add($this->request->getPost('announce'))) {
 
 				$this->flashBag->set('success', 'An announce has been created successfully');
 				return $announceManager->getLastId();
