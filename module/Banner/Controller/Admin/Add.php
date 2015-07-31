@@ -37,7 +37,7 @@ final class Add extends AbstractBanner
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost(), $this->request->getFiles());
+		$formValidator = $this->getValidator($this->request->getPost('banner'), $this->request->getFiles());
 
 		if ($formValidator->isValid()) {
 

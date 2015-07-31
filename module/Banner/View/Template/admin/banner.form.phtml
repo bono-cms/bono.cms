@@ -1,20 +1,20 @@
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="id" value="<?php echo $banner->getId(); ?>" />
-		<input type="hidden" name="file" value="<?php echo $banner->getFile(); ?>" >
+		<input type="hidden" name="banner[id]" value="<?php echo $banner->getId(); ?>" />
+		<input type="hidden" name="banner[file]" value="<?php echo $banner->getFile(); ?>" >
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
-				<input type="text" name="name" class="form-control" placeholder="<?php $this->show('Banner name'); ?>" value="<?php echo $banner->getName(); ?>"/>
+				<input type="text" name="banner[name]" class="form-control" placeholder="<?php $this->show('Banner name'); ?>" value="<?php echo $banner->getName(); ?>"/>
 			</div>
 		</div>
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('URL Link'); ?></label>
 			<div class="col-lg-10">
-				<input type="text" name="link" class="form-control" placeholder="<?php $this->show('URL link when clicked'); ?>" value="<?php echo $banner->getLink(); ?>" />
+				<input type="text" name="banner[link]" class="form-control" placeholder="<?php $this->show('URL link when clicked'); ?>" value="<?php echo $banner->getLink(); ?>" />
 			</div>
 		</div>
 		

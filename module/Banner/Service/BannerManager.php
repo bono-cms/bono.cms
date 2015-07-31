@@ -159,7 +159,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	private function prepareInput(array $input)
 	{
 		$file =& $input['files']['banner'];
-		$data =& $input['data'];
+		$data =& $input['data']['banner'];
 
 		if (!empty($file)) {
 			$this->filterFileInput($file);
@@ -180,7 +180,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 		$form = $this->prepareInput($form);
 
 		if (!empty($form['files']['banner'])) {
-			$data =& $form['data'];
+			$data =& $form['data']['banner'];
 
 			// In order to get last id, a record needs to be inserted first
 			$this->bannerMapper->insert($data);
@@ -207,7 +207,7 @@ final class BannerManager extends AbstractManager implements BannerManagerInterf
 	 */
 	public function update(array $input)
 	{
-		$data =& $input['data'];
+		$data =& $input['data']['banner'];
 
 		// If we have a new banner
 		if (!empty($input['files']['banner'])) {

@@ -44,7 +44,7 @@ final class Edit extends AbstractBanner
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost(), $this->request->getFiles(), true);
+		$formValidator = $this->getValidator($this->request->getPost('banner'), $this->request->getFiles(), true);
 
 		if ($formValidator->isValid()) {
 
