@@ -43,11 +43,11 @@ final class Edit extends AbstractQa
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('qa'));
 
 		if ($formValidator->isValid()) {
 
-			if ($this->getQaManager()->update($this->request->getPost())) {
+			if ($this->getQaManager()->update($this->request->getPost('qa'))) {
 
 				$this->flashBag->set('success', 'The pair has been updated successfully');
 				return '1';

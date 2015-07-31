@@ -42,12 +42,12 @@ final class Add extends AbstractQa
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('qa'));
 
 		if ($formValidator->isValid()) {
 			$qaManager = $this->getQaManager();
 
-			if ($qaManager->add($this->request->getPost())) {
+			if ($qaManager->add($this->request->getPost('qa'))) {
 
 				$this->flashBag->set('success', 'A pair has been added successfully');
 				return $qaManager->getLastId();
