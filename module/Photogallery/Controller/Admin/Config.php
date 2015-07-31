@@ -38,11 +38,11 @@ final class Config extends AbstractController
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('config'));
 
 		if ($formValidator->isValid()) {
 
-			$this->getConfigManager()->write($this->request->getPost());
+			$this->getConfigManager()->write($this->request->getPost('config'));
 			$this->flashBag->set('success', 'Configuration has been updated successfully');
 
 			return '1';
