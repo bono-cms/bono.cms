@@ -43,7 +43,7 @@ final class Edit extends AbstractReview
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('review'));
 
 		if ($formValidator->isValid()) {
 

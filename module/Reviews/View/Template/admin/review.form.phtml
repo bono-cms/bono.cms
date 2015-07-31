@@ -7,13 +7,13 @@ use Krystal\Form\Widget\CheckBoxWidget;
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="id" value="<?php echo $review->getId(); ?>" />
+		<input type="hidden" name="review[id]" value="<?php echo $review->getId(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="name" class="form-control" placeholder="<?php $this->show('Name of the person who left this message'); ?>" value="<?php echo $review->getName(); ?>" />
+					<input type="text" name="review[name]" class="form-control" placeholder="<?php $this->show('Name of the person who left this message'); ?>" value="<?php echo $review->getName(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -24,7 +24,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" class="form-control" name="email" placeholder="<?php $this->show('Email of the person who left this message'); ?>" value="<?php echo $review->getEmail(); ?>" />
+					<input type="text" class="form-control" name="review[email]" placeholder="<?php $this->show('Email of the person who left this message'); ?>" value="<?php echo $review->getEmail(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -35,7 +35,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<label class="col-lg-2 control-label"><?php $this->show('Date'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="date" class="form-control" placeholder="<?php $this->show('Date of the publication'); ?>" value="<?php echo date($dateFormat, $review->getTimestamp()); ?>" />
+					<input type="text" name="review[date]" class="form-control" placeholder="<?php $this->show('Date of the publication'); ?>" value="<?php echo date($dateFormat, $review->getTimestamp()); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 				</div>
 			</div>
@@ -45,7 +45,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
 			<div class="col-lg-10">
-				<textarea id="content" name="content" class="form-control"><?php echo $review->getContent(); ?></textarea>
+				<textarea id="content" name="review[content]" class="form-control"><?php echo $review->getContent(); ?></textarea>
 			</div>
 		</div>
 		

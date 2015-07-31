@@ -91,7 +91,7 @@ abstract class AbstractReview extends AbstractController
 	 */
 	final protected function getContainer()
 	{
-		return array_merge(array('ip' => $this->request->getClientIp()), $this->request->getPost());
+		return array_merge(array('ip' => $this->request->getClientIp()), $this->request->getPost('review'));
 	}
 
 	/**

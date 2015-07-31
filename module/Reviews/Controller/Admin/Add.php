@@ -41,7 +41,7 @@ final class Add extends AbstractReview
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('review'));
 
 		if ($formValidator->isValid()) {
 
