@@ -223,7 +223,7 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	 */
 	private function prepareInput(array $input)
 	{
-		$data =& $input['data'];
+		$data =& $input['data']['photo'];
 		$file =& $input['files']['file'];
 
 		// Empty photo name should be replace by target filename
@@ -246,7 +246,7 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	{
 		$input = $this->prepareInput($input);
 
-		$data =& $input['data'];
+		$data =& $input['data']['photo'];
 		$file =& $input['files']['file'];
 
 		$data['photo'] = $file[0]->getName();
@@ -266,7 +266,7 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	 */
 	public function update(array $input)
 	{
-		$data =& $input['data'];
+		$data =& $input['data']['photo'];
 
 		// Upload a photo if present and override it
 		if (!empty($input['files'])) {

@@ -23,7 +23,7 @@ final class Add extends AbstractAlbum
 	public function indexAction()
 	{
 		$this->loadSharedPlugins();
-		
+
 		$album = new VirtualEntity();
 		$album->setSeo(true);
 
@@ -40,7 +40,7 @@ final class Add extends AbstractAlbum
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('album'));
 
 		if ($formValidator->isValid()) {
 

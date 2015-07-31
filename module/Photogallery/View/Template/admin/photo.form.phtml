@@ -20,14 +20,14 @@ use Krystal\Form\Widget\DropdownWidget;
 		<div role="tabpanel" class="tab-pane fade in active" id="image" role="tabpanel">
 			<div class="well clearfix">
 				
-				<input type="hidden" name="id" value="<?php echo $photo->getId(); ?>" />
-				<input type="hidden" name="photo" value="<?php echo $photo->getPhoto(); ?>" />
+				<input type="hidden" name="photo[id]" value="<?php echo $photo->getId(); ?>" />
+				<input type="hidden" name="photo[photo]" value="<?php echo $photo->getPhoto(); ?>" />
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="name" class="form-control" value="<?php echo $photo->getName(); ?>" placeholder="<?php $this->show('Name of the photo to be added'); ?>" />
+							<input type="text" name="photo[name]" class="form-control" value="<?php echo $photo->getName(); ?>" placeholder="<?php $this->show('Name of the photo to be added'); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -37,7 +37,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Album'); ?></label>
 					<div class="col-lg-10">
-						<?php echo DropdownWidget::render(array('name' => 'album_id', 'class' => 'form-control'), $albums, $photo->getAlbumId(), false); ?>
+						<?php echo DropdownWidget::render(array('name' => 'photo[album_id]', 'class' => 'form-control'), $albums, $photo->getAlbumId(), false); ?>
 					</div>
 				</div>
 				
@@ -73,7 +73,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'published', 'class' => 'form-control'), $photo->getPublished()); ?>
+						<?php echo CheckBoxWidget::render(array('name' => 'photo[published]', 'class' => 'form-control'), $photo->getPublished()); ?>
 					</div>
 				</div>
 				
@@ -81,7 +81,7 @@ use Krystal\Form\Widget\DropdownWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" name="order" class="form-control" value="<?php echo $photo->getOrder(); ?>" placeholder="<?php $this->show('Order of this photo in selected album'); ?>" />
+							<input type="number" name="photo[order]" class="form-control" value="<?php echo $photo->getOrder(); ?>" placeholder="<?php $this->show('Order of this photo in selected album'); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -91,7 +91,7 @@ use Krystal\Form\Widget\DropdownWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<textarea name="description" class="form-control" placeholder="<?php $this->show('Description. Can be used as a hint when mouse overs'); ?>"><?php echo $photo->getDescription(); ?></textarea>
+							<textarea name="photo[description]" class="form-control" placeholder="<?php $this->show('Description. Can be used as a hint when mouse overs'); ?>"><?php echo $photo->getDescription(); ?></textarea>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>

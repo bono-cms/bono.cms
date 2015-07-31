@@ -44,7 +44,7 @@ final class Edit extends AbstractAlbum
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('album'));
 
 		if ($formValidator->isValid()) {
 

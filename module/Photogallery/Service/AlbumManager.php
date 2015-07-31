@@ -195,18 +195,20 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	 */
 	private function prepareInput(array $input)
 	{
+		$form =& $input['album'];
+
 		// When name is empty, then it needs to be taken from a title
-		if (empty($input['title'])) {
-			$input['title'] = $input['name'];
+		if (empty($form['title'])) {
+			$form['title'] = $form['name'];
 		}
 
 		// Empty slug is always taken from a name
-		if (empty($input['slug'])) {
-			$input['slug']= $input['title'];
+		if (empty($form['slug'])) {
+			$form['slug'] = $form['title'];
 		}
 
 		// It's time to make a string look like a slug
-		$input['slug'] = $this->webPageManager->sluggify($input['slug']);
+		$form['slug'] = $this->webPageManager->sluggify($form['slug']);
 
 		return $input;
 	}
@@ -220,16 +222,18 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	public function add(array $input)
 	{
 		$input = $this->prepareInput($input);
-		$input['web_page_id'] = '';
+		$form =& $input['album'];
 
-		if ($this->albumMapper->insert(ArrayUtils::arrayWithout($input, array('slug', 'menu')))) {
+		$form['web_page_id'] = '';
 
-			$this->track('Album "%s" has been created', $input['title']);
+		if ($this->albumMapper->insert(ArrayUtils::arrayWithout($form, array('slug', 'menu')))) {
 
-			if ($this->webPageManager->add($this->getLastId(), $input['slug'], 'Photogallery', 'Photogallery:Album@showAction', $this->albumMapper)){
+			$this->track('Album "%s" has been created', $form['title']);
+
+			if ($this->webPageManager->add($this->getLastId(), $form['slug'], 'Photogallery', 'Photogallery:Album@showAction', $this->albumMapper)){
 				// Do the work in case menu widget was injected
 				if ($this->hasMenuWidget()) {
-					$this->addMenuItem($this->webPageManager->getLastId(), $input['title'], $input);
+					$this->addMenuItem($this->webPageManager->getLastId(), $form['title'], $input);
 				}
 			}
 
@@ -248,15 +252,16 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	public function update(array $input)
 	{
 		$input = $this->prepareInput($input);
-		$this->webPageManager->update($input['web_page_id'], $input['slug']);
+		$form =& $input['album'];
 
-		$this->track('Album "%s" has been updated', $input['title']);
+		$this->webPageManager->update($form['web_page_id'], $form['slug']);
+		$this->track('Album "%s" has been updated', $form['title']);
 
 		if ($this->hasMenuWidget()) {
-			$this->updateMenuItem($input['web_page_id'], $input['title'], $input['menu']);
+			$this->updateMenuItem($form['web_page_id'], $form['title'], $input['menu']);
 		}
 
-		return $this->albumMapper->update(ArrayUtils::arrayWithout($input, array('slug', 'menu')));
+		return $this->albumMapper->update(ArrayUtils::arrayWithout($form, array('slug', 'menu')));
 	}
 
 	/**

@@ -16,14 +16,15 @@ use Krystal\Form\Widget\DropdownWidget;
 		<div class="tab-pane fade in active" id="page" role="tabpanel">
 			<div class="well clearfix">
 				
-				<input type="hidden" name="id" value="<?php echo $album->getId(); ?>" />
+				<input type="hidden" name="album[id]" value="<?php echo $album->getId(); ?>" />
+				<input type="hidden" name="album[web_page_id]" value="<?php echo $album->getWebPageId(); ?>" />
 				<input type="hidden" name="web_page_id" value="<?php echo $album->getWebPageId(); ?>" />
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="name" class="form-control" placeholder="<?php $this->show("Photoalbum's name"); ?>" value="<?php echo $album->getName(); ?>" />
+							<input type="text" name="album[name]" class="form-control" placeholder="<?php $this->show("Photoalbum's name"); ?>" value="<?php echo $album->getName(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -34,7 +35,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Parent album'); ?></label>
 					<div class="col-lg-10">
-						<?php echo DropdownWidget::render(array('name' => 'parent_id', 'class' => 'form-control'), $albums, $album->getParentId(), '— '.$this->translate('None').' —'); ?>
+						<?php echo DropdownWidget::render(array('name' => 'album[parent_id]', 'class' => 'form-control'), $albums, $album->getParentId(), '— '.$this->translate('None').' —'); ?>
 					</div>
 				</div>
 				
@@ -42,7 +43,7 @@ use Krystal\Form\Widget\DropdownWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 					<div class="col-lg-10">
-						<textarea name="description" id="description" class="form-control"><?php echo $album->getDescription(); ?></textarea>
+						<textarea name="album[description]" id="description" class="form-control"><?php echo $album->getDescription(); ?></textarea>
 					</div>
 				</div>
 				
@@ -54,7 +55,7 @@ use Krystal\Form\Widget\DropdownWidget;
 						<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="title" value="<?php echo $album->getTitle(); ?>" class="form-control" placeholder="<?php $this->show("Photoalbum's title. By default is taken from the name"); ?>" />
+								<input type="text" name="album[title]" value="<?php echo $album->getTitle(); ?>" class="form-control" placeholder="<?php $this->show("Photoalbum's title. By default is taken from the name"); ?>" />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 							</div>
 						</div>
@@ -65,7 +66,7 @@ use Krystal\Form\Widget\DropdownWidget;
 						<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="order" value="<?php echo $album->getOrder(); ?>" class="form-control" placeholder="<?php $this->show('Sort order of this album'); ?>" />
+								<input type="text" name="album[order]" value="<?php echo $album->getOrder(); ?>" class="form-control" placeholder="<?php $this->show('Sort order of this album'); ?>" />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 							</div>
 						</div>
@@ -76,7 +77,7 @@ use Krystal\Form\Widget\DropdownWidget;
 						<label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="slug" value="<?php echo $album->getSlug(); ?>" class="form-control" placeholder="<?php $this->show('URL slug for this album. By default is taken from a title'); ?>" />
+								<input type="text" name="album[slug]" value="<?php echo $album->getSlug(); ?>" class="form-control" placeholder="<?php $this->show('URL slug for this album. By default is taken from a title'); ?>" />
 								<span class="input-group-addon">
 									<a href="#" data-button="slug"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" data-placement="left" title="<?php $this->show('Refresh the slug'); ?>"></i></a>
 								</span>
@@ -89,7 +90,7 @@ use Krystal\Form\Widget\DropdownWidget;
 						<label class="col-lg-2 control-label"><?php $this->show('Keywords'); ?></label>
 						<div class="col-lg-10">
 							<div class="input-group">
-								<input type="text" name="keywords" value="<?php echo $album->getKeywords(); ?>" class="form-control" placeholder="<?php $this->show('Keywords for search engines'); ?>" />
+								<input type="text" name="album[keywords]" value="<?php echo $album->getKeywords(); ?>" class="form-control" placeholder="<?php $this->show('Keywords for search engines'); ?>" />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 							</div>
 						</div>
@@ -99,14 +100,14 @@ use Krystal\Form\Widget\DropdownWidget;
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Meta-description'); ?></label>
 						<div class="col-lg-10">
-							<textarea class="form-control" name="meta_description" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $album->getMetaDescription(); ?></textarea>
+							<textarea class="form-control" name="album[meta_description]" placeholder="<?php $this->show('Meta description for search engines'); ?>"><?php echo $album->getMetaDescription(); ?></textarea>
 						</div>
 					</div>
 					
 					<div class="form-group clearfix">
 						<label class="col-lg-2 control-label"><?php $this->show('Enable SEO'); ?></label>
 						<div class="col-lg-10">
-							<?php echo CheckBoxWidget::render(array('name' => 'seo', 'class' => 'form-control'), $album->getSeo()); ?>
+							<?php echo CheckBoxWidget::render(array('name' => 'album[seo]', 'class' => 'form-control'), $album->getSeo()); ?>
 						</div>
 					</div>
 					
