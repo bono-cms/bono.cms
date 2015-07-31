@@ -11,21 +11,24 @@
 
 namespace News\Service;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class TimeBagFactory
 {
 	/**
 	 * Configuration entity
 	 * 
-	 * @var \News\
+	 * @var \Krystal\Stdlib\VirtualEntity
 	 */
 	private $config;
 
 	/**
 	 * State initialization
 	 * 
+	 * @param \Krystal\Stdlib\VirtualEntity $config
 	 * @return void
 	 */
-	public function __construct($config)
+	public function __construct(VirtualEntity $config)
 	{
 		$this->config = $config;
 	}
