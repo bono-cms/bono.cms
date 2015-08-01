@@ -223,11 +223,11 @@ final class LinkBuilder implements LinkBuilderInterface
 	private function process(array $raw)
 	{
 		// This trick allows to use class's public methods inside a visitor at least
-		$self =& $this;
+		$that = $this;
 
-		$data = $this->appendNestedPair($this->drop($raw), function($data) use ($self){
+		$data = $this->appendNestedPair($this->drop($raw), function($data) use ($that){
 			// Grab a service for current module
-			$service = $self->getService($data['module']);
+			$service = $that->getService($data['module']);
 
 			// Ensure found service is registered in module declaration
 			if ($service !== false) {
