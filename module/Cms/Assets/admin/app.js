@@ -120,6 +120,9 @@ $(function(){
 			data : {
 				title : $("[data-input='title']").val()
 			},
+			beforeSend : function(){
+				// Cancel global beforeSend() with this empty function
+			},
 			success : function(response){
 				$("[data-input='slug']").val(response);
 			}
