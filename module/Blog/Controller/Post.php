@@ -11,6 +11,8 @@
 
 namespace Blog\Controller;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Post extends AbstractBlogController
 {
 	/**
@@ -45,7 +47,7 @@ final class Post extends AbstractBlogController
 	 * @param \Krystal\Stdlib\VirtualEntity $post
 	 * @return void
 	 */
-	private function loadPlugins($post)
+	private function loadPlugins(VirtualEntity $post)
 	{
 		$this->loadSitePlugins();
 		$this->view->getBreadcrumbBag()->add($this->getPostManager()->getBreadcrumbs($post));
