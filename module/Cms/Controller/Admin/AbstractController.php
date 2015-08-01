@@ -185,6 +185,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 			'languages' => $contentLanguages,
 			'currentLanguage' => $languageManager->fetchByCurrentId(),
 			'perPageCounts' => $this->getPerPageCountProvider()->getPerPageCountValues(),
+			'token' => $this->csrfProtector->getToken()
 		));
 
 		$this->view->getPluginBag()->load(array(
@@ -197,6 +198,21 @@ abstract class AbstractController extends AbstractAuthAwareController
 		));
 
 		$this->tweak();
+	}
+
+	/**
+	 * Validates the token
+	 * 
+	 * @return void
+	 */
+	final protected function validateCsrfToken()
+	{
+		// This is general for all forms
+		$valid = $this->csrfProtector->isValid($this->request->getPost('token'));
+
+		if (!$valid) {
+			die('Invalid CSRF token');
+		}
 	}
 
 	/**
