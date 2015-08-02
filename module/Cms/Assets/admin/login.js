@@ -1,4 +1,9 @@
 
+$(window).load(function(){
+	$("button[type='submit']").removeClass('disabled');
+});
+
+
 $(function() {
 	
 	$("form").submit(function(event) {
