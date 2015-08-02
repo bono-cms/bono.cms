@@ -136,6 +136,8 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 */
 	protected function bootstrap()
 	{
+		$this->validateCsrfToken();
+
 		$this->view->getBlockBag()->setBlocksDir($this->appConfig->getModulesDir() . '/Cms/View/Template/admin/blocks/')
 								  ->addStaticBlock($this->appConfig->getModulesDir() . '/Menu/View/Template/admin', 'menu-widget');
 
@@ -185,7 +187,6 @@ abstract class AbstractController extends AbstractAuthAwareController
 			'languages' => $contentLanguages,
 			'currentLanguage' => $languageManager->fetchByCurrentId(),
 			'perPageCounts' => $this->getPerPageCountProvider()->getPerPageCountValues(),
-			'token' => $this->csrfProtector->getToken()
 		));
 
 		$this->view->getPluginBag()->load(array(
@@ -207,11 +208,15 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 */
 	final protected function validateCsrfToken()
 	{
-		// This is general for all forms
-		$valid = $this->csrfProtector->isValid($this->request->getPost('token'));
+		// Do validate only for POST requests for now
+		if ($this->request->isPost()) {
 
-		if (!$valid) {
-			die('Invalid CSRF token');
+			// This is general for all forms
+			$valid = $this->csrfProtector->isValid($this->request->getMetaCsrfToken());
+
+			if (!$valid) {
+				die('Invalid CSRF token');
+			}
 		}
 	}
 
