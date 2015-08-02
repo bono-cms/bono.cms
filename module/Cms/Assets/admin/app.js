@@ -9,6 +9,9 @@ $(function(){
 		beforeSend	: function() {
 			$("#loader").modal();
 		},
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
 		complete : function() {
 			$("#loader").modal("hide");
 		},
