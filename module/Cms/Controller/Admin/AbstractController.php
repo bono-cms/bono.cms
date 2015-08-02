@@ -136,7 +136,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 */
 	protected function bootstrap()
 	{
-		$this->validateCsrfToken();
+		$this->validateRequest();
 
 		$this->view->getBlockBag()->setBlocksDir($this->appConfig->getModulesDir() . '/Cms/View/Template/admin/blocks/')
 								  ->addStaticBlock($this->appConfig->getModulesDir() . '/Menu/View/Template/admin', 'menu-widget');
@@ -202,12 +202,17 @@ abstract class AbstractController extends AbstractAuthAwareController
 	}
 
 	/**
-	 * Validates the token
+	 * Validates the request
 	 * 
 	 * @return void
 	 */
-	final protected function validateCsrfToken()
+	final protected function validateRequest()
 	{
+		// Must support only POST and GET requests
+		if (!$this->request->isIntended()) {
+			die('Invalid request');
+		}
+
 		// Do validate only for POST requests for now
 		if ($this->request->isPost()) {
 
