@@ -1,5 +1,22 @@
 <?php
 
+// Can't rely on $_SERVER['ROOT'], that's why building path to the root folter manually
+$root = dirname(dirname(dirname(dirname(dirname(__DIR__)))));
+
+// Grab service locator
+$app = require($root.'/config/bootstrap.php');
+$sl = $app->bootstrap();
+
+// Grab required services
+$authManager = $sl->get('authManager');
+$response = $sl->get('response');
+
+// Finally do validate rights
+if (!$authManager->isAllowed(array('dev', 'user'))) {
+	$response->setStatusCode(403)
+			 ->send('You have no rights to access File Manager');
+	exit;
+}
 
 ?>
 <!DOCTYPE html>
