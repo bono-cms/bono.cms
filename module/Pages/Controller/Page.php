@@ -62,15 +62,13 @@ final class Page extends AbstractPagesController
 			)
 		));
 
-		//@TODO That needs to be in response
-		header("HTTP/1.0 404 Not Found");
-
+		// There's no need to set 404 status code here, as its handled by the router internally
 		return $this->view->render('pages-404', array(
 			'title' => '404',
 			'page' => new VirtualEntity()
 		));
 	}
-	
+
 	/**
 	 * Displays a home page
 	 * 
