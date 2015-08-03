@@ -146,9 +146,25 @@ abstract class AbstractController extends AbstractAuthAwareController
 	}
 
 	/**
+	 * Returns per page count provider
+	 * 
+	 * @return \Krystal\Form\Provider\PerPageCount
+	 */
+	final protected function getPerPageCountProvider()
+	{
+		static $provider = null;
+
+		if (is_null($provider)) {
+			$provider = new PerPageCount('admin.pgc', 5);
+		}
+
+		return $provider;
+	}
+
+	/**
 	 * Checks for role
 	 */
-	protected function roleCheck($mode)
+	private function roleCheck($mode)
 	{
 		// Regular users that have no extra privileges
 		$regular = array('guest', 'user');
@@ -163,7 +179,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 * 
 	 * @return void
 	 */
-	final protected function loadAllShared()
+	private function loadAllShared()
 	{
 		// Required services
 		$mode = $this->getService('Cms', 'mode');
@@ -206,7 +222,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 * 
 	 * @return void
 	 */
-	final protected function validateRequest()
+	private function validateRequest()
 	{
 		// Must support only POST and GET requests
 		if (!$this->request->isIntended()) {
@@ -230,7 +246,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 * 
 	 * @return void
 	 */
-	protected function tweak()
+	private function tweak()
 	{
 		// Do tweak in case user is logged in
 		if ($this->sessionBag->has('user_id')) {
@@ -245,21 +261,5 @@ abstract class AbstractController extends AbstractAuthAwareController
 
 			$this->getService('Cms', 'notepadManager')->setUserId($userId);
 		}
-	}
-
-	/**
-	 * Returns per page count provider
-	 * 
-	 * @return \Krystal\Form\Provider\PerPageCount
-	 */
-	final protected function getPerPageCountProvider()
-	{
-		static $provider = null;
-
-		if (is_null($provider)) {
-			$provider = new PerPageCount('admin.pgc', 5);
-		}
-
-		return $provider;
 	}
 }
