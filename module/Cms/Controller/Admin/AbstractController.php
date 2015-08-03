@@ -226,6 +226,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 	{
 		// Must support only POST and GET requests
 		if (!$this->request->isIntended()) {
+			$this->response->setStatusCode(400);
 			die('Invalid request');
 		}
 
@@ -236,6 +237,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 			$valid = $this->csrfProtector->isValid($this->request->getMetaCsrfToken());
 
 			if (!$valid) {
+				$this->response->setStatusCode(400);
 				die('Invalid CSRF token');
 			}
 		}
@@ -262,4 +264,5 @@ abstract class AbstractController extends AbstractAuthAwareController
 			$this->getService('Cms', 'notepadManager')->setUserId($userId);
 		}
 	}
+
 }
