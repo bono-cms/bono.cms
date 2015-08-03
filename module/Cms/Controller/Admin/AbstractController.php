@@ -214,7 +214,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 			'to-top'
 		));
 
-		$this->tweak();
+		$this->tweakInternalServices();
 	}
 
 	/**
@@ -246,7 +246,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 	 * 
 	 * @return void
 	 */
-	private function tweak()
+	private function tweakInternalServices()
 	{
 		// Do tweak in case user is logged in
 		if ($this->getAuthService()->isLoggedIn()) {
