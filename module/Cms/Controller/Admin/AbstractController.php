@@ -242,15 +242,15 @@ abstract class AbstractController extends AbstractAuthAwareController
 	}
 
 	/**
-	 * Tweaks history manager
+	 * Tweaks CMS internal services
 	 * 
 	 * @return void
 	 */
 	private function tweak()
 	{
 		// Do tweak in case user is logged in
-		if ($this->sessionBag->has('user_id')) {
-			$userId = $this->sessionBag->get('user_id');
+		if ($this->getAuthService()->isLoggedIn()) {
+			$userId = $this->getAuthService()->getId();
 
 			// Grab administration configuration entity
 			$config = $this->getService('Cms', 'configManager')->getEntity();
