@@ -116,14 +116,17 @@ final class Module extends AbstractModule
 		$webPageManager = new WebPageManager($webPageMapper, $languageMapper, new SlugGenerator());
 		$notificationManager = new NotificationManager($notificationMapper);
 
+		$userManager = new UserManager($userMapper, $authManager);
+		$authManager->setAuthService($userManager);
+
 		return array(
-			
+
 			'mailer' => new Mailer($notificationManager, $config->getEntity()),
 			'configManager' => $config,
 			'webPageManager' => $webPageManager,
 			'notepadManager' => new NotepadManager($notepadMapper, 1),
 			'mode' => $this->getModeService(),
-			'userManager'	 => new UserManager($userMapper, $authManager),
+			'userManager'	 => $userManager,
 			'historyManager' => new HistoryManager($historyMapper),
 			'notificationManager' => $notificationManager,
 			'languageManager' => $languageManager
