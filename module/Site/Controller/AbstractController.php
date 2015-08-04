@@ -136,9 +136,9 @@ abstract class AbstractController extends BaseController
 		} else {
 			throw new \Exception('You have to provide theme configuration');
 		}
-		
+
 		$this->view->addVariables(array(
-			//'languages' => $this->getService('Cms', 'languageManager')->fetchAllPublished(),
+			'languages' => $this->getService('Cms', 'languageManager')->fetchAllPublished(),
 		));
 
 		$instanceProvider = new InstanceProvider($this->getBootstrappers());
