@@ -136,7 +136,7 @@ abstract class AbstractController extends BaseController
 		} else {
 			throw new \Exception('You have to provide theme configuration');
 		}
-
+		
 		$this->view->addVariables(array(
 			//'languages' => $this->getService('Cms', 'languageManager')->fetchAllPublished(),
 		));
@@ -146,6 +146,9 @@ abstract class AbstractController extends BaseController
 		foreach ($instanceProvider->getAll() as $bs) {
 			$bs->bootstrap();
 		}
+
+		// And lastly, do load global site plugin
+		$this->view->getPluginBag()->load('site');
 	}
 
 	/**
@@ -153,6 +156,8 @@ abstract class AbstractController extends BaseController
 	 */
 	final protected function bootstrap()
 	{
+		$this->validateRequest();
+
 		$this->validatorFactory->setRenderer(new Renderer\StandardJson());
 		$this->view->setLayout('__layout__');
 
@@ -175,4 +180,31 @@ abstract class AbstractController extends BaseController
 			die($config->getSiteDownReason());
 		}
 	}
+
+	/**
+	 * Validates the request
+	 * 
+	 * @return void
+	 */
+	private function validateRequest()
+	{
+		// Must support only POST and GET requests
+		if (!$this->request->isIntended()) {
+			$this->response->setStatusCode(400);
+			die('Invalid request');
+		}
+
+		// Do validate only for POST requests for now
+		if ($this->request->isPost()) {
+
+			// This is general for all forms
+			$valid = $this->csrfProtector->isValid($this->request->getMetaCsrfToken());
+
+			if (!$valid) {
+				$this->response->setStatusCode(400);
+				die('Invalid CSRF token');
+			}
+		}
+	}
+	
 }
