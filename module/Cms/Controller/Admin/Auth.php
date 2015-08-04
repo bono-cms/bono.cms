@@ -30,7 +30,8 @@ final class Auth extends AbstractController
 	{
 		// If user is logged in already, then he should be redirected to a dashboard
 		if ($this->getAuthService()->isLoggedIn()) {
-			$this->response->redirect('/admin');
+			$this->redirectToRoute('Cms:Admin:Dashboard@indexAction');
+
 		} else {
 			$this->view->getPluginBag()->appendStylesheet($this->getWithAssetPath('/css/login.css'))
 									   ->appendScript($this->getWithAssetPath('/admin/login.js'));
@@ -75,7 +76,7 @@ final class Auth extends AbstractController
 	public function logoutAction()
 	{
 		$this->getAuthService()->logout();
-		$this->response->redirect('/admin/login');
+		$this->redirectToRoute('Cms:Admin:Auth@indexAction');
 	}
 
 	/**
