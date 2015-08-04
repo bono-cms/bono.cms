@@ -23,8 +23,13 @@ final class SearchMapper extends AbstractSearchProvider
 	{
 		$queryBuilder->select($this->getWithDefaults(array('content')))
 					 ->from(PageMapper::getTableName())
-					 ->whereEquals('lang_id', "'{$this->getLangId()}'")
-					 ->andWhereLike('title', $placeholder)
-					 ->orWhereLike('content', $placeholder);
+					 ->whereEquals('seo', '1')
+					 ->andWhereEquals('lang_id', "'{$this->getLangId()}'")
+					 ->rawAnd()
+					 ->openBracket()
+					 ->like('title', $placeholder)
+					 ->rawOr()
+					 ->like('content', $placeholder)
+					 ->closeBracket();
 	}
 }
