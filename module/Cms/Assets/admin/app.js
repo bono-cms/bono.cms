@@ -255,13 +255,33 @@ $(function(){
 	});
 	
 	
-	$.showErrors = function(response) {
+	$.setFormGroup = function(group){
+		$.group = group;
+	};
+	
+	$.showErrors = function(response){
+		
 		// Initial
 		var messages = '';
-
+		var group = $.group;
+		
+		var buildName = function(element){
+			// If group is specified, then gotta build a selector for that
+			if (group) {
+				return group + "[" + name + "]";
+			} else {
+				return name;
+			}
+		};
+		
 		// Build a selector
 		var buildSelector = function(elementName){
-			return "[name='" + name + "']";
+			// If group is specified, then gotta build a selector for that
+			if (group) {
+				return "[name='" + group + "[" + name + "]" + "']";
+			} else {
+				return "[name='" + name + "']";
+			}
 		};
 
 		// Before we even start iteration
@@ -280,7 +300,7 @@ $(function(){
 				var $row = $targetElement.closest('div.form-group');
 				
 				$row.each(function(){
-					if ($targetElement.attr('name') == name){
+					if ($targetElement.attr('name') == buildName(name)){
 						if ($(this).hasClass('has-success')) {
 							$(this).removeClass('has-success');
 						}
