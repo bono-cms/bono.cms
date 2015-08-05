@@ -22,7 +22,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Keep the track of latest activity'); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'keep_track', 'class' => 'form-control'), $config->getKeepTrack()); ?>
+						<?php echo CheckBoxWidget::render(array('name' => 'config[keep_track]', 'class' => 'form-control'), $config->getKeepTrack()); ?>
 					</div>
 				</div>
 				
@@ -31,7 +31,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Email for notifications'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="notification_email" value="<?php echo $config->getNotificationEmail(); ?>" />
+							<input type="text" class="form-control" name="config[notification_email]" value="<?php echo $config->getNotificationEmail(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('This email is used as an address for sending notifications'); ?></span>
@@ -49,7 +49,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Site is down for maintenance'); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'site_enabled', 'class' => 'form-control'), $config->getSiteEnabled()); ?>
+						<?php echo CheckBoxWidget::render(array('name' => 'config[site_enabled]', 'class' => 'form-control'), $config->getSiteEnabled()); ?>
 					</div>
 				</div>
 				
@@ -57,7 +57,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Message'); ?></label>
 					<div class="col-lg-10">
-						<textarea name="site_down_reason" class="form-control"><?php echo $config->getSiteDownReason(); ?></textarea>
+						<textarea name="config[site_down_reason]" class="form-control"><?php echo $config->getSiteDownReason(); ?></textarea>
 					</div>
 				</div>
 				
@@ -74,7 +74,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("Try using server's native mailer"); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'use_smtp_driver', 'class' => 'form-control'), $config->getUseSmtpDriver()); ?>
+						<?php echo CheckBoxWidget::render(array('name' => 'config[use_smtp_driver]', 'class' => 'form-control'), $config->getUseSmtpDriver()); ?>
 					</div>
 				</div>
 				
@@ -82,7 +82,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Secure layer'); ?> (SSL/TLS)</label>
 					<div class="col-lg-10">
-						<?php echo DropdownWidget::render(array('name' => 'smtp_secure_layer', 'class' => 'form-control'), $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), false); ?>
+						<?php echo DropdownWidget::render(array('name' => 'config[smtp_secure_layer]', 'class' => 'form-control'), $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), false); ?>
 						<span class="help-block"><?php $this->show('If your provided requires secure layer, choice required one here'); ?></span>
 					</div>
 				</div>
@@ -92,7 +92,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Host'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="smtp_host" value="<?php echo $config->getSmtpHost(); ?>" />
+							<input type="text" class="form-control" name="config[smtp_host]" value="<?php echo $config->getSmtpHost(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('STMP host might look like as smtp.yourserver.com'); ?></span>
@@ -104,7 +104,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Username'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="smtp_username" value="<?php echo $config->getSmtpUsername(); ?>" />
+							<input type="text" class="form-control" name="config[smtp_username]" value="<?php echo $config->getSmtpUsername(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Account's username, which usually represents your login"); ?></span>
@@ -115,7 +115,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="smtp_password" value="<?php echo $config->getSmtpPassword(); ?>" />
+							<input type="text" class="form-control" name="config[smtp_password]" value="<?php echo $config->getSmtpPassword(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Account's password"); ?></span>
@@ -126,7 +126,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Port'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" class="form-control" name="smtp_port" value="<?php echo $config->getSmtpPort(); ?>" />
+							<input type="number" class="form-control" name="config[smtp_port]" value="<?php echo $config->getSmtpPort(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("SMTP server's port. In most cases its 25"); ?></span>

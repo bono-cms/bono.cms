@@ -1,7 +1,8 @@
 
 $(function() {
 	
-	$.wysiwyg.init(['site_down_reason']);
+	$.wysiwyg.init(['config[site_down_reason]']);
+	$.setFormGroup('config');
 	
 	
 	$("[data-button='save']").click(function(){
@@ -29,12 +30,13 @@ $(function() {
 	
 	function alterSmptElements(state){
 		// Do the batch for required elements
-		$("[name='smtp_secure_layer'], [name='smtp_host'], [name='smtp_username'], [name='smtp_password'], [name='smtp_port']").prop('disabled', state);
+		$("[name='config[smtp_secure_layer]'], [name='config[smtp_host]'], [name='config[smtp_username]'], [name='config[smtp_password]'], [name='config[smtp_port]']")
+		.prop('disabled', state);
 	}
 	
-	alterSmptElements($("#smtpDriver").prop('checked'));
+	alterSmptElements($("[name='config[use_smtp_driver]']").prop('checked'));
 	
-	$("#smtpDriver").click(function(){
+	$("[name='config[use_smtp_driver]']").click(function(){
 		alterSmptElements($(this).prop('checked'));
 	});
 	
