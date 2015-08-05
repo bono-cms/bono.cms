@@ -2,6 +2,7 @@
 $(function() {
 	
 	$.wysiwyg.init(['category[description]']);
+	$.setFormGroup('category');
 	
 	
 	function update(callback){

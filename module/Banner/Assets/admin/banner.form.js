@@ -1,6 +1,8 @@
 
 $(function() {
 	
+	$.setFormGroup('banner');
+	
 	function update(callback){
 		$("form").send({
 			url : "/admin/module/banner/edit.ajax",

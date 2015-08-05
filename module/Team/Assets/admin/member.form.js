@@ -2,6 +2,7 @@
 $(function() {
 	
 	$.wysiwyg.init(['team[description]']);
+	$.setFormGroup('team');
 	
 	
 	function add(success) {

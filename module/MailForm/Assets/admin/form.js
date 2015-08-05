@@ -1,6 +1,7 @@
 $(function(){
 
 	$.wysiwyg.init(['form[description]']);
+	$.setFormGroup('form');
 
 	/**
 	 * Adds a form

@@ -2,6 +2,7 @@
 $(function() {
 
 	$.wysiwyg.init(['product[description]']);
+	$.setFormGroup('product');
 
 	/**
 	 * Updates a product

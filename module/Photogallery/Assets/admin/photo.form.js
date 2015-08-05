@@ -1,6 +1,7 @@
 
 $(function() {
 	
+	$.setFormGroup('photo');
 	
 	function update(success) {
 		$("form").send({

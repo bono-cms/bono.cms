@@ -1,6 +1,8 @@
 
 $(function() {
 	
+	$.setFormGroup('block');
+	
 	function update(callback){
 		$("form").send({
 			url : "/admin/module/block/edit.ajax",

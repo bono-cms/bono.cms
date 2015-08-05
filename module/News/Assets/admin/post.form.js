@@ -3,7 +3,8 @@ $(function() {
 	
 	$("[name='post[date]'").datepicker();
 	$.wysiwyg.init(['post[full]', 'post[intro]']);
-	
+	$.setFormGroup('post');
+
 	
 	function update(callback) {
 		$("form").send({

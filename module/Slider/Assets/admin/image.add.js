@@ -1,6 +1,8 @@
 
 $(function() {
 	
+	$.setFormGroup('image');
+	
 	function add(callback){
 		$("form").send({
 			url	: "/admin/module/slider/image/add.ajax",

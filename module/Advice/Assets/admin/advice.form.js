@@ -2,6 +2,8 @@
 $(function() {
 	
 	$.wysiwyg.init(['advice[content]']);
+	$.setFormGroup('advice');
+	
 	
 	function add(callback){
 		$("form").send({

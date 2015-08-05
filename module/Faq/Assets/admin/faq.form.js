@@ -2,6 +2,7 @@
 $(function() {
 	
 	$.wysiwyg.init(['faq[answer]']);
+	$.setFormGroup('faq');
 	
 	
 	function update(callback){

@@ -3,6 +3,7 @@ $(function(){
 	
 	$.wysiwyg.init(['review[content]']);
 	$("[name='review[date]']").datepicker();
+	$.setFormGroup('review');
 	
 	
 	function update(callback) {

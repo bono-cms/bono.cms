@@ -1,6 +1,8 @@
 
 $(function() {
 	
+	$.setFormGroup('language');
+	
 	function add(callback){
 		$("form").send({
 			url : "/admin/languages/add.ajax",

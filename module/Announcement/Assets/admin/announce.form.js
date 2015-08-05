@@ -2,7 +2,7 @@
 $(function() {
 	
 	$.wysiwyg.init(['announce[full]', 'announce[intro]']);
-	
+	$.setFormGroup('announce');
 	
 	function add(callback) {
 		$("form").send({

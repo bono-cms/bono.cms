@@ -1,5 +1,7 @@
 
 $(function(){
+
+	$.setFormGroup('user');
 	
 	function add(callback){
 		$("form").send({

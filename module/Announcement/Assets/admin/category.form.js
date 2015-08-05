@@ -1,6 +1,8 @@
 
 $(function() {
 	
+	$.setFormGroup('category');
+	
 	function add(callback){
 		$("form").send({
 			url : '/admin/module/announcement/category/add.ajax',

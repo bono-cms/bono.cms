@@ -2,6 +2,7 @@
 $(function(){
 	
 	$.wysiwyg.init(['page[content]']);
+	$.setFormGroup('page');
 	
 	
 	function add(callback) {
