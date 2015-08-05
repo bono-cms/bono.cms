@@ -38,11 +38,11 @@ final class Config extends AbstractController
 	 */
 	public function saveAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('config'));
 
 		if ($formValidator->isValid()) {
 
-			$this->getConfigManager()->write($this->request->getPost());
+			$this->getConfigManager()->write($this->request->getPost('config'));
 			$this->flashBag->set('success', 'Settings have been saved');
 
 			return '1';

@@ -18,7 +18,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Enable moderation'); ?></label>
 					<div class="col-lg-10">
 						
-						<?php echo CheckBoxWidget::render(array('name' => 'enable_moderation', 'class' => 'form-control'), $config->getEnabledModeration()); ?>
+						<?php echo CheckBoxWidget::render(array('name' => 'config[enable_moderation]', 'class' => 'form-control'), $config->getEnabledModeration()); ?>
 					</div>
 				</div>
 				
@@ -26,7 +26,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Items per page'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" min="1" class="form-control" name="per_page_count" value="<?php echo $config->getPerPageCount(); ?>" />
+							<input type="number" min="1" class="form-control" name="config[per_page_count]" value="<?php echo $config->getPerPageCount(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('How many reviews you want to be displayed per page on site?'); ?></span>
