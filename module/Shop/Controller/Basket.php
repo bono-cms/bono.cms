@@ -28,7 +28,7 @@ final class Basket extends AbstractShopController
 		if ($page !== false) {
 			$this->loadPlugins($page);
 
-			return $this->view->render($this->getConfig()->getBasketTemplate(), array(
+			return $this->view->render('shop-basket', array(
 				'products' => $this->getBasketManager()->getProducts(),
 				'page' => $page,
 

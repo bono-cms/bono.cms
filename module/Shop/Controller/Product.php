@@ -31,7 +31,7 @@ final class Product extends AbstractShopController
 			// Load required plugins for view
 			$this->loadPlugins($productManager->getBreadcrumbs($product));
 
-			$response = $this->view->render($this->getConfig()->getProductTemplate(), array(
+			$response = $this->view->render('shop-product', array(
 				// Image bags of current product
 				'images' => $productManager->fetchAllPublishedImagesById($id),
 				'page' => $product,

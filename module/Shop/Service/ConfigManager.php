@@ -29,9 +29,6 @@ final class ConfigManager extends AbstractConfigManager
 			   ->setDefaultCategoryPerPageCount((int) $this->get('default_category_per_page_count'))
 			   ->setCurrency(Filter::escape($this->get('currency')))
 			   ->setMaxRecentAmount((int) $this->get('recent_max_amount', 3))
-			   ->setBasketTemplate(Filter::escape($this->get('basket_template', 'shop-basket')))
-			   ->setProductTemplate(Filter::escape($this->get('product_template', 'shop-product')))
-			   ->setCategoryTemplate(Filter::escape($this->get('category_template', 'shop-category')))
 			   ->setBasketPageId(Filter::escape($this->get('basket_page_id', 0)));
 
 		$entity->setBasketStorageType($this->get('basket_storage_type', 'cookies'));

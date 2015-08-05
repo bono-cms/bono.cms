@@ -54,7 +54,7 @@ final class Category extends AbstractShopController
 			);
 
 			// Done. Now just render them
-			return $this->view->render($this->getConfig()->getCategoryTemplate(), array(
+			return $this->view->render('shop-category', array(
 
 				'paginator' => $paginator,
 				'products' => $products,

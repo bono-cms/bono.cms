@@ -91,43 +91,6 @@ use Krystal\Form\HtmlHelper;
 						<?php echo DropdownWidget::render(array('name' => 'config[basket_storage_type]', 'class' => 'form-control'), $this->getTranslator()->translateArray($config->getBasketStorageTypes()), $config->getBasketStorageType(), false); ?>
 					</div>
 				</div>
-				
-				
-				<div class="form-group clearfix">
-					<label class="col-lg-2 control-label"><?php $this->show("Basket's template"); ?></label>
-					<div class="col-lg-10">
-						<div class="input-group">
-							<input type="text" class="form-control" name="config[basket_template]" value="<?php echo $config->getBasketTemplate(); ?>" />
-							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-						</div>
-						<span class="help-block"><?php $this->show("Framework-compliant basket's template name for the view"); ?></span>
-					</div>
-				</div>
-				
-				
-				<div class="form-group clearfix">
-					<label class="col-lg-2 control-label"><?php $this->show("Product's template"); ?></label>
-					<div class="col-lg-10">
-						<div class="input-group">
-							<input type="text" class="form-control" name="config[product_template]" value="<?php echo $config->getProductTemplate(); ?>" />
-							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-						</div>
-						<span class="help-block"><?php $this->show("Framework-compliant product's template name for the view"); ?></span>
-					</div>
-				</div>
-				
-				
-				<div class="form-group clearfix">
-					<label class="col-lg-2 control-label"><?php $this->show("Category's template"); ?></label>
-					<div class="col-lg-10">
-						<div class="input-group">
-							<input type="text" class="form-control" name="config[category_template]" value="<?php echo $config->getCategoryTemplate(); ?>" />
-							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-						</div>
-						<span class="help-block"><?php $this->show("Framework-compliant category's template's name for the view"); ?></span>
-					</div>
-				</div>
-				
 
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("Basket's page id"); ?></label>

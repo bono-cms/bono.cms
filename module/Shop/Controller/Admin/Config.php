@@ -96,7 +96,6 @@ final class Config extends AbstractController
 			'input' => array(
 				'source' => $input,
 				'definition' => array(
-					
 					// Grab these rules from framework's patterns
 					'default_category_per_page_count' => new Pattern\PerPageCount(),
 					'currency' => new Pattern\Currency(),
