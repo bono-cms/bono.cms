@@ -24,7 +24,7 @@ use Krystal\Form\HtmlHelper;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Activate stoke price support'); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'stoke_price_enabled', 'class' => 'form-control'), $config->getStokePriceEnabled()); ?>
+						<?php echo CheckBoxWidget::render(array('name' => 'config[stoke_price_enabled]', 'class' => 'form-control'), $config->getStokePriceEnabled()); ?>
 					</div>
 				</div>
 				
@@ -32,7 +32,7 @@ use Krystal\Form\HtmlHelper;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Activate special offer support'); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'special_support', 'class' => 'form-control'), $config->getSpecialSupport()); ?>
+						<?php echo CheckBoxWidget::render(array('name' => 'config[special_support]', 'class' => 'form-control'), $config->getSpecialSupport()); ?>
 					</div>
 				</div>
 				
@@ -41,7 +41,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show('Currency'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="currency" value="<?php echo $config->getCurrency(); ?>" />
+							<input type="text" class="form-control" name="config[currency]" value="<?php echo $config->getCurrency(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Default which is displayed on site'); ?></span>
@@ -53,7 +53,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show('Default per page count'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" min="3" class="form-control" name="default_category_per_page_count" value="<?php echo $config->getDefaultCategoryPerPageCount(); ?>" />
+							<input type="number" min="3" class="form-control" name="config[default_category_per_page_count]" value="<?php echo $config->getDefaultCategoryPerPageCount(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Default per page count for when browsing categories on site'); ?></span>
@@ -65,7 +65,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show('Amount of new products in showcase'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" min="1" max="10" class="form-control" name="showcase_count" value="<?php echo $config->getShowCaseCount(); ?>" />
+							<input type="number" min="1" max="10" class="form-control" name="config[showcase_count]" value="<?php echo $config->getShowCaseCount(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("How many products you want to be shown on site's showcase?"); ?></span>
@@ -77,7 +77,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show('Maximal amount of recent products'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" min="1" max="10" class="form-control" name="recent_max_amount" value="<?php echo $config->getMaxRecentAmount(); ?>" />
+							<input type="number" min="1" max="10" class="form-control" name="config[recent_max_amount]" value="<?php echo $config->getMaxRecentAmount(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Maximal amount of recent products for the block which is appeared on product's page. Enter 0 to disable this functionality"); ?></span>
@@ -88,7 +88,7 @@ use Krystal\Form\HtmlHelper;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("User's storage type"); ?></label>
 					<div class="col-lg-10">
-						<?php echo DropdownWidget::render(array('name' => 'basket_storage_type', 'class' => 'form-control'), $this->getTranslator()->translateArray($config->getBasketStorageTypes()), $config->getBasketStorageType(), false); ?>
+						<?php echo DropdownWidget::render(array('name' => 'config[basket_storage_type]', 'class' => 'form-control'), $this->getTranslator()->translateArray($config->getBasketStorageTypes()), $config->getBasketStorageType(), false); ?>
 					</div>
 				</div>
 				
@@ -97,7 +97,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show("Basket's template"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="basket_template" value="<?php echo $config->getBasketTemplate(); ?>" />
+							<input type="text" class="form-control" name="config[basket_template]" value="<?php echo $config->getBasketTemplate(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Framework-compliant basket's template name for the view"); ?></span>
@@ -109,7 +109,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show("Product's template"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="product_template" value="<?php echo $config->getProductTemplate(); ?>" />
+							<input type="text" class="form-control" name="config[product_template]" value="<?php echo $config->getProductTemplate(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Framework-compliant product's template name for the view"); ?></span>
@@ -121,7 +121,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show("Category's template"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="category_template" value="<?php echo $config->getCategoryTemplate(); ?>" />
+							<input type="text" class="form-control" name="config[category_template]" value="<?php echo $config->getCategoryTemplate(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Framework-compliant category's template's name for the view"); ?></span>
@@ -133,7 +133,7 @@ use Krystal\Form\HtmlHelper;
 					<label class="col-lg-2 control-label"><?php $this->show("Basket's page id"); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="basket_page_id" value="<?php echo $config->getBasketPageId(); ?>" />
+							<input type="text" class="form-control" name="config[basket_page_id]" value="<?php echo $config->getBasketPageId(); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Page's id which is attached to basket's controller"); ?></span>
@@ -162,7 +162,7 @@ use Krystal\Form\HtmlHelper;
 							
 							<div class="col-lg-10">
 								<div class="input-group">
-									<input type="number" min="10" max="1000" class="form-control" name="category_cover_height" value="<?php echo $config->getCategoryCoverHeight(); ?>" />
+									<input type="number" min="10" max="1000" class="form-control" name="config[category_cover_height]" value="<?php echo $config->getCategoryCoverHeight(); ?>" />
 									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 								</div>
 								<span class="help-block"><?php $this->show("Cover image's width when browsing categories"); ?></span>
@@ -174,7 +174,7 @@ use Krystal\Form\HtmlHelper;
 							<label class="col-lg-2 control-label"><?php $this->show("Width"); ?></label>
 							<div class="col-lg-10">
 								<div class="input-group">
-									<input type="number" min="10" max="1000" class="form-control" name="category_cover_width" value="<?php echo $config->getCategoryCoverWidth(); ?>" />
+									<input type="number" min="10" max="1000" class="form-control" name="config[category_cover_width]" value="<?php echo $config->getCategoryCoverWidth(); ?>" />
 									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 								</div>
 								<span class="help-block"><?php $this->show("Cover image's width when browsing categories"); ?></span>
@@ -193,7 +193,7 @@ use Krystal\Form\HtmlHelper;
 							
 							<div class="col-lg-10">
 								<div class="input-group">
-									<input type="number" min="10" max="1000" class="form-control" name="cover_width" value="<?php echo $config->getCoverWidth(); ?>" />
+									<input type="number" min="10" max="1000" class="form-control" name="config[cover_width]" value="<?php echo $config->getCoverWidth(); ?>" />
 									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 								</div>
 								<span class="help-block"><?php $this->show("Cover image's width on a cart page"); ?></span>
@@ -206,7 +206,7 @@ use Krystal\Form\HtmlHelper;
 							
 							<div class="col-lg-10">
 								<div class="input-group">
-									<input type="number" min="10" max="1000" class="form-control" name="cover_height" value="<?php echo $config->getCoverHeight(); ?>" />
+									<input type="number" min="10" max="1000" class="form-control" name="config[cover_height]" value="<?php echo $config->getCoverHeight(); ?>" />
 									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 								</div>
 								<span class="help-block"><?php $this->show("Cover image's height on a cart page"); ?></span>
@@ -219,7 +219,7 @@ use Krystal\Form\HtmlHelper;
 							
 							<div class="col-lg-10">
 								<div class="input-group">
-									<input type="number" min="10" max="1000" class="form-control" name="thumb_height" value="<?php echo $config->getThumbHeight(); ?>" />
+									<input type="number" min="10" max="1000" class="form-control" name="config[thumb_height]" value="<?php echo $config->getThumbHeight(); ?>" />
 									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 								</div>
 								<span class="help-block"><?php $this->show('Height of product small image'); ?></span>
@@ -231,7 +231,7 @@ use Krystal\Form\HtmlHelper;
 							<label class="col-lg-2 control-label"><?php $this->show("Thumb's width"); ?></label>
 							<div class="col-lg-10">
 								<div class="input-group">
-									<input type="number" min="10" max="1000" class="form-control" name="thumb_width" value="<?php echo $config->getThumbWidth(); ?>" />
+									<input type="number" min="10" max="1000" class="form-control" name="config[thumb_width]" value="<?php echo $config->getThumbWidth(); ?>" />
 									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 								</div>
 								<span class="help-block"><?php $this->show('Width of small images on product page'); ?></span>
