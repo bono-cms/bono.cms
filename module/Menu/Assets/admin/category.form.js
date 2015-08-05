@@ -1,6 +1,7 @@
 
 $(function(){
 	
+	$.setFormGroup('category');
 	
 	function add(callback){
 		$("form").send({

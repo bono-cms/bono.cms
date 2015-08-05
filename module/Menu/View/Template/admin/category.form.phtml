@@ -7,7 +7,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="name" class="form-control" placeholder="<?php $this->show('Category name'); ?>" value="<?php echo $category->getName(); ?>" />
+					<input type="text" name="category[name]" class="form-control" placeholder="<?php $this->show('Category name'); ?>" value="<?php echo $category->getName(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -19,7 +19,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Class'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="class" class="form-control" placeholder="<?php $this->show('Class to simplify rendering'); ?>" value="<?php echo $category->getClass(); ?>" />
+					<input type="text" name="category[class]" class="form-control" placeholder="<?php $this->show('Class to simplify rendering'); ?>" value="<?php echo $category->getClass(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Maximal depth'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="number" name="max_depth" class="form-control" placeholder="<?php $this->show('Maximal allowed nested level for items'); ?>" value="<?php echo $category->getMaxDepth(); ?>" />
+					<input type="number" name="category[max_depth]" class="form-control" placeholder="<?php $this->show('Maximal allowed nested level for items'); ?>" value="<?php echo $category->getMaxDepth(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
