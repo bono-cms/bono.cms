@@ -12,7 +12,10 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 			<div class="col-lg-10">
-				<input type="text" name="advice[title]" class="form-control" placeholder="<?php $this->show('Advice title'); ?>" value="<?php echo $advice->getTitle(); ?>" />
+				<div class="input-group">
+					<input type="text" name="advice[title]" class="form-control" placeholder="<?php $this->show('Advice title'); ?>" value="<?php echo $advice->getTitle(); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
 			</div>
 		</div>
 		
