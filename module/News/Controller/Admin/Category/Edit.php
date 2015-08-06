@@ -43,7 +43,7 @@ final class Edit extends AbstractCategory
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('category'));
 
 		if ($formValidator->isValid()) {
 
