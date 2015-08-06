@@ -163,7 +163,7 @@ final class Browser extends AbstractController
 		return array(
 			'paginator' => $this->getPageManager()->getPaginator(),
 			'pages' => $pages,
-			'filter' => new QueryContainer($this->request->getQuery('filter')),
+			'filter' => new QueryContainer($this->request->getQuery(), 'filter'),
 			'title' => 'Pages'
 		);
 	}

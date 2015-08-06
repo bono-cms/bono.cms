@@ -204,7 +204,7 @@ final class Browser extends AbstractController
 			'title' => 'Shop',
 			'taskManager' => $this->getModuleService('taskManager'),
 			'categories' => $treeBuilder->render(new PhpArray('title')),
-			'filter' => new QueryContainer($this->request->getQuery('filter'))
+			'filter' => new QueryContainer($this->request->getQuery(), 'filter')
 		);
 
 		return array_replace_recursive($vars, $overrides);

@@ -53,14 +53,14 @@ use Krystal\Form\HtmlHelper;
 				<tr>
 					<td></td>
 					<td class="col-lg-1">
-						<input type="number" min="1" name="filter[id]" class="form-control" value="<?php echo $filter->get('id'); ?>" />
+						<input type="number" min="1" name="<?php echo $filter->getElementName('id'); ?>" class="form-control" value="<?php echo $filter->get('id'); ?>" />
 					</td>
 					<td>
-						<input type="text" name="filter[title]" class="form-control" value="<?php echo $filter->get('title'); ?>" />
+						<input type="text" name="<?php echo $filter->getElementName('title'); ?>" class="form-control" value="<?php echo $filter->get('title'); ?>" />
 					</td>
 					<td></td>
 					<td class="col-lg-1">
-						<?php echo BooleanWidget::render(array('class' => 'form-control', 'name' => 'filter[seo]'), $filter->get('seo'), $this->getTranslator()); ?>
+						<?php echo BooleanWidget::render(array('class' => 'form-control', 'name' => $filter->getElementName('seo')), $filter->get('seo'), $this->getTranslator()); ?>
 					</td>
 					<td></td>
 					<td></td>

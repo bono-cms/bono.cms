@@ -64,28 +64,28 @@ use Krystal\Form\HtmlHelper;
 					<tr>
 						<th></th>
 						<th>
-							<input type="number" name="filter[id]" min="1" class="form-control col-md-1" value="<?php echo $filter->get('id'); ?>" />
+							<input type="number" name="<?php echo $filter->getElementName('id'); ?>" min="1" class="form-control col-md-1" value="<?php echo $filter->get('id'); ?>" />
 						</th>
 						<th></th>
 						<th>
-							<input type="text" name="filter[title]" class="form-control" value="<?php echo $filter->get('title'); ?>" />
+							<input type="text" name="<?php echo $filter->getElementName('title'); ?>" class="form-control" value="<?php echo $filter->get('title'); ?>" />
 						</th>
 						<th class="date-col">
-							<input type="text" name="filter[date]" class="form-control" value="<?php echo $filter->get('date'); ?>" />
+							<input type="text" name="<?php echo $filter->getElementName('date'); ?>" class="form-control" value="<?php echo $filter->get('date'); ?>" />
 						</th>
 						<th>
-							<?php echo DropdownWidget::render(array('name' => 'filter[category_id]', 'class' => 'form-control'), $categories, $filter->get('category_id')); ?>
+							<?php echo DropdownWidget::render(array('name' => $filter->getElementName('category_id'), 'class' => 'form-control'), $categories, $filter->get('category_id')); ?>
 						</th>
 						<th class="price-col">
-							<input type="text" name="filter[price]" class="form-control" value="<?php echo $filter->get('price'); ?>" />
+							<input type="text" name="<?php echo $filter->getElementName('price'); ?>" class="form-control" value="<?php echo $filter->get('price'); ?>" />
 						</th>
 						
 						<th class="text-center">
-							<?php echo BooleanWidget::render(array('name' => 'filter[published]', 'class' => 'form-control'), $filter->get('published'), $this->getTranslator()); ?>
+							<?php echo BooleanWidget::render(array('name' => $filter->getElementName('published'), 'class' => 'form-control'), $filter->get('published'), $this->getTranslator()); ?>
 						</th>
 						
 						<th class="text-center">
-							<?php echo BooleanWidget::render(array('name' => 'filter[seo]', 'class' => 'form-control'), $filter->get('seo'), $this->getTranslator()); ?>
+							<?php echo BooleanWidget::render(array('name' => $filter->getElementName('seo'), 'class' => 'form-control'), $filter->get('seo'), $this->getTranslator()); ?>
 						</th>
 						
 						<th></th>
