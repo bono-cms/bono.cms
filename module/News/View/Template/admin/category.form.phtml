@@ -17,6 +17,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				
 				<input type="hidden" name="category[id]" value="<?php echo $category->getId(); ?>" />
 				<input type="hidden" name="category[web_page_id]" value="<?php echo $category->getWebPageId(); ?>" />
+				<input type="hidden" name="web_page_id" value="<?php echo $category->getWebPageId(); ?>" />
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
