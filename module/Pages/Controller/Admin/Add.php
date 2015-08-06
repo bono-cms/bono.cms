@@ -46,7 +46,7 @@ final class Add extends AbstractPage
 		if ($formValidator->isValid()) {
 			$pageManager = $this->getPageManager();
 
-			if ($pageManager->add($this->request->getPost('page'))) {
+			if ($pageManager->add($this->request->getPost())) {
 
 				$this->flashBag->set('success', 'A page has been created successfully');
 				return $pageManager->getLastId();

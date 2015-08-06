@@ -283,15 +283,17 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 	 */
 	private function prepareInput(array $input)
 	{
-		if (empty($input['slug'])) {
-			$input['slug'] = $input['title'];
+		$page =& $input['page'];
+
+		if (empty($page['slug'])) {
+			$page['slug'] = $page['title'];
 		}
 
 		// Make it look like a a slug now
-		$input['slug'] = $this->webPageManager->sluggify($input['slug']);
+		$page['slug'] = $this->webPageManager->sluggify($page['slug']);
 
 		// Ensure the title is secure
-		$input['title'] = Filter::escape($input['title']);
+		$page['title'] = Filter::escape($page['title']);
 
 		return $input;
 	}
@@ -305,29 +307,30 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 	public function add(array $input)
 	{
 		$input = $this->prepareInput($input);
-		$input['web_page_id'] = '';
+		$page =& $input['page'];
+		$page['web_page_id'] = '';
 
-		if (!$this->pageMapper->insert(ArrayUtils::arrayWithout($input, array('controller', 'makeDefault', 'slug', 'menu')))) {
+		if (!$this->pageMapper->insert(ArrayUtils::arrayWithout($page, array('controller', 'makeDefault', 'slug', 'menu')))) {
 			return false;
 		} else {
 			// It was inserted successfully
 			$id = $this->getLastId();
 
 			// If checkbox was checked
-			if (isset($input['makeDefault']) && $input['makeDefault'] == '1') {
+			if (isset($page['makeDefault']) && $page['makeDefault'] == '1') {
 				$this->makeDefault($id);
 			}
 
 			// Add a web page now
-			if ($this->webPageManager->add($id, $input['slug'], 'Pages', 'Pages:Page@indexAction', $this->pageMapper)) {
+			if ($this->webPageManager->add($id, $page['slug'], 'Pages', 'Pages:Page@indexAction', $this->pageMapper)) {
 				// Do the work in case menu widget was injected
 				if ($this->hasMenuWidget()) {
-					$this->addMenuItem($this->webPageManager->getLastId(), $input['title'], $input);
+					$this->addMenuItem($this->webPageManager->getLastId(), $page['title'], $input);
 				}
 			}
 
 			// Track it
-			$this->track('A new "%s" page has been created', $input['title']);
+			$this->track('A new "%s" page has been created', $page['title']);
 			return true;
 		}
 	}
@@ -341,15 +344,17 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 	public function update(array $input)
 	{
 		$input = $this->prepareInput($input);
-		$this->webPageManager->update($input['web_page_id'], $input['slug'], $input['controller']);
+		$page =& $input['page'];
+
+		$this->webPageManager->update($page['web_page_id'], $page['slug'], $page['controller']);
 
 		if ($this->hasMenuWidget() && isset($input['menu'])) {
-			$this->updateMenuItem($input['web_page_id'], $input['title'], $input['menu']);
+			$this->updateMenuItem($page['web_page_id'], $page['title'], $input['menu']);
 		}
 
-		$this->track('The page "%s" has been updated', $input['title']);
+		$this->track('The page "%s" has been updated', $page['title']);
 
-		return $this->pageMapper->update(ArrayUtils::arrayWithout($input, array('controller', 'makeDefault', 'slug', 'menu')));
+		return $this->pageMapper->update(ArrayUtils::arrayWithout($page, array('controller', 'makeDefault', 'slug', 'menu')));
 	}
 
 	/**

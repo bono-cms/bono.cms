@@ -46,7 +46,7 @@ final class Edit extends AbstractPage
 		$formValidator = $this->getValidator($this->request->getPost('page'));
 
 		if ($formValidator->isValid()) {
-			if ($this->getPageManager()->update($this->request->getPost('page'))) {
+			if ($this->getPageManager()->update($this->request->getPost())) {
 
 				$this->flashBag->set('success', 'The page has been updated successfully');
 				return '1';
