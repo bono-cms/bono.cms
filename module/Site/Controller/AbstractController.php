@@ -162,8 +162,8 @@ abstract class AbstractController extends BaseController
 		$this->view->setLayout('__layout__');
 
 		$this->view->getBlockBag()
-				   ->setBlocksDir($this->appConfig->getModulesDir() . sprintf('/%s/View/Template/%s', 'Site', $this->getResolverThemeName()) . '/blocks/');
-		
+				   ->setBlocksDir($this->getWithViewPath('/blocks/', 'Site', $this->getResolverThemeName()));
+
 		// Tweak first breadcrumb
 		$this->view->getBreadcrumbBag()->removeFirst()->add(array(
 			array(
