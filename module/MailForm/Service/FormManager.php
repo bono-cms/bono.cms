@@ -240,13 +240,15 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	 */
 	private function prepareInput(array $input)
 	{
-		if (empty($input['slug'])) {
+		$form =& $input['form'];
+
+		if (empty($form['slug'])) {
 			// Empty slug is taken from a title
-			$input['slug'] = $input['title'];
+			$form['slug'] = $form['title'];
 		}
 
 		// Normalize a slug now
-		$input['slug'] = $this->webPageManager->sluggify($input['slug']);
+		$form['slug'] = $this->webPageManager->sluggify($form['slug']);
 
 		return $input;
 	}
@@ -260,19 +262,21 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	public function add(array $input)
 	{
 		$input = $this->prepareInput($input);
-		$input['web_page_id'] = '';
+		$form =& $input['form'];
 
-		if ($this->formMapper->insert(ArrayUtils::arrayWithout($input, array('slug', 'menu')))) {
+		$form['web_page_id'] = '';
+
+		if ($this->formMapper->insert(ArrayUtils::arrayWithout($form, array('slug', 'menu')))) {
 
 			// Add a web page now
-			if ($this->webPageManager->add($this->getLastId(), $input['slug'], 'Mail forms', 'MailForm:Form@indexAction', $this->formMapper)) {
+			if ($this->webPageManager->add($this->getLastId(), $form['slug'], 'Mail forms', 'MailForm:Form@indexAction', $this->formMapper)) {
 
 				if ($this->hasMenuWidget()) {
-					$this->addMenuItem($this->webPageManager->getLastId(), $input['title'], $input);
+					$this->addMenuItem($this->webPageManager->getLastId(), $form['title'], $input);
 				}
 			}
 
-			$this->track('Mail form "%s" has been created', $input['title']);
+			$this->track('Mail form "%s" has been created', $form['title']);
 			return true;
 
 		} else {
@@ -291,16 +295,17 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	public function update(array $input)
 	{
 		$input = $this->prepareInput($input);
+		$form = $input['form'];
 
-		if ($this->formMapper->update(ArrayUtils::arrayWithout($input, array('slug', 'menu')))) {
+		if ($this->formMapper->update(ArrayUtils::arrayWithout($form, array('slug', 'menu')))) {
 
-			$this->webPageManager->update($input['web_page_id'], $input['slug']);
+			$this->webPageManager->update($form['web_page_id'], $form['slug']);
 
 			if ($this->hasMenuWidget() && isset($input['menu'])) {
-				$this->updateMenuItem($input['web_page_id'], $input['title'], $input['menu']);
+				$this->updateMenuItem($form['web_page_id'], $form['title'], $input['menu']);
 			}
 
-			$this->track('Mail form "%s" has been updated', $input['title']);
+			$this->track('Mail form "%s" has been updated', $form['title']);
 			return true;
 
 		} else {
