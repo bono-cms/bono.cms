@@ -271,12 +271,14 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	 */
 	private function prepareInput(array $input)
 	{
+		$category =& $input['category'];
+
 		// Empty slug is always take from a title
-		if (empty($input['slug'])) {
-			$input['slug'] = $input['title'];
+		if (empty($category['slug'])) {
+			$category['slug'] = $category['title'];
 		}
 
-		$input['slug'] = $this->webPageManager->sluggify($input['slug']);
+		$category['slug'] = $this->webPageManager->sluggify($category['slug']);
 		return $input;
 	}
 
@@ -289,18 +291,20 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	public function add(array $input)
 	{
 		$input = $this->prepareInput($input);
-		$input['web_page_id'] = '';
+		$category =& $input['category'];
 
-		if ($this->categoryMapper->insert(ArrayUtils::arrayWithout($input, array('menu', 'slug')))) {
+		$category['web_page_id'] = '';
+
+		if ($this->categoryMapper->insert(ArrayUtils::arrayWithout($category, array('menu', 'slug')))) {
 
 			$id = $this->getLastId();
-			$this->track('Category "%s" has been created', $input['title']);
+			$this->track('Category "%s" has been created', $category['title']);
 
 			// Add a web page now
-			if ($this->webPageManager->add($id, $input['slug'], 'Blog (Categories)', 'Blog:Category@indexAction', $this->categoryMapper)){
+			if ($this->webPageManager->add($id, $category['slug'], 'Blog (Categories)', 'Blog:Category@indexAction', $this->categoryMapper)){
 				// Do the work in case menu widget was injected
 				if ($this->hasMenuWidget()) {
-					$this->addMenuItem($this->webPageManager->getLastId(), $input['title'], $input);
+					$this->addMenuItem($this->webPageManager->getLastId(), $category['title'], $input);
 				}
 			}
 
@@ -320,14 +324,16 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	public function update(array $input)
 	{
 		$input = $this->prepareInput($input);
-		$this->webPageManager->update($input['web_page_id'], $input['slug']);
+		$category =& $input['category'];
+
+		$this->webPageManager->update($category['web_page_id'], $category['slug']);
 
 		if ($this->hasMenuWidget() && isset($input['menu'])) {
-			$this->updateMenuItem($input['web_page_id'], $input['title'], $input['menu']);
+			$this->updateMenuItem($category['web_page_id'], $category['title'], $input['menu']);
 		}
 
-		$this->track('Category "%s" has been updated', $input['title']);
+		$this->track('Category "%s" has been updated', $category['title']);
 
-		return $this->categoryMapper->update(ArrayUtils::arrayWithout($input, array('menu', 'slug')));
+		return $this->categoryMapper->update(ArrayUtils::arrayWithout($category, array('menu', 'slug')));
 	}
 }
