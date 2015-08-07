@@ -1,3 +1,9 @@
+<?php
+
+// Load lightbox for this page
+$this->getPluginBag()->load('lightbox');
+
+?>
 <div class="container">
 	<div class="page-header">
 	  <h3><?php echo $page->getTitle(); ?> </h3>
@@ -11,7 +17,7 @@
 	  
 	  <div class="col-xs-6 col-md-3">
 		<div class="thumbnail height-initial">
-		  <img src="<?php echo $photo->getImageBag()->getUrl('170x170'); ?>" alt="<?php echo $photo->getName(); ?>" />
+		  <a data-lightbox="<?php printf('image-%s', $photo->getId()); ?>" href="<?php echo $photo->getImageBag()->getUrl('original'); ?>"><img src="<?php echo $photo->getImageBag()->getUrl('170x170'); ?>" alt="<?php echo $photo->getName(); ?>" />
 		  <div class="caption text-center">
 			<h3 class="text-muted"><?php echo $photo->getName(); ?></h3>
 			<p><?php echo $photo->getDescription(); ?></p>
