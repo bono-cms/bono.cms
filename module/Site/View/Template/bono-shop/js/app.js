@@ -24,7 +24,8 @@ $(function(){
 			tint : true,
 			tintColour : 'black',
 			tintOpacity : 0.5,
-			scrollZoom : true
+			scrollZoom : true,
+			loadingIcon : '/module/Site/View/Template/bono-shop/img/ajax.gif'
 		});
 	}
 
