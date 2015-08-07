@@ -1,3 +1,8 @@
+
+<div class="pull-right">
+	<h4 title="<?php $this->show('Views'); ?>" class="text-muted"><i class="glyphicon glyphicon-eye-open"></i> <?php echo $product->getViewCount(); ?></h4>
+</div>
+
 <div class="row">
 	<div class="col-lg-6 clearfix">
 		<img data-zoom-image="<?php echo $product->getImageBag()->getUrl('original'); ?>" data-product-image="cover" class="img-responsive" src="<?php echo $product->getImageBag()->getUrl('450x450'); ?>" title="<?php echo $product->getTitle(); ?>" />
