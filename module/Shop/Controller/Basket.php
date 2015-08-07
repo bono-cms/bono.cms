@@ -149,10 +149,6 @@ final class Basket extends AbstractShopController
 				'link' => '#'
 			)
 		));
-		
-		// Append handler for a site
-		$this->view->getPluginBag()
-				   ->appendScript($this->getWithAssetPath('/form.js', 'MailForm'));
 	}
 
 	/**
