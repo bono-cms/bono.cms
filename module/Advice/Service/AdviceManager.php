@@ -86,7 +86,7 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 				->setTitle(Filter::escape($advice['title']))
 				->setContent(Filter::escapeContent($advice['content']))
 				->setPublished((bool) $advice['published']);
-		
+
 		return $entity;
 	}
 
@@ -181,9 +181,9 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 		if ($this->adviceMapper->deleteById($id)) {
 			$this->track('Advice "%s" has been removed', $title);
 			return true;
-			
+
 		} else {
-			
+
 			return false;
 		}
 	}
@@ -201,7 +201,7 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
 				return false;
 			}
 		}
-		
+
 		$this->track('Batch removal of %s advices', count($ids));
 		return true;
 	}
