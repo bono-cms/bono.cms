@@ -315,7 +315,8 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 			->setTimestamp((int) $post['timestamp'])
 			->setKeywords(Filter::escape($post['keywords']))
 			->setMetaDescription(Filter::escape($post['meta_description']))
-			->setCover(Filter::escape($post['cover']));
+			->setCover(Filter::escape($post['cover']))
+			->setViewCount((int) $post['views']);
 
 		return $entity;
 	}
