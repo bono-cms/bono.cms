@@ -28,7 +28,7 @@ final class Add extends AbstractPage
 		$page->setSeo(true)
 			 ->setController('Pages:Page@indexAction');
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add a page',
 			'page' => $page
 		)));

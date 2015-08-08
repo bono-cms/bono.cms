@@ -26,7 +26,7 @@ final class Edit extends AbstractPage
 		if ($page !== false) {
 			$this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 				'page' => $page,
 				'title' => 'Edit the page',
 			)));
