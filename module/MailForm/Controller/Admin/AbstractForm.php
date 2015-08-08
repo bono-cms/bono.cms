@@ -62,7 +62,7 @@ abstract class AbstractForm extends AbstractController
 	 * @param array $overrides
 	 * @return void
 	 */
-	final protected function getSharedVars(array $overrides)
+	final protected function getWithSharedVars(array $overrides)
 	{
 		$this->view->getBreadcrumbBag()->add(array(
 			array(

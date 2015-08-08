@@ -27,7 +27,7 @@ final class Edit extends AbstractForm
 		if ($form !== false) {
 			$this->loadSharedPlugins();
 
-			return $this->view->render('form', $this->getSharedVars(array(
+			return $this->view->render('form', $this->getWithSharedVars(array(
 				'title' => 'Edit the form',
 				'form' => $form
 			)));

@@ -28,7 +28,7 @@ final class Add extends AbstractForm
 		$form->setSeo(true)
 			 ->setMessageView('message');
 
-		return $this->view->render('form', $this->getSharedVars(array(
+		return $this->view->render('form', $this->getWithSharedVars(array(
 			'title' => 'Add a form',
 			'form' => $form
 		)));
