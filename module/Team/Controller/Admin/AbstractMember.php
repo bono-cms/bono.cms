@@ -51,7 +51,7 @@ abstract class AbstractMember extends AbstractController
 	 * @param array $overrides
 	 * @return array
 	 */
-	final protected function getSharedVars(array $overrides)
+	final protected function getWithSharedVars(array $overrides)
 	{
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
