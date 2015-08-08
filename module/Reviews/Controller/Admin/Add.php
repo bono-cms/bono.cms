@@ -28,7 +28,7 @@ final class Add extends AbstractReview
 		$review->setPublished(true)
 			   ->setTimestamp(time());
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add new review',
 			'review' => $review
 		)));
