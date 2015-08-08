@@ -27,7 +27,7 @@ final class Add extends AbstractAlbum
 		$album = new VirtualEntity();
 		$album->setSeo(true);
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add an album',
 			'album' => $album
 		)));

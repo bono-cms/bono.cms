@@ -42,7 +42,7 @@ abstract class AbstractAlbum extends AbstractController
 	 * @param array $overrides
 	 * @return array
 	 */
-	final protected function getSharedVars(array $overrides)
+	final protected function getWithSharedVars(array $overrides)
 	{
 		$treeBuilder = new TreeBuilder($this->getAlbumManager()->fetchAll());
 

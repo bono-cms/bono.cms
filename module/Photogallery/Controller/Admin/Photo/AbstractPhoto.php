@@ -52,7 +52,7 @@ abstract class AbstractPhoto extends AbstractController
 	 * @param array $overrides
 	 * @return array
 	 */
-	final protected function getSharedVars(array $overrides)
+	final protected function getWithSharedVars(array $overrides)
 	{
 		$photogallery = $this->moduleManager->getModule('Photogallery');
 		$treeBuilder = new TreeBuilder($photogallery->getService('albumManager')->fetchAll());

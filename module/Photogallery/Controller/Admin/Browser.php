@@ -30,7 +30,7 @@ final class Browser extends AbstractController
 		$paginator = $this->getPhotoManager()->getPaginator();
 		$paginator->setUrl('/admin/module/photogallery/browse/%s');
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'paginator' => $paginator,
 			'photos' => $this->getPhotoManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
 		)));
@@ -54,7 +54,7 @@ final class Browser extends AbstractController
 			$paginator = $this->getPhotoManager()->getPaginator();
 			$paginator->setUrl('/admin/module/photogallery/browse/album/'.$albumId.'/page/%s');
 
-			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 				'albumId' => $albumId,
 				'paginator' => $paginator,
 				'photos' => $this->getPhotoManager()->fetchAllByAlbumIdAndPage($albumId, $page, $this->getSharedPerPageCount()),
@@ -166,7 +166,7 @@ final class Browser extends AbstractController
 	 * @param array $overrides
 	 * @return array
 	 */
-	private function getSharedVars(array $overrides)
+	private function getWithSharedVars(array $overrides)
 	{
 		$treeBuilder = new TreeBuilder($this->getAlbumManager()->fetchAll());
 		$title = 'Photogallery';
