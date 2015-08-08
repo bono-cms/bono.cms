@@ -27,7 +27,7 @@ final class Add extends AbstractCategory
 		$category = new VirtualEntity();
 		$category->setSeo(true);
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add a category',
 			'category' => $category
 		)));

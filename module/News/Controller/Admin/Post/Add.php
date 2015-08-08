@@ -25,7 +25,7 @@ final class Add extends AbstractPost
 
 		$this->loadSharedPlugins();
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add a post',
 			'post' => $this->getPostManager()->fetchDummy()
 		)));

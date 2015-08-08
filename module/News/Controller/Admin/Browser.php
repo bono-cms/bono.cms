@@ -26,7 +26,7 @@ final class Browser extends AbstractAdminController
 		$paginator = $this->getPostManager()->getPaginator();
 		$paginator->setUrl('/admin/module/news/browse/%s');
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'posts' => $this->getPostManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
 			'paginator' => $paginator,
 		)));
@@ -46,7 +46,7 @@ final class Browser extends AbstractAdminController
 		$paginator = $this->getPostManager()->getPaginator();
 		$paginator->setUrl('/admin/module/news/browse/%s');
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 
 			'posts' => $this->getPostManager()->fetchAllByCategoryIdAndPage($id, false, $page, $this->getSharedPerPageCount()),
 			'categoryId' => $id,
@@ -150,7 +150,7 @@ final class Browser extends AbstractAdminController
 	 * @param array $overrides
 	 * @return array
 	 */
-	private function getSharedVars(array $overrides)
+	private function getWithSharedVars(array $overrides)
 	{
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
