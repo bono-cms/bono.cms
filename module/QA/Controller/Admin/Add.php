@@ -29,7 +29,7 @@ final class Add extends AbstractQa
 		   ->setTimestampAnswered(time())
 		   ->setPublished(true);
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add a pair',
 			'qa' => $qa
 		)));
