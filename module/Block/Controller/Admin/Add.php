@@ -24,7 +24,7 @@ final class Add extends AbstractBlock
 	{
 		$this->loadSharedPlugins();
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'block' => new VirtualEntity(),
 			'title' => 'Add a block'
 		)));

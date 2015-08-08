@@ -26,7 +26,7 @@ final class Edit extends AbstractBlock
 		if ($block !== false) {
 			$this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 				'title' => 'Edit the block',
 				'block' => $block
 			)));
