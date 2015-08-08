@@ -57,7 +57,7 @@ final class Browser extends AbstractController
 
 		$this->loadSharedPlugins();
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 
 			'paginator' => $paginator,
 			'products' => $products,
@@ -78,7 +78,7 @@ final class Browser extends AbstractController
 		$paginator = $this->getProductManager()->getPaginator();
 		$paginator->setUrl('/admin/module/shop/category/'.$id. '/page/%s');
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'currentCategoryId' => $id,
 			'paginator' => $paginator,
 			'products' => $this->getProductManager()->fetchAllByCategoryIdAndPage($id, $page, $this->getSharedPerPageCount()),
@@ -190,7 +190,7 @@ final class Browser extends AbstractController
 	 * @param array $vars
 	 * @return array
 	 */
-	final protected function getSharedVars(array $overrides)
+	final protected function getWithSharedVars(array $overrides)
 	{
 		$treeBuilder = new TreeBuilder($this->getModuleService('categoryManager')->fetchAll());
 		$this->view->getBreadcrumbBag()->add(array(

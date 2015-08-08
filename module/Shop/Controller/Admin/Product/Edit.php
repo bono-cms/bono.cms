@@ -26,7 +26,7 @@ final class Edit extends AbstractProduct
 		if ($product !== false) {
 			$this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 				'product' => $product,
 				'title' => 'Edit the product',
 				'photos' => $this->getProductManager()->fetchAllImagesById($id),

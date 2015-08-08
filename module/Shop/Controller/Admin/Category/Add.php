@@ -25,7 +25,7 @@ final class Add extends AbstractCategory
 		$this->loadSharedPlugins();
 		$this->view->getPluginBag()->load('preview');
 		
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add a category',
 			'category' => new VirtualEntity()
 		)));

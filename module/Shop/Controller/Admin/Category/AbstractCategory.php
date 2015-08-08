@@ -78,7 +78,7 @@ abstract class AbstractCategory extends AbstractController
 	 * @param array $overrides
 	 * @return array
 	 */
-	final protected function getSharedVars(array $overrides)
+	final protected function getWithSharedVars(array $overrides)
 	{
 		$treeBuilder = new TreeBuilder($this->getCategoryManager()->fetchAll());
 
