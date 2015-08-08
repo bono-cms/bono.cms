@@ -28,7 +28,7 @@ final class Add extends AbstractAnnounce
 		$announce->setSeo(true);
 		$announce->setPublished(true);
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add new announce',
 			'announce' => $announce
 		)));
