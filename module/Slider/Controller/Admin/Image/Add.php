@@ -29,7 +29,7 @@ final class Add extends AbstractImage
 		$image->setPublished(true)
 			  ->setOrder(0);
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add a slider',
 			'image' => $image
 		)));

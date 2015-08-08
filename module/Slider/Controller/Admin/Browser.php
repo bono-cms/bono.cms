@@ -28,7 +28,7 @@ final class Browser extends AbstractController
 		$paginator = $this->getImageManager()->getPaginator();
 		$paginator->setUrl('/admin/module/slider/page/%s');
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Slider',
 			'images' => $this->getImageManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
 			'paginator' => $paginator
@@ -49,7 +49,7 @@ final class Browser extends AbstractController
 		$paginator = $this->getImageManager()->getPaginator();
 		$paginator->setUrl('/admin/module/slider/category/view/'.$categoryId.'/page/%s');
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'categoryId' => $categoryId,
 			'images'	 => $this->getImageManager()->fetchAllByCategoryAndPage($categoryId, $page, $this->getSharedPerPageCount()),
 			'paginator' => $paginator,
@@ -197,7 +197,7 @@ final class Browser extends AbstractController
 	 * @param array $overrides
 	 * @return array
 	 */
-	private function getSharedVars(array $overrides)
+	private function getWithSharedVars(array $overrides)
 	{
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
