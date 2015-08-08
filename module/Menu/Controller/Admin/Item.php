@@ -26,7 +26,7 @@ final class Item extends AbstractItem
 	{
 		$this->loadSharedPlugins();
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars($categoryId, array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars($categoryId, array(
 			'maxDepth' => $this->getMaxNestedDepth($categoryId),
 
 			// Tells whether we in edit mode. By using this variable we can re-use the same template
@@ -57,7 +57,7 @@ final class Item extends AbstractItem
 
 		$this->loadSharedPlugins();
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars($categoryId, array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars($categoryId, array(
 
 			'maxDepth' => $this->getMaxNestedDepth($categoryId),
 
@@ -94,7 +94,7 @@ final class Item extends AbstractItem
 		if ($item !== false) {
 			$this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getSharedVars($item->getCategoryId(), array(
+			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars($item->getCategoryId(), array(
 
 				'item' => $item,
 				// Tells whether we in edit mode. By using this variable we can re-use the same template

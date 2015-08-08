@@ -77,7 +77,7 @@ abstract class AbstractItem extends AbstractAdminController
 	 * @param string $active Active item
 	 * @return array
 	 */
-	final protected function getSharedVars($categoryId, array $overrides, $active = null)
+	final protected function getWithSharedVars($categoryId, array $overrides, $active = null)
 	{
 		$treeBuilder = $this->getTreeBuilder($categoryId);
 
