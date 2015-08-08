@@ -27,7 +27,7 @@ final class Add extends AbstractFaq
 		$faq = new VirtualEntity();
 		$faq->setPublished(true);
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Add new FAQ',
 			'faq' => $faq
 		)));
