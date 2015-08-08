@@ -26,7 +26,7 @@ final class Edit extends AbstractUser
 		if ($user !== false) {
 			$this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 				'editing' => true,
 				'title' => 'Edit the user',
 				'user' => $user

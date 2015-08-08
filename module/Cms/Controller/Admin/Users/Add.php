@@ -24,7 +24,7 @@ final class Add extends AbstractUser
 	{
 		$this->loadSharedPlugins();
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'user' => new VirtualEntity(),
 			'title' => 'Add a user'
 		)));
