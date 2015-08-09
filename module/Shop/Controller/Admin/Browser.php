@@ -162,7 +162,7 @@ final class Browser extends AbstractController
 
 			$id = $this->request->getPost('id');
 
-			$categoryManager = $this->moduleManager->getModule('Shop')->getService('categoryManager');
+			$categoryManager = $this->getModuleService('categoryManager');
 
 			if ($categoryManager->removeById($id)) {
 				$this->flashBag->set('success', 'The category has been removed successfully');

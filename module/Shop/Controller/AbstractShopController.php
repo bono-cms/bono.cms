@@ -16,16 +16,6 @@ use Site\Controller\AbstractController;
 abstract class AbstractShopController extends AbstractController
 {
 	/**
-	 * Returns Shop module
-	 * 
-	 * @return \Shop\Module
-	 */
-	final protected function getShopModule()
-	{
-		return $this->moduleManager->getModule('Shop');
-	}
-
-	/**
 	 * Returns configuration entity
 	 * 
 	 * @return \Krystal\Stdlib\VirtualEntity
