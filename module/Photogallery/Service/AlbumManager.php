@@ -244,8 +244,11 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 
 		// If we have a cover, then we need to upload it
 		if (!empty($input['files']['file'])) {
+			$file =& $input['files']['file'];
+			$this->filterFileInput($file);
+
 			// Override empty cover's value now
-			$form['cover'] = $input['files']['file'][0]->getName();
+			$form['cover'] = $file[0]->getName();
 		}
 
 		if ($this->albumMapper->insert(ArrayUtils::arrayWithout($form, array('slug', 'menu')))) {
