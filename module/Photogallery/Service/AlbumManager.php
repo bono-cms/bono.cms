@@ -18,7 +18,6 @@ use Cms\Service\AbstractManager;
 use Cms\Service\WebPageManagerInterface;
 use Menu\Contract\MenuAwareManager;
 use Menu\Service\MenuWidgetInterface;
-use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Security\Filter;
@@ -92,10 +91,10 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	/**
 	 * Returns breadcrumbs
 	 * 
-	 * @param \Krystal\Stdlib\VirtualEntity $album
+	 * @param \Photogallery\Service\AlbumEntity $album
 	 * @return array
 	 */
-	public function getBreadcrumbs(VirtualEntity $album)
+	public function getBreadcrumbs(AlbumEntity $album)
 	{
 		return $this->getBreadcrumbsById($album->getId());
 	}
@@ -137,7 +136,7 @@ final class AlbumManager extends AbstractManager implements AlbumManagerInterfac
 	 */
 	protected function toEntity(array $album)
 	{
-		$entity = new VirtualEntity();
+		$entity = new AlbumEntity();
 		$entity->setId((int) $album['id'])
 			->setParentId((int) $album['parent_id'])
 			->setWebPageId((int) $album['web_page_id'])

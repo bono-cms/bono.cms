@@ -21,10 +21,10 @@ interface AlbumManagerInterface
 	/**
 	 * Returns breadcrumbs
 	 * 
-	 * @param \Krystal\Stdlib\VirtualEntity $album
+	 * @param \Photogallery\Service\AlbumEntity $album
 	 * @return array
 	 */
-	public function getBreadcrumbs(VirtualEntity $album);
+	public function getBreadcrumbs(AlbumEntity $album);
 
 	/**
 	 * Fetches children by parent id
