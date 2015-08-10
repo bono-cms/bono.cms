@@ -30,7 +30,7 @@ final class Browser extends AbstractController
 		if ($records !== false) {
 			$this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 				'paginator' => $this->getProductManager()->getPaginator(),
 				'products' => $records
 			)));
