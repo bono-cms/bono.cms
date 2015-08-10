@@ -18,9 +18,21 @@ use Photogallery\Service\PhotoManager;
 use Photogallery\Service\TaskManager;
 use Photogallery\Service\ConfigManager;
 use Photogallery\Service\PhotoManagerFactory;
+use Photogallery\Service\AlbumImageManagerFactory;
 
 final class Module extends AbstractCmsModule
 {
+	/**
+	 * Returns album image manager
+	 * 
+	 * @return \Krystal\Image\ImageManager
+	 */
+	private function getAlbumImageManager()
+	{
+		$factory = new AlbumImageManagerFactory($this->getAppConfig(), $this->getConfigService()->getEntity());
+		return $factory->build();
+	}
+
 	/**
 	 * Returns prepared image manager
 	 * 
@@ -84,10 +96,18 @@ final class Module extends AbstractCmsModule
 		$webPageManager = $this->getWebPageManager();
 		$imageManager = $this->getImageManagerService();
 
-		$albumManager = new AlbumManager($albumMapper, $photoMapper, $imageManager, $webPageManager, $historyManager, $this->getMenuWidget());
+		$albumManager = new AlbumManager(
+			$albumMapper, 
+			$photoMapper, 
+			$this->getAlbumImageManager(), 
+			$imageManager, 
+			$webPageManager, 
+			$historyManager, 
+			$this->getMenuWidget()
+		);
 
 		return array(
-			
+
 			'configManager' => $this->getConfigService(),
 			'taskManager' => new TaskManager($photoMapper, $albumManager),
 			'photoManager' => new PhotoManager($photoMapper, $albumMapper, $imageManager, $historyManager),

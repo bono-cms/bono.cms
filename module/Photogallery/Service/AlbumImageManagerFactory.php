@@ -13,14 +13,14 @@ namespace Photogallery\Service;
 
 use Krystal\Image\Tool\AbstractImageManagerFactory;
 
-final class PhotoManagerFactory extends AbstractImageManagerFactory
+final class AlbumImageManagerFactory extends AbstractImageManagerFactory
 {
 	/**
 	 * {@inheritDoc}
 	 */
 	protected function getPath()
 	{
-		return '/data/uploads/module/photogallery/photos';
+		return '/data/uploads/module/photogallery/albums';
 	}
 
 	/**
@@ -30,21 +30,21 @@ final class PhotoManagerFactory extends AbstractImageManagerFactory
 	{
 		return array(
 			'thumb' => array(
-				'quality' => $this->config->getQuality(),
+				#'quality' => $this->config->getQuality(),
 				'dimensions' => array(
 					// Dimensions for administration panel
 					array(400, 200),
 					// Dimensions for site previews. 200 are default values
-					array($this->config->getWidth(), $this->config->getHeight())
+					#array($this->config->getWidth(), $this->config->getHeight())
 				)
 			),
 			
 			'original' => array(
-				'quality' => $this->config->getQuality(),
+				#'quality' => $this->config->getQuality(),
 				'prefix' => 'original',
-				'max_width' => $this->config->getMaxWidth(),
-				'max_height' => $this->config->getMaxHeight(),
+				'max_width' => 400, #$this->config->getMaxWidth(),
+				'max_height' => 400, #$this->config->getMaxHeight(),
 			)
 		);
-	}
+	}	
 }

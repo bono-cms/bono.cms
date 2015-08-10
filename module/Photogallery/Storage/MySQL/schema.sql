@@ -1,7 +1,7 @@
 
 DROP TABLE IF EXISTS `bono_module_photoalbum_albums`;
 CREATE TABLE `bono_module_photoalbum_albums` (
-	
+
 	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`lang_id` INT NOT NULL COMMENT 'Language identificator',
 	`parent_id` INT NOT NULL COMMENT 'Parent album id in current table',
@@ -11,12 +11,10 @@ CREATE TABLE `bono_module_photoalbum_albums` (
 	`description` TEXT NOT NULL COMMENT 'Album description that comes from WYSIWYG',
 	`order` INT NOT NULL COMMENT 'Sort order',
 	`keywords` TEXT NOT NULL COMMENT 'Keywords for SEO',
-	`meta_description` TEXT NOT NULL COMMENT 'Meta description for SEO'
-	
+	`meta_description` TEXT NOT NULL COMMENT 'Meta description for SEO',
+	`cover` varchar(255) NOT NULL
+
 ) DEFAULT CHARSET = UTF8;
-
-
-
 
 DROP TABLE IF EXISTS `bono_module_photoalbum_photos`;
 CREATE TABLE `bono_module_photoalbum_photos` (

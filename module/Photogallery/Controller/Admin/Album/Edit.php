@@ -49,7 +49,7 @@ final class Edit extends AbstractAlbum
 		if ($formValidator->isValid()) {
 
 			$albumManager = $this->getAlbumManager();
-			$albumManager->update($this->request->getPost());
+			$albumManager->update($this->request->getAll());
 
 			$this->flashBag->set('success', 'The album has been updated successfully');
 

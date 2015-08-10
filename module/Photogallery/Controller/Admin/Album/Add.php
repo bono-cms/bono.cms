@@ -45,7 +45,7 @@ final class Add extends AbstractAlbum
 		if ($formValidator->isValid()) {
 
 			$albumManager = $this->getAlbumManager();
-			$albumManager->add($this->request->getPost());
+			$albumManager->add($this->request->getAll());
 
 			$this->flashBag->set('success', 'An album has been created successfully');
 

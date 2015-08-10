@@ -111,9 +111,34 @@ use Krystal\Form\Widget\DropdownWidget;
 						</div>
 					</div>
 					
+					<div class="form-group clearfix">
+						<label class="col-lg-2 control-label"><?php $this->show('Сover'); ?></label>
+						<div class="col-lg-10">
+
+							<?php if ($album->hasCover()): ?>
+
+							<img src="<?php echo $album->getImageBag()->getUrl('400x200'); ?>" />
+
+							<br />
+							<br />
+
+							<div>
+								<label for="removeCover"><?php $this->show('Remove this cover'); ?></label>
+								<input type="checkbox" id="removeCover" name="album[remove_cover]" data-toggle="tooltip" data-placement="left" title="<?php $this->show('Check it if you want to remove this cover'); ?>" />
+							</div>
+							
+							<?php else: ?>
+							
+							<img data-image="preview" />
+							
+							<?php endif; ?>
+							
+							<input type="file" name="file" accept="image/x-png, image/gif, image/jpeg" />
+						</div>
+					</div>
+					
 				</div>
 			</div>
-			
 			
 			<?php if (!$album->getId()): ?>
 			
