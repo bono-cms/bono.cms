@@ -78,6 +78,16 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					</div>
 				</div>
 				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Domain'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="text" name="config[domain]" class="form-control" value="<?php echo $config->getDomain(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Default domain can be overriden if neccesary'); ?></span>
+					</div>
+				</div>
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Secure layer'); ?> (SSL/TLS)</label>

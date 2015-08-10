@@ -29,7 +29,8 @@ final class ConfigManager extends AbstractConfigManager
 			   ->setSmtpUsername(Filter::escape($this->get('smtp_username')))
 		       ->setSmtpSecureLayer(Filter::escape($this->get('smtp_secure_layer')))
 			   ->setSmtpPort(Filter::escape($this->get('smtp_port')))
-			   ->setUseSmtpDriver((bool)($this->get('use_smtp_driver')));
+			   ->setUseSmtpDriver((bool)($this->get('use_smtp_driver')))
+			   ->setDomain($this->get('domain', $_SERVER['HTTP_HOST']));
 
 		// SMTP Secure layers
 		$entity->setSmtpSecureLayers(array(

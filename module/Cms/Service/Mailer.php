@@ -78,22 +78,19 @@ final class Mailer implements MailerInterface
 		// Create the Mailer using your created Transport
 		$mailer = \Swift_Mailer::newInstance($transport);
 
-		$host = $_SERVER['HTTP_HOST'];
-		$host = 'demo.co';
-		
 		// Build Swift's message
 		$message = \Swift_Message::newInstance($subject)
-							  ->setFrom(array('no-reply@'.$host))
+							  ->setFrom(array('no-reply@'.$this->config->getDomain()))
 							  ->setTo(array(
 								$this->config->getNotificationEmail()
 							  ))
 							  ->setBody($text);
 		// Re-define the id
 		$msgId = $message->getHeaders()->get('Message-ID');
-		$msgId->setId(time() . '.' . uniqid('token') . '@' . $host);
+		$msgId->setId(time() . '.' . uniqid('token') . '@' . $this->config->getDomain());
 
 		if ($mailer->send($message, $failed) != 0) {
-			
+
 			$this->notificationManager->notify('You have received a new message');
 			return true;
 
