@@ -287,8 +287,13 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 
 		// If we have a cover, then we need to upload it
 		if (!empty($input['files']['file'])) {
+			$file =& $input['files']['file'];
+
+			// Now filter original file's name
+			$this->filterFileInput($file);
+
 			// Override empty cover's value now
-			$category['cover'] = $input['files']['file'][0]->getName();
+			$category['cover'] = $file[0]->getName();
 		}
 
 		$category['web_page_id'] = '';
