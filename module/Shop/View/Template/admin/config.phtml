@@ -60,7 +60,6 @@ use Krystal\Form\HtmlHelper;
 					</div>
 				</div>
 				
-				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Amount of new products in showcase'); ?></label>
 					<div class="col-lg-10">
@@ -72,7 +71,18 @@ use Krystal\Form\HtmlHelper;
 					</div>
 				</div>
 
-
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show('Per page count when showing stoke products on site'); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" min="1" class="form-control" name="config[stoke_per_page_count]" value="<?php echo $config->getStokePerPageCount(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show("How many products you want to be shown on stoke page?"); ?></span>
+					</div>
+				</div>
+				
+				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Maximal amount of recent products'); ?></label>
 					<div class="col-lg-10">
