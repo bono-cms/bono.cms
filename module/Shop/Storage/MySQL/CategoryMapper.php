@@ -62,6 +62,20 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
 	}
 
 	/**
+	 * Fetches children by parent id
+	 * 
+	 * @param string $parentId
+	 * @return array
+	 */
+	public function fetchChildrenByParentId($parentId)
+	{
+		return $this->db->select('*')
+						->from(static::getTableName())
+						->whereEquals('parent_id', $parentId)
+						->queryAll();
+	}
+
+	/**
 	 * Adds a category
 	 * 
 	 * @param array $input Raw input data

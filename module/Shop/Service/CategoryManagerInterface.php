@@ -14,6 +14,14 @@ namespace Shop\Service;
 interface CategoryManagerInterface
 {
 	/**
+	 * Fetches children by parent id
+	 * 
+	 * @param string $parentId
+	 * @return array
+	 */
+	public function fetchChildrenByParentId($parentId);
+
+	/**
 	 * Returns category's breadcrumbs
 	 * 
 	 * @param \Shop\Service\CategoryEntity $category

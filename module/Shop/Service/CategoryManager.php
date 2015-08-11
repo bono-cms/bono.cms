@@ -97,7 +97,18 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 
 		$this->setMenuWidget($menuWidget);
 	}
-	
+
+	/**
+	 * Fetches children by parent id
+	 * 
+	 * @param string $parentId
+	 * @return array
+	 */
+	public function fetchChildrenByParentId($parentId)
+	{
+		return $this->prepareResults($this->categoryMapper->fetchChildrenByParentId($parentId));
+	}
+
 	/**
 	 * Fetches all categories as a tree
 	 * 

@@ -53,9 +53,7 @@ final class Category extends AbstractShopController
 				$this->getCategorySortProvider()->getData()
 			);
 
-			// Done. Now just render them
-			return $this->view->render('shop-category', array(
-
+			$vars = array(
 				'paginator' => $paginator,
 				'products' => $products,
 				'page' => $category,
@@ -64,7 +62,18 @@ final class Category extends AbstractShopController
 				// Rest
 				'perPageCounts' => $this->getPerPageCountProvider()->getPerPageCountValues(),
 				'sortOptions' => $this->getCategorySortProvider()->getSortingOptions(),
-			));
+			);
+
+			// Extract child categories
+			$children = $categoryManager->fetchChildrenByParentId($id);
+
+			if (!empty($children)) {
+				// Then append them to view templates as well
+				$vars['categories'] = $children;
+			}
+
+			// Done. Now just render them
+			return $this->view->render('shop-category', $vars);
 
 		} else {
 

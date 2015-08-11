@@ -14,6 +14,14 @@ namespace Shop\Storage;
 interface CategoryMapperInterface
 {
 	/**
+	 * Fetches children by parent id
+	 * 
+	 * @param string $parentId
+	 * @return array
+	 */
+	public function fetchChildrenByParentId($parentId);
+
+	/**
 	 * Fetches breadcrumb's data
 	 * 
 	 * @param string $id Category id
