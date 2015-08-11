@@ -31,7 +31,7 @@ final class Stokes extends AbstractShopController
 		if ($page !== false) {
 
 			$productManager = $this->getModuleService('productManager');
-			$products = $productManager->fetchAllPublishedStokesByPage($pageNumber, 10);
+			$products = $productManager->fetchAllPublishedStokesByPage($pageNumber, $this->getConfig()->getStokePerPageCount());
 
 			$this->loadPlugins($page->getTitle());
 
