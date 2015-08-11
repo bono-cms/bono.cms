@@ -35,7 +35,16 @@ $(function() {
 		});
 	});
 	
-	
+	$("[data-button='add-create']").click(function(event){
+		add(function(response) {
+			if ($.isNumeric(response)) {
+				window.location.reload();
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
+
 	$("[data-button='save']").click(function(){
 		update(function(response){
 			if (response == "1") {
@@ -46,6 +55,15 @@ $(function() {
 		});
 	});
 	
+	$("[data-button='save-create']").click(function(event){
+		update(function(response) {
+			if (response == "1") {
+				window.location = '/admin/module/shop/category/add';
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
 	
 	$("[data-button='cancel']").click(function(event){
 		event.preventDefault();
