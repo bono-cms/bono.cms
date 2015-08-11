@@ -38,6 +38,15 @@ $(function() {
 		});
 	});
 	
+	$("[data-button='save-create']").click(function(event){
+		update(function(response) {
+			if (response == "1") {
+				window.location = '/admin/module/news/post/add';
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
 	
 	$("[data-button='add']").click(function(event) {
 		add(function(response) {
