@@ -13,6 +13,10 @@ body {
  background-size: cover;
 }
 
+button {
+ margin-left: 4px;
+}
+
 .form-control {
  z-index:0 !important;
 }
