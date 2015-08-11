@@ -31,5 +31,15 @@ $(function() {
 			}
 		});
 	});
-
+	
+	
+	$("[data-button='add-upload']").click(function(){
+		add(function(response) {
+			if ($.isNumeric(response)) {
+				window.location.reload();
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
 });
