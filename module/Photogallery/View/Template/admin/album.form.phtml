@@ -123,7 +123,7 @@ use Krystal\Form\Widget\DropdownWidget;
 							<br />
 
 							<div>
-								<label for="removeCover"><?php $this->show('Remove this cover'); ?></label>
+								<label for="removeCover"><?php $this->show('Remove this cover'); ?>&nbsp;&nbsp;</label>
 								<input type="checkbox" id="removeCover" name="album[remove_cover]" data-toggle="tooltip" data-placement="left" title="<?php $this->show('Check it if you want to remove this cover'); ?>" />
 							</div>
 							
@@ -133,10 +133,12 @@ use Krystal\Form\Widget\DropdownWidget;
 							
 							<?php endif; ?>
 							
+							<br />
+							
 							<input type="file" name="file" accept="image/x-png, image/gif, image/jpeg" />
 						</div>
 					</div>
-					
+					 
 				</div>
 			</div>
 			
