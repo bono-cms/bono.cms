@@ -60,5 +60,14 @@ $(function() {
 			}
 		});
 	});
-	
+
+	$("[data-button='save-upload']").click(function() {
+		update(function(response) {
+			if (response == "1") {
+				window.location = '/admin/module/slider/image/add';
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});	
 });
