@@ -31,7 +31,10 @@ abstract class AbstractPage extends AbstractController
 		$result = array();
 
 		foreach ($mapManager->getControllers() as $controller) {
-			$result[$controller] = $controller;
+			// Add only non-administration && non-CMS controllers
+			if (strpos($controller, 'Admin') === false && strpos($controller, 'Cms') === false) {
+				$result[$controller] = $controller;
+			}
 		}
 
 		return $result;
