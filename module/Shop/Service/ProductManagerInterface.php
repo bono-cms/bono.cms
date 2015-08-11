@@ -14,6 +14,15 @@ namespace Shop\Service;
 interface ProductManagerInterface
 {
 	/**
+	 * Fetches all published products that have stoke price
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllPublishedStokesByPage($page, $itemsPerPage);
+
+	/**
 	 * Returns product's breadcrumbs collection
 	 * 
 	 * @param \Shop\Service\ProductEntity $product

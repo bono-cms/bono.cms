@@ -130,6 +130,18 @@ final class ProductManager extends AbstractManager implements ProductManagerInte
 	}
 
 	/**
+	 * Fetches all published products that have stoke price
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllPublishedStokesByPage($page, $itemsPerPage)
+	{
+		return $this->prepareResults($this->productMapper->fetchAllPublishedStokesByPage($page, $itemsPerPage));
+	}
+
+	/**
 	 * Fetches a title by product's web page id
 	 * 
 	 * @param string $webPageId

@@ -14,6 +14,15 @@ namespace Shop\Storage;
 interface ProductMapperInterface
 {
 	/**
+	 * Fetches all published products that have stoke price
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllPublishedStokesByPage($page, $itemsPerPage);
+
+	/**
 	 * Fetches product title by its associated id
 	 * 
 	 * @param string $id Product id

@@ -99,6 +99,26 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	}
 
 	/**
+	 * Fetches all published products that have stoke price
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllPublishedStokesByPage($page, $itemsPerPage)
+	{
+		return $this->db->select('*')
+						->from(static::getTableName())
+						->whereEquals('lang_id', $this->getLangId())
+						->andWhereEquals('published', '1')
+						->andWhereNotEquals('stoke_price', '0')
+						->orderBy('id')
+						->desc()
+						->paginate($page, $itemsPerPage)
+						->queryAll();
+	}
+
+	/**
 	 * Returns minimal product's price associated with provided category id
 	 * It's aware only of published products
 	 * 
