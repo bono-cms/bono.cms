@@ -30,21 +30,16 @@ final class AlbumImageManagerFactory extends AbstractImageManagerFactory
 	{
 		return array(
 			'thumb' => array(
-				#'quality' => $this->config->getQuality(),
 				'dimensions' => array(
 					// Dimensions for administration panel
 					array(400, 200),
-					// Dimensions for site previews. 200 are default values
-					#array($this->config->getWidth(), $this->config->getHeight())
+					// Dimensions for the site
+					array($this->config->getAlbumThumbWidth(), $this->config->getAlbumThumbHeight())
 				)
 			),
-			
 			'original' => array(
-				#'quality' => $this->config->getQuality(),
-				'prefix' => 'original',
-				'max_width' => 400, #$this->config->getMaxWidth(),
-				'max_height' => 400, #$this->config->getMaxHeight(),
+				'prefix' => 'original'
 			)
 		);
-	}	
+	}
 }

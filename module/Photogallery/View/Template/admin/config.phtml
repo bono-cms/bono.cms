@@ -107,6 +107,29 @@ use Krystal\Form\HtmlHelper;
 						<span class="help-block"><?php $this->show('Desired thumbs width when viewing on site'); ?></span>
 					</div>
 				</div>
+
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Album's thumb height"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" name="config[album_thumb_height]" class="form-control" value="<?php echo $config->getAlbumThumbHeight(); ?>" <?php HtmlHelper::makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Desired album thumbs height when viewing on site'); ?></span>
+					</div>
+				</div>
+				
+				<div class="form-group clearfix">
+					<label class="col-lg-2 control-label"><?php $this->show("Album's thumb width"); ?></label>
+					<div class="col-lg-10">
+						<div class="input-group">
+							<input type="number" name="config[album_thumb_width]" class="form-control" value="<?php echo $config->getAlbumThumbWidth(); ?>" <?php HtmlHelper::makeReadOnlyOnDemand(!$extendedMode); ?> />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
+						<span class="help-block"><?php $this->show('Desired album thumbs width when viewing on site'); ?></span>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>

@@ -29,6 +29,8 @@ final class ConfigManager extends AbstractConfigManager
 			   ->setMaxWidth((float) $this->get('max_img_width', 200))
 			   ->setQuality((float) $this->get('quality', 75))
 			   ->setLanguageSupport((bool) $this->get('language_support'))
+			   ->setAlbumThumbWidth($this->get('album_thumb_width', 200))
+			   ->setAlbumThumbHeight($this->get('album_thumb_height', 200))
 			   ->setLanguageSupportOptions(array(
 					'0' => 'One photogallery version for all languages',
 					'1' => 'Each language must have its own photogallery version',
