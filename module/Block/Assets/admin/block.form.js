@@ -1,5 +1,5 @@
 
-$(function() {
+$(function(){
 	
 	$.setFormGroup('block');
 	
@@ -30,10 +30,32 @@ $(function() {
 	});
 	
 	
+	$("[data-button='add-create']").click(function(event){
+		add(function(response) {
+			if ($.isNumeric(response)) {
+				window.location.reload();
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
+	
+	
 	$("[data-button='save']").click(function(){
 		update(function(response){
 			if (response == "1") {
 				window.location.reload();
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
+	
+	
+	$("[data-button='save-create']").click(function(event){
+		update(function(response) {
+			if (response == "1") {
+				window.location = '/admin/module/block/add';
 			} else {
 				$.showErrors(response);
 			}
