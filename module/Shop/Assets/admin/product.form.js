@@ -132,6 +132,15 @@ $(function() {
 		});
 	});
 	
+	$("[data-button='save-create']").click(function(event){
+		update(function(response) {
+			if (response == "1") {
+				window.location = '/admin/module/shop/product/add';
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
 	
 	
 	$("[data-button='add-create']").click(function(){
