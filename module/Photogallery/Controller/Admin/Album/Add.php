@@ -23,6 +23,7 @@ final class Add extends AbstractAlbum
 	public function indexAction()
 	{
 		$this->loadSharedPlugins();
+		$this->view->getPluginBag()->load('preview');
 
 		$album = new VirtualEntity();
 		$album->setSeo(true);
