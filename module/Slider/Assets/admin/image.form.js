@@ -10,10 +10,19 @@ $(function() {
 		});
 	}
 	
+	function update(success){
+		$("form").send({
+			url : "/admin/module/slider/image/edit.ajax",
+			success : success
+		});
+	}
 	
-	$("[name='file']").preview(function(data){
-		$("[data-image='preview']").fadeIn(1000).attr('src', data);
-	});
+	
+	if (jQuery().preview) {
+		$("[name='file']").preview(function(data){
+			$("[data-image='preview']").fadeIn(1000).attr('src', data);
+		});
+	}
 	
 	
 	$("[data-button='cancel']").click(function(event){
@@ -32,7 +41,6 @@ $(function() {
 		});
 	});
 	
-	
 	$("[data-button='add-upload']").click(function(){
 		add(function(response) {
 			if ($.isNumeric(response)) {
@@ -42,4 +50,15 @@ $(function() {
 			}
 		});
 	});
+	
+	$("[data-button='save']").click(function(){
+		update(function(response) {
+			if (response == "1") {
+				window.location.reload();
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
+	
 });

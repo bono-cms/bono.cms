@@ -22,8 +22,7 @@ final class Add extends AbstractImage
 	 */
 	public function indexAction()
 	{
-		$this->view->getPluginBag()->load('preview')
-								   ->appendScript($this->getWithAssetPath('/admin/image.add.js'));
+		$this->loadSharedPlugins();
 
 		$image = new VirtualEntity();
 		$image->setPublished(true)

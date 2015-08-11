@@ -24,10 +24,8 @@ final class Edit extends AbstractImage
 		$image = $this->getImageManager()->fetchById($id);
 
 		if ($image !== false) {
+			$this->loadSharedPlugins(false);
 
-			$this->view->getPluginBag()
-					   ->appendScript($this->getWithAssetPath('/admin/image.edit.js'));
-			
 			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 				'title' => 'Edit the slider',
 				'image' => $image

@@ -72,6 +72,23 @@ abstract class AbstractImage extends AbstractController
 	}
 
 	/**
+	 * Loads shared view plugins
+	 * 
+	 * @param boolean $preview Whether to load preview plugin
+	 * @return void
+	 */
+	final protected function loadSharedPlugins($preview = true)
+	{
+		$pb = $this->view->getPluginBag();
+
+		if ($preview) {
+			$pb->load('preview');
+		}
+
+		$pb->appendScript($this->getWithAssetPath('/admin/image.form.js'));
+	}
+
+	/**
 	 * Returns image manager
 	 * 
 	 * @return \Slider\Service\ImageManager
