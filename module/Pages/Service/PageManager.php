@@ -321,8 +321,11 @@ final class PageManager extends AbstractManager implements PageManagerInterface,
 				$this->makeDefault($id);
 			}
 
+			// Use custom controller if provided by user
+			$controller = isset($page['controller']) ? $page['controller'] : 'Pages:Page@indexAction';
+
 			// Add a web page now
-			if ($this->webPageManager->add($id, $page['slug'], 'Pages', 'Pages:Page@indexAction', $this->pageMapper)) {
+			if ($this->webPageManager->add($id, $page['slug'], 'Pages', $controller, $this->pageMapper)) {
 				// Do the work in case menu widget was injected
 				if ($this->hasMenuWidget()) {
 					$this->addMenuItem($this->webPageManager->getLastId(), $page['title'], $input);
