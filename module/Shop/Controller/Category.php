@@ -12,7 +12,7 @@
 namespace Shop\Controller;
 
 use Shop\Service\CategorySortProvider;
-use Shop\Service\PerPageCountProvider;
+use Krystal\Form\Providers\PerPageCount;
 
 final class Category extends AbstractShopController
 {
@@ -109,11 +109,11 @@ final class Category extends AbstractShopController
 	private function getPerPageCountProvider()
 	{
 		static $provider = null;
-		
+
 		if (is_null($provider)) {
-			$provider = new PerPageCountProvider();
+			$provider = new PerPageCount($this->sessionBag, 'cat_pc', 5);
 		}
-		
+
 		return $provider;
 	}
 
@@ -128,7 +128,7 @@ final class Category extends AbstractShopController
 		static $provider = null;
 
 		if (is_null($provider)) {
-			$provider = new CategorySortProvider();
+			$provider = new CategorySortProvider($this->sessionBag);
 		}
 
 		return $provider;
