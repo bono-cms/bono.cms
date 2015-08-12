@@ -32,7 +32,7 @@ final class AlbumImageManagerFactory extends AbstractImageManagerFactory
 			'thumb' => array(
 				'dimensions' => array(
 					// Dimensions for administration panel
-					array(400, 200),
+					array(200, 200),
 					// Dimensions for the site
 					array($this->config->getAlbumThumbWidth(), $this->config->getAlbumThumbHeight())
 				)
