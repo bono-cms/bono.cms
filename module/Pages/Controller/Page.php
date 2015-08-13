@@ -64,6 +64,7 @@ final class Page extends AbstractPagesController
 
 		$page = new VirtualEntity();
 		$page->setTitle($this->translator->translate('Page not found'))
+			 ->setContent($this->translator->translate('Requested page doesn\'t exist'))
 			 ->setSeo(false);
 
 		// There's no need to set 404 status code here, as its handled by the router internally
