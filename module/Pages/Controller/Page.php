@@ -69,7 +69,6 @@ final class Page extends AbstractPagesController
 
 		// There's no need to set 404 status code here, as its handled by the router internally
 		return $this->view->render('pages-404', array(
-			'title' => '404',
 			'page' => $page
 		));
 	}
