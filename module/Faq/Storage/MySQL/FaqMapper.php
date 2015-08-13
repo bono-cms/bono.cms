@@ -39,7 +39,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 
 		if ($published === true) {
 			$db->andWhereEquals('published', '1')
-			   ->order('order');
+			   ->orderBy('order');
 		} else {
 			$db->orderBy('id')
 			   ->desc();
