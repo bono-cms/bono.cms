@@ -141,7 +141,10 @@ final class Form extends AbstractController
 			'input' => $input
 		));
 
-		return $this->getFormManager()->send($input, $body);
+		// Prepare a subject
+		$subject = sprintf($this->translator->translate('You received a new message from %s <%s>', $input['name'], $input['email']));
+
+		return $this->getFormManager()->send($subject, $body);
 	}
 
 	/**

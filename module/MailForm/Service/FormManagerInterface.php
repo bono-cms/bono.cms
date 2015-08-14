@@ -32,11 +32,11 @@ interface FormManagerInterface
 	/**
 	 * Sends a form
 	 * 
-	 * @param array $input Raw input data
+	 * @param string $subject
 	 * @param string $body Message body
 	 * @return boolean
 	 */
-	public function send(array $input, $body);
+	public function send($subject, $body);
 
 	/**
 	 * Fetches web page title by its associated id
