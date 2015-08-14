@@ -81,6 +81,7 @@ final class Mailer implements MailerInterface
 		// Build Swift's message
 		$message = \Swift_Message::newInstance($subject)
 							  ->setFrom(array('no-reply@'.$this->config->getDomain()))
+							  ->setContentType("text/html")
 							  ->setTo(array(
 								$this->config->getNotificationEmail()
 							  ))
