@@ -40,6 +40,10 @@ final class Search extends AbstractController
 			// It's time to grab configuration entity
 			$config = $this->getConfig();
 
+			// Get site service to define target keyword
+			$siteService = $this->getModuleService('siteService');
+			$siteService->setKeyword($keyword);
+
 			if ($formValidator->isValid()) {
 				
 				$searchManager = $this->getModuleService('searchManager');
@@ -54,7 +58,7 @@ final class Search extends AbstractController
 
 				// Template variables
 				$vars = array(
-					'keyword' => $keyword,
+					'search' => $siteService,
 					'page' => $this->getPage(),
 					'results' => $results,
 					'paginator' => $paginator
@@ -64,7 +68,7 @@ final class Search extends AbstractController
 
 				// Template variables when we have errors
 				$vars = array(
-					'keyword' => $keyword,
+					'search' => $siteService,
 					'page' => $this->getPage(),
 					'errors' => $formValidator->getErrors()
 				);

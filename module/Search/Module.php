@@ -15,6 +15,7 @@ use Krystal\Config\File\FileArray;
 use Cms\AbstractCmsModule;
 use Search\Service\SearchManager;
 use Search\Service\ConfigManager;
+use Search\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -91,7 +92,10 @@ final class Module extends AbstractCmsModule
 			$searchMapper->append($this->getMapper($mapper));
 		}
 
+		$siteService = new SiteService();
+
 		return array(
+			'siteService' => $siteService,
 			'configManager' => $this->getConfigManager(),
 			'searchManager' => new SearchManager($searchMapper, $this->getWebPageManager())
 		);

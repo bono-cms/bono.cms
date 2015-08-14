@@ -14,6 +14,21 @@ namespace Search\Service;
 interface SiteServiceInterface
 {
 	/**
+	 * Defines search keyword
+	 * 
+	 * @param string $keyword
+	 * @return void
+	 */
+	public function setKeyword($keyword);
+
+	/**
+	 * Returns search keyword
+	 * 
+	 * @return string
+	 */
+	public function getKeyword();
+
+	/**
 	 * Returns URL where requests should be send to
 	 * 
 	 * @return string
