@@ -11,7 +11,11 @@ use Krystal\Form\Widget\CheckBoxWidget;
 	  </button>
 	  <ul class="dropdown-menu">
 		 <li><a href="<?php echo $this->url('Announcement:Admin:Announce:Add@indexAction'); ?>"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Add new announce'); ?></a></li>
+		 
+		 <?php if ($extendedMode): ?>
 		 <li><a href="<?php echo $this->url('Announcement:Admin:Category:Add@indexAction'); ?>"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Add a category'); ?></a></li>
+		 <?php endif; ?>
+		 
 		 <li class="divider"></li>
 		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
 		 <?php if (!empty($announces)): ?>
@@ -98,8 +102,11 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<tr>
 				<th class="text-center"><?php $this->show('#'); ?></th>
 				<th class="text-center"><?php $this->show('Name'); ?></th>
+				
+				<?php if ($extendedMode): ?>
 				<th class="text-center"><?php $this->show('Class'); ?></th>
 				<th class="text-center"><?php $this->show('Actions'); ?></th>
+				<?php endif; ?>
 			</tr>
 		</thead>
 		
@@ -117,11 +124,13 @@ use Krystal\Form\Widget\CheckBoxWidget;
 						<?php endif; ?>
 					</a>
 				</td>
+				<?php if ($extendedMode): ?>
 				<td class="text-center"><?php echo $category->getClass(); ?></td>
 				<td class="text-center">
 					<a data-toggle="tooltip" data-placement="left" data-button="edit" data-original-title="<?php $this->show('Edit this category'); ?>" href="<?php echo $this->url('Announcement:Admin:Category:Edit@indexAction', $category->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
 					<a data-toggle="tooltip" data-placement="left" data-button="delete" data-original-title="<?php $this->show('Remove this category'); ?>" data-id="<?php echo $category->getId(); ?>" data-category="category" href="#"><i class="glyphicon glyphicon-remove"></i></a>
 				</td>
+				<?php endif; ?>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
