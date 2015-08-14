@@ -35,11 +35,11 @@ final class Config extends AbstractAdminController
 	 */
 	public function saveAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('config'));
 
 		if (1) {
 
-			$this->getConfigManager()->write($this->request->getPost());
+			$this->getConfigManager()->write($this->request->getPost('config'));
 			$this->flashBag->set('success', "Blog's configuration has been updated successfully");
 
 			return '1';

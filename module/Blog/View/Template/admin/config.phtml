@@ -4,7 +4,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Per page count'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group date">
-					<input type="number" min="1" name="per_page_count" class="form-control" value="<?php echo $config->getPerPageCount(); ?>" />
+					<input type="number" min="1" name="config[per_page_count]" class="form-control" value="<?php echo $config->getPerPageCount(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 				<span class="help-block"><?php $this->show('How many posts you want to be displayed per page in each category?'); ?></span>
@@ -19,7 +19,7 @@
 				<label class="col-lg-2 control-label"><?php $this->show("Post's template"); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group date">
-						<input type="text" name="post_template" class="form-control" value="<?php echo $config->getPostTemplate(); ?>" />
+						<input type="text" name="config[post_template]" class="form-control" value="<?php echo $config->getPostTemplate(); ?>" />
 						<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 					</div>
 					<span class="help-block"><?php $this->show("Framework-compliant post's template"); ?></span>
@@ -30,7 +30,7 @@
 				<label class="col-lg-2 control-label"><?php $this->show("Category's template"); ?></label>
 				<div class="col-lg-10">
 					<div class="input-group date">
-						<input type="text" class="form-control" name="category_template" value="<?php echo $config->getCategoryTemplate(); ?>" />
+						<input type="text" class="form-control" name="config[category_template]" value="<?php echo $config->getCategoryTemplate(); ?>" />
 						<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 					</div>
 					<span class="help-block"><?php $this->show("Framework-compliant category's template"); ?></span>
