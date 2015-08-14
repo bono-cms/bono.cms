@@ -24,14 +24,23 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
 	private $view;
 
 	/**
+	 * Search site service
+	 * 
+	 * @var \Search\Service\SiteServiceInterface
+	 */
+	private $siteService;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param \Krystal\Application\View\ViewManagerInterface $view
+	 * @param \Search\Service\SiteServiceInterface $siteService
 	 * @return void
 	 */
-	public function __construct(ViewManagerInterface $view)
+	public function __construct(ViewManagerInterface $view, SiteServiceInterface $siteService)
 	{
 		$this->view = $view;
+		$this->siteService = $siteService;
 	}
 
 	/**
@@ -39,6 +48,6 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
 	 */
 	public function bootstrap()
 	{
-		$this->view->addVariable('search', new SiteService());
+		$this->view->addVariable('search', $this->siteService);
 	}
 }

@@ -14,6 +14,34 @@ namespace Search\Service;
 final class SiteService implements SiteServiceInterface
 {
 	/**
+	 * Target keyword
+	 * 
+	 * @var string
+	 */
+	private $keyword;
+
+	/**
+	 * Defines search keyword
+	 * 
+	 * @param string $keyword
+	 * @return void
+	 */
+	public function setKeyword($keyword)
+	{
+		$this->keyword = $keyword;
+	}
+
+	/**
+	 * Returns search keyword
+	 * 
+	 * @return string
+	 */
+	public function getKeyword()
+	{
+		return $this->keyword;
+	}
+
+	/**
 	 * Returns URL where requests should be send to
 	 * 
 	 * @return string
