@@ -1,9 +1,11 @@
+<?php 
+?>
 <div class="container">
 	
 	<?php if (empty($errors)): ?>
 	
 	<div class="page-header">
-		<h3 class="text-muted"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Search results for'); ?> "<?php echo $keyword; ?>" (<?php echo $paginator->getTotalAmount(); ?>)</h3>
+		<h3 class="text-muted"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Search results for'); ?> "<?php echo $search->getKeyword(); ?>" (<?php echo $paginator->getTotalAmount(); ?>)</h3>
 	</div>
 	
 	<?php if (!empty($results)): ?>
