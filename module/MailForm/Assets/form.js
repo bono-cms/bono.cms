@@ -11,7 +11,7 @@ $(function(){
 		// Find its parent form
 		var $form = $(this).closest('form');
 
-		$form.submit(function(){
+		$form.submit(function(event){
 			event.preventDefault();
 			var data = $(this).serialize();
 
