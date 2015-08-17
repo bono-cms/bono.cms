@@ -18,6 +18,8 @@ use Krystal\Db\Filter\QueryContainer;
 
 final class Browser extends AbstractController
 {
+	const FILTER_ROUTE = '/admin/module/shop/filter/';
+
 	/**
 	 * Applies the filter
 	 * 
@@ -25,7 +27,7 @@ final class Browser extends AbstractController
 	 */
 	public function filterAction()
 	{
-		$records = $this->getFilter($this->getProductManager());
+		$records = $this->getFilter($this->getProductManager(), self::FILTER_ROUTE);
 
 		if ($records !== false) {
 			$this->loadSharedPlugins();
@@ -187,10 +189,10 @@ final class Browser extends AbstractController
 	/**
 	 * Returns shared variables
 	 * 
-	 * @param array $vars
+	 * @param array $extra
 	 * @return array
 	 */
-	final protected function getWithSharedVars(array $overrides)
+	final protected function getWithSharedVars(array $extra)
 	{
 		$treeBuilder = new TreeBuilder($this->getModuleService('categoryManager')->fetchAll());
 		$this->view->getBreadcrumbBag()->add(array(
@@ -204,10 +206,10 @@ final class Browser extends AbstractController
 			'title' => 'Shop',
 			'taskManager' => $this->getModuleService('taskManager'),
 			'categories' => $treeBuilder->render(new PhpArray('title')),
-			'filter' => new QueryContainer($this->request->getQuery(), 'filter')
+			'filter' => new QueryContainer($this->request->getQuery(), self::FILTER_ROUTE)
 		);
 
-		return array_replace_recursive($vars, $overrides);
+		return array_replace_recursive($vars, $extra);
 	}
 
 	/**

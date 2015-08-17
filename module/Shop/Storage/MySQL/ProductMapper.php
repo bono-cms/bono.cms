@@ -74,28 +74,37 @@ final class ProductMapper extends AbstractMapper implements ProductMapperInterfa
 	}
 
 	/**
-	 * Finds data by the filter
+	 * Filters the raw input
 	 * 
-	 * @param array $input Raw input data
-	 * @param integer $page
-	 * @param integer $itemsPerPage
+	 * @param array|\ArrayAccess $input Raw input data
+	 * @param integer $page Current page number
+	 * @param integer $itemsPerPage Items per page to be displayed
+	 * @param string $sortingColumn Column name to be sorted
+	 * @param string $desc Whether to sort in DESC order
 	 * @return array
 	 */
-	public function filter(array $input, $page, $itemsPerPage)
+	public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc)
 	{
-		return $this->db->select('*')
+		if (!$sortingColumn) {
+			$sortingColumn = 'id';
+		}
+
+		$db = $this->db->select('*')
 						->from(static::getTableName())
 						->whereLike('title', '%'.$input['title'].'%', true)
 						->andWhereEquals('date', $input['date'], true)
 						->andWhereEquals('id', $input['id'], true)
-						->andWhereEquals('regular_price', $input['price'], true)
+						->andWhereEquals('regular_price', $input['regular_price'], true)
 						->andWhereEquals('category_id', $input['category_id'], true)
 						->andWhereEquals('published', $input['published'], true)
 						->andWhereEquals('seo', $input['seo'], true)
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+						->orderBy($sortingColumn);
+		
+		if ($desc){
+			$db->desc();
+		}
+
+		return $db->paginate($page, $itemsPerPage)->queryAll();
 	}
 
 	/**
