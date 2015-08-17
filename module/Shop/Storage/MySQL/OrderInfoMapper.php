@@ -25,16 +25,22 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 	}
 
 	/**
-	 * Filters the input
+	 * Filters the raw input
 	 * 
-	 * @param array $input Raw input data
-	 * @param integer $page
-	 * @param integer $itemsPerPage
+	 * @param array|\ArrayAccess $input Raw input data
+	 * @param integer $page Current page number
+	 * @param integer $itemsPerPage Items per page to be displayed
+	 * @param string $sortingColumn Column name to be sorted
+	 * @param string $desc Whether to sort in DESC order
 	 * @return array
 	 */
-	public function filter(array $input, $page, $itemsPerPage)
+	public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc)
 	{
-		return $this->db->select('*')
+		if (!$sortingColumn) {
+			$sortingColumn = 'id';
+		}
+
+		$db = $this->db->select('*')
 						->from(static::getTableName())
 						->whereLike('name', '%'.$input['name'].'%', true)
 						->andWhereLike('phone', '%'.$input['phone'].'%', true)
@@ -43,8 +49,13 @@ final class OrderInfoMapper extends AbstractMapper implements OrderInfoMapperInt
 						->andWhereEquals('qty', $input['qty'], true)
 						->andWhereEquals('total_price', $input['total_price'], true)
 						->andWhereEquals('approved', $input['approved'], true)
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+						->orderBy($sortingColumn);
+
+		if ($desc) {
+			$db->desc();
+		}
+
+		return $db->paginate($page, $itemsPerPage)->queryAll();
 	}
 
 	/**

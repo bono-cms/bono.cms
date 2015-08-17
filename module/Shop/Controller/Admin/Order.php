@@ -16,6 +16,8 @@ use Krystal\Db\Filter\QueryContainer;
 
 final class Order extends AbstractController
 {
+	const FILTER_ROUTE = '/admin/module/shop/orders/filter/';
+
 	/**
 	 * Applies the filter
 	 * 
@@ -23,7 +25,7 @@ final class Order extends AbstractController
 	 */
 	public function filterAction()
 	{
-		$records = $this->getFilter($this->getOrderManager());
+		$records = $this->getFilter($this->getOrderManager(), self::FILTER_ROUTE);
 
 		if ($records !== false) {
 
@@ -135,7 +137,7 @@ final class Order extends AbstractController
 			'paginator' => $paginator,
 			'config' => $this->getConfig(),
 			'title' => 'Orders',
-			'filter' => new QueryContainer($this->request->getQuery('filter'))
+			'filter' => new QueryContainer($this->request->getQuery(), self::FILTER_ROUTE)
 		);
 	}
 
