@@ -13,20 +13,35 @@ use Krystal\Form\HtmlHelper;
 	<?php $this->loadBlock('items-per-page', array('caption' => 'Recent orders')); ?>
 	
 	<form action="<?php echo $this->url('Shop:Admin:Order@filterAction', null); ?>" novalidate>
-		
 		<table class="table table-hover table-bordered table-striped">
 			<thead>
 				<tr>
-					<th class="text-center"><?php $this->show('#'); ?></th>
-					<th class="text-center"><?php $this->show('Date'); ?></th>
-					<th class="text-center"><?php $this->show('Customer'); ?></th>
-					<th class="text-center"><?php $this->show('Phone'); ?></th>
-					<th class="text-center"><?php $this->show('Address'); ?></th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('id'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('id'); ?>"><i class="<?php echo $filter->isSortedByDesc('id') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> #</a>
+					</th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('date'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('date'); ?>"><i class="<?php echo $filter->isSortedByDesc('date') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Date'); ?></a>
+					</th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('name'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('name'); ?>"><i class="<?php echo $filter->isSortedByDesc('name') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Customer'); ?></a>
+					</th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('phone'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('phone'); ?>"><i class="<?php echo $filter->isSortedByDesc('name') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Phone'); ?></a>
+					</th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('address'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('address'); ?>"><i class="<?php echo $filter->isSortedByDesc('address') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Address'); ?></a>
+					</th>
 					<th class="text-center"><?php $this->show('Comment'); ?></th>
 					<th class="text-center"><?php $this->show('Delivery type'); ?></th>
-					<th class="text-center"><?php $this->show('Qty'); ?></th>
-					<th class="text-center"><?php $this->show('Total price'); ?></th>
-					<th class="text-center"><?php $this->show('Approved'); ?></th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('qty'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('qty'); ?>"><i class="<?php echo $filter->isSortedByDesc('address') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Qty'); ?></a>
+					</th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('total_price'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('total_price'); ?>"><i class="<?php echo $filter->isSortedByDesc('total_price') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Total price'); ?></a>
+					</th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('approved'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('approved'); ?>"><i class="<?php echo $filter->isSortedByDesc('approved') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Approved'); ?></a>
+					</th>
 					<th class="text-center"><?php $this->show('Actions'); ?></th>
 				</tr>
 				
