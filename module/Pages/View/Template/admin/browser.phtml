@@ -42,10 +42,16 @@ use Krystal\Form\HtmlHelper;
 						<input type="checkbox" />
 						<?php endif; ?>
 					</th>
-					<th class="text-center"><?php $this->show('#'); ?></th>
-					<th class="text-center"><?php $this->show('Title'); ?></th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('id'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('id'); ?>"><i class="<?php echo $filter->isSortedByDesc('id') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> #</a>
+					</th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('title'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('title'); ?>"><i class="<?php echo $filter->isSortedByDesc('title') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Title'); ?></a>
+					</th>
 					<th class="text-center"><?php $this->show('Default'); ?></th>
-					<th class="text-center"><?php $this->show('SEO'); ?></th>
+					<th class="text-center">
+						<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('seo'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('seo'); ?>"><i class="<?php echo $filter->isSortedByDesc('seo') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('SEO'); ?></a>
+					</th>
 					<th class="text-center"><?php $this->show('Actions'); ?></th>
 				</tr>
 				
