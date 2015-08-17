@@ -50,14 +50,40 @@ use Krystal\Form\HtmlHelper;
 							<input type="checkbox" />
 							<?php endif; ?>
 						</th>
-						<th class="text-center"><?php $this->show('#'); ?></th>
+						<th class="text-center">
+							<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('id'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('id'); ?>"><i class="<?php echo $filter->isSortedByDesc('id') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> #</a>
+						</th>
 						<th class="text-center"><?php $this->show('Cover'); ?></th>
-						<th class="text-center"><?php $this->show('Title'); ?> </th>
-						<th class="text-center"><?php $this->show('Date'); ?></th>
-						<th class="text-center"><?php $this->show('Category'); ?></th>
-						<th class="text-center"><?php $this->show('Price'); ?></th>
-						<th class="text-center"><?php $this->show('Published'); ?></th>
-						<th class="text-center"><?php $this->show('SEO'); ?></th>
+						<th class="text-center">
+							<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('title'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('title'); ?>">
+							<i class="<?php echo $filter->isSortedByDesc('title') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Title'); ?>
+							</a>
+						</th>
+						<th class="text-center">
+							<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('date'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('date'); ?>">
+							<i class="<?php echo $filter->isSortedByDesc('date') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Date'); ?>
+							</a>
+						</th>
+						<th class="text-center">
+							<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('category_id'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('category_id'); ?>">
+							<i class="<?php echo $filter->isSortedByDesc('category_id') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Category'); ?>
+							</a>
+						</th>
+						<th class="text-center">
+							<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('regular_price'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('regular_price'); ?>">
+							<i class="<?php echo $filter->isSortedByDesc('regular_price') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Price'); ?>
+							</a>
+						</th>
+						<th class="text-center">
+							<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('published'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('published'); ?>">
+							<i class="<?php echo $filter->isSortedByDesc('published') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('Published'); ?>
+							</a>
+						</th>
+						<th class="text-center">
+							<a <?php echo HtmlHelper::addClassOnDemand($filter->isSortedBy('seo'), 'text-info'); ?> href="<?php echo $filter->getColumnSortingUrl('seo'); ?>">
+							<i class="<?php echo $filter->isSortedByDesc('seo') ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up'; ?>"></i> <?php $this->show('SEO'); ?>
+							</a>
+						</th>
 						<th class="text-center"><?php $this->show('Actions'); ?></th>
 					</tr>
 					
