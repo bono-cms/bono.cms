@@ -16,6 +16,8 @@ use Krystal\Db\Filter\QueryContainer;
 
 final class Browser extends AbstractController
 {
+	const FILTER_ROUTE = '/admin/module/pages/filter/';
+
 	/**
 	 * Applies a filter
 	 * 
@@ -23,7 +25,7 @@ final class Browser extends AbstractController
 	 */
 	public function filterAction()
 	{
-		$records = $this->getFilter($this->getPageManager());
+		$records = $this->getFilter($this->getPageManager(), self::FILTER_ROUTE);
 
 		if ($records !== false) {
 			$this->loadPlugins();
@@ -163,7 +165,7 @@ final class Browser extends AbstractController
 		return array(
 			'paginator' => $this->getPageManager()->getPaginator(),
 			'pages' => $pages,
-			'filter' => new QueryContainer($this->request->getQuery(), 'filter'),
+			'filter' => new QueryContainer($this->request->getQuery(), self::FILTER_ROUTE),
 			'title' => 'Pages'
 		);
 	}

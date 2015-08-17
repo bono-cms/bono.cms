@@ -71,24 +71,33 @@ final class PageMapper extends AbstractMapper implements PageMapperInterface, We
 	}
 
 	/**
-	 * Filters the input and returns a result-set
+	 * Filters the raw input
 	 * 
-	 * @param array $input Raw input data
-	 * @param integer $page
-	 * @param integer $itemsPerPage
+	 * @param array|\ArrayAccess $input Raw input data
+	 * @param integer $page Current page number
+	 * @param integer $itemsPerPage Items per page to be displayed
+	 * @param string $sortingColumn Column name to be sorted
+	 * @param string $desc Whether to sort in DESC order
 	 * @return array
-	 */ 
-	public function filter(array $input, $page, $itemsPerPage)
+	 */
+	public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc)
 	{
-		return $this->db->select('*')
+		if (!$sortingColumn) {
+			$sortingColumn = 'id';
+		}
+
+		$db = $this->db->select('*')
 						->from(static::getTableName())
 						->whereLike('title', '%'.$input['title'].'%', true)
 						->andWhereEquals('id', $input['id'], true)
 						->andWhereEquals('seo', $input['seo'], true)
-						->orderBy('id')
-						->desc()
-						->paginate($page, $itemsPerPage)
-						->queryAll();
+						->orderBy($sortingColumn);
+
+		if ($desc) {
+			$db->desc();
+		}
+
+		return $db->paginate($page, $itemsPerPage)->queryAll();
 	}
 
 	/**
