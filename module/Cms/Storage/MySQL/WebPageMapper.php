@@ -25,6 +25,23 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 	}
 
 	/**
+	 * Checks whether slug already exists
+	 * 
+	 * @param string $slug
+	 * @return boolean
+	 */
+	public function exists($slug)
+	{
+		$result = $this->db->select()
+						   ->count('slug', 'count')
+						   ->from(self::getTableName())
+						   ->whereEquals('slug', $slug)
+						   ->query('count');
+
+		return intval($result) > 0;
+	}
+
+	/**
 	 * Fetches language id by associated web page id
 	 * 
 	 * @param string $id

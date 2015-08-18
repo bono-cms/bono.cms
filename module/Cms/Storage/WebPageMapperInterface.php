@@ -14,6 +14,14 @@ namespace Cms\Storage;
 interface WebPageMapperInterface
 {
 	/**
+	 * Checks whether slug already exists
+	 * 
+	 * @param string $slug
+	 * @return boolean
+	 */
+	public function exists($slug);
+
+	/**
 	 * Fetches web page's slug by its associated id
 	 * 
 	 * @param string $webPageId
