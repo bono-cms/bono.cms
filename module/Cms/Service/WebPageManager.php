@@ -227,6 +227,30 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 	}
 
 	/**
+	 * Returns unique slug
+	 * 
+	 * @param string $slug
+	 * @return string
+	 */
+	private function getUniqueSlug($slug)
+	{
+		if ($this->webPageMapper->exists($slug)) {
+			$count = 0;
+
+			while (true) {
+				$count++;
+				$target = sprintf('%s-%s', $slug, $count);
+
+				if (!$this->webPageMapper->exists($target)) {
+					return $target;
+				}
+			}
+		}
+
+		return $slug;
+	}
+
+	/**
 	 * Adds a web page
 	 * 
 	 * @param string $targetId Data to be supplied to controller
@@ -237,14 +261,16 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 	 */
 	public function add($targetId, $slug, $module, $controller, $childMapper)
 	{
+		// Ensure the slug is unique
+		$slug = $this->getUniqueSlug($slug);
+
 		$this->webPageMapper->insert(array(
-			
 			'target_id'		=> $targetId,
-			'slug'			=> $slug,
+			'slug' 			=> $slug,
 			'module'		=> $module,
 			'controller'	=> $controller,
 		));
-		
+
 		return $childMapper->updateWebPageIdById($targetId, $this->webPageMapper->getLastId());
 	}
 
