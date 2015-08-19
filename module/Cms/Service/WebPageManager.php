@@ -123,9 +123,12 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 	public function surround($slug, $langId)
 	{
 		if ($slug != null && $langId != null) {
+			static $languages = null;
 
-			// TODO: This should be cached
-			$languages = $this->languageMapper->fetchAllPublished();
+			// Cache fetching calls
+			if (is_null($languages)) {
+				$languages = $this->languageMapper->fetchAllPublished();
+			}
 
 			// If we have more that one language, then URL itself should look like as /lang-code/slug/
 			if (count($languages) > 1) {
