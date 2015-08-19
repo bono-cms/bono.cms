@@ -143,6 +143,18 @@ if (window.jQuery){
 			charset : "UTF-8",
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			beforeSend : function(){
+				// Ensure bootstrap modal is loaded
+				if ($.isFunction($.fn.modal)) {
+					$("#ajax-modal").modal('show');
+				}
+			},
+			complete : function(){
+				// Ensure bootstrap modal is loaded
+				if ($.isFunction($.fn.modal)) {
+					$("#ajax-modal").modal('hide');
+				}
 			}
 		});
 		

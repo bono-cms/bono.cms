@@ -3,16 +3,6 @@ $(function(){
 	
 	$('ul.sf-menu').superfish();
 	
-	$.ajaxSetup({
-		beforeSend : function(){
-			$("#ajax-modal").modal('show');
-		},
-		complete : function(){
-			$("#ajax-modal").modal('hide');
-		}
-	});
-	
-	
 	// If zoom plugin is loaded, then init it
 	if ($.fn.elevateZoom) {
 		$("[data-product-image='cover']").elevateZoom({
