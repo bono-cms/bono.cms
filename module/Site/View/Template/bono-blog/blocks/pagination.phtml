@@ -3,22 +3,37 @@
 <nav class="center-block text-center">
   <ul class="pagination pagination-lg">
 	<?php if ($paginator->hasPreviousPage()): ?>
-	<?php endif; ?>
 	<li>
-	  <a href="#" aria-label="Previous">
+	  <a href="<?php echo $paginator->getPreviousPageUrl(); ?>" aria-label="Previous">
 		<span aria-hidden="true">&laquo;</span>
 	  </a>
 	</li>
+	<?php endif; ?>
+
+	<?php foreach ($paginator->getPageNumbers() as $page): ?>
+	<?php if (is_numeric($page)): ?>
+	<?php if ($paginator->isCurrentPage($page)): ?>
 	
-	<?php foreach ($paginator->getPageNumbers() as $pageNumber): ?>
-	<li <?php $this->getHelper()->addClassOnDemand($paginator->isCurrentPage($pageNumber), 'active')?>><a href="<?php echo $paginator->getUrl($pageNumber); ?>"><?php echo $pageNumber; ?></a></li>
+	<li class="active"><a href="<?php echo $paginator->getUrl($page); ?>"><?php echo $page; ?></a></li>
+	<?php else: ?>
+	
+	<li><a href="<?php echo $paginator->getUrl($page); ?>"><?php echo $page; ?></a></li>
+	<?php endif; ?>
+	
+	<?php else: ?>
+	<li><a href="#"><?php echo $page; ?></a></li>
+	<?php endif; ?>
 	<?php endforeach; ?>
 	
+	<?php if ($paginator->hasNextPage()): ?>
 	<li>
-	  <a href="#" aria-label="Next">
+	  <a href="<?php echo $paginator->getNextPageUrl(); ?>" aria-label="Next">
 		<span aria-hidden="true">&raquo;</span>
 	  </a>
 	</li>
+	<?php endif; ?>
+	
   </ul>
 </nav>
+
 <?php endif; ?>
