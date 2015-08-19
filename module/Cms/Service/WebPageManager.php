@@ -284,6 +284,9 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 	 */
 	public function update($id, $slug, $controller = null)
 	{
+		// Ensure the slug is unique
+		$slug = $this->getUniqueSlug($slug);
+
 		return $this->webPageMapper->update($id, $slug, $controller);
 	}
 }
