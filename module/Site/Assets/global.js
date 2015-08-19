@@ -4,14 +4,8 @@
 
 // Do set global AJAX options in case jquery has been loaded
 if (window.jQuery){
+	
 	$(function(){
-		$.ajaxSetup({
-			cache : false,
-			charset : "UTF-8",
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
 		
 		$.validator = {
 			/**
@@ -142,5 +136,26 @@ if (window.jQuery){
 				}
 			}
 		};
+		
+		// Setup global AJAX settings
+		$.ajaxSetup({
+			cache : false,
+			charset : "UTF-8",
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		
+		// CAPTCHA's button
+		$("[data-captcha='button-refresh']").click(function(event){
+			event.preventDefault();
+
+			// Grab image's element
+			var $image = $("[data-captcha='image']");
+			var link = $image.attr('src');
+
+			$image.attr('src', link + Math.random());
+		});
+		
 	});
 }
