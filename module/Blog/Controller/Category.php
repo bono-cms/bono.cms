@@ -43,7 +43,7 @@ final class Category extends AbstractBlogController
 				$this->preparePaginator($paginator, $code, $slug, $pageNumber);
 			}
 
-			return $this->view->render($config->getCategoryTemplate(), array(
+			return $this->view->render('blog-category', array(
 				'page' => $category,
 				'category' => $category,
 				'posts' => $posts,

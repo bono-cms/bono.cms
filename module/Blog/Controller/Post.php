@@ -29,7 +29,7 @@ final class Post extends AbstractBlogController
 		if ($post !== false) {
 			$this->loadPlugins($post);
 
-			return $this->view->render($this->getConfig()->getPostTemplate(), array(
+			return $this->view->render('blog-post', array(
 				'page' => $post,
 				'post' => $post,
 			));
