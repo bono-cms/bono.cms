@@ -71,7 +71,6 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
 			return true;
 
 		} else {
-
 			return false;
 		}
 	}
