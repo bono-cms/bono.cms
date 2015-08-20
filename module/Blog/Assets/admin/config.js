@@ -1,5 +1,7 @@
 $(function() {
 	
+	$.setFormGroup('config');
+	
 	$("form").submit(function(event) {
 		event.preventDefault();
 		var data = $(this).serialize();
