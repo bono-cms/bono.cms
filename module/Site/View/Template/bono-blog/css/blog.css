@@ -2,6 +2,15 @@
  * Globals
  */
 
+::-moz-selection {
+ background: black;
+ color: white;
+}
+
+::selection {
+ background: black;
+ color: white;
+}
 
 /*
  * Override Bootstrap's default container.
