@@ -11,6 +11,8 @@
 
 namespace Blog\Controller\Admin;
 
+use Krystal\Validate\Pattern;
+
 final class Config extends AbstractAdminController
 {
 	/**
@@ -37,7 +39,7 @@ final class Config extends AbstractAdminController
 	{
 		$formValidator = $this->getValidator($this->request->getPost('config'));
 
-		if (1) {
+		if ($formValidator->isValid()) {
 
 			$this->getConfigManager()->write($this->request->getPost('config'));
 			$this->flashBag->set('success', "Blog's configuration has been updated successfully");
@@ -51,13 +53,21 @@ final class Config extends AbstractAdminController
 	}
 
 	/**
-	 * Returns prepared form validator
+	 * Returns prepared and configured form validator
 	 * 
 	 * @param array $input Raw input data
 	 * @return \Krystal\Validate\ValidatorChain
 	 */
 	private function getValidator(array $input)
 	{
+		return $this->validatorFactory->build(array(
+			'input' => array(
+				'source' => $input,
+				'definition' => array(
+					'per_page_count' => new Pattern\PerPageCount(),
+				)
+			)
+		));
 	}
 
 	/**
