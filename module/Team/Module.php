@@ -11,6 +11,7 @@
 
 namespace Team;
 
+use Krystal\Image\Tool\ImageManager;
 use Cms\AbstractCmsModule;
 use Team\Service\TeamManager;
 use Team\Service\TeamImageManagerFactory;
@@ -18,14 +19,34 @@ use Team\Service\TeamImageManagerFactory;
 final class Module extends AbstractCmsModule
 {
 	/**
-	 * Returns image manager
+	 * Returns image manager service
 	 * 
 	 * @return \Krystal\Image\Tool\ImageManager
 	 */
 	private function getImageManager()
 	{
-		$factory = new TeamImageManagerFactory($this->getAppConfig());
-		return $factory->build();
+		$options = array(
+			'thumb' => array(
+				'dimensions' => array(
+					// For administration
+					array(400, 200),
+					// For site
+					array(170, 170)
+				)
+			),
+			
+			// @TODO: Needed it even?
+			'original' => array(
+				'prefix' => 'original'
+			)
+		);
+
+		return new ImageManager(
+			'/data/uploads/module/team/',
+			$this->appConfig->getRootDir(),
+			$this->appConfig->getRootUrl(),
+			$options
+		);
 	}
 
 	/**
