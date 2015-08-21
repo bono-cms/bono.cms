@@ -63,8 +63,34 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getImageManagerService()
 	{
-		$factory = new PhotoManagerFactory($this->getAppConfig(), $this->getConfigService()->getEntity());
-		return $factory->build();
+		// Grab configuration entity
+		$config = $this->getConfigService()->getEntity();
+
+		$options = array(
+			'thumb' => array(
+				'quality' => $config->getQuality(),
+				'dimensions' => array(
+					// Dimensions for administration panel
+					array(400, 200),
+					// Dimensions for site previews. 200 are default values
+					array($config->getWidth(), $config->getHeight())
+				)
+			),
+
+			'original' => array(
+				'quality' => $config->getQuality(),
+				'prefix' => 'original',
+				'max_width' => $config->getMaxWidth(),
+				'max_height' => $config->getMaxHeight(),
+			)
+		);
+
+		return new ImageManager(
+			'/data/uploads/module/photogallery/photos',
+			$this->appConfig->getRootDir(),
+			$this->appConfig->getRootUrl(),
+			$options
+		);
 	}
 
 	/**
