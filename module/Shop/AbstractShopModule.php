@@ -12,6 +12,7 @@
 namespace Shop;
 
 use Krystal\Image\Tool\ImageBagInterface;
+use Krystal\Image\Tool\ImageManager;
 use Krystal\Config\File\FileArray;
 use Cms\AbstractCmsModule;
 use Shop\Service\ProductImageManagerFactory;
@@ -41,8 +42,32 @@ abstract class AbstractShopModule extends AbstractCmsModule
 	 */
 	final protected function getProductImageManager()
 	{
-		$factory = new ProductImageManagerFactory($this->getAppConfig(), $this->getConfigEntity());
-		return $factory->build();
+		$config = $this->getConfigEntity();
+
+		$options = array(
+			'thumb' => array(
+				'dimensions' => array(
+					// In product's page (Administration area)
+					array(200, 200),
+					// Dimensions for a main cover image on site
+					array($config->getCoverWidth(), $config->getCoverHeight()),
+					// In category (and in browser)
+					array($config->getCategoryCoverWidth(), $config->getCategoryCoverHeight()),
+					// Thumbs on site
+					array($config->getThumbWidth(), $config->getThumbHeight()),
+				)
+			),
+			'original' => array(
+				'prefix' => 'original'
+			)
+		);
+
+		return new ImageManager(
+			'/data/uploads/module/shop/products/',
+			$this->appConfig->getRootDir(),
+			$this->appConfig->getRootUrl(),
+			$options
+		);
 	}
 
 	/**
