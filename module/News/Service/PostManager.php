@@ -447,7 +447,7 @@ final class PostManager extends AbstractManager implements PostManagerInterface,
 		}
 
 		// Update a record itself now
-		$this->postMapper->update(ArrayUtils::arrayWithout($post, array('date', 'slug')));
+		$this->postMapper->update(ArrayUtils::arrayWithout($post, array('date', 'slug', 'remove_cover')));
 
 		// Update a slug
 		$this->webPageManager->update($post['web_page_id'], $post['slug']);
