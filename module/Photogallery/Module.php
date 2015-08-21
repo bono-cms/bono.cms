@@ -33,7 +33,7 @@ final class Module extends AbstractCmsModule
 		// Grab configuration entity
 		$config = $this->getConfigService()->getEntity();
 
-		$options = array(
+		$plugins = array(
 			'thumb' => array(
 				'dimensions' => array(
 					// Dimensions for administration panel
@@ -52,7 +52,7 @@ final class Module extends AbstractCmsModule
 			'/data/uploads/module/photogallery/albums',
 			$this->appConfig->getRootDir(),
 			$this->appConfig->getRootUrl(),
-			$options
+			$plugins
 		);
 	}
 
@@ -66,7 +66,7 @@ final class Module extends AbstractCmsModule
 		// Grab configuration entity
 		$config = $this->getConfigService()->getEntity();
 
-		$options = array(
+		$plugins = array(
 			'thumb' => array(
 				'quality' => $config->getQuality(),
 				'dimensions' => array(
@@ -89,7 +89,7 @@ final class Module extends AbstractCmsModule
 			'/data/uploads/module/photogallery/photos',
 			$this->appConfig->getRootDir(),
 			$this->appConfig->getRootUrl(),
-			$options
+			$plugins
 		);
 	}
 

@@ -44,7 +44,7 @@ abstract class AbstractShopModule extends AbstractCmsModule
 	{
 		$config = $this->getConfigEntity();
 
-		$options = array(
+		$plugins = array(
 			'thumb' => array(
 				'dimensions' => array(
 					// In product's page (Administration area)
@@ -66,7 +66,7 @@ abstract class AbstractShopModule extends AbstractCmsModule
 			'/data/uploads/module/shop/products/',
 			$this->appConfig->getRootDir(),
 			$this->appConfig->getRootUrl(),
-			$options
+			$plugins
 		);
 	}
 
@@ -79,7 +79,7 @@ abstract class AbstractShopModule extends AbstractCmsModule
 	{
 		$config = $this->getConfigEntity();
 
-		$options = array(
+		$plugins = array(
 			'thumb' => array(
 				'dimensions' => array(
 					// For the administration panel
@@ -97,7 +97,7 @@ abstract class AbstractShopModule extends AbstractCmsModule
 			'/data/uploads/module/shop/categories/',
 			$this->appConfig->getRootDir(),
 			$this->appConfig->getRootUrl(),
-			$options
+			$plugins
 		);
 	}
 

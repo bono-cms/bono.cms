@@ -88,7 +88,7 @@ final class Module extends AbstractCmsModule
 		// Grab configuration entity
 		$config = $this->getConfigProvider()->getEntity();
 
-		$options = array(
+		$plugins = array(
 			'thumb' => array(
 				'quality' => $config->getCoverQuality(),
 				'dimensions' => array(
@@ -106,7 +106,7 @@ final class Module extends AbstractCmsModule
 			'/data/uploads/module/news/posts/',
 			$this->appConfig->getRootDir(),
 			$this->appConfig->getRootUrl(),
-			$options
+			$plugins
 		);
 	}
 }

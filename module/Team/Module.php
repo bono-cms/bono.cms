@@ -25,7 +25,7 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getImageManager()
 	{
-		$options = array(
+		$plugins = array(
 			'thumb' => array(
 				'dimensions' => array(
 					// For administration
@@ -45,7 +45,7 @@ final class Module extends AbstractCmsModule
 			'/data/uploads/module/team/',
 			$this->appConfig->getRootDir(),
 			$this->appConfig->getRootUrl(),
-			$options
+			$plugins
 		);
 	}
 
