@@ -77,8 +77,28 @@ abstract class AbstractShopModule extends AbstractCmsModule
 	 */
 	final protected function getCategoryImageManager()
 	{
-		$factory = new CategoryImageManagerFactory($this->getAppConfig(), $this->getConfigEntity());
-		return $factory->build();
+		$config = $this->getConfigEntity();
+
+		$options = array(
+			'thumb' => array(
+				'dimensions' => array(
+					// For the administration panel
+					array(200, 200),
+					// For the site
+					array($config->getCategoryCoverWidth(), $config->getCategoryCoverHeight())
+				)
+			),
+			'original' => array(
+				'prefix' => 'original'
+			)
+		);
+
+		return new ImageManager(
+			'/data/uploads/module/shop/categories/',
+			$this->appConfig->getRootDir(),
+			$this->appConfig->getRootUrl(),
+			$options
+		);
 	}
 
 	/**
