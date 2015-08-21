@@ -13,6 +13,7 @@ namespace Photogallery;
 
 use Cms\AbstractCmsModule;
 use Krystal\Config\File\FileArray;
+use Krystal\Image\Tool\ImageManager;
 use Photogallery\Service\AlbumManager;
 use Photogallery\Service\PhotoManager;
 use Photogallery\Service\TaskManager;
@@ -29,8 +30,30 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getAlbumImageManager()
 	{
-		$factory = new AlbumImageManagerFactory($this->getAppConfig(), $this->getConfigService()->getEntity());
-		return $factory->build();
+		// Grab configuration entity
+		$config = $this->getConfigService()->getEntity();
+
+		$options = array(
+			'thumb' => array(
+				'dimensions' => array(
+					// Dimensions for administration panel
+					array(200, 200),
+					// Dimensions for the site
+					array($config->getAlbumThumbWidth(), $config->getAlbumThumbHeight())
+				)
+			),
+
+			'original' => array(
+				'prefix' => 'original'
+			)
+		);
+
+		return new ImageManager(
+			'/data/uploads/module/photogallery/albums',
+			$this->appConfig->getRootDir(),
+			$this->appConfig->getRootUrl(),
+			$options
+		);
 	}
 
 	/**
