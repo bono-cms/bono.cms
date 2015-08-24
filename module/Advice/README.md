@@ -9,7 +9,7 @@ This module has one service `$advice` that has following methods:
 
 Returns random advice's entity
 
-# getById
+# getById()
 
 Returns advice's entity by its associated id
 
