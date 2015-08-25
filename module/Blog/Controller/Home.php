@@ -34,7 +34,7 @@ final class Home extends AbstractBlogController
 
 		$page = $this->getService('Pages', 'pageManager')->fetchDefault();
 
-		return $this->view->render($this->getConfig()->getCategoryTemplate(), array(
+		return $this->view->render('blog-category', array(
 			'paginator' => $paginator,
 			'page' => $page,
 			'posts' => $posts,
