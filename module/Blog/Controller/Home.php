@@ -30,7 +30,7 @@ final class Home extends AbstractBlogController
 		// Tweak pagination
 		$paginator = $postManager->getPaginator();
 		// The pattern /(:var)/page/(:var) is reserved, so another one should be used instead
-		$paginator->setUrl('/blog/pg/%s', $pageNumber);
+		$paginator->setUrl('/blog/pg/(:var)', $pageNumber);
 
 		$page = $this->getService('Pages', 'pageManager')->fetchDefault();
 

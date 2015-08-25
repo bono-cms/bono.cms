@@ -28,7 +28,7 @@ final class Browser extends AbstractController
 		$teamManager = $this->getTeamManager();
 
 		$paginator = $teamManager->getPaginator();
-		$paginator->setUrl('/admin/module/team/page/%s', $page);
+		$paginator->setUrl('/admin/module/team/page/(:var)');
 
 		return $this->view->render('browser', array(
 			'members' => $teamManager->fetchAllByPage($page, $this->getSharedPerPageCount()),

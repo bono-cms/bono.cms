@@ -53,7 +53,7 @@ final class Browser extends AbstractController
 
 		// Alter paginator's state
 		$paginator = $pageManager->getPaginator();
-		$paginator->setUrl('/admin/module/pages/browse/%s');
+		$paginator->setUrl('/admin/module/pages/browse/(:var)');
 
 		return $this->view->render($this->getGridTemplate(), $this->getWithSharedVars($pageManager->fetchAllByPage($page, $this->getSharedPerPageCount())));
 	}

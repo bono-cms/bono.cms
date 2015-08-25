@@ -24,7 +24,7 @@ final class Browser extends AbstractAdminController
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getPostManager()->getPaginator();
-		$paginator->setUrl('/admin/module/news/browse/%s');
+		$paginator->setUrl('/admin/module/news/browse/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'posts' => $this->getPostManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
@@ -44,7 +44,7 @@ final class Browser extends AbstractAdminController
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getPostManager()->getPaginator();
-		$paginator->setUrl('/admin/module/news/browse/%s');
+		$paginator->setUrl('/admin/module/news/browse/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 

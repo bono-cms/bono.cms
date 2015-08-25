@@ -26,7 +26,7 @@ final class Browser extends AbstractAdminController
 		$this->loadPlugins();
 
 		$paginator = $bannerManager->getPaginator();
-		$paginator->setUrl('/admin/module/banner/page/%s');
+		$paginator->setUrl('/admin/module/banner/page/(:var)');
 
 		return $this->view->render('browser', array(
 			'banners' => $bannerManager->fetchAllByPage($page, $this->getSharedPerPageCount()),

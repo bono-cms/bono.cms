@@ -26,7 +26,7 @@ final class Browser extends AbstractController
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getImageManager()->getPaginator();
-		$paginator->setUrl('/admin/module/slider/page/%s');
+		$paginator->setUrl('/admin/module/slider/page/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'title' => 'Slider',
@@ -47,7 +47,7 @@ final class Browser extends AbstractController
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getImageManager()->getPaginator();
-		$paginator->setUrl('/admin/module/slider/category/view/'.$categoryId.'/page/%s');
+		$paginator->setUrl('/admin/module/slider/category/view/'.$categoryId.'/page/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'categoryId' => $categoryId,

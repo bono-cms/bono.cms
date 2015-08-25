@@ -24,7 +24,7 @@ final class Browser extends AbstractAdminController
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getPostManager()->getPaginator();
-		$paginator->setUrl('/admin/module/blog/page/%s');
+		$paginator->setUrl('/admin/module/blog/page/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 
@@ -43,7 +43,7 @@ final class Browser extends AbstractAdminController
 	public function categoryAction($categoryId, $page = 1)
 	{
 		$paginator = $this->getPostManager()->getPaginator();
-		$paginator->setUrl('/admin/module/blog/category/view/'.$categoryId.'/page/%s');
+		$paginator->setUrl('/admin/module/blog/category/view/'.$categoryId.'/page/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'categoryId' => $categoryId,

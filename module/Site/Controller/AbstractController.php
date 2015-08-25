@@ -64,13 +64,13 @@ abstract class AbstractController extends BaseController
 	{
 		// If $code isn't empty, then we have more than one language
 		if (!empty($code)) {
-			$url = sprintf('/%s/%s/page/', $code, $slug);
+			$url = sprintf('/%s/%s/page/(:var)', $code, $slug);
 		} else {
 			// Otherwise we have only one language
-			$url = sprintf('/%s/page/', $slug);
+			$url = sprintf('/%s/page/(:var)', $slug);
 		}
 
-		$paginator->setUrl($url . '%s', $pageNumber);
+		$paginator->setUrl($url);
 	}
 
 	/**

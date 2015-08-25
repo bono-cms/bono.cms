@@ -26,7 +26,7 @@ final class Browser extends AbstractAdminController
 		$blockManager = $this->getBlockManager();;
 
 		$paginator = $blockManager->getPaginator();
-		$paginator->setUrl('/admin/module/block/page/%s');
+		$paginator->setUrl('/admin/module/block/page/(:var)');
 
 		return $this->view->render('browser', array(
 			'blocks'	=> $blockManager->fetchAllByPage($page, $this->getSharedPerPageCount()),

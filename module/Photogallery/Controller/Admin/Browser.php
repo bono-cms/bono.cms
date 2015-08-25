@@ -28,7 +28,7 @@ final class Browser extends AbstractController
 		$this->loadSharePlugins();
 
 		$paginator = $this->getPhotoManager()->getPaginator();
-		$paginator->setUrl('/admin/module/photogallery/browse/%s');
+		$paginator->setUrl('/admin/module/photogallery/browse/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'paginator' => $paginator,
@@ -52,7 +52,7 @@ final class Browser extends AbstractController
 			$this->loadSharePlugins();
 
 			$paginator = $this->getPhotoManager()->getPaginator();
-			$paginator->setUrl('/admin/module/photogallery/browse/album/'.$albumId.'/page/%s');
+			$paginator->setUrl('/admin/module/photogallery/browse/album/'.$albumId.'/page/(:var)');
 
 			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 				'albumId' => $albumId,

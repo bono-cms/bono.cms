@@ -28,7 +28,7 @@ final class Browser extends AbstractController
 		$qaManager = $this->getQaManager();
 
 		$paginator = $qaManager->getPaginator();
-		$paginator->setUrl('/admin/module/qa/page/%s');
+		$paginator->setUrl('/admin/module/qa/page/(:var)');
 
 		return $this->view->render('browser', array(
 			'title' => 'Questions and Answers',

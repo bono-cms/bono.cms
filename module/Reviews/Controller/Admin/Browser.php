@@ -26,7 +26,7 @@ final class Browser extends AbstractController
 		$reviewsManager = $this->getModuleService('reviewsManager');
 
 		$paginator = $reviewsManager->getPaginator();
-		$paginator->setUrl('/admin/module/reviews/page/%s');
+		$paginator->setUrl('/admin/module/reviews/page/(:var)');
 
 		$this->loadPlugins();
 

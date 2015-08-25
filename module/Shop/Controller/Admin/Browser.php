@@ -55,7 +55,7 @@ final class Browser extends AbstractController
 		$products = $this->getProductManager()->fetchAllByPage($page, $this->getSharedPerPageCount());
 
 		$paginator = $this->getProductManager()->getPaginator();
-		$paginator->setUrl('/admin/module/shop/page/%s');
+		$paginator->setUrl('/admin/module/shop/page/(:var)');
 
 		$this->loadSharedPlugins();
 
@@ -78,7 +78,7 @@ final class Browser extends AbstractController
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getProductManager()->getPaginator();
-		$paginator->setUrl('/admin/module/shop/category/'.$id. '/page/%s');
+		$paginator->setUrl('/admin/module/shop/category/'.$id. '/page/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'currentCategoryId' => $id,

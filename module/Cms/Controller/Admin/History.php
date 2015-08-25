@@ -31,7 +31,7 @@ final class History extends AbstractController
 
 		// Tweak paginator
 		$paginator = $historyManager->getPaginator();
-		$paginator->setUrl('/admin/history/page/%s');
+		$paginator->setUrl('/admin/history/page/(:var)');
 
 		return $this->view->render('history', array(
 			'title' => 'History',

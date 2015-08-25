@@ -26,7 +26,7 @@ final class Browser extends AbstractAdminController
 		$this->loadPlugins();
 
 		$paginator = $faqManager->getPaginator();
-		$paginator->setUrl('/admin/module/faq/page/%s');
+		$paginator->setUrl('/admin/module/faq/page/(:var)');
 
 		return $this->view->render('browser', array(
 			'paginator'	=> $paginator,

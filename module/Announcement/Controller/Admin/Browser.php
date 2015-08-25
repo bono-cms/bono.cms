@@ -24,7 +24,7 @@ final class Browser extends AbstractAdminController
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getAnnounceManager()->getPaginator();
-		$paginator->setUrl('/admin/module/announcement/page/%s');
+		$paginator->setUrl('/admin/module/announcement/page/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'announces' => $this->getAnnounceManager()->fetchAllByPage($page, $this->getSharedPerPageCount()),
@@ -44,7 +44,7 @@ final class Browser extends AbstractAdminController
 		$this->loadSharedPlugins();
 
 		$paginator = $this->getAnnounceManager()->getPaginator();
-		$paginator->setUrl('/admin/module/announcement/category/view/'.$categoryId.'/page/%s');
+		$paginator->setUrl('/admin/module/announcement/category/view/'.$categoryId.'/page/(:var)');
 
 		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
 			'categoryId' => $categoryId,
