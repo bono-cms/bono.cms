@@ -13,7 +13,7 @@ namespace Menu\View;
 
 use Krystal\Form\NodeElement;
 
-/* Special dropdown renderer made for Twitter bootstrap 3.x*/
+/* Special drop-down renderer made for Twitter bootstrap 3.x */
 final class BootstrapDropdown extends AbstractSiteDropdown
 {
 	/**
@@ -26,7 +26,7 @@ final class BootstrapDropdown extends AbstractSiteDropdown
 
 		// Determine whether target id has at least one child
 		$hasChildren = $this->hasChildren($row['id'], $parents);
-		
+
 		if ($hasChildren) {
 			$li->addAttribute('class', 'dropdown');
 		}
@@ -39,7 +39,7 @@ final class BootstrapDropdown extends AbstractSiteDropdown
 		$a = new NodeElement();
 		$a->openTag('a')
 		  ->addAttribute('href', $this->makeUrl($row));
-		
+
 		// Whether to open in new window?
 		if ((bool) $row['open_in_new_window']) {
 			$a->addAttribute('target', '_blank');
@@ -72,23 +72,6 @@ final class BootstrapDropdown extends AbstractSiteDropdown
 
 		$a->closeTag();
 		$li->appendChild($a);
-
-		/*
-		$divider= '';
-		if ($hasChildren){
-			
-			$divider = new NodeElement();
-			$divider->openTag('li')
-					->addAttribute('class', 'divider')
-					->closeTag()
-					->render();
-			
-			//$li->appendAfter($divider);
-		}
-		if ($hasChildren) {
-			//return $divider->render();
-		}
-		*/
 
 		return $li->render();
 	}
@@ -123,7 +106,7 @@ final class BootstrapDropdown extends AbstractSiteDropdown
 		$ul = new NodeElement();
 		$ul->openTag('ul')
 		   ->addAttribute('class', 'nav navbar-nav');
-		
+
 		// Check whether we have a class name
 		if (isset($this->options['class']['base'])) {
 			$ul->addAttribute('class', $this->options['class']['base']);
