@@ -21,7 +21,7 @@ final class Team extends AbstractController
 	 * @param string $id Page id
 	 * @param string $pageNumber Page id
 	 * @param string $code Language code
-	 * @param string $slug Album slug
+	 * @param string $slug Page slug
 	 * @return string
 	 */
 	public function indexAction($id, $pageNumber = 1, $code = null, $slug = null)
