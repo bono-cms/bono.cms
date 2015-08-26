@@ -11,9 +11,9 @@
 
 namespace Pages\Controller\Admin;
 
-use Krystal\Application\Route\MapManager;
 use Krystal\Validate\Pattern;
 use Cms\Controller\Admin\AbstractController;
+use Pages\Service\ControllerProvider;
 
 abstract class AbstractPage extends AbstractController
 {
@@ -22,22 +22,10 @@ abstract class AbstractPage extends AbstractController
 	 * 
 	 * @return array
 	 */
-	final protected function getControllers()
+	private function getControllers()
 	{
-		// Return all loaded routes
-		$routes = $this->moduleManager->getRoutes();
-		$mapManager = new MapManager($routes);
-
-		$result = array();
-
-		foreach ($mapManager->getControllers() as $controller) {
-			// Add only non-administration && non-CMS controllers
-			if (strpos($controller, 'Admin') === false && strpos($controller, 'Cms') === false) {
-				$result[$controller] = $controller;
-			}
-		}
-
-		return $result;
+		$provider = new ControllerProvider($this->moduleManager->getRoutes());
+		return $provider->getControllers();
 	}
 
 	/**
