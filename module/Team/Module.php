@@ -12,26 +12,42 @@
 namespace Team;
 
 use Krystal\Image\Tool\ImageManager;
+use Krystal\Config\File\FileArray;
 use Cms\AbstractCmsModule;
 use Team\Service\TeamManager;
+use Team\Service\ConfigManager;
 use Team\Service\TeamImageManagerFactory;
 
 final class Module extends AbstractCmsModule
 {
 	/**
+	 * Returns configuration manager
+	 * 
+	 * @return \Reviews\Service\ConfigManager
+	 */
+	private function getConfigManager()
+	{
+		$adapter = new FileArray(__DIR__ .'/Config/module.config.php');
+		$adapter->load();
+
+		return new ConfigManager($adapter);
+	}
+
+	/**
 	 * Returns image manager service
 	 * 
+	 * @param $config
 	 * @return \Krystal\Image\Tool\ImageManager
 	 */
-	private function getImageManager()
+	private function getImageManager($config)
 	{
 		$plugins = array(
 			'thumb' => array(
 				'dimensions' => array(
-					// For administration
+					// For administration panel
 					array(400, 200),
-					// For site
-					array(170, 170)
+					// For the site
+					array($config->getCoverWidth(), $config->getCoverHeight())
 				)
 			),
 			
@@ -54,8 +70,12 @@ final class Module extends AbstractCmsModule
 	 */
 	public function getServiceProviders()
 	{
+		$config = $this->getConfigManager();
+		$teamManager = new TeamManager($this->getMapper('/Team/Storage/MySQL/TeamMapper'), $this->getImageManager($config->getEntity()), $this->getHistoryManager());
+
 		return array(
-			'teamManager' => new TeamManager($this->getMapper('/Team/Storage/MySQL/TeamMapper'), $this->getImageManager(), $this->getHistoryManager())
+			'teamManager' => $teamManager,
+			'configManager' => $config
 		);
 	}
 }
