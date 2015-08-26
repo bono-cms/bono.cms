@@ -18,22 +18,41 @@ final class Team extends AbstractController
 	/**
 	 * Shows a page with team members
 	 * 
+	 * @param string $id Page id
 	 * @param string $pageNumber Page id
+	 * @param string $code Language code
+	 * @param string $slug Album slug
 	 * @return string
 	 */
-	public function indexAction($id, $pageNumber = 1)
+	public function indexAction($id, $pageNumber = 1, $code = null, $slug = null)
 	{
-		$page = $this->getService('Pages', 'pageManager')->fetchById($id);
-		$this->loadSitePlugins();
+		$pageManager = $this->getService('Pages', 'pageManager');
+		$page = $pageManager->fetchById($id);
 
-		$teamManager = $this->getModuleService('teamManager');
+		if ($page !== false) {
 
-		$paginator = $teamManager->getPaginator();
+			// Load asset plugins and tweak breadcrumbs
+			$this->loadSitePlugins();
+			$this->view->getBreadcrumbBag()->add($pageManager->getBreadcrumbs($page));
 
-		return $this->view->render('team', array(
-			'page' => $page,
-			//@TODO per page count
-			'members' => $teamManager->fetchAllPublishedByPage($pageNumber, 10)
-		));
+			$teamManager = $this->getModuleService('teamManager');
+			$config = $this->getModuleService('configManager')->getEntity();
+
+			// Fetch all members
+			$members = $teamManager->fetchAllPublishedByPage($pageNumber, $config->getPerPageCount());
+
+			$paginator = $teamManager->getPaginator();
+			$this->preparePaginator($paginator, $code, $slug, $pageNumber);
+
+			return $this->view->render('team', array(
+				'page' => $page,
+				'members' => $members,
+				'paginator' => $paginator
+			));
+
+		} else {
+
+			return false;
+		}
 	}
 }
