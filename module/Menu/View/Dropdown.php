@@ -25,7 +25,7 @@ final class Dropdown extends AbstractSiteDropdown
 	{
 		$li = new NodeElement();
 		$li->openTag('li');
-		
+
 		// Is it active web page?
 		if (isset($row['web_page_id']) && $row['web_page_id'] != 0 && $active != 0 && $row['web_page_id'] == $active) {
 			$li->addAttribute('class', 'active');
@@ -34,7 +34,7 @@ final class Dropdown extends AbstractSiteDropdown
 		$a = new NodeElement();
 		$a->openTag('a')
 		  ->addAttribute('href', $this->makeUrl($row));
-		
+
 		// Whether to open in new window?
 		if ((bool) $row['open_in_new_window']) {
 			$a->addAttribute('target', '_blank');
@@ -46,7 +46,7 @@ final class Dropdown extends AbstractSiteDropdown
 
 		$a->setText($row['name'])
 		  ->closeTag();
-		
+
 		$li->appendChild($a);
 
 		return $li->render();
@@ -59,7 +59,7 @@ final class Dropdown extends AbstractSiteDropdown
 	{
 		$ul = new NodeElement();
 		$ul->closeTag('ul');
-		
+
 		return $ul->render();
 	}
 
@@ -81,7 +81,7 @@ final class Dropdown extends AbstractSiteDropdown
 	{
 		$ul = new NodeElement();
 		$ul->openTag('ul');
-		
+
 		// Check whether we have a class name
 		if (isset($this->options['class']['base'])) {
 			$ul->addAttribute('class', $this->options['class']['base']);
