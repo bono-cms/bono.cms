@@ -35,7 +35,7 @@ abstract class AbstractQa extends AbstractController
 							)
 						)
 					),
-					
+
 					'questioner' => array(
 						'required' => true,
 						'rules' => array(
@@ -44,12 +44,21 @@ abstract class AbstractQa extends AbstractController
 							)
 						)
 					),
-					
+
 					'answerer' => array(
 						'required' => true,
 						'rules' => array(
 							'NotEmpty' => array(
 								'message' => 'Answerer is required'
+							)
+						)
+					),
+
+					'answer' => array(
+						'required' => true,
+						'rules' => array(
+							'NotEmpty' => array(
+								'message' => 'Answer is required'
 							)
 						)
 					)
