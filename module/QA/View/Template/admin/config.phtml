@@ -1,0 +1,20 @@
+
+<form>
+	<div class="well clearfix">
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Per page count'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="number" class="form-control" name="config[per_page_count]" value="<?php echo $config->getPerPageCount(); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+				<span class="help-block"><?php $this->show('Amount of pairs to be displayed per page'); ?></span>
+			</div>
+		</div>
+		
+	</div>
+	
+	<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="cancel" type="button" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+	
+</form>

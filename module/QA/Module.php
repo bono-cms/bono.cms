@@ -11,18 +11,34 @@
 
 namespace Qa;
 
+use Krystal\Config\File\FileArray;
 use Cms\AbstractCmsModule;
 Use Qa\Service\QaManager;
+Use Qa\Service\ConfigManager;
 
 final class Module extends AbstractCmsModule
 {
+	/**
+	 * Returns configuration manager
+	 * 
+	 * @return \Team\Service\ConfigManager
+	 */
+	private function getConfigManager()
+	{
+		$adapter = new FileArray(__DIR__ .'/Config/module.config.php');
+		$adapter->load();
+
+		return new ConfigManager($adapter);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function getServiceProviders()
 	{
 		return array(
-			'qaManager' => new QaManager($this->getMapper('/Qa/Storage/MySQL/QaMapper'), $this->getHistoryManager())
+			'qaManager' => new QaManager($this->getMapper('/Qa/Storage/MySQL/QaMapper'), $this->getHistoryManager()),
+			'configManager' => $this->getConfigManager()
 		);
 	}
 }
