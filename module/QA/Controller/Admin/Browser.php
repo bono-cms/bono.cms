@@ -18,10 +18,10 @@ final class Browser extends AbstractController
 	/**
 	 * Shows a grid
 	 * 
-	 * @param integer $page Current page
+	 * @param integer $page Current page number
 	 * @return string
 	 */
-	public function indexAction($page = 1)
+	public function indexAction($pageNumber = 1)
 	{
 		$this->loadPlugins();
 
@@ -32,7 +32,7 @@ final class Browser extends AbstractController
 
 		return $this->view->render('browser', array(
 			'title' => 'Questions and Answers',
-			'pairs' => $qaManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
+			'pairs' => $qaManager->fetchAllByPage($pageNumber, $this->getSharedPerPageCount()),
 			'paginator' => $paginator,
 		));
 	}
