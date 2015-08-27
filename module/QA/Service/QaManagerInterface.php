@@ -61,6 +61,15 @@ interface QaManagerInterface
 	public function fetchAllByPage($page, $itemsPerPage);
 
 	/**
+	 * Fetches all published QA pairs filtered by pagination
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllPublishedByPage($page, $itemsPerPage);
+
+	/**
 	 * Adds a QA pair
 	 * 
 	 * @param array $input Raw form data

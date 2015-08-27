@@ -177,6 +177,18 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 	}
 
 	/**
+	 * Fetches all published QA entities filtered by pagination
+	 * 
+	 * @param integer $page Current page
+	 * @param integer $itemsPerPage Per page count
+	 * @return array
+	 */
+	public function fetchAllPublishedByPage($page, $itemsPerPage)
+	{
+		return $this->prepareResults($this->qaMapper->fetchAllPublishedByPage($page, $itemsPerPage));
+	}
+
+	/**
 	 * Prepare raw input data before sending to a mapper
 	 * 
 	 * @param array $data
