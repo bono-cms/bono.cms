@@ -17,4 +17,10 @@ $(function(){
 			}
 		});
 	});	
+
+	$("[data-button='cancel']").click(function(event){
+		event.preventDefault();
+		window.location = '/admin/module/team';
+	});
+
 });
