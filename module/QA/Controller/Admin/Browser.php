@@ -44,7 +44,7 @@ final class Browser extends AbstractController
 	 */
 	private function getQaManager()
 	{
-		return $this->moduleManager->getModule('Qa')->getService('qaManager');
+		return $this->getModuleService('qaManager');
 	}
 
 	/**
