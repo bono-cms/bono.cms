@@ -37,7 +37,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			<thead>
 				<tr>
 					<th class="text-center">
-						<?php if (!empty($pair)): ?>
+						<?php if (!empty($pairs)): ?>
 						<input type="checkbox" />
 						<?php endif; ?>
 					</th>
@@ -50,9 +50,9 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				</tr>
 			</thead>
 			
-			<?php if (!empty($pair)): ?>
+			<?php if (!empty($pairs)): ?>
 			<tbody>
-				<?php foreach ($pair as $qa): ?>
+				<?php foreach ($pairs as $qa): ?>
 				<tr>
 					<td class="text-center">
 						<input type="checkbox" name="toDelete[<?php echo $qa->getId(); ?>]" />
@@ -76,7 +76,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 			
 		</table>
 		
-		<?php if (empty($pair)): ?>
+		<?php if (empty($pairs)): ?>
 		<div class="center-block">
 			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No pairs'); ?></h2>
 		</div>

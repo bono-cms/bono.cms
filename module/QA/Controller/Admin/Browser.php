@@ -32,7 +32,7 @@ final class Browser extends AbstractController
 
 		return $this->view->render('browser', array(
 			'title' => 'Questions and Answers',
-			'pair' => $qaManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
+			'pairs' => $qaManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
 			'paginator' => $paginator,
 		));
 	}
