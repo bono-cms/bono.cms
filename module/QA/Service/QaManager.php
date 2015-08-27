@@ -165,7 +165,7 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 	}
 
 	/**
-	 * Fetches all QA bags filtered by pagination
+	 * Fetches all QA entities filtered by pagination
 	 * 
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count

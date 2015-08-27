@@ -52,7 +52,7 @@ interface QaManagerInterface
 	public function getLastId();
 
 	/**
-	 * Fetches all QA bags filtered by pagination
+	 * Fetches all QA entities filtered by pagination
 	 * 
 	 * @param integer $page Current page number
 	 * @param integer $itemsPerPage Per page count
@@ -61,7 +61,7 @@ interface QaManagerInterface
 	public function fetchAllByPage($page, $itemsPerPage);
 
 	/**
-	 * Fetches all published QA pairs filtered by pagination
+	 * Fetches all published QA entities filtered by pagination
 	 * 
 	 * @param integer $page Current page
 	 * @param integer $itemsPerPage Per page count
