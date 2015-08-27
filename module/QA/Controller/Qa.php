@@ -16,20 +16,41 @@ use Site\Controller\AbstractController;
 final class Qa extends AbstractController
 {
 	/**
-	 * Default action
 	 * Lists all pairs with pagination
 	 * 
+	 * @param string $id Page id
+	 * @param string $pageNumber Page id
+	 * @param string $code Language code
+	 * @param string $slug Page slug
 	 * @return string
 	 */
-	public function indexAction()
+	public function indexAction($id, $pageNumber = 1, $code = null, $slug = null)
 	{
-		$qaManager = $this->getModuleService('qaManager');
+		$pageManager = $this->getService('Pages', 'pageManager');
+		$page = $pageManager->fetchById($id);
 
-		return $this->view->render('qa', array(
+		if ($page !== false) {
+
+			// Load asset plugins and tweak breadcrumbs
+			$this->loadSitePlugins();
+			$this->view->getBreadcrumbBag()->add($pageManager->getBreadcrumbs($page));
+
+			$qaManager = $this->getModuleService('qaManager');
+			$config = $this->getModuleService('configManager')->getEntity();
+
+			// Tweak pagination service
+			$paginator = $qaManager->getPaginator();
+			$this->preparePaginator($paginator, $code, $slug, $pageNumber);
 			
-			'pairs' => $qaManager->fetchAllByPage($page, 10),
-			'paginator' => $qaManager->getPaginator(),
-		));
+			return $this->view->render('qa', array(
+				'pairs' => $qaManager->fetchAllByPage($pageNumber, $config->getPerPageCount()),
+				'paginator' => $paginator,
+			));
+
+		} else {
+
+			return false;
+		}
 	}
 
 	/**
