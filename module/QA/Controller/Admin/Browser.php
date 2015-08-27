@@ -114,7 +114,7 @@ final class Browser extends AbstractController
 			$published = $this->request->getPost('published');
 
 			$this->getQaManager()->updatePublished($published);
-			$this->flashBag->set('success', 'Settings have been successfully');
+			$this->flashBag->set('success', 'Settings have been updated successfully');
 
 			return '1';
 		}
