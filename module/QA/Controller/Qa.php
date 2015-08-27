@@ -43,7 +43,7 @@ final class Qa extends AbstractController
 			$this->preparePaginator($paginator, $code, $slug, $pageNumber);
 			
 			return $this->view->render('qa', array(
-				'pairs' => $qaManager->fetchAllByPage($pageNumber, $config->getPerPageCount()),
+				'pairs' => $qaManager->fetchAllPublishedByPage($pageNumber, $config->getPerPageCount()),
 				'paginator' => $paginator,
 			));
 
