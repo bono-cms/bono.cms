@@ -109,7 +109,6 @@ final class Qa extends AbstractController
 		// Load asset plugins and tweak breadcrumbs
 		$this->loadSitePlugins();
 		$this->view->getBreadcrumbBag()->add($breadcrumbs);
-		$this->view->getPluginBag()->appendScript('@Qa/qa.js');
 	}
 
 	/**

@@ -156,9 +156,6 @@ final class Form extends AbstractController
 	private function loadPlugins(VirtualEntity $form)
 	{
 		$this->loadSitePlugins();
-
-		// Append handler for a site
-		$this->view->getPluginBag()->appendScript($this->getWithAssetPath('/form.js'));
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'link' => '#',
