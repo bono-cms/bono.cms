@@ -10,6 +10,7 @@ CREATE TABLE `bono_module_qa` (
 	`answerer` varchar(254) NOT NULL,
 	`published` varchar(1) NOT NULL,
 	`timestamp_asked` INT(10) NOT NULL,
-	`timestamp_answered` INT(10) NOT NULL
+	`timestamp_answered` INT(10) NOT NULL,
+	`ip` varchar(50) NOT NULL
 	
 ) DEFAULT CHARSET = UTF8;

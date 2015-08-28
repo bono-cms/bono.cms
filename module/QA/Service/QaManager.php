@@ -73,7 +73,8 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 			  ->setTimestampAsked((int) $qa['timestamp_asked'])
 			  ->setTimestampAnswered((int) $qa['timestamp_answered'])
 			  ->setDateAsked(strtotime($qa['timestamp_asked']))
-			  ->setDateAnswered(strtotime($qa['timestamp_answered']));
+			  ->setDateAnswered(strtotime($qa['timestamp_answered']))
+			  ->setIP($qa['ip']);
 
 		return $entity;
 	}

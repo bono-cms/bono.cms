@@ -45,9 +45,11 @@ final class Add extends AbstractQa
 		$formValidator = $this->getValidator($this->request->getPost('qa'));
 
 		if ($formValidator->isValid()) {
-			$qaManager = $this->getQaManager();
 
-			if ($qaManager->add($this->request->getPost('qa'))) {
+			$qaManager = $this->getQaManager();
+			$data = array_merge($this->request->getPost('qa'), array('ip' => $this->request->getClientIp()));
+
+			if ($qaManager->add($data)) {
 
 				$this->flashBag->set('success', 'A pair has been added successfully');
 				return $qaManager->getLastId();

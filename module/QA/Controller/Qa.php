@@ -83,7 +83,7 @@ final class Qa extends AbstractController
 
 		if ($formValidator->isValid()) {
 
-			$data = $this->request->getPost();
+			$data = array_merge($this->request->getPost(), array('ip' => $this->request->getClientIp()));
 			$qaManager = $this->getModuleService('qaManager');
 
 			if ($qaManager->send($data)) {

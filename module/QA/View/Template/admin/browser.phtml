@@ -45,6 +45,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<th class="text-center"><?php $this->show('Question'); ?></th>
 					<th class="text-center"><?php $this->show('Questioner'); ?></th>
 					<th class="text-center"><?php $this->show('Answerer'); ?></th>
+					<th class="text-center"><?php $this->show('IP'); ?></th>
 					<th class="text-center"><?php $this->show('Published'); ?></th>
 					<th class="text-center"><?php $this->show('Actions'); ?></th>
 				</tr>
@@ -61,6 +62,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<td class="text-center"><?php echo $qa->getQuestion(); ?></td>
 					<td class="text-center"><?php echo $qa->getQuestioner(); ?></td>
 					<td class="text-center"><?php echo $qa->getAnswerer(); ?></td>
+					<td class="text-center"><?php echo $qa->getIP(); ?></td>
 					<td class="text-center">
 						<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $qa->getId())), $qa->getPublished()); ?>
 					</td>
