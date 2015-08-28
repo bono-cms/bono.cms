@@ -7,8 +7,6 @@ use Krystal\Form\Widget\DropdownWidget;
 
 <?php if (!empty($categories)): ?>
 
-
-
 <form>
 
 	<ul class="nav nav-tabs" role="tablist">
@@ -33,14 +31,12 @@ use Krystal\Form\Widget\DropdownWidget;
 					</div>
 				</div>
 				
-				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Category'); ?></label>
 					<div class="col-lg-10">
 						<?php echo DropdownWidget::render(array('name' => 'image[category_id]', 'class' => 'form-control'), $categories, $image->getCategoryId(), false); ?>
 					</div>
 				</div>
-				
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Image'); ?></label>
@@ -60,19 +56,16 @@ use Krystal\Form\Widget\DropdownWidget;
 						<input type="file" name="file" accept="image/x-png, image/gif, image/jpeg" />
 					</div>
 				</div>
-				
 			</div>
 		</div>
-
 		
 		<div class="tab-pane" id="options" role="tabpanel">
-			
 			<div class="well">
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" name="image[order]" class="form-control" value="<?php echo $image->getOrder(); ?>" placeholder="<?php $this->show('Image sort order'); ?>" />
+							<input type="number" min="0" name="image[order]" class="form-control" value="<?php echo $image->getOrder(); ?>" placeholder="<?php $this->show('Image sort order'); ?>" />
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 					</div>
@@ -81,32 +74,31 @@ use Krystal\Form\Widget\DropdownWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 					<div class="col-lg-10">
-						<textarea name="image[description]" class="form-control" placeholder="<?php $this->show('Image description'); ?>"><?php echo $image->getDescription(); ?></textarea>
+						<div class="input-group">
+							<textarea name="image[description]" class="form-control" placeholder="<?php $this->show('Image description'); ?>"><?php echo $image->getDescription(); ?></textarea>
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
 					</div>
 				</div>
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Link'); ?></label>
 					<div class="col-lg-10">
-						<input type="text" name="image[link]" class="form-control" placeholder="<?php $this->show('Link to be opened when clicking on the slider'); ?>" value="<?php echo $image->getLink(); ?>" />
+						<div class="input-group">
+							<input type="text" name="image[link]" class="form-control" placeholder="<?php $this->show('Link to be opened when clicking on the slider'); ?>" value="<?php echo $image->getLink(); ?>" />
+							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+						</div>
 					</div>
 				</div>
-				
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array(
-
-							'name' => 'image[published]', 
-							'class' => 'form-control'
-
-						), $image->getPublished()); ?>
+						<?php echo CheckBoxWidget::render(array('name' => 'image[published]', 'class' => 'form-control'), $image->getPublished()); ?>
 					</div>
 				</div>
 			</div>
 		</div>
-		
 		
 	</div>
 	
