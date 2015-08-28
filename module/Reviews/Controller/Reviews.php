@@ -46,7 +46,7 @@ final class Reviews extends AbstractController
 		$formValidator = $this->getValidator($this->request->getPost());
 
 		if ($formValidator->isValid()) {
-			$data = array_merge($this->request->getPost(), $this->request->getClientIP())
+			$data = array_merge($this->request->getPost(), $this->request->getClientIP());
 
 			if ($this->getReviewsManager()->send($data, $this->getConfig()->getEnabledModeration()) {
 				$this->flashBag->set('success', 'Your reviews has been sent! Thank you');
@@ -59,7 +59,7 @@ final class Reviews extends AbstractController
 			return $formValidator->getErrors();
 		}
 	}
-
+	
 	/**
 	 * Returns configuration entity
 	 * 

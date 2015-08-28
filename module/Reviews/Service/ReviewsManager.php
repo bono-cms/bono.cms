@@ -36,7 +36,7 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 	private $historyManager;
 
 	/**
-	 * Notification manager to deal with notifications
+	 * Notification service to deal with notifications
 	 * 
 	 * @var \Cms\NotificationManagerInterface
 	 */
