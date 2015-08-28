@@ -1,7 +1,7 @@
 
 $(function(){
 	
-	$.wysiwyg.init(['review[content]']);
+	$.wysiwyg.init(['review[review]']);
 	$("[name='review[date]']").datepicker();
 	$.setFormGroup('review');
 	

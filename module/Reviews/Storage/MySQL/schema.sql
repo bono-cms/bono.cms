@@ -9,6 +9,6 @@ CREATE TABLE `bono_module_reviews` (
 	`published` varchar(1) NOT NULL,
 	`name` varchar(254) NOT NULL,
 	`email` varchar(254) NOT NULL,
-	`content` TEXT
+	`review` TEXT NOT NULL
 	
 ) DEFAULT CHARSET = UTF8;

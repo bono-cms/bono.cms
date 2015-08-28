@@ -72,8 +72,8 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 				  ->setPublished((bool) $review['published'])
 				  ->setName(Filter::escape($review['name']))
 				  ->setEmail(Filter::escape($review['email']))
-				  ->setContent(Filter::escapeContent($review['content']));
-				  
+				  ->setReview(Filter::escapeContent($review['review']));
+
 		return $entity;
 	}
 
@@ -238,14 +238,15 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 
 		// This value depends on configuration, where we handled moderation
 		if ($enableModeration) {
+
 			$input['published'] = '0';
 			$this->notificationManager->notify('A new review waits for your approval');
-			
+
 		} else {
 			$input['published'] = '1';
 		}
 
-		return $this->reviewsMapper->insert($input);
+		return $this->reviewsMapper->insert(ArrayUtils::arrayWithout($input, array('captcha')));
 	}
 
 	/**
