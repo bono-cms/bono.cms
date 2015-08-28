@@ -157,7 +157,7 @@ if (window.jQuery){
 				}
 			}
 		});
-		
+
 		// CAPTCHA's button
 		$("[data-captcha='button-refresh']").click(function(event){
 			event.preventDefault();
@@ -167,6 +167,25 @@ if (window.jQuery){
 			var link = $image.attr('src');
 
 			$image.attr('src', link + Math.random());
+		});
+
+		// For forms that send data
+		$("[data-button='submit']").click(function(){
+			// Find its parent form
+			var $form = $(this).closest('form');
+
+			$form.off('submit').submit(function(event){
+				event.preventDefault();
+				var data = $(this).serialize();
+
+				$.ajax({
+					type : "POST",
+					data : data,
+					success : function(response){
+						$.validator.handleAll(response);
+					}
+				});
+			});
 		});
 		
 	});
