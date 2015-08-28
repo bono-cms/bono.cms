@@ -17,23 +17,58 @@ use Krystal\Validate\Pattern;
 final class Reviews extends AbstractController
 {
 	/**
-	 * Shows a web-page with reviews
-	 * 
-	 * @param integer $page
+	 * Shows reviews
+	 *
+	 * @param string $id Page id
+	 * @param string $pageNumber Page id
+	 * @param string $code Language code
+	 * @param string $slug Page slug
 	 * @return string
 	 */
-	public function showAction($page = 1)
+	public function indexAction($id = false, $pageNumber = 1, $code = null, $slug = null)
 	{
-		$config = $this->getConfig();
-		$reviewManager = $this->getReviewsManager();
+		if ($this->request->isPost()) {
+			return $this->submitAction();
+		} else {
+			return $this->showAction($id, $pageNumber, $code, $slug);
+		}
+	}
 
-		$paginator = $reviewManager->getPaginator();
-		$this->preparePaginator($paginator);
+	/**
+	 * Shows a web-page with reviews
+	 * 
+	 * @param string $id Page id
+	 * @param string $pageNumber Page id
+	 * @param string $code Language code
+	 * @param string $slug Page slug
+	 * @return string
+	 */
+	private function showAction($id, $pageNumber, $code, $slug)
+	{
+		$pageManager = $this->getService('Pages', 'pageManager');
+		$page = $pageManager->fetchById($id);
 
-		return $this->view->render('reviews', array(
-			'reviews' => $reviewManager->fetchAllPublishedByPage($page, $config->getPerPageCount()),
-			'paginator' => $paginator
-		));
+		if ($page !== false) {
+
+			// Prepare view
+			$this->loadSitePlugins();
+			$this->view->getBreadcrumbBag()->add($pageManager->getBreadcrumbs($page));
+
+			$reviewManager = $this->getReviewsManager();
+			$reviews = $reviewManager->fetchAllPublishedByPage($pageNumber, $this->getConfig()->getPerPageCount());
+
+			$paginator = $reviewManager->getPaginator();
+			$this->preparePaginator($paginator, $code, $slug, $pageNumber);
+
+			return $this->view->render('reviews', array(
+				'reviews' => $reviews,
+				'paginator' => $paginator,
+				'page' => $page
+			));
+
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -41,15 +76,15 @@ final class Reviews extends AbstractController
 	 * 
 	 * @return string The response
 	 */
-	public function addAction()
+	public function submitAction()
 	{
 		$formValidator = $this->getValidator($this->request->getPost());
 
 		if ($formValidator->isValid()) {
-			$data = array_merge($this->request->getPost(), $this->request->getClientIP());
+			$data = array_merge($this->request->getPost(), array('ip' => $this->request->getClientIP()));
 
-			if ($this->getReviewsManager()->send($data, $this->getConfig()->getEnabledModeration()) {
-				$this->flashBag->set('success', 'Your reviews has been sent! Thank you');
+			if ($this->getReviewsManager()->send($data, $this->getConfig()->getEnabledModeration())) {
+				$this->flashBag->set('success', 'Your review has been sent! Thank you');
 			}
 
 			return '1';
@@ -92,7 +127,10 @@ final class Reviews extends AbstractController
 			'input' => array(
 				'source' => $input,
 				'definition' => array(
-					'name' => new Pattern\Name()
+					'name' => new Pattern\Name(),
+					'email' => new Pattern\Email(),
+					'captcha' => new Pattern\Captcha($this->captcha),
+					'review' => new Pattern\Message()
 				)
 			)
 		));

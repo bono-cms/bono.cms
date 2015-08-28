@@ -30,7 +30,7 @@ abstract class AbstractReview extends AbstractController
 				'definition' => array(
 					'name' => new Pattern\Name(),
 					'email' => new Pattern\Email(),
-					'content' => new Pattern\Content(),
+					'review' => new Pattern\Content(),
 				)
 			)
 		));
