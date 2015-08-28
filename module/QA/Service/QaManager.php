@@ -13,6 +13,7 @@ namespace Qa\Service;
 
 use Cms\Service\HistoryManagerInterface;
 use Cms\Service\AbstractManager;
+use Cms\Service\NotificationManagerInterface;
 use Qa\Storage\QaMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
@@ -35,16 +36,25 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 	private $historyManager;
 
 	/**
+	 * Notification service to deal with notifications
+	 * 
+	 * @var \Cms\NotificationManagerInterface
+	 */
+	private $notificationManager;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param \QA\Storage\QaMapperInterface $qaMapper
 	 * @param \Cms\Service\HistoryManagerInterface $historyManager
+	 * @param \Cms\Service\NotificationManagerInterface $notificationManager
 	 * @return void
 	 */
-	public function __construct(QaMapperInterface $qaMapper, HistoryManagerInterface $historyManager)
+	public function __construct(QaMapperInterface $qaMapper, HistoryManagerInterface $historyManager, NotificationManagerInterface $notificationManager)
 	{
 		$this->qaMapper = $qaMapper;
 		$this->historyManager = $historyManager;
+		$this->notificationManager = $notificationManager;
 	}
 
 	/**
@@ -121,6 +131,29 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 		}
 
 		return true;
+	}
+
+	/**
+	 * Sends data from a user
+	 * 
+	 * @param array $input Raw input data
+	 * @return boolean
+	 */
+	public function send(array $input)
+	{
+		// Save current timestamp
+		$timestamp = time();
+
+		// Defaults
+		$input['timestamp_asked'] = $timestamp;
+		$input['timestamp_answered'] = $timestamp;
+		$input['answerer'] = '';
+		$input['answer'] = '';
+		$input['published'] = '0';
+
+		$this->notificationManager->notify('A new question waits for your review');
+
+		return $this->qaMapper->insert(ArrayUtils::arrayWithout($input, array('captcha')));
 	}
 
 	/**

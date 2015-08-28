@@ -37,7 +37,7 @@ final class Module extends AbstractCmsModule
 	public function getServiceProviders()
 	{
 		return array(
-			'qaManager' => new QaManager($this->getMapper('/Qa/Storage/MySQL/QaMapper'), $this->getHistoryManager()),
+			'qaManager' => new QaManager($this->getMapper('/Qa/Storage/MySQL/QaMapper'), $this->getHistoryManager(), $this->getNotificationManager()),
 			'configManager' => $this->getConfigManager()
 		);
 	}

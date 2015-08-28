@@ -37,15 +37,11 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($published === true) {
-
-			$db->andWhereEquals('published', '1')
-			   ->orderBy('timestamp_asked');
-
-		} else {
-
-			$db->orderBy('id')
-			   ->desc();
+			$db->andWhereEquals('published', '1');
 		}
+
+		$db->orderBy('id')
+		   ->desc();
 
 		return $db;
 	}
