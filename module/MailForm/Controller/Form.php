@@ -109,23 +109,6 @@ final class Form extends AbstractController
 	}
 
 	/**
-	 * Prepares a view object to send messages
-	 * 
-	 * @return \Krystal\Application\View\ViewManager
-	 */
-	private function getMessageView()
-	{
-		// Special case, when override must be done
-		$resolver = $this->view->getResolver();
-		$resolver->setModule('MailForm')
-				 ->setTheme('messages');
-
-		$this->view->disableLayout();
-
-		return $this->view;
-	}
-
-	/**
 	 * Sends a message from the input
 	 * 
 	 * @param string $id Form id
@@ -137,7 +120,7 @@ final class Form extends AbstractController
 		$template = $this->getFormManager()->fetchMessageViewById($id);
 
 		// Render the body firstly
-		$body = $this->getMessageView()->render($template, array(
+		$body = $this->view->renderRaw($this->moduleName, 'messages', $template, array(
 			'input' => $input
 		));
 

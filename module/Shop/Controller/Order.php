@@ -49,7 +49,7 @@ final class Order extends AbstractShopController
 
 		if ($orderManager->make($input)) {
 
-			$letter = $this->getMessageView()->render('order', array(
+			$letter = $this->view->renderRaw($this->moduleName, 'messages', 'order', array(
 				'basketManager' => $this->getModuleService('basketManager'),
 				'currency' => $this->getModuleService('configManager')->getEntity()->getCurrency(),
 				'input' => $input
@@ -60,22 +60,6 @@ final class Order extends AbstractShopController
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Returns message view
-	 * 
-	 * @return string
-	 */
-	private function getMessageView()
-	{
-		// Special case, when override must be done
-		$resolver = $this->view->getResolver();
-		$resolver->setModule('Shop')
-				 ->setTheme('messages');
-
-		$this->view->disableLayout();
-		return $this->view;
 	}
 
 	/**
