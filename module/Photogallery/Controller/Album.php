@@ -24,7 +24,7 @@ final class Album extends AbstractController
 	 * @param string $slug Album slug
 	 * @return string
 	 */
-	public function showAction($albumId, $pageNumber = 1, $code = null, $slug = null)
+	public function showAction($albumId = false, $pageNumber = 1, $code = null, $slug = null)
 	{
 		$photoManager = $this->getModuleService('photoManager');
 		$albumManager = $this->getModuleService('albumManager');

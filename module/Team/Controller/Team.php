@@ -24,7 +24,7 @@ final class Team extends AbstractController
 	 * @param string $slug Page slug
 	 * @return string
 	 */
-	public function indexAction($id, $pageNumber = 1, $code = null, $slug = null)
+	public function indexAction($id = false, $pageNumber = 1, $code = null, $slug = null)
 	{
 		$pageManager = $this->getService('Pages', 'pageManager');
 		$page = $pageManager->fetchById($id);

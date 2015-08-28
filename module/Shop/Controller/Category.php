@@ -25,7 +25,7 @@ final class Category extends AbstractShopController
 	 * @param string $slug Optional slug
 	 * @return string
 	 */
-	public function indexAction($id, $pageNumber = 1, $code = null, $slug = null)
+	public function indexAction($id = false, $pageNumber = 1, $code = null, $slug = null)
 	{
 		$categoryManager = $this->getModuleService('categoryManager');
 		$category = $categoryManager->fetchById($id);

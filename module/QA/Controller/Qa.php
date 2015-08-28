@@ -25,7 +25,7 @@ final class Qa extends AbstractController
 	 * @param string $slug Page slug
 	 * @return string
 	 */
-	public function indexAction($id, $pageNumber = 1, $code = null, $slug = null)
+	public function indexAction($id = false, $pageNumber = 1, $code = null, $slug = null)
 	{
 		if ($this->request->isPost()) {
 			return $this->submitAction();
