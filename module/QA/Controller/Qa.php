@@ -43,15 +43,15 @@ final class Qa extends AbstractController
 	 * @param string $slug Page slug
 	 * @return string
 	 */
-	private function showAction($id, $pageNumber = 1, $code = null, $slug = null)
+	private function showAction($id, $pageNumber, $code, $slug)
 	{
 		$pageManager = $this->getService('Pages', 'pageManager');
 		$page = $pageManager->fetchById($id);
 
 		if ($page !== false) {
 
-			// Load all view plugins
-			$this->loadPlugins($pageManager->getBreadcrumbs($page));
+			$this->loadSitePlugins();
+			$this->view->getBreadcrumbBag()->add($pageManager->getBreadcrumbs($page));
 
 			$qaManager = $this->getModuleService('qaManager');
 			$pairs = $qaManager->fetchAllPublishedByPage($pageNumber, $this->getConfig()->getPerPageCount());
@@ -96,19 +96,6 @@ final class Qa extends AbstractController
 
 			return $formValidator->getErrors();
 		}
-	}
-
-	/**
-	 * Loads site plugins
-	 * 
-	 * @param array $breadcrumbs
-	 * @return void
-	 */
-	private function loadPlugins($breadcrumbs)
-	{
-		// Load asset plugins and tweak breadcrumbs
-		$this->loadSitePlugins();
-		$this->view->getBreadcrumbBag()->add($breadcrumbs);
 	}
 
 	/**
