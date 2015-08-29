@@ -11,99 +11,23 @@
 
 namespace Photogallery\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
+use Cms\Controller\Admin\AbstractConfigController;
 use Krystal\Validate\Pattern;
 
-final class Config extends AbstractController
+final class Config extends AbstractConfigController
 {
 	/**
-	 * Shows configuration form
-	 * 
-	 * @return string
+	 * {@inheritDoc}
 	 */
-	public function indexAction()
+	protected function getValidationRules()
 	{
-		$this->loadPlugins();
-		
-		return $this->view->render('config', array(
-			'title' => 'Configuration',
-			'config' => $this->getConfigManager()->getEntity()
-		));
-	}
-
-	/**
-	 * Saves configuration
-	 * 
-	 * @return string
-	 */
-	public function updateAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('config'));
-
-		if ($formValidator->isValid()) {
-
-			$this->getConfigManager()->write($this->request->getPost('config'));
-			$this->flashBag->set('success', 'Configuration has been updated successfully');
-
-			return '1';
-		} else {
-
-			return $formValidator->getErrors();
-		}
-	}
-
-	/**
-	 * Loads required plugins for view
-	 * 
-	 * @return void
-	 */
-	private function loadPlugins()
-	{
-		$this->view->getPluginBag()
-				   ->appendScript($this->getWithAssetPath('/admin/config.js'));
-
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'link' => 'Photogallery:Admin:Browser@indexAction',
-				'name' => 'Photogallery'
-			),
-			array(
-				'link' => '#',
-				'name' => 'Configuration'
-			)
-		));
-	}
-
-	/**
-	 * Returns configuration manager
-	 * 
-	 * @return \Photogallery\Service\ConfigManager
-	 */
-	private function getConfigManager()
-	{
-		return $this->getModuleService('configManager');
-	}
-
-	/**
-	 * Returns prepared and configured form validator
-	 * 
-	 * @param array $input Raw input data
-	 * @return \Krystal\Validate\ValidatorChain
-	 */
-	private function getValidator(array $input)
-	{
-		return $this->validatorFactory->build(array(
-			'input' => array(
-				'source' => $input,
-				'definition' => array(
-					'max_img_height' => new Pattern\ImageHeight(),
-					'max_img_width' => new Pattern\ImageWidth(),
-					'photos_per_page' => new Pattern\PerPageCount(),
-					'quality' => new Pattern\ImageQuality(),
-					'thumb_height' => new Pattern\ThumbHeight(),
-					'thumb_width' => new Pattern\ThumbWidth()
-				)
-			)
-		));
+		return array(
+			'max_img_height' => new Pattern\ImageHeight(),
+			'max_img_width' => new Pattern\ImageWidth(),
+			'photos_per_page' => new Pattern\PerPageCount(),
+			'quality' => new Pattern\ImageQuality(),
+			'thumb_height' => new Pattern\ThumbHeight(),
+			'thumb_width' => new Pattern\ThumbWidth()
+		);
 	}
 }
