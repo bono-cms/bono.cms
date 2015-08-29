@@ -55,9 +55,12 @@ abstract class AbstractConfigController extends AbstractController
 		$formValidator = $this->getValidator($input);
 
 		if ($formValidator->isValid()) {
+			// Grab history manager service
+			$historyManager = $this->getService('Cms', 'historyManager');
 
-			$this->getConfigManager()->write($input);
-			$this->flashBag->set('success', 'Configuration has been updated successfully');
+			if ($this->getConfigManager()->write($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')){
+				$this->flashBag->set('success', 'Configuration has been updated successfully');
+			}
 
 			return '1';
 
