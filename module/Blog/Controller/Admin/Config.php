@@ -12,83 +12,17 @@
 namespace Blog\Controller\Admin;
 
 use Krystal\Validate\Pattern;
+use Cms\Controller\Admin\AbstractConfigController;
 
-final class Config extends AbstractAdminController
+final class Config extends AbstractConfigController
 {
 	/**
-	 * Shows configuration form
-	 * 
-	 * @return string
+	 * {@inheritDoc}
 	 */
-	public function indexAction()
+	protected function getValidationRules()
 	{
-		$this->loadPlugins();
-
-		return $this->view->render('config', array(
-			'title' => 'Configuration',
-			'config' => $this->getConfigManager()->getEntity()
-		));
-	}
-
-	/**
-	 * Saves data from the configuration form
-	 * 
-	 * @return string
-	 */
-	public function saveAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('config'));
-
-		if ($formValidator->isValid()) {
-
-			$this->getConfigManager()->write($this->request->getPost('config'));
-			$this->flashBag->set('success', "Blog's configuration has been updated successfully");
-
-			return '1';
-		
-		} else {
-
-			return $formValidator->getErrors();
-		}
-	}
-
-	/**
-	 * Returns prepared and configured form validator
-	 * 
-	 * @param array $input Raw input data
-	 * @return \Krystal\Validate\ValidatorChain
-	 */
-	private function getValidator(array $input)
-	{
-		return $this->validatorFactory->build(array(
-			'input' => array(
-				'source' => $input,
-				'definition' => array(
-					'per_page_count' => new Pattern\PerPageCount(),
-				)
-			)
-		));
-	}
-
-	/**
-	 * Loads required plugins for view
-	 * 
-	 * @return void
-	 */
-	private function loadPlugins()
-	{
-		$this->view->getPluginBag()
-				   ->appendScript('/module/Blog/Assets/admin/config.js');
-
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'name' => 'Blog',
-				'link' => 'Blog:Admin:Browser@indexAction'
-			),
-			array(
-				'name' => 'Configuration',
-				'link' => '#'
-			)
-		));
+		return array(
+			'per_page_count' => new Pattern\PerPageCount(),
+		);
 	}
 }
