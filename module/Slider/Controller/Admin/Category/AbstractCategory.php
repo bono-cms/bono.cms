@@ -90,6 +90,6 @@ abstract class AbstractCategory extends AbstractController
 	 */
 	final protected function getCategoryManager()
 	{
-		return $this->moduleManager->getModule('Slider')->getService('categoryManager');
+		return $this->getModuleService('categoryManager');
 	}
 }
