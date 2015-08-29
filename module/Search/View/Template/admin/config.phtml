@@ -4,7 +4,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Items per page to show'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="number" min="1" name="per_page_count" class="form-control" value="<?php echo $config->getPerPageCount(); ?>" required />
+					<input type="number" min="1" name="config[per_page_count]" class="form-control" value="<?php echo $config->getPerPageCount(); ?>" required />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 				<span class="help-block"><?php $this->show('How many results do you want to display on site per page?'); ?></span>
@@ -15,7 +15,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Maximal description length'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="max_description_length" class="form-control" value="<?php echo $config->getMaxDescriptionLength(); ?>" />
+					<input type="text" name="config[max_description_length]" class="form-control" value="<?php echo $config->getMaxDescriptionLength(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 				<span class="help-block"><?php $this->show('Maximal length for description text when displaying results on site'); ?></span>
