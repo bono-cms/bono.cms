@@ -11,91 +11,33 @@
 
 namespace Cms\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
 use Krystal\Validate\Pattern;
 
-final class Tweaks extends AbstractController
+final class Tweaks extends AbstractConfigController
 {
 	/**
-	 * Shows tweak form
-	 * 
-	 * @return string
+	 * {@inheritDoc}
 	 */
-	public function indexAction()
+	protected function getValidationRules()
 	{
-		$this->loadPlugins();
-
-		return $this->view->render('tweaks', array(
-			'title' => 'Tweaks',
-			'config' => $this->getConfigManager()->getEntity(),
-		));
+		return array(
+			'notification_email' => new Pattern\Email()
+		);
 	}
 
 	/**
-	 * Saves tweaks
-	 * 
-	 * @return string
+	 * {@inheritDoc}
 	 */
-	public function saveAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('config'));
-
-		if ($formValidator->isValid()) {
-
-			$this->getConfigManager()->write($this->request->getPost('config'));
-			$this->flashBag->set('success', 'System settings have been updated successfully');
-
-			return '1';
-
-		} else {
-
-			return $formValidator->getErrors();
-		}
-	}
-
-	/**
-	 * Loads required plugins
-	 * 
-	 * @return void
-	 */
-	private function loadPlugins()
+	protected function loadPlugins()
 	{
 		$this->view->getPluginBag()
 				   ->load($this->getWysiwygPluginName())
-				   ->appendScript($this->getWithAssetPath('/admin/tweaks.js'));
+				   ->appendScript($this->getWithAssetPath('/admin/config.js'));
 
 		$this->view->getBreadcrumbBag()->add(array(
 			array(
 				'link' => '#',
 				'name' => 'Tweaks'
-			)
-		));
-	}
-
-	/**
-	 * Returns configuration manager
-	 * 
-	 * @return \Admin\Service\ConfigManager
-	 */
-	private function getConfigManager()
-	{
-		return $this->getService('Cms', 'configManager');
-	}
-
-	/**
-	 * Returns prepared form validator
-	 * 
-	 * @param array $input Raw input data
-	 * @return \Krystal\Validate\ValidatorChain
-	 */
-	private function getValidator(array $input)
-	{
-		return $this->validatorFactory->build(array(
-			'input' => array(
-				'source' => $input,
-				'definition' => array(
-					'notification_email' => new Pattern\Email()
-				)
 			)
 		));
 	}
