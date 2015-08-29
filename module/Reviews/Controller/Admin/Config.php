@@ -11,95 +11,18 @@
 
 namespace Reviews\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
+use Cms\Controller\Admin\AbstractConfigController;
 use Krystal\Validate\Pattern;
 
-final class Config extends AbstractController
+final class Config extends AbstractConfigController
 {
 	/**
-	 * Shows a form
-	 * 
-	 * @return string
+	 * {@inheritDoc}
 	 */
-	public function indexAction()
+	protected function getValidationRules()
 	{
-		$this->loadPlugins();
-
-		return $this->view->render('config', array(
-			'title' => 'Configuration',
-			'config' => $this->getConfigManager()->getEntity()
-		));
-	}
-
-	/**
-	 * Saves the data
-	 * 
-	 * @return string The response
-	 */
-	public function saveAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('config'));
-
-		if ($formValidator->isValid()) {
-
-			$this->getConfigManager()->write($this->request->getPost('config'));
-			$this->flashBag->set('success', 'Settings have been saved');
-
-			return '1';
-
-		} else {
-
-			return $formValidator->getErrors();
-		}
-	}
-
-	/**
-	 * Loads required plugins for view
-	 * 
-	 * @return void
-	 */
-	private function loadPlugins()
-	{
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'name' => 'Reviews',
-				'link' => 'Reviews:Admin:Browser@indexAction'
-			),
-			array(
-				'name' => 'Configuration',
-				'link' => '#'
-			)
-		));
-
-		$this->view->getPluginBag()
-				   ->appendScript($this->getWithAssetPath('/admin/config.js'));
-	}
-
-	/**
-	 * Returns configuration manager
-	 * 
-	 * @return \Reviews\Service\ConfigManager
-	 */
-	private function getConfigManager()
-	{
-		return $this->moduleManager->getModule('Reviews')->getService('configManager');
-	}
-
-	/**
-	 * Returns prepared validator
-	 * 
-	 * @param array $input Raw input data
-	 * @return \Krystal\Validate\ValidatorChain
-	 */
-	private function getValidator(array $input)
-	{
-		return $this->validatorFactory->build(array(
-			'input' => array(
-				'source' => $input,
-				'definition' => array(
-					'per_page_count' => new Pattern\PerPageCount()
-				)
-			)
-		));
+		return array(
+			'per_page_count' => new Pattern\PerPageCount()
+		);
 	}
 }
