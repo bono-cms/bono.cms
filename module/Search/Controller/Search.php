@@ -177,10 +177,11 @@ final class Search extends AbstractController
 	 */
 	private function tweakPaginator(PaginatorInterface $paginator)
 	{
-		//@TODO Decorate it
-		$url =  '/search/?' . $this->request->buildQuery(array('page' => '%s'));
-		$url = str_replace('%25s', '%s', $url);
-		
+		$placeholder = '(:var)';
+
+		$url =  '/search/?'.$this->request->buildQuery(array('page' => $placeholder));
+		$url = str_replace(rawurlencode($placeholder), $placeholder, $url);
+
 		$paginator->setUrl($url);
 	}
 }
