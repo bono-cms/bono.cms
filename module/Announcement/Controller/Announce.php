@@ -27,9 +27,14 @@ final class Announce extends AbstractController
 		$announce = $announceManager->fetchById($id);
 
 		if ($announce !== false) {
+
+			// Load view plugins
+			$this->loadSitePlugins();
+			$this->view->getBreadcrumbBag()->add($announceManager->getBreadcrumbs($announce));
+
 			return $this->view->render('page', array(
-				'breadcrumbs' => $announceManager->getBreadcrumbs($announce),
-				'page' => $announce
+				'page' => $announce,
+				'announce' => $announce
 			));
 
 		} else {
