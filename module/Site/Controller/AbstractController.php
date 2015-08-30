@@ -178,7 +178,11 @@ abstract class AbstractController extends BaseController
 
 		// If site isn't enabled, then its down for maintenance
 		if ($config->getSiteEnabled()) {
-			die($config->getSiteDownReason());
+			$response = $this->view->renderRaw('Cms', 'down', 'main', array(
+				'reason' => $config->getSiteDownReason()
+			));
+
+			die($response);
 		}
 	}
 
