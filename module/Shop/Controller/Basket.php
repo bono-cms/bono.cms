@@ -22,7 +22,6 @@ final class Basket extends AbstractShopController
 	public function indexAction($id)
 	{
 		$pageManager = $this->getService('Pages', 'pageManager');
-
 		$page = $pageManager->fetchById($id);
 
 		if ($page !== false) {
@@ -31,7 +30,6 @@ final class Basket extends AbstractShopController
 			return $this->view->render('shop-basket', array(
 				'products' => $this->getBasketManager()->getProducts(),
 				'page' => $page,
-
 				'deliveryTypes' => array(
 					'I will take myself',
 					'Via courier'
