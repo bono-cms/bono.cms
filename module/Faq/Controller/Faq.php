@@ -24,7 +24,6 @@ final class Faq extends AbstractController
 	public function indexAction($id)
 	{
 		$pageManager = $this->getService('Pages', 'pageManager');
-
 		$page = $pageManager->fetchById($id);
 
 		if ($page !== false) {
@@ -36,7 +35,6 @@ final class Faq extends AbstractController
 			$this->view->getBreadcrumbBag()->add($faqManager->getBreadcrumbs($page));
 
 			return $this->view->render('faq', array(
-
 				'faqs' => $faqManager->fetchAllPublished(),
 				'page' => $page
 			));
