@@ -32,7 +32,7 @@ final class Announce extends AbstractController
 			$this->loadSitePlugins();
 			$this->view->getBreadcrumbBag()->add($announceManager->getBreadcrumbs($announce));
 
-			return $this->view->render('page', array(
+			return $this->view->render('announce', array(
 				'page' => $announce,
 				'announce' => $announce
 			));
