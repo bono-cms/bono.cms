@@ -17,14 +17,6 @@ namespace Photogallery\Service;
 interface PhotoManagerInterface
 {
 	/**
-	 * Fetches random published photo
-	 * 
-	 * @param string $albumId Optionally can be filtered by album id
-	 * @return \Krystal\Stdlib\VirtualEntity|boolean
-	 */
-	public function fetchRandomPublished($albumId = null);
-
-	/**
 	 * Updates published state by their associated ids
 	 * 
 	 * @param array $pair
