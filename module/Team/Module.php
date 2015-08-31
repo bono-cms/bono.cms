@@ -17,7 +17,6 @@ use Krystal\Stdlib\VirtualEntity;
 use Cms\AbstractCmsModule;
 use Team\Service\TeamManager;
 use Team\Service\ConfigManager;
-use Team\Service\TeamImageManagerFactory;
 
 final class Module extends AbstractCmsModule
 {
