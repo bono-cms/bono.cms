@@ -13,4 +13,10 @@ namespace Team\Service;
 
 interface SiteServiceInterface
 {
+	/**
+	 * Returns all member entities
+	 * 
+	 * @return array
+	 */
+	public function getAll();
 }

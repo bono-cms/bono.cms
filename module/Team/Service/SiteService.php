@@ -30,4 +30,14 @@ final class SiteService implements SiteServiceInterface
 	{
 		$this->teamManager = $teamManager;
 	}
+
+	/**
+	 * Returns all member entities
+	 * 
+	 * @return array
+	 */
+	public function getAll()
+	{
+		return $this->teamManager->fetchAllPublished();
+	}
 }
