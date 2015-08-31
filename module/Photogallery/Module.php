@@ -18,6 +18,7 @@ use Photogallery\Service\AlbumManager;
 use Photogallery\Service\PhotoManager;
 use Photogallery\Service\TaskManager;
 use Photogallery\Service\ConfigManager;
+use Photogallery\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -153,12 +154,14 @@ final class Module extends AbstractCmsModule
 			$this->getMenuWidget()
 		);
 
-		return array(
+		$photoManager = new PhotoManager($photoMapper, $albumMapper, $imageManager, $historyManager);
 
+		return array(
+			'siteService' => new SiteService($photoManager),
 			'configManager' => $this->getConfigService(),
 			'taskManager' => new TaskManager($photoMapper, $albumManager),
-			'photoManager' => new PhotoManager($photoMapper, $albumMapper, $imageManager, $historyManager),
-			'albumManager' => $albumManager,
+			'photoManager' => $photoManager,
+			'albumManager' => $albumManager
 		);
 	}
 }
