@@ -139,6 +139,14 @@ interface PhotoMapperInterface
 	public function fetchAllPublishedByAlbumIdAndPage($albumId, $page, $itemsPerPage);
 
 	/**
+	 * Fetches all published photos associated with provided album id
+	 * 
+	 * @param string $albumId
+	 * @return array
+	 */
+	public function fetchAllPublishedByAlbumId($albumId);
+
+	/**
 	 * Fetch all records filter by pagination
 	 * 
 	 * @param integer $page

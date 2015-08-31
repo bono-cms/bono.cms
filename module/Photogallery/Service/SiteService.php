@@ -30,4 +30,15 @@ final class SiteService implements SiteServiceInterface
 	{
 		$this->photoManager = $photoManager;
 	}
+
+	/**
+	 * Fetches all photo entities by associated album id
+	 * 
+	 * @param string $id Album id
+	 * @return array
+	 */
+	public function getAllByAlbumId($id)
+	{
+		return $this->photoManager->fetchAllPublishedByAlbumId($id);
+	}
 }

@@ -328,6 +328,17 @@ final class PhotoManager extends AbstractManager implements PhotoManagerInterfac
 	}
 
 	/**
+	 * Fetches all published photo entities associated with provided album id
+	 * 
+	 * @param string $albumId
+	 * @return array
+	 */
+	public function fetchAllPublishedByAlbumId($albumId)
+	{
+		return $this->prepareResults($this->photoMapper->fetchAllPublishedByAlbumId($albumId));
+	}
+
+	/**
 	 * Fetches only published photos
 	 * 
 	 * @param string $albumId

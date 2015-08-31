@@ -13,4 +13,11 @@ namespace Photogallery\Service;
 
 interface SiteServiceInterface
 {
+	/**
+	 * Fetches all photo entities by associated album id
+	 * 
+	 * @param string $id Album id
+	 * @return array
+	 */
+	public function getAllByAlbumId($id);
 }

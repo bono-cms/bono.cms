@@ -259,6 +259,18 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 	}
 
 	/**
+	 * Fetches all published photos associated with provided album id
+	 * 
+	 * @param string $albumId
+	 * @return array
+	 */
+	public function fetchAllPublishedByAlbumId($albumId)
+	{
+		return $this->getSelectQuery(true, $albumId)
+					->queryAll();
+	}
+
+	/**
 	 * Fetches all photos filtered by album id
 	 * 
 	 * @param string $albumId
