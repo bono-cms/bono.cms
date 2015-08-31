@@ -13,6 +13,7 @@ namespace Slider\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Slider\Storage\ImageMapperInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 {
@@ -44,8 +45,7 @@ final class ImageMapper extends AbstractMapper implements ImageMapperInterface
 
 		if ($published === true) {
 			$db->andWhereEquals('published', '1')
-			   // @TODO Add this: CASE WHEN `order` = 0 THEN `id` END
-			   ->orderBy('order');
+			   ->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'));
 		} else {
 			$db->orderBy('id')
 			   ->desc();

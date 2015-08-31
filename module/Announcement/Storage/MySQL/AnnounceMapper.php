@@ -13,6 +13,7 @@ namespace Announcement\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Announcement\Storage\AnnounceMapperInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInterface
 {
@@ -43,7 +44,7 @@ final class AnnounceMapper extends AbstractMapper implements AnnounceMapperInter
 
 		if ($published === true) {
 			$db->andWhereEquals('published', '1')
-			   ->orderBy('order');
+			   ->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'));
 		} else {
 			$db->orderBy('id')
 			   ->desc();

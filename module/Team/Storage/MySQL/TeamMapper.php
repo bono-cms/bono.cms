@@ -13,6 +13,7 @@ namespace Team\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Team\Storage\TeamMapperInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 {
@@ -108,8 +109,7 @@ final class TeamMapper extends AbstractMapper implements TeamMapperInterface
 		if ($published === true) {
 
 			$db->andWhereEquals('published', '1')
-			   ->orderBy('order');
-
+			   ->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'));
 		} else {
 
 			$db->orderBy('id')

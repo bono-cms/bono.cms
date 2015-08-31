@@ -13,6 +13,7 @@ namespace Photogallery\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Photogallery\Storage\PhotoMapperInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 {
@@ -43,7 +44,7 @@ final class PhotoMapper extends AbstractMapper implements PhotoMapperInterface
 
 		if ($published === true) {
 			$db->andWhereEquals('published', '1')
-			   ->orderBy('order'); // @TODO: CASE WHEN `order` = 0 THEN id END
+			   ->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'));
 		} else {
 			$db->orderBy('id')
 			   ->desc();

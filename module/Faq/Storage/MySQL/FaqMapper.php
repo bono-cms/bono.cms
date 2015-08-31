@@ -13,6 +13,7 @@ namespace Faq\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Faq\Storage\FaqMapperInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 {
@@ -39,7 +40,7 @@ final class FaqMapper extends AbstractMapper implements FaqMapperInterface
 
 		if ($published === true) {
 			$db->andWhereEquals('published', '1')
-			   ->orderBy('order');
+			   ->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'));
 		} else {
 			$db->orderBy('id')
 			   ->desc();
