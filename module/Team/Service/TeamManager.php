@@ -88,6 +88,16 @@ final class TeamManager extends AbstractManager implements TeamManagerInterface
 	}
 
 	/**
+	 * Fetches all published member entities
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished()
+	{
+		return $this->prepareResults($this->teamMapper->fetchAllPublished());
+	}
+
+	/**
 	 * Fetches all member entities filtered by pagination
 	 * 
 	 * @param integer $page

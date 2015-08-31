@@ -14,6 +14,13 @@ namespace Team\Service;
 interface TeamManagerInterface
 {
 	/**
+	 * Fetches all published member entities
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished();
+
+	/**
 	 * Returns prepared paginator's instance
 	 * 
 	 * @return \Krystal\Paginate\Paginator
