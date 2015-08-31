@@ -48,7 +48,8 @@ abstract class AbstractController extends BaseController
 			'\News\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\Banner\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\Advice\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-			'\Photogallery\Service\SiteBootstrapper' => array($this->moduleManager, $this->view)
+			'\Photogallery\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
+			'\Team\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 		);
 	}
 

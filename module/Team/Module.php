@@ -17,6 +17,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Cms\AbstractCmsModule;
 use Team\Service\TeamManager;
 use Team\Service\ConfigManager;
+use Team\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -74,6 +75,7 @@ final class Module extends AbstractCmsModule
 		);
 
 		return array(
+			'siteService' => new SiteService($teamManager),
 			'teamManager' => $teamManager,
 			'configManager' => $config
 		);
