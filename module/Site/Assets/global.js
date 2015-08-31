@@ -6,8 +6,17 @@
 if (window.jQuery){
 	
 	$(function(){
-		
-		$.validator = {
+
+		/**
+		 * Validator class
+		 * 
+		 * @param $form Jquey form object
+		 */
+		function Validator($form){
+			this.$form = $form;
+		}
+
+		Validator.prototype = {
 			/**
 			 * Builds a selector for a target element
 			 * 
@@ -25,7 +34,7 @@ if (window.jQuery){
 			 */
 			getContainerElementByClosestName : function(name){
 				var selector = this.buildElementSelector(name);
-				return $(selector).closest('div.form-group');
+				return this.$form.find(selector).closest('div.form-group');
 			},
 			
 			/**
@@ -68,7 +77,7 @@ if (window.jQuery){
 			 * @param string name Element's name
 			 * @param string message To be appended
 			 */
-			showErrorOn : function(name, message){
+			showErrorOn : function($form, name, message){
 				$container = this.getContainerElementByClosestName(name);
 				
 				if ($container.hasClass('has-success')) {
@@ -88,7 +97,7 @@ if (window.jQuery){
 				// Classes we'd like to remove when reseting all
 				var classes = ['has-error', 'has-warning', 'has-success'];
 
-				$('div.form-group').each(function(){
+				this.$form.find('div.form-group').each(function(){
 					for (var key in classes) {
 						// Value represents class name
 						var value = classes[key];
@@ -100,10 +109,10 @@ if (window.jQuery){
 				});
 				
 				// Now we'd assume that everything is okay, and later remove this class on demand
-				$('div.form-group').addClass('has-success');
+				this.$form.find('div.form-group').addClass('has-success');
 
 				// Remove all helper spans
-				$("span.help-block").remove();
+				this.$form.find("span.help-block").remove();
 			},
 
 			/**
@@ -113,7 +122,7 @@ if (window.jQuery){
 			 */
 			handleAll : function(response){
 				// Clear all previous messages and added classes
-				this.resetAll();
+				this.resetAll(this.$form);
 
 				// if its not JSON, but "1" then we'd assume success
 				if (response == "1") {
@@ -126,7 +135,7 @@ if (window.jQuery){
 
 						for (var name in data){
 							var message = data[name];
-							this.showErrorOn(name, message);
+							this.showErrorOn(this.$form, name, message);
 						}
 
 					} catch(e) {
@@ -182,7 +191,8 @@ if (window.jQuery){
 					type : "POST",
 					data : data,
 					success : function(response){
-						$.validator.handleAll(response);
+						var validator = new Validator($form);
+						validator.handleAll(response);
 					}
 				});
 			});
