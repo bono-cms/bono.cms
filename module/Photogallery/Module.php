@@ -18,8 +18,6 @@ use Photogallery\Service\AlbumManager;
 use Photogallery\Service\PhotoManager;
 use Photogallery\Service\TaskManager;
 use Photogallery\Service\ConfigManager;
-use Photogallery\Service\PhotoManagerFactory;
-use Photogallery\Service\AlbumImageManagerFactory;
 
 final class Module extends AbstractCmsModule
 {
