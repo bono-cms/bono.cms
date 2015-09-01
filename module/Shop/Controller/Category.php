@@ -92,10 +92,6 @@ final class Category extends AbstractShopController
 	{
 		$this->loadSitePlugins();
 
-		// Appends category UI logic into script stack
-		$this->view->getPluginBag()
-				   ->appendScript($this->getWithAssetPath('/category.module.js'));
-			
 		// Append breadcrumbs now
 		$this->view->getBreadcrumbBag()
 				   ->add($breadcrumbs);

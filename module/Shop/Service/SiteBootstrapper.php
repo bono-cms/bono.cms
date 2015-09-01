@@ -77,7 +77,7 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
 		// Finally add $basket entity and append a script which handles a basket
 		$this->view->addVariable('basket', $basket)
 				   ->getPluginBag()
-				   ->appendScript('/module/Shop/Assets/basket.module.js');
+				   ->appendScript('@Shop/site.module.js');
 		
 	}
 

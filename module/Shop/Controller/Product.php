@@ -62,8 +62,7 @@ final class Product extends AbstractShopController
 
 		// Load zoom plugin
 		$this->view->getPluginBag()
-				   ->load(array('zoom'))
-				   ->appendScript($this->getWithAssetPath('/product.images.module.js'));
+				   ->load(array('zoom'));
 
 		// Alter breadcrumbs in view
 		$this->view->getBreadcrumbBag()
