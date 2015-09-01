@@ -147,6 +147,15 @@ $(function(){
 		}
 	};
 	
+	/**
+	 * Global factory for form validator
+	 * 
+	 * @param object $form Jquery form object
+	 */
+	$.getValidator = function($form){
+		return new Validator($form);
+	};
+	
 	// Setup global AJAX settings
 	$.ajaxSetup({
 		cache : false,
@@ -192,8 +201,7 @@ $(function(){
 				type : "POST",
 				data : data,
 				success : function(response){
-					var validator = new Validator($form);
-					validator.handleAll(response);
+					$.getValidator($form).handleAll(response);
 				}
 			});
 		});
