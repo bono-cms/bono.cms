@@ -1,10 +1,5 @@
 /**!
- * Basket module for shop module
- * Jquery-plugin
- * 
- * All you have to do, is to include this script file in your site
- * Done. Then just use data-attributes (see the docs for example usages)
- * 
+ * jquery basket module for the shop module
  */
 
 $(function(){
