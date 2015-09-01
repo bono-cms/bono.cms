@@ -45,7 +45,7 @@ final class Search extends AbstractController
 			$siteService->setKeyword($keyword);
 
 			if ($formValidator->isValid()) {
-				
+
 				$searchManager = $this->getModuleService('searchManager');
 
 				// Override maximal description's length
