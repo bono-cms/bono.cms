@@ -40,7 +40,7 @@ final class Module extends AbstractShopModule
 		$basketManager = $this->getBasketManager($productMapper, $productImageManager->getImageBag());
 		$basketManager->load();
 
-		$config = $this->getConfigManager();
+		$config = $this->getConfigService();
 		
 		$productRemover = new ProductRemover($productMapper, $imageMapper, $webPageManager, $productImageManager);
 		

@@ -12,12 +12,10 @@
 namespace Photogallery;
 
 use Cms\AbstractCmsModule;
-use Krystal\Config\File\FileArray;
 use Krystal\Image\Tool\ImageManager;
 use Photogallery\Service\AlbumManager;
 use Photogallery\Service\PhotoManager;
 use Photogallery\Service\TaskManager;
-use Photogallery\Service\ConfigManager;
 use Photogallery\Service\SiteService;
 
 final class Module extends AbstractCmsModule
@@ -90,25 +88,6 @@ final class Module extends AbstractCmsModule
 			$this->appConfig->getRootUrl(),
 			$plugins
 		);
-	}
-
-	/**
-	 * Returns prepared and configured configuration
-	 * 
-	 * @return \Krystal\Config\FileArray
-	 */
-	private function getConfigService()
-	{
-		static $config = null;
-
-		if (is_null($config)) {
-			$adapter = new FileArray(__DIR__.'/Config/module.config.php');
-			$adapter->load();
-
-			$config = new ConfigManager($adapter);
-		}
-		
-		return $config;
 	}
 
 	/**

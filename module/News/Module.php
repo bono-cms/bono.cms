@@ -12,10 +12,8 @@
 namespace News;
 
 use Cms\AbstractCmsModule;
-use Krystal\Config\File\FileArray;
 use Krystal\Image\Tool\ImageManager;
 use News\Service\CategoryManager;
-use News\Service\ConfigManager;
 use News\Service\PostManager;
 use News\Service\TaskManager;
 use News\Service\PostImageManagerFactory;
@@ -41,7 +39,7 @@ final class Module extends AbstractCmsModule
 
 		return array(
 			'siteService' => new SiteService($postManager),
-			'configManager' => $this->getConfigProvider(),
+			'configManager' => $this->getConfigService(),
 			'taskManager' => new TaskManager($postMapper),
 			'categoryManager' => new CategoryManager($categoryMapper, $postMapper, $webPageManager, $historyManager, $imageManager, $this->getMenuWidget()),
 			'postManager' => $postManager
@@ -55,27 +53,8 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getTimeBag()
 	{
-		$factory = new TimeBagFactory($this->getConfigProvider()->getEntity());
+		$factory = new TimeBagFactory($this->getConfigService()->getEntity());
 		return $factory->build();
-	}
-
-	/**
-	 * Returns prepared config provider
-	 * 
-	 * @return \Krystal\Config\FileArray
-	 */
-	private function getConfigProvider()
-	{
-		static $config = null;
-
-		if ($config === null) {
-			$adapter = new FileArray(__DIR__.'/Config/module.config.php');
-			$adapter->load();
-
-			$config = new ConfigManager($adapter);
-		}
-
-		return $config;
 	}
 
 	/**
@@ -86,7 +65,7 @@ final class Module extends AbstractCmsModule
 	private function getImageManager()
 	{
 		// Grab configuration entity
-		$config = $this->getConfigProvider()->getEntity();
+		$config = $this->getConfigService()->getEntity();
 
 		$plugins = array(
 			'thumb' => array(

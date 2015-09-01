@@ -11,29 +11,14 @@
 
 namespace Blog;
 
-use Krystal\Config\File\FileArray;
 use Cms\AbstractCmsModule;
 use Blog\Service\PostManager;
 use Blog\Service\CategoryManager;
 use Blog\Service\TaskManager;
-use Blog\Service\ConfigManager;
 use Blog\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
-	/**
-	 * Returns configuration manager
-	 * 
-	 * @return \Blog\Service\ConfigManager
-	 */
-	private function getConfigManager()
-	{
-		$adapter = new FileArray(__DIR__ . '/Config/module.config.php');
-		$adapter->load();
-
-		return new ConfigManager($adapter);
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -52,7 +37,7 @@ final class Module extends AbstractCmsModule
 
 		return array(
 			'siteService' => $siteService,
-			'configManager' => $this->getConfigManager(),
+			'configManager' => $this->getConfigService(),
 			'taskManager' => new TaskManager($postMapper),
 			'postManager' => $postManager,
 			'categoryManager' => $categoryManager

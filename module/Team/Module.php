@@ -12,36 +12,22 @@
 namespace Team;
 
 use Krystal\Image\Tool\ImageManager;
-use Krystal\Config\File\FileArray;
 use Krystal\Stdlib\VirtualEntity;
 use Cms\AbstractCmsModule;
 use Team\Service\TeamManager;
-use Team\Service\ConfigManager;
 use Team\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
 	/**
-	 * Returns configuration manager
-	 * 
-	 * @return \Team\Service\ConfigManager
-	 */
-	private function getConfigManager()
-	{
-		$adapter = new FileArray(__DIR__ .'/Config/module.config.php');
-		$adapter->load();
-
-		return new ConfigManager($adapter);
-	}
-
-	/**
 	 * Returns image manager service
 	 * 
-	 * @param \Krystal\Stdlib\VirtualEntity $config
 	 * @return \Krystal\Image\Tool\ImageManager
 	 */
-	private function getImageManager(VirtualEntity $config)
+	private function getImageManager()
 	{
+		$config = $this->getConfigService()->getEntity();
+
 		$plugins = array(
 			'thumb' => array(
 				'dimensions' => array(
@@ -66,18 +52,16 @@ final class Module extends AbstractCmsModule
 	 */
 	public function getServiceProviders()
 	{
-		$config = $this->getConfigManager();
-
 		$teamManager = new TeamManager(
 			$this->getMapper('/Team/Storage/MySQL/TeamMapper'), 
-			$this->getImageManager($config->getEntity()), 
+			$this->getImageManager(), 
 			$this->getHistoryManager()
 		);
 
 		return array(
 			'siteService' => new SiteService($teamManager),
 			'teamManager' => $teamManager,
-			'configManager' => $config
+			'configManager' => $this->getConfigService()
 		);
 	}
 }

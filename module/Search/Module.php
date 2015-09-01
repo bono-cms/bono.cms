@@ -11,29 +11,12 @@
 
 namespace Search;
 
-use Krystal\Config\File\FileArray;
 use Cms\AbstractCmsModule;
 use Search\Service\SearchManager;
-use Search\Service\ConfigManager;
 use Search\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
-	/**
-	 * Returns prepared configuration service
-	 * 
-	 * @return \Pages\Service\ConfigManager
-	 */
-	private function getConfigManager()
-	{
-		$adapter = new FileArray(__DIR__.'/Config/module.config.php');
-		$adapter->load();
-
-		$config = new ConfigManager($adapter);
-
-		return $config;
-	}
-
 	/**
 	 * Returns mappers that should be attached to the search
 	 * 
@@ -54,7 +37,7 @@ final class Module extends AbstractCmsModule
 
 		return $result;
 	}
-	
+
 	/**
 	 * Returns all attached mappers for main mapper
 	 * 
@@ -96,7 +79,7 @@ final class Module extends AbstractCmsModule
 
 		return array(
 			'siteService' => $siteService,
-			'configManager' => $this->getConfigManager(),
+			'configManager' => $this->getConfigService(),
 			'searchManager' => new SearchManager($searchMapper, $this->getWebPageManager())
 		);
 	}

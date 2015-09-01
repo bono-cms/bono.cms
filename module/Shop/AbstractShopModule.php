@@ -20,7 +20,6 @@ use Shop\Service\CategoryImageManagerFactory;
 use Shop\Service\RecentProductManagerFactory;
 use Shop\Service\BasketManagerFactory;
 use Shop\Service\BasketManager;
-use Shop\Service\ConfigManager;
 use Shop\Service\ProductManagerInterface;
 
 abstract class AbstractShopModule extends AbstractCmsModule
@@ -32,7 +31,7 @@ abstract class AbstractShopModule extends AbstractCmsModule
 	 */
 	final protected function getConfigEntity()
 	{
-		return $this->getConfigManager()->getEntity();
+		return $this->getConfigService()->getEntity();
 	}
 
 	/**
@@ -137,24 +136,5 @@ abstract class AbstractShopModule extends AbstractCmsModule
 	protected function getBasketManager($productMapper, ImageBagInterface $imageBag)
 	{
 		return BasketManagerFactory::build($productMapper, $this->getWebPageManager(), $imageBag, $this->getStorage());
-	}
-
-	/**
-	 * Returns configuration manager
-	 * 
-	 * @return \Shop\Service\ConfigManager
-	 */
-	protected function getConfigManager()
-	{
-		static $config = null;
-
-		if (is_null($config)) {
-			$adapter = new FileArray(__DIR__.'/Config/module.config.php');
-			$adapter->load();
-			
-			$config = new ConfigManager($adapter);
-		}
-		
-		return $config;
 	}
 }
