@@ -265,14 +265,15 @@ $(function(){
 	
 	$("[data-basket-button='order']").click(function(event){
 		event.preventDefault();
+		// Grab parent form
+		var $form = $(this).closest('form');
 		
 		$.basket.order(function(response){
 			// 1 means success
 			if (response == "1"){
 				window.location.reload();
 			} else {
-				$.validator.handleAll(response);
-				//console.log(response);
+				$.getValidator($form).handleAll(response);
 			}
 		});
 	});
