@@ -12,6 +12,8 @@
 namespace Cms;
 
 use Krystal\Application\Module\AbstractModule;
+use Krystal\Config\File\FileArray;
+use RuntimeException;
 
 /**
  * One module with shortcut methods for all CMS modules
@@ -21,6 +23,40 @@ use Krystal\Application\Module\AbstractModule;
  */
 abstract class AbstractCmsModule extends AbstractModule
 {
+	/**
+	 * Configuration service
+	 * 
+	 * @var \Krystal\Config\AbstractConfigManager
+	 */
+	protected $configService;
+
+	/**
+	 * Returns configuration service of descendant's module
+	 * 
+	 * @return \Krystal\Config\AbstractConfigManager
+	 */
+	final protected function getConfigService()
+	{
+		// Lazy initialization
+		if (is_null($this->configService)) {
+
+			// Build qualified manager's class name
+			$manager = sprintf('\%s\Service\ConfigManager', $this->getCurrentModuleName());
+
+			// Make sure the manager class exists, before processing
+			if (!class_exists($manager)) {
+				throw new RuntimeException(sprintf('Module %s does not have ConfigManager service', $this->getCurrentModuleName()));
+			}
+
+			$adapter = new FileArray($this->getPathProvider()->getWithConfigDir('module.config.php'));
+			$adapter->load();
+
+			$this->configService = new $manager($adapter);
+		}
+
+		return $this->configService;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
