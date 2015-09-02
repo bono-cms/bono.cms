@@ -58,6 +58,16 @@ abstract class AbstractCmsModule extends AbstractModule
 	}
 
 	/**
+	 * Returns configuration entity
+	 * 
+	 * @return \Krystal\Stdlib\VirtualEntity
+	 */
+	final protected function getConfigEntity()
+	{
+		return $this->getConfigService()->getEntity();
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function getRoutes()
