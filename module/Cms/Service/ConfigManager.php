@@ -11,7 +11,7 @@
 
 namespace Cms\Service;
 
-use Krystal\Config\AbstractConfigManager;
+use Krystal\Config\File\AbstractConfigManager;
 use Krystal\Security\Filter;
 
 final class ConfigManager extends AbstractConfigManager
