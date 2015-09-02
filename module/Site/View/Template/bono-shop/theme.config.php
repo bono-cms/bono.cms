@@ -39,7 +39,7 @@ return array(
 	// Style sheets and scripts for this theme to load
 	'theme' => array(
 		'stylesheets' => array(
-			'/css/styles.min.css',
+			'/css/styles.css',
 		),
 		'scripts' => array(
 			'/js/app.js'
