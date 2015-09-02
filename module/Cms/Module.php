@@ -100,7 +100,7 @@ final class Module extends AbstractCmsModule
 			'mailer' => new Mailer($notificationManager, $config->getEntity()),
 			'configManager' => $config,
 			'webPageManager' => $webPageManager,
-			'notepadManager' => new NotepadManager($notepadMapper, 1),
+			'notepadManager' => new NotepadManager($notepadMapper),
 			'mode' => $this->getModeService(),
 			'userManager'	 => $userManager,
 			'historyManager' => new HistoryManager($historyMapper),
