@@ -32,7 +32,8 @@ final class Module extends AbstractModule
 	public function getRoutes()
 	{
 		return array_merge(
-			include(__DIR__ . '/Config/routes.install.php'),
+			// Installation wizard, is not completely ready yet, so its routes are ignored for now
+			// include(__DIR__ . '/Config/routes.install.php')
 			include(__DIR__ . '/Config/routes.php')
 		);
 	}
