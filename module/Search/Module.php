@@ -75,10 +75,8 @@ final class Module extends AbstractCmsModule
 			$searchMapper->append($this->getMapper($mapper));
 		}
 
-		$siteService = new SiteService();
-
 		return array(
-			'siteService' => $siteService,
+			'siteService' => new SiteService(),
 			'configManager' => $this->getConfigService(),
 			'searchManager' => new SearchManager($searchMapper, $this->getWebPageManager())
 		);
