@@ -4,6 +4,17 @@
  * (c) 2014 By D.D.Yang <daworld.ny@gmail.com>
  */
 
+ 
+::-moz-selection { /* for Firefox */
+ background: black;
+ color: white;
+}
+
+::selection {
+ color: white;
+ background: black;
+}
+
 /*set a border on the images to prevent shifting*/
 #gallery_01 img { 
  border : 2px solid white;
@@ -81,7 +92,7 @@ nav.pagination-container {
  background-image: linear-gradient(to bottom, #286090 0px, #241639 100%) !important;
 }
 
-li.active a {
+li.active > a, .sf-menu a:hover {
  background-color : rgb(103, 90, 90);
  font-weight : bold;
  text-decoration: underline;
@@ -92,7 +103,13 @@ li.active a {
 }
 
 .sf-menu a:hover {
- font-weight: bold !important;
+ transition: fade in .7s;
+ -webkit-transition: opacity .7s;
+ -moz-transition: opacity .7s;
+ opacity: 0.5;
+ -moz-opacity: 0.5;
+ -webkit-opacity: 0.5;
+ -khtml-opacity: 0.5; 
  text-decoration: none !important;
 }
 
