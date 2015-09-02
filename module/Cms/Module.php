@@ -11,9 +11,7 @@
 
 namespace Cms;
 
-use Krystal\Application\Module\AbstractModule;
 use Krystal\Text\SlugGenerator;
-use Krystal\Config\File\FileArray;
 use Cms\Service\LanguageManager;
 use Cms\Service\UserManager;
 use Cms\Service\HistoryManager;
@@ -24,7 +22,7 @@ use Cms\Service\WebPageManager;
 use Cms\Service\ConfigManager;
 use Cms\Service\Mailer;
 
-final class Module extends AbstractModule
+final class Module extends AbstractCmsModule
 {
 	/**
 	 * {@inheritDoc}
@@ -50,16 +48,6 @@ final class Module extends AbstractModule
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public function getConfigData()
-	{
-		return array(
-			'version' => '1.1'
-		);
-	}
-
-	/**
 	 * Returns mode service
 	 * 
 	 * @return \Admin\Service\Mode
@@ -70,19 +58,6 @@ final class Module extends AbstractModule
 		$mode->prepare();
 
 		return $mode;
-	}
-
-	/**
-	 * Returns prepared configuration handler
-	 * 
-	 * @return \Admin\Service\ConfigManager
-	 */
-	private function getConfigService()
-	{
-		$adapter = new FileArray(__DIR__ . '/Config/module.config.php');
-		$adapter->load();
-		
-		return new ConfigManager($adapter);
 	}
 
 	/**
