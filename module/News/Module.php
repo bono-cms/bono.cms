@@ -53,7 +53,7 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getTimeBag()
 	{
-		$factory = new TimeBagFactory($this->getConfigService()->getEntity());
+		$factory = new TimeBagFactory($this->getConfigEntity());
 		return $factory->build();
 	}
 
@@ -64,8 +64,7 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getImageManager()
 	{
-		// Grab configuration entity
-		$config = $this->getConfigService()->getEntity();
+		$config = $this->getConfigEntity();
 
 		$plugins = array(
 			'thumb' => array(

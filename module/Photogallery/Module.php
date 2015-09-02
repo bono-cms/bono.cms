@@ -27,8 +27,7 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getAlbumImageManager()
 	{
-		// Grab configuration entity
-		$config = $this->getConfigService()->getEntity();
+		$config = $this->getConfigEntity();
 
 		$plugins = array(
 			'thumb' => array(
@@ -60,8 +59,7 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getImageManagerService()
 	{
-		// Grab configuration entity
-		$config = $this->getConfigService()->getEntity();
+		$config = $this->getConfigEntity();
 
 		$plugins = array(
 			'thumb' => array(

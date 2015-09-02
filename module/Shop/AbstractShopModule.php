@@ -25,16 +25,6 @@ use Shop\Service\ProductManagerInterface;
 abstract class AbstractShopModule extends AbstractCmsModule
 {
 	/**
-	 * Returns configuration entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	final protected function getConfigEntity()
-	{
-		return $this->getConfigService()->getEntity();
-	}
-
-	/**
 	 * Returns product image manager
 	 * 
 	 * @return \Krystal\Image\ImageManager

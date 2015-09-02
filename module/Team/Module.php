@@ -26,7 +26,7 @@ final class Module extends AbstractCmsModule
 	 */
 	private function getImageManager()
 	{
-		$config = $this->getConfigService()->getEntity();
+		$config = $this->getConfigEntity();
 
 		$plugins = array(
 			'thumb' => array(
