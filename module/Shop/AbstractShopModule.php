@@ -123,7 +123,7 @@ abstract class AbstractShopModule extends AbstractCmsModule
 	 * @param \Krystal\Image\Tool\ImageBagInterface $imageBag
 	 * @return \Shop\Service\BasketManager
 	 */
-	protected function getBasketManager($productMapper, ImageBagInterface $imageBag)
+	final protected function getBasketManager($productMapper, ImageBagInterface $imageBag)
 	{
 		return BasketManagerFactory::build($productMapper, $this->getWebPageManager(), $imageBag, $this->getStorage());
 	}
