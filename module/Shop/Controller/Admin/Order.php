@@ -50,7 +50,7 @@ final class Order extends AbstractController
 		$orderManager = $this->getOrderManager();
 
 		$paginator = $orderManager->getPaginator();
-		$paginator->setUrl('/admin/module/shop/orders/page/%s');
+		$paginator->setUrl('/admin/module/shop/orders/page/(:var)');
 
 		// Grab all order entities
 		$orders = $orderManager->fetchAllByPage($page, $this->getSharedPerPageCount());
