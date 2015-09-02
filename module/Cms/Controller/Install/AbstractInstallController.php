@@ -67,7 +67,7 @@ abstract class AbstractInstallController extends AbstractController
 						'required' => true,
 						'rules' => array(
 							'NotEmpty' => array(
-								'message' => 'Host name cannot be empty'
+								'message' => 'Database host cannot be empty'
 							)
 						)
 					),

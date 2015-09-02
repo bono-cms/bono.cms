@@ -14,7 +14,7 @@ namespace Cms\Controller\Install;
 final class Install extends AbstractInstallController
 {
 	/**
-	 * Index command
+	 * Renders wizard's page
 	 * 
 	 * @return string
 	 */
@@ -35,22 +35,18 @@ final class Install extends AbstractInstallController
 	public function installAction()
 	{
 		if ($this->request->hasPost('db')) {
-
 			$formValidator = $this->getValidator($this->request->getPost('db'));
 
 			if ($formValidator->isValid()) {
-
 				$result = $this->processAll();
-			
+
 				if (!$result) {
-					return 'Cannot connect to database server. Make sure the data is valid';
+					return $this->translator->translate('Cannot connect to database server. Make sure the data is valid!');
 				} else {
-					//@TODO
 					return '1';
 				}
 
 			} else {
-
 				return $formValidator->getErrors();
 			}
 		}
