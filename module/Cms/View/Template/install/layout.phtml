@@ -20,41 +20,11 @@
 
 <main><?php echo $fragment; ?></main>
 
-<?php //$this->loadBlock('ajax'); ?>
+<?php $this->loadBlock('ajax'); ?>
 
 <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
 <script src="<?php echo $script; ?>"></script>
 <?php endforeach; ?>
-
-<script>
-	
-	$(function(){
-		
-		$("form").submit(function(event){
-			event.preventDefault();
-			var data = $(this).serialize();
-			
-			$.ajax({
-				url : '/install.ajax',
-				data : data,
-				type : 'POST',
-				success : function(response){
-					
-					alert(response);
-					return;
-					
-					if (response == "1") {
-						alert('OK');
-					} else {
-						$.showErrors(response);
-					}
-				}
-			});
-			
-		});
-	});
-	
-</script>
 
 </body>
 </html>
