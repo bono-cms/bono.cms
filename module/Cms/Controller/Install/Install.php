@@ -20,6 +20,8 @@ final class Install extends AbstractInstallController
 	 */
 	public function indexAction()
 	{
+		$this->loadPlugins();
+
 		return $this->view->render('install', array(
 			'title' => 'Bono CMS: Installation wizard'
 		));
@@ -52,5 +54,19 @@ final class Install extends AbstractInstallController
 				return $formValidator->getErrors();
 			}
 		}
+	}
+
+	/**
+	 * Loads required plugins for template view
+	 * 
+	 * @return void
+	 */
+	private function loadPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/install.js'));
+
+		$this->view->getBlockBag()
+				   ->setBlocksDir($this->getWithViewPath('/blocks/', 'Cms', 'admin'));
 	}
 }
