@@ -31,3 +31,14 @@ Returns image's URL by provided dimension. That dimension needs to be defined in
     
     <?php endforeach; ?>
     <?php endif; ?>
+
+
+# Site service
+
+There's also a pre-defined `$team` service you can use in case you want to render members on another page. For instance, that can be a landing page where you want to render all members. The `$team` service has only one method for this:
+
+## getAll()
+
+Returns an array of member entities.
+
+As you might already guess, the usage is the same. Just like as rendering `$members` array in previous example, but instead, you'd substitute it with `$team->getAll()`.
