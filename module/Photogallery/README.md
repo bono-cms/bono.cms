@@ -41,3 +41,12 @@ Note this example assumes, that you have set up 250x250 dimensions in configurat
     
     <?php endif; ?>
 
+# Site service
+
+There's also a pre-defined `$photogallery` service you can use in case you want to render members on another page. For instance, that can be a landing page where you want to render all photos from some album. The `$photogallery` service has only one method for this:
+
+## getAll($id)
+
+Returns an array of photo entities by given album id.
+
+As you might already guess, the usage is the same. Just like as rendering `$photos` array in previous example, but instead, you'd substitute it with `$photogallery->getAll('..some id..')`.
