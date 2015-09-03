@@ -153,7 +153,7 @@ final class BasketManager implements BasketManagerInterface
 						   ->setQty($qty)
 						   ->setPrice($price)
 						   ->setSubTotalPrice($qty * $price);
-				
+
 				// Finally add prepared entity
 				array_push($entities, $entity);
 			}
@@ -306,8 +306,7 @@ final class BasketManager implements BasketManagerInterface
 		// We're adding a product for the first time
 		$this->collection->addWithOption($id, self::BASKET_STATIC_OPTION_QTY, $qty)
 						 ->addWithOption($id, self::BASKET_STATIC_OPTION_SUBTOTAL_PRICE, $qty * $price);
-		
-		
+
 		return true;
 	}
 
