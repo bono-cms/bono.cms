@@ -49,23 +49,23 @@
 	</div>
 	
 	<div class="col-lg-4">
-		<h2><?php echo $page->getTitle(); ?></h2>
+		<h2><?php echo $product->getTitle(); ?></h2>
 		
 		<div class="clearfix">
 			
 			<?php if (!$product->hasStokePrice()): ?>
 			
-			<h2><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $page->getPrice(); ?></h2>
+			<h2><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $product->getPrice(); ?></h2>
 			
 			<?php else: ?>
 			
-			<h2><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $page->getStokePrice(); ?></h2>
-			<p><strike><h2 class="text-muted"><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $page->getPrice(); ?></h2></strike></p>
+			<h2><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $product->getStokePrice(); ?></h2>
+			<p><strike><h2 class="text-muted"><label data-basket-label="currency"><?php echo $basket->getCurrency(); ?></label> <?php echo $product->getPrice(); ?></h2></strike></p>
 			
 			<?php endif; ?>
 			
 		</div>
 		
-		<article><?php echo $page->getDescription(); ?></article>
+		<article><?php echo $product->getDescription(); ?></article>
 	</div>
 </div>
