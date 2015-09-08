@@ -88,18 +88,18 @@
 
 <main>
 
- <?php if ($this->getBreadcrumbBag()->has()): ?>
- <ul class="breadcrumb">
-   <li><a href="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fa fa-home"></i> <?php $this->show('Dashboard'); ?></a></li>
-   <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $breadcrumb): ?>
-   <?php if ($breadcrumb->isActive()): ?>
-   <li class="active"><?php $this->show($breadcrumb->getName()); ?></li>
-   <?php else: ?>
-   <li><a href="<?php echo $this->url($breadcrumb->getLink()); ?>"><?php $this->show($breadcrumb->getName()); ?></a></li>
-   <?php endif; ?>
-   <?php endforeach; ?>
- </ul>
- <?php endif; ?>
+	<?php if ($this->getBreadcrumbBag()->has()): ?>
+	<ul class="breadcrumb">
+	  <li><a href="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fa fa-home"></i> <?php $this->show('Dashboard'); ?></a></li>
+	  <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $breadcrumb): ?>
+	  <?php if ($breadcrumb->isActive()): ?>
+	  <li class="active"><?php $this->show($breadcrumb->getName()); ?></li>
+	  <?php else: ?>
+	  <li><a href="<?php echo $this->url($breadcrumb->getLink()); ?>"><?php $this->show($breadcrumb->getName()); ?></a></li>
+	  <?php endif; ?>
+	  <?php endforeach; ?>
+	</ul>
+	<?php endif; ?>
 	
 	<?php if ($flashBag->has('success')):?>
 	<div class="alert alert-dismissable alert-success">
