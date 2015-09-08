@@ -15,7 +15,7 @@
 			<label class="col-lg-2 control-label"><?php $this->show('Maximal description length'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="config[max_description_length]" class="form-control" value="<?php echo $config->getMaxDescriptionLength(); ?>" />
+					<input type="number" min="10" name="config[max_description_length]" class="form-control" value="<?php echo $config->getMaxDescriptionLength(); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 				<span class="help-block"><?php $this->show('Maximal length for description text when displaying results on site'); ?></span>
