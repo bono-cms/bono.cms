@@ -117,7 +117,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 			->setName(Filter::escape($category['name']))
 			->setClass(Filter::escape($category['class']))
 			->setMaxDepth((int) $category['max_depth']);
-		
+
 		return $entity;
 	}
 
@@ -155,7 +155,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	public function deleteById($id)
 	{
 		$name = Filter::escape($this->categoryMapper->fetchNameById($id));
-		
+
 		$this->track('Category menu "%s" has been removed', $name);
 		return $this->categoryMapper->deleteById($id) && $this->itemMapper->deleteAllByCategoryId($id);
 	}

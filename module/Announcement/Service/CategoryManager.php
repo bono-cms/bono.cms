@@ -78,7 +78,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 		$entity->setId((int) $category['id'])
 			->setName(Filter::escape($category['name']))
 			->setClass(Filter::escape($category['class']));
-		
+
 		return $entity;
 	}
 
@@ -133,7 +133,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 	{
 		// Grab category's name before we remove it
 		$name = Filter::escape($this->categoryMapper->fetchNameById($id));
-		
+
 		if ($this->categoryMapper->deleteById($id) && $this->announceMapper->deleteAllByCategoryId($id)) {
 			$this->track('Category "%s" has been removed', $name);
 			return true;
@@ -154,7 +154,7 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
 		if ($this->categoryMapper->update($input['id'], $input['name'], $input['class'])) {
 			$this->track('Category "%s" has been updated', $input['name']);
 			return true;
-			
+
 		} else {
 			return false;
 		}
