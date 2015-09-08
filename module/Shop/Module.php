@@ -41,9 +41,9 @@ final class Module extends AbstractShopModule
 		$basketManager->load();
 
 		$config = $this->getConfigService();
-		
+
 		$productRemover = new ProductRemover($productMapper, $imageMapper, $webPageManager, $productImageManager);
-		
+
 		// Build category manager
 		$categoryManager = new CategoryManager(
 			$categoryMapper, 
@@ -54,7 +54,7 @@ final class Module extends AbstractShopModule
 			$productRemover,
 			$this->getMenuWidget()
 		);
-		
+
 		$productManager = new ProductManager(
 			$productMapper, 
 			$imageMapper, 
