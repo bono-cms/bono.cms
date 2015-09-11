@@ -19,6 +19,23 @@ final class Config extends AbstractConfigController
 	/**
 	 * {@inheritDoc}
 	 */
+	protected function loadPlugins()
+	{
+		$this->view->getPluginBag()
+				   ->appendScript($this->getWithAssetPath('/admin/config.js'));
+
+		// Override defauul breadcrumbs collection
+		$this->view->getBreadcrumbBag()->add(array(
+			array(
+				'name' => 'Search',
+				'link' => '#'
+			)
+		));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getValidationRules()
 	{
 		return array(
