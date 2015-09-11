@@ -102,7 +102,7 @@ final class FaqManager extends AbstractManager implements FaqManagerInterface
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -119,7 +119,7 @@ final class FaqManager extends AbstractManager implements FaqManagerInterface
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -235,7 +235,7 @@ final class FaqManager extends AbstractManager implements FaqManagerInterface
 				return false;
 			}
 		}
-		
+
 		$this->track('Batch removal of %s faq', count($ids));
 		return true;
 	}
