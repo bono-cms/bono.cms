@@ -18,7 +18,7 @@ use Menu\Contract\WebPageAwareRendererInterface;
 abstract class AbstractSiteDropdown extends AbstractDropdown implements WebPageAwareRendererInterface
 {
 	/**
-	 * Web page manager to generate urls using web page ids
+	 * Web page manager to generate URLs using web page ids
 	 * 
 	 * @var \Cms\Service\WebPageManagerInterface
 	 */
