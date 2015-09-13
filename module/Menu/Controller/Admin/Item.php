@@ -96,6 +96,7 @@ final class Item extends AbstractItem
 
 			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars($item->getCategoryId(), array(
 
+				'maxDepth' => $this->getMaxNestedDepth($item->getCategoryId()),
 				'item' => $item,
 				// Tells whether we in edit mode. By using this variable we can re-use the same template
 				'editing' => true,
