@@ -310,8 +310,9 @@ $(function(){
 				beforeSend : function(){},
 				complete : function(){},
 				success : function(response){
-					// Don't do anything here for now
-				}	
+					// Don't do anything here for now, but log the response
+					console.log(response);
+				}
 			});
 		}
 	});
