@@ -78,7 +78,7 @@ $(function(){
 		 * @param string name Element's name
 		 * @param string message To be appended
 		 */
-		showErrorOn : function($form, name, message){
+		showErrorOn : function(name, message){
 			$container = this.getContainerElementByClosestName(name);
 			
 			if ($container.hasClass('has-success')) {
@@ -136,7 +136,7 @@ $(function(){
 
 					for (var name in data){
 						var message = data[name];
-						this.showErrorOn(this.$form, name, message);
+						this.showErrorOn(name, message);
 					}
 
 				} catch(e) {
