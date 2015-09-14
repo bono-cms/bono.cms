@@ -9,9 +9,10 @@ if (!(window.jQuery)){
 
 $(function(){
 	/**
-	 * Validator class
+	 * Validator class constructor
 	 * 
 	 * @param $form Jquey form object
+	 * @return void
 	 */
 	function Validator($form){
 		this.$form = $form;
@@ -22,26 +23,28 @@ $(function(){
 		 * Builds a selector for a target element
 		 * 
 		 * @param string name Element's name
+		 * @return string Built selector
 		 */
 		buildElementSelector : function(name){
 			return selector = '[name="' + name + '"]';
 		},
-		
+
 		/**
 		 * Finds container element by a child's name inside it
 		 * 
 		 * @param string name Child element's name
-		 * @return HTMLElement
+		 * @return object
 		 */
 		getContainerElementByClosestName : function(name){
 			var selector = this.buildElementSelector(name);
 			return this.$form.find(selector).closest('div.form-group');
 		},
-		
+
 		/**
 		 * Returns parent element's container
 		 * 
 		 * @param string name Child element's name
+		 * @return object
 		 */
 		getParentContainer : function(name){
 			var selector = this.buildElementSelector(name);
@@ -52,6 +55,7 @@ $(function(){
 		 * Creates message block
 		 * 
 		 * @param string text Text to be appeared within container
+		 * @return object
 		 */
 		createMessageElement : function(text){
 			var element = document.createElement('span');
@@ -59,16 +63,17 @@ $(function(){
 			// Configure element for bootstrap
 			$span = $(element).attr('class', 'help-block')
 							  .text(text);
-			
+
 			return $span;
 		},
 
 		/**
 		 * Checks whether parent element has a helper block
 		 * 
-		 * @param $container
+		 * @param object $container
+		 * @return boolean
 		 */
-		hasHelpBlock : function($container) {
+		hasHelpBlock : function($container){
 			return $container.length > 0;
 		},
 
@@ -77,14 +82,15 @@ $(function(){
 		 * 
 		 * @param string name Element's name
 		 * @param string message To be appended
+		 * @return void
 		 */
 		showErrorOn : function(name, message){
 			$container = this.getContainerElementByClosestName(name);
-			
+
 			if ($container.hasClass('has-success')) {
 				$container.removeClass('has-success');
 			}
-			
+
 			$container.addClass('has-error');
 
 			$span = this.createMessageElement(message);
@@ -93,9 +99,13 @@ $(function(){
 			$parent.append($span);
 		},
 
-		// Resets control elements to their initial state
+		/**
+		 * Resets control elements to their initial state
+		 * 
+		 * @return void
+		 */
 		resetAll : function(){
-			// Classes we'd like to remove when reseting all
+			// Classes we'd like to remove when resetting all
 			var classes = ['has-error', 'has-warning', 'has-success'];
 
 			this.$form.find('div.form-group').each(function(){
@@ -108,7 +118,7 @@ $(function(){
 					}
 				}
 			});
-			
+
 			// Now we'd assume that everything is okay, and later remove this class on demand
 			this.$form.find('div.form-group').addClass('has-success');
 
@@ -120,10 +130,11 @@ $(function(){
 		 * Shows error messages
 		 * 
 		 * @param string response Server's response
+		 * @return void
 		 */
 		handleAll : function(response){
 			// Clear all previous messages and added classes
-			this.resetAll(this.$form);
+			this.resetAll();
 
 			// if its not JSON, but "1" then we'd assume success
 			if (response == "1") {
@@ -151,6 +162,7 @@ $(function(){
 	 * Global factory for form validator
 	 * 
 	 * @param object $form Jquery form object
+	 * @return Validator
 	 */
 	$.getValidator = function($form){
 		return new Validator($form);
