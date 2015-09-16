@@ -31,7 +31,7 @@ abstract class AbstractUser extends AbstractController
 				'definition' => array(
 					'login' => new Pattern\Login(),
 					'password' => new Pattern\Password(),
-					'password_confirm' => new Pattern\PasswordConfirmation(array('required' => !$edit), $input['password']),
+					'password_confirm' => new Pattern\PasswordConfirmation($input['password'], array('required' => !$edit)),
 					'email' => new Pattern\Email(),
 					'name' => new Pattern\Name()
 				)
