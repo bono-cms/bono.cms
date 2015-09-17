@@ -138,7 +138,6 @@ abstract class AbstractController extends AbstractAuthAwareController
 	protected function bootstrap()
 	{
 		$this->validateRequest();
-
 		$this->view->getBlockBag()->setBlocksDir($this->getWithViewPath('/blocks/', 'Cms', 'admin'))
 								  ->addStaticBlock($this->getViewPath('Menu', 'admin'), 'menu-widget');
 
