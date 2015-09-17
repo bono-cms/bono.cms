@@ -63,7 +63,144 @@ $(function(){
 			}
 		}
 	};
+
+	// Error handler class written for Bootstrap 3.x
+	var errorHandler = {
+		/**
+		 * Builds element name
+		 * 
+		 * @param string Field name
+		 * @param string
+		 */
+		buildName : function(name){
+			// If group is specified, then gotta build a selector for that
+			if ($.group) {
+				return $.group + "[" + name + "]";
+			} else {
+				return name;
+			}
+		},
+
+		/**
+		 * Builds appropriate element selector
+		 * 
+		 * @param string name
+		 * @return string Prepared selector name
+		 */
+		buildSelector : function(name){
+			// If group is specified, then gotta build a selector for that
+			if ($.group) {
+				return "[name='" + $.group + "[" + name + "]" + "']";
+			} else {
+				return "[name='" + name + "']";
+			}
+		},
+
+		/**
+		 * Remove all previous error classes if present
+		 * 
+		 * @return void
+		 */
+		resetAll : function(){
+			$("div.form-group").removeClass('has-error').addClass('has-success');
+		},
+
+		/**
+		 * Creates populated UL element
+		 * 
+		 * @param object messages JSON object with error messages
+		 * @return HTMLElement
+		 */
+		createUl : function(messages){
+			var ul = document.createElement('ul');
+
+			for (var key in messages) {
+				var li = document.createElement('li');
+				var text = messages[key];
+
+				$(li).text(text);
+				$(ul).append(li);
+			}
+
+			// Return populated UL element
+			return ul;
+		},
+
+		/**
+		 * Displays modal dialog with error messages
+		 * 
+		 * @return void
+		 */
+		displayModal : function(messages){
+			var $modal = $("#errors-modal");
+			var text = this.createUl(messages);
+
+			$modal.find(".modal-body").empty().html(text);
+			$modal.modal("show");
+		},
+		
+		/**
+		 * Renders error messages highlighting fields
+		 * 
+		 * @param object data
+		 * @return void
+		 */
+		render : function(data){
+			// To access errorHandler instance inside functions
+			var self = this;
+
+			for (var key in data.names) {
+				// Name represents a name of an Element, that contains an error
+				var name = data.names[key];
+				// OK, we got an instance of current element which contain an error
+				var $targetElement = $(self.buildSelector(name));
+				// That's not fast, but reliable at least
+				var $row = $targetElement.closest('div.form-group');
+
+				$row.each(function(){
+					if ($targetElement.attr('name') == self.buildName(name)){
+						if ($(this).hasClass('has-success')) {
+							$(this).removeClass('has-success');
+						}
+
+						$(this).addClass('has-error');
+					}
+				});
+			}
+		},
+		
+		/**
+		 * Handles server response
+		 * 
+		 * @param string response
+		 * @return void
+		 */
+		handleResponse : function(response){
+			this.resetAll();
+
+			try {
+				var data = $.parseJSON(response);
+				var messages = data.messages;
+
+				this.render(data);
+
+			} catch(e) {
+				var messages = response;
+			}
+
+			this.displayModal(messages);
+		}
+	};
 	
+	$.setFormGroup = function(group){
+		$.group = group;
+	};
+
+	$.showErrors = function(response){
+		errorHandler.handleResponse(response);
+		$("#scroller").click();
+	}
+
 	$("a.mode-link").click(function(event){
 		event.preventDefault();
 		var mode = $(this).data('mode-id');
@@ -82,7 +219,6 @@ $(function(){
 			}
 		});
 	});
-	
 	
 	$("[data-button='refresh']").click(function(event){
 		event.preventDefault();
@@ -255,74 +391,4 @@ $(function(){
 	});
 	
 	
-	$.setFormGroup = function(group){
-		$.group = group;
-	};
-	
-	$.showErrors = function(response){
-		
-		// Initial
-		var messages = '';
-		var group = $.group;
-		
-		var buildName = function(element){
-			// If group is specified, then gotta build a selector for that
-			if (group) {
-				return group + "[" + name + "]";
-			} else {
-				return name;
-			}
-		};
-		
-		// Build a selector
-		var buildSelector = function(elementName){
-			// If group is specified, then gotta build a selector for that
-			if (group) {
-				return "[name='" + group + "[" + name + "]" + "']";
-			} else {
-				return "[name='" + name + "']";
-			}
-		};
-
-		// Before we even start iteration
-		// Remove all previous error classes if we have the,
-		$("div.form-group").removeClass('has-error').addClass('has-success');
-
-		try {
-			var data = $.parseJSON(response);
-			
-			for (var key in data.names) {
-				// Name represents a name of an Element, that contains an error
-				var name = data.names[key];
-				// Ok, we got an instance of current element which contain an error
-				var $targetElement = $(buildSelector(name));
-				// That's not fast, but reliable at least
-				var $row = $targetElement.closest('div.form-group');
-				
-				$row.each(function(){
-					if ($targetElement.attr('name') == buildName(name)){
-						if ($(this).hasClass('has-success')) {
-							$(this).removeClass('has-success');
-						}
-						
-						$(this).addClass('has-error');
-					}
-				});
-				
-				$("#scroller").click();
-				messages = data.messages;
-			}
-
-		} catch(e) {
-			messages = response;
-		}
-		
-		var $modal = $("#errors-modal");
-		
-		$modal.find(".modal-body").html(messages);
-		$modal.modal("show");
-	}
-	
-	
 });
-
