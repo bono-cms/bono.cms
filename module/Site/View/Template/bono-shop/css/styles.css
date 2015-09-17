@@ -4,7 +4,10 @@
  * (c) 2014 By D.D.Yang <daworld.ny@gmail.com>
  */
 
- 
+body {
+ font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+}
+
 ::-moz-selection { /* for Firefox */
  background: black;
  color: white;
