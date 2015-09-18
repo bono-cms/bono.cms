@@ -41,7 +41,7 @@ final class Auth extends AbstractController
 	}
 
 	/**
-	 * Does log-in
+	 * Performs a login
 	 * 
 	 * @return string
 	 */
@@ -59,6 +59,7 @@ final class Auth extends AbstractController
 			if ($this->getAuthService()->authenticate($login, $password, $remember)) {
 				return '1';
 			} else {
+				// Return raw string indicating failure
 				return $this->translator->translate('Invalid login or password');
 			}
 
