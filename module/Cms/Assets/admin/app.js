@@ -129,16 +129,22 @@ $(function(){
 		/**
 		 * Displays modal dialog with error messages
 		 * 
+		 * @param mixed response
 		 * @return void
 		 */
 		displayModal : function(messages){
 			var $modal = $("#errors-modal");
-			var text = this.createUl(messages);
+
+			if ($.isArray(messages)){
+				var text = this.createUl(messages);
+			} else {
+				var text = messages;
+			}
 
 			$modal.find(".modal-body").empty().html(text);
 			$modal.modal("show");
 		},
-		
+
 		/**
 		 * Renders error messages highlighting fields
 		 * 
