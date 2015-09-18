@@ -163,16 +163,6 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 	}
 
 	/**
-	 * Disables authorization checking
-	 * 
-	 * @return void
-	 */
-	public function disableAuthCheck()
-	{
-		$this->authManager->setActive(false);
-	}
-
-	/**
 	 * Provides a hash of a string
 	 * 
 	 * @param string $string
