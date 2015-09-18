@@ -97,11 +97,17 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
 		return $entity;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getId()
 	{
 		return $this->authManager->getId();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getRole()
 	{
 		return $this->authManager->getRole();
