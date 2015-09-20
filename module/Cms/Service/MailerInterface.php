@@ -18,7 +18,8 @@ interface MailerInterface
 	 * 
 	 * @param string Message's subject
 	 * @param string $text Data to be sent
+	 * @param string $notification Default notification message to be pop in administration panel
 	 * @return boolean Depending on success
 	 */
-	public function send($subject, $text);
+	public function send($subject, $text, $notification = 'You have received a new message');
 }
