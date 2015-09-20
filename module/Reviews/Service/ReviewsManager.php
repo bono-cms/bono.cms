@@ -41,10 +41,8 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 	 * @param \Cms\Service\HistoryManagerInterface $historyManager
 	 * @return void
 	 */
-	public function __construct(
-		ReviewsMapperInterface $reviewsMapper, 
-		HistoryManagerInterface $historyManager
-	){
+	public function __construct(ReviewsMapperInterface $reviewsMapper, HistoryManagerInterface $historyManager)
+	{
 		$this->reviewsMapper = $reviewsMapper;
 		$this->historyManager = $historyManager;
 	}

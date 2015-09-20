@@ -76,7 +76,7 @@ final class Reviews extends AbstractController
 	 * 
 	 * @return string The response
 	 */
-	public function submitAction()
+	private function submitAction()
 	{
 		$input = $this->request->getPost();
 		$formValidator = $this->getValidator($input);
