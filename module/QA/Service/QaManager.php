@@ -92,7 +92,7 @@ final class QaManager extends AbstractManager implements QaManagerInterface
 				return false;
 			}
 		}
-		
+
 		$this->track('%s questions have been removed', count($ids));
 		return true;
 	}
