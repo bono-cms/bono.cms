@@ -56,7 +56,6 @@ final class Mailer implements MailerInterface
 	/**
 	 * Sends a mail
 	 * 
-	 * @param string $to Delivery e-mail address
 	 * @param string Message's subject
 	 * @param string $text Data to be sent
 	 * @param string $notification Default notification message to be pop in administration panel
