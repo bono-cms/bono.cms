@@ -24,7 +24,7 @@ final class Module extends AbstractCmsModule
 		$formMapper = $this->getMapper('/MailForm/Storage/MySQL/FormMapper');
 
 		return array(
-			'formManager' => new FormManager($formMapper, $this->getWebPageManager(), $this->getHistoryManager(), $this->getMailer(), $this->getMenuWidget())
+			'formManager' => new FormManager($formMapper, $this->getWebPageManager(), $this->getHistoryManager(), $this->getMenuWidget())
 		);
 	}
 }

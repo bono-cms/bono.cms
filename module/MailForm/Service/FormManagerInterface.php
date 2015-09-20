@@ -30,15 +30,6 @@ interface FormManagerInterface
 	public function updateSeo(array $pair);
 
 	/**
-	 * Sends a form
-	 * 
-	 * @param string $subject
-	 * @param string $body Message body
-	 * @return boolean
-	 */
-	public function send($subject, $body);
-
-	/**
 	 * Fetches web page title by its associated id
 	 * 
 	 * @param string $webPageId

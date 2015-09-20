@@ -14,7 +14,6 @@ namespace MailForm\Service;
 use Cms\Service\HistoryManagerInterface;
 use Cms\Service\AbstractManager;
 use Cms\Service\WebPageManagerInterface;
-use Cms\Service\MailerInterface;
 use Menu\Service\MenuWidgetInterface;
 use Menu\Contract\MenuAwareManager;
 use MailForm\Storage\FormMapperInterface;
@@ -46,19 +45,11 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 	private $historyManager;
 
 	/**
-	 * Mailer service
-	 * 
-	 * @var \Cms\Service\MailerInterface
-	 */
-	private $mailer;
-
-	/**
 	 * State initialization
 	 * 
 	 * @param \MailForm\Storage\FormMapperInterface $formMapper
 	 * @param \Cms\Service\WebPageManagerInterface $webPageManager
 	 * @param \Cms\Service\HistoryManagerInterface $historyManager
-	 * @param \Cms\Service\MailerInterface $mailer
 	 * @param \Menu\Service\MenuWidgetInterface $menuWidget
 	 * @return void
 	 */
@@ -66,13 +57,11 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 		FormMapperInterface $formMapper,
 		WebPageManagerInterface $webPageManager,
 		HistoryManagerInterface $historyManager,
-		MailerInterface $mailer,
 		MenuWidgetInterface $menuWidget = null
 	){
 		$this->formMapper = $formMapper;
 		$this->webPageManager = $webPageManager;
 		$this->historyManager = $historyManager;
-		$this->mailer = $mailer;
 		$this->setMenuWidget($menuWidget);
 	}
 
@@ -102,18 +91,6 @@ final class FormManager extends AbstractManager implements FormManagerInterface,
 		}
 
 		return true;
-	}
-
-	/**
-	 * Sends a form
-	 * 
-	 * @param string $subject
-	 * @param string $body Message body
-	 * @return boolean
-	 */
-	public function send($subject, $body)
-	{
-		return $this->mailer->send($subject, $body);
 	}
 
 	/**

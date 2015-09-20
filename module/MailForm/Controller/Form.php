@@ -127,7 +127,9 @@ final class Form extends AbstractController
 		// Prepare a subject
 		$subject = $this->translator->translate('You received a new message from %s <%s>', $input['name'], $input['email']);
 
-		return $this->getFormManager()->send($subject, $body);
+		// Grab mailer service
+		$mailer = $this->getService('Cms', 'mailer');
+		return $mailer->send($subject, $body);
 	}
 
 	/**
