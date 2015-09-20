@@ -59,9 +59,10 @@ final class Mailer implements MailerInterface
 	 * @param string $to Delivery e-mail address
 	 * @param string Message's subject
 	 * @param string $text Data to be sent
+	 * @param string $notification Default notification message to be pop in administration panel
 	 * @return boolean Depending on success
 	 */
-	public function send($subject, $text)
+	public function send($subject, $text, $notification = 'You have received a new message')
 	{
 		$this->loadLibrary();
 
@@ -89,7 +90,7 @@ final class Mailer implements MailerInterface
 		$msgId->setId(time().'.'.uniqid('token').'@'.$this->config->getDomain());
 
 		if ($mailer->send($message, $failed) != 0) {
-			$this->notificationManager->notify('You have received a new message');
+			$this->notificationManager->notify($notification);
 			return true;
 
 		} else {
