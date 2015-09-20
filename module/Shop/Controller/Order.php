@@ -55,9 +55,12 @@ final class Order extends AbstractShopController
 				'input' => $input
 			));
 
+			// Prepare the subject
+			$subject = $this->translator->translate('You have a new order from %s', $input['name']);
+
 			// Grab mailer service
 			$mailer = $this->getService('Cms', 'mailer');
-			return $mailer->send('You have a new order', $message);
+			return $mailer->send($subject, $message);
 
 		} else {
 			return false;
