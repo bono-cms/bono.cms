@@ -21,10 +21,8 @@ final class Module extends AbstractCmsModule
 	 */
 	public function getServiceProviders()
 	{
-		$notificationManager = $this->getNotificationManager();
-
 		return array(
-			'reviewsManager' => new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper'), $this->getHistoryManager(), $notificationManager),
+			'reviewsManager' => new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper'), $this->getHistoryManager()),
 			'configManager' => $this->getConfigService()
 		);
 	}

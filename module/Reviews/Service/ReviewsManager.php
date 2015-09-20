@@ -13,7 +13,6 @@ namespace Reviews\Service;
 
 use Cms\Service\AbstractManager;
 use Cms\Service\HistoryManagerInterface;
-use Cms\Service\NotificationManagerInterface;
 use Reviews\Storage\ReviewsMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
@@ -36,28 +35,18 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 	private $historyManager;
 
 	/**
-	 * Notification service to deal with notifications
-	 * 
-	 * @var \Cms\NotificationManagerInterface
-	 */
-	private $notificationManager;
-
-	/**
 	 * State initialization
 	 * 
 	 * @param \Review\Storage\ReviewsMapperInterface $reviewsMapper
 	 * @param \Cms\Service\HistoryManagerInterface $historyManager
-	 * @param \Cms\Service\NotificationManagerInterface $notificationManager
 	 * @return void
 	 */
 	public function __construct(
 		ReviewsMapperInterface $reviewsMapper, 
-		HistoryManagerInterface $historyManager, 
-		NotificationManagerInterface $notificationManager
+		HistoryManagerInterface $historyManager
 	){
 		$this->reviewsMapper = $reviewsMapper;
 		$this->historyManager = $historyManager;
-		$this->notificationManager = $notificationManager;
 	}
 
 	/**
@@ -238,10 +227,7 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
 
 		// This value depends on configuration, where we handled moderation
 		if ($enableModeration) {
-
 			$input['published'] = '0';
-			$this->notificationManager->notify('A new review waits for your approval');
-
 		} else {
 			$input['published'] = '1';
 		}
