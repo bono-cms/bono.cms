@@ -71,7 +71,7 @@ final class Module extends AbstractShopModule
 
 			'siteService' => $siteService,
 			'configManager' => $config,
-			'orderManager' => new OrderManager($orderInfoMapper, $orderProductMapper, $basketManager, $this->getNotificationManager(), $this->getMailer()),
+			'orderManager' => new OrderManager($orderInfoMapper, $orderProductMapper, $basketManager),
 			'basketManager' => $basketManager,
 			'taskManager' => new TaskManager($productMapper, $categoryManager),
 			'productManager' => $productManager,

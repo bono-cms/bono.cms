@@ -12,7 +12,6 @@
 namespace Shop\Service;
 
 use Cms\Service\AbstractManager;
-use Cms\Service\NotificationManagerInterface;
 use Cms\Service\MailerInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
@@ -37,20 +36,6 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	private $orderProductMapper;
 
 	/**
-	 * Notification manager is used to notify about new orders
-	 * 
-	 * @var \Cms\Service\NotificationManagerInterface
-	 */
-	private $notificationManager;
-
-	/**
-	 * Mailer is used to send mails about new orders
-	 * 
-	 * @var \Cms\Service\MailerInterface
-	 */
-	private $mailer;
-
-	/**
 	 * Basket manager
 	 * 
 	 * @var \Shop\Service\BasketManagerInterface
@@ -63,22 +48,16 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	 * @param \Shop\Storage\OrderInfoMapperInterface $orderMapper
 	 * @param \Shop\Storage\OrderProductMapperInterface $orderProductMapper
 	 * @param \Shop\Service\BasketManagerInterface $basketManager
-	 * @param \Cms\Service\NotificationManagerInterface $notificationManager
-	 * @param \Cms\Service\MailerInterface $mailer
 	 * @return void
 	 */
 	public function __construct(
 		OrderInfoMapperInterface $orderInfoMapper, 
 		OrderProductMapperInterface $orderProductMapper, 
-		BasketManagerInterface $basketManager, 
-		NotificationManagerInterface $notificationManager, 
-		MailerInterface $mailer
+		BasketManagerInterface $basketManager
 	){
 		$this->orderInfoMapper = $orderInfoMapper;
 		$this->orderProductMapper = $orderProductMapper;
 		$this->basketManager = $basketManager;
-		$this->notificationManager = $notificationManager;
-		$this->mailer = $mailer;
 	}
 
 	/**
@@ -229,17 +208,6 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Notifies about new order
-	 * 
-	 * @param string $body
-	 * @return boolean
-	 */
-	public function notify($body)
-	{
-		return $this->notificationManager->notify('You have a new order from a customer') && $this->mailer->send('You have a new order', $body);
 	}
 
 	/**

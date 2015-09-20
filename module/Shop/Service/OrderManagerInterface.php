@@ -75,14 +75,6 @@ interface OrderManagerInterface
 	public function make(array $input);
 
 	/**
-	 * Notifies about new order
-	 * 
-	 * @param string $body
-	 * @return boolean
-	 */
-	public function notify($body);
-
-	/**
 	 * Fetches latest order entities
 	 * 
 	 * @param integer $limit

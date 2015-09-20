@@ -49,13 +49,15 @@ final class Order extends AbstractShopController
 
 		if ($orderManager->make($input)) {
 
-			$letter = $this->view->renderRaw($this->moduleName, 'messages', 'order', array(
+			$message = $this->view->renderRaw($this->moduleName, 'messages', 'order', array(
 				'basketManager' => $this->getModuleService('basketManager'),
 				'currency' => $this->getModuleService('configManager')->getEntity()->getCurrency(),
 				'input' => $input
 			));
 
-			return $orderManager->notify($letter);
+			// Grab mailer service
+			$mailer = $this->getService('Cms', 'mailer');
+			return $mailer->send('You have a new order', $message);
 
 		} else {
 			return false;
