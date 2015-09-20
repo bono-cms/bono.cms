@@ -80,11 +80,26 @@ final class Page extends AbstractPagesController
 	 */
 	public function homeAction()
 	{
+		// The reason it's implemented this way, is because the CMS itself can be used to manage a single landing page
+		// Landings pages mostly contain contact form at the bottom, so the request is handled within the same action
+		if ($this->request->isPost()) {
+			return $this->submitAction();
+		} else {
+			return $this->homePageAction();
+		}
+	}
+
+	/**
+	 * Displays home page
+	 * 
+	 * @return string
+	 */
+	private function homePageAction()
+	{
 		$pageManager = $this->getPageManager();
 		$page = $pageManager->fetchDefault();
 
 		if ($page !== false) {
-
 			$this->loadSitePlugins();
 
 			// Clear all breadcrumbs
@@ -99,6 +114,39 @@ final class Page extends AbstractPagesController
 			// Returning false from a controller's action triggers 404 error automatically
 			return false;
 		}
+	}
+
+	/**
+	 * Processes a POST request that comes from home page
+	 * 
+	 * @return string
+	 */
+	private function submitAction()
+	{
+		$formValidator = $this->getValidator();
+
+		if ($formValidator->isValid()) {
+			// Handle submission here
+		} else {
+			return $formValidator->getErrors();
+		}
+	}
+
+	/**
+	 * Returns prepared form validator
+	 * 
+	 * @return \Krystal\Validate\ValidatorChain
+	 */
+	private function getValidator()
+	{
+		return $this->validatorFactory->build(array(
+			'input' => array(
+				'source' => $this->request->getPost(),
+				'definition' => array(
+					// Validation rules must be defined here
+				)
+			)
+		));
 	}
 
 	/**
