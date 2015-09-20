@@ -50,7 +50,7 @@ final class Form extends AbstractController
 	public function indexAction($id)
 	{
 		if ($this->request->isPost()) {
-			return $this->sendAction($id);
+			return $this->submitAction($id);
 
 		} else {
 			return $this->showAction($id);
@@ -82,12 +82,12 @@ final class Form extends AbstractController
 	}
 
 	/**
-	 * Sends a form
+	 * Submits a form
 	 *  
 	 * @param string $id Form id
 	 * @return string
 	 */
-	private function sendAction($id)
+	private function submitAction($id)
 	{
 		$formValidator = $this->getValidator($id, $this->request->getPost());
 
