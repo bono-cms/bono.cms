@@ -79,15 +79,17 @@ final class Qa extends AbstractController
 	 */
 	private function submitAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$input = $this->request->getPost();
+		$formValidator = $this->getValidator($input);
 
 		if ($formValidator->isValid()) {
 
-			$data = array_merge($this->request->getPost(), array('ip' => $this->request->getClientIp()));
+			$data = array_merge($this->request->getPost(), array('ip' => $this->request->getClientIP()));
 			$qaManager = $this->getModuleService('qaManager');
 
 			if ($qaManager->send($data)) {
 
+				$this->sendMessage($input);
 				$this->flashBag->set('success', 'Your question has been sent! Thank you!');
 				return '1';
 			}
@@ -96,6 +98,27 @@ final class Qa extends AbstractController
 
 			return $formValidator->getErrors();
 		}
+	}
+
+	/**
+	 * Sends a message from the input
+	 * 
+	 * @param array $input Raw input data
+	 * @return boolean
+	 */
+	private function sendMessage(array $input)
+	{
+		// Render the body firstly
+		$message = $this->view->renderRaw($this->moduleName, 'messages', 'notification', array(
+			'input' => $input
+		));
+
+		// Prepare a subject
+		$subject = $this->translator->translate('You have received a new question from %s', $input['questioner']);
+
+		// Grab mailer service
+		$mailer = $this->getService('Cms', 'mailer');
+		return $mailer->send($subject, $message, 'A new question waits for you to answer');
 	}
 
 	/**
