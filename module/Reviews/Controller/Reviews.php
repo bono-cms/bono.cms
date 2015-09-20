@@ -78,12 +78,26 @@ final class Reviews extends AbstractController
 	 */
 	public function submitAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$input = $this->request->getPost();
+		$formValidator = $this->getValidator($input);
 
 		if ($formValidator->isValid()) {
-			$data = array_merge($this->request->getPost(), array('ip' => $this->request->getClientIP()));
+			// Summary data to be sent
+			$data = array_merge($input, array('ip' => $this->request->getClientIP()));
 
-			if ($this->getReviewsManager()->send($data, $this->getConfig()->getEnabledModeration())) {
+			// Defines whether must be published or not
+			$published = (bool) $this->getConfig()->getEnabledModeration();
+
+			// If moderation isn't enabled, then send a message
+			if ($published) {
+				$this->sendMessage($input);
+			} else {
+				// The moderation is disabled, so we have to notify manually
+				$notificationManager = $this->getService('Cms', 'notificationManager');
+				$notificationManager->notify('You have received a new review');
+			}
+
+			if ($this->getReviewsManager()->send($data, $published)) {
 				$this->flashBag->set('success', 'Your review has been sent! Thank you');
 			}
 
@@ -94,7 +108,28 @@ final class Reviews extends AbstractController
 			return $formValidator->getErrors();
 		}
 	}
-	
+
+	/**
+	 * Sends a message from the input
+	 * 
+	 * @param array $input Raw input data
+	 * @return boolean
+	 */
+	private function sendMessage(array $input)
+	{
+		// Render the body firstly
+		$message = $this->view->renderRaw($this->moduleName, 'messages', 'notification', array(
+			'input' => $input
+		));
+
+		// Prepare a subject
+		$subject = $this->translator->translate('You have received a new review from %s', $input['name']);
+
+		// Grab mailer service
+		$mailer = $this->getService('Cms', 'mailer');
+		return $mailer->send($subject, $message, 'A new review waits for your approval');
+	}
+
 	/**
 	 * Returns configuration entity
 	 * 
