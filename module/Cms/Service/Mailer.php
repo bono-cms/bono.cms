@@ -49,7 +49,7 @@ final class Mailer implements MailerInterface
 	 */
 	private function loadLibrary()
 	{
-		// Yeah, obviously that's not the best way
+		// Yeah, obviously that's not the best way to include the library
 		require(dirname(dirname(dirname(__DIR__)))) . '/vendor/SwiftMailer/swift_required.php';
 	}
 
@@ -81,22 +81,18 @@ final class Mailer implements MailerInterface
 		// Build Swift's message
 		$message = \Swift_Message::newInstance($subject)
 							  ->setFrom(array('no-reply@'.$this->config->getDomain()))
-							  ->setContentType("text/html")
-							  ->setTo(array(
-								$this->config->getNotificationEmail()
-							  ))
+							  ->setContentType('text/html')
+							  ->setTo(array($this->config->getNotificationEmail()))
 							  ->setBody($text);
 		// Re-define the id
 		$msgId = $message->getHeaders()->get('Message-ID');
-		$msgId->setId(time() . '.' . uniqid('token') . '@' . $this->config->getDomain());
+		$msgId->setId(time().'.'.uniqid('token').'@'.$this->config->getDomain());
 
 		if ($mailer->send($message, $failed) != 0) {
-
 			$this->notificationManager->notify('You have received a new message');
 			return true;
 
 		} else {
-
 			return false;
 		}
 	}
