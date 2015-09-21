@@ -12,6 +12,7 @@
 namespace Pages\Controller;
 
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Validate\Pattern;
 
 final class Page extends AbstractPagesController
 {
@@ -101,7 +102,6 @@ final class Page extends AbstractPagesController
 
 		if ($page !== false) {
 			$this->loadSitePlugins();
-
 			// Clear all breadcrumbs
 			$this->view->getBreadcrumbBag()->clear();
 
@@ -123,10 +123,15 @@ final class Page extends AbstractPagesController
 	 */
 	private function submitAction()
 	{
-		$formValidator = $this->getValidator();
+		// Grab all POST data
+		$input = $this->request->getPost();
+		$formValidator = $this->getValidator($input);
 
 		if ($formValidator->isValid()) {
-			// Handle submission here
+
+			// Send a message to site owner. Assuming the following responses will be caught by AJAX handler
+			return $this->sendMessage($input) ? '1' : '0';
+
 		} else {
 			return $formValidator->getErrors();
 		}
@@ -135,18 +140,43 @@ final class Page extends AbstractPagesController
 	/**
 	 * Returns prepared form validator
 	 * 
+	 * @param array $input
 	 * @return \Krystal\Validate\ValidatorChain
 	 */
-	private function getValidator()
+	private function getValidator(array $input)
 	{
 		return $this->validatorFactory->build(array(
 			'input' => array(
-				'source' => $this->request->getPost(),
+				'source' => $input,
 				'definition' => array(
-					// Validation rules must be defined here
+					// Common rules for common contact forms
+					'name' => new Pattern\Name(),
+					'email' => new Pattern\Email(),
+					'message' => new Pattern\Message()
 				)
 			)
 		));
+	}
+
+	/**
+	 * Sends a message from the input
+	 * 
+	 * @param array $input Raw input data
+	 * @return boolean
+	 */
+	private function sendMessage(array $input)
+	{
+		// Render the body firstly
+		$message = $this->view->renderRaw($this->moduleName, 'messages', 'message', array(
+			'input' => $input
+		));
+
+		// Prepare a subject
+		$subject = $this->translator->translate('You have received a new message from %s', $input['name']);
+
+		// Grab mailer service
+		$mailer = $this->getService('Cms', 'mailer');
+		return $mailer->send($subject, $message, 'You have received a new message');
 	}
 
 	/**
