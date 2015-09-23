@@ -3,7 +3,7 @@
  * Small jquery plugin to work with previews
  * version 1.0
  * 
- * Copyright (c) 2014 D.D.Yang <daworld.ny@gmail.com>
+ * Copyright (c) No Global State Lab
  */
 
 (function($){

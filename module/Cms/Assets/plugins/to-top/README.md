@@ -9,5 +9,5 @@ Very simple, to-top integration on your site. To make it work, simply include th
 
 In stylesheets and scripts accordingly. If you want to replace the image, just replace the `to-top.png` itself.
 
-Copyright (c) 2015 David Yang <daworld.ny@gmail.com>
+Copyright (c) No Global State Lab
 No license. Do whatever you want
