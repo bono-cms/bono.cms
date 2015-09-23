@@ -13,5 +13,11 @@ namespace Slider\Service;
 
 interface TaskManagerInterface
 {
-	//@TODO
+	/**
+	 * Counts amount of slides in given category
+	 * 
+	 * @param string $categoryId
+	 * @return integer
+	 */
+	public function getSlidesCountByCategoryId($categoryId);
 }
