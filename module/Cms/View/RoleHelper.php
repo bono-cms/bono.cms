@@ -15,9 +15,17 @@ use Krystal\Authentication\RoleHelper as Facade;
 
 final class RoleHelper extends Facade
 {
+	/**
+	 * Target user id
+	 * 
+	 * @var string
+	 */
 	private $id;
 
 	/**
+	 * Defines user id
+	 * 
+	 * @param string $id
 	 * @return void
 	 */
 	public function setId($id)
@@ -26,6 +34,8 @@ final class RoleHelper extends Facade
 	}
 
 	/**
+	 * Returns user id
+	 * 
 	 * @return string
 	 */
 	public function getId()
@@ -34,6 +44,8 @@ final class RoleHelper extends Facade
 	}
 
 	/**
+	 * Determines whether current role is user
+	 * 
 	 * @return boolean
 	 */
 	public function isUser()
@@ -42,7 +54,7 @@ final class RoleHelper extends Facade
 	}
 
 	/**
-	 * Whether current role is guest
+	 * Determines whether current role is guest
 	 * 
 	 * @return boolean
 	 */
@@ -52,7 +64,7 @@ final class RoleHelper extends Facade
 	}
 
 	/**
-	 * Whether current role is developer
+	 * Determines whether current role is developer
 	 * 
 	 * @return boolean
 	 */
