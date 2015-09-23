@@ -20,6 +20,7 @@ final class Module extends AbstractCmsModule
 	 */
 	public function getConfigData()
 	{
+		// Override parent method by this one returning nothing, since the module doesn't require any configuration data
 		return array();
 	}
 }
