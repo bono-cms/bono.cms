@@ -16,7 +16,6 @@ use Krystal\Application\View\Resolver\Module as Resolver;
 use Krystal\Paginate\Paginator;
 use Krystal\Validate\Renderer;
 use Krystal\InstanceManager\InstanceProvider;
-use Search\Service\SiteService as SearchSiteService;
 
 abstract class AbstractController extends BaseController
 {
@@ -43,7 +42,7 @@ abstract class AbstractController extends BaseController
 			'\Slider\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\Block\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\AboutBox\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-			'\Search\Service\SiteBootstrapper' => array($this->view, new SearchSiteService()),
+			'\Search\Service\SiteBootstrapper' => array($this->view),
 			'\Blog\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\News\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
 			'\Banner\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
