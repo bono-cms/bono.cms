@@ -167,12 +167,13 @@ abstract class AbstractController extends BaseController
 				   ->setBlocksDir($this->getWithViewPath('/blocks/', 'Site', $this->getResolverThemeName()));
 
 		// Tweak first breadcrumb
-		$this->view->getBreadcrumbBag()->removeFirst()->add(array(
-			array(
-				'link' => '/',
-				'name' => $this->translator->translate('Home page')
-			)
-		));
+		$this->view->getBreadcrumbBag()
+				   ->removeFirst()
+				   ->add(array(array(
+						'link' => '/',
+						'name' => $this->translator->translate('Home page')
+					))
+		);
 
 		// Get core configuration entity of the system itself
 		$config = $this->getService('Cms', 'configManager')->getEntity();
