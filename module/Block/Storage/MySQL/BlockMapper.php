@@ -25,6 +25,17 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	}
 
 	/**
+	 * Fetches block's name by its associated class name
+	 * 
+	 * @param string $name
+	 * @return string
+	 */
+	public function fetchNameByClass($class)
+	{
+		return $this->fetchColumnByClass('name', $class);
+	}
+
+	/**
 	 * Fetches block's content by its associated class name
 	 * 
 	 * @param string $class
@@ -32,11 +43,23 @@ final class BlockMapper extends AbstractMapper implements BlockMapperInterface
 	 */
 	public function fetchContentByClass($class)
 	{
-		return $this->db->select('content')
+		return $this->fetchColumnByClass('content', $class);
+	}
+
+	/**
+	 * Fetches column's value by associated class
+	 * 
+	 * @param string $column Column to be fetched
+	 * @param string $class Associated class name
+	 * @return string
+	 */
+	private function fetchColumnByClass($column, $class)
+	{
+		return $this->db->select($column)
 						->from(static::getTableName())
 						->whereEquals('class', $class)
 						->andWhereEquals('lang_id', $this->getLangId())
-						->query('content');
+						->query($column);
 	}
 
 	/**
