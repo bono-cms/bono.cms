@@ -34,6 +34,17 @@ final class SiteService implements SiteServiceInterface
 	}
 
 	/**
+	 * Returns block name by its associated class name
+	 * 
+	 * @param string $class
+	 * @return string
+	 */
+	public function getNameByClass($class)
+	{
+		return $this->blockMapper->fetchNameByClass($class);
+	}
+
+	/**
 	 * Renders a block
 	 * 
 	 * @param string $class Block's class name
