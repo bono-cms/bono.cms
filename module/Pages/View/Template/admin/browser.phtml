@@ -113,12 +113,14 @@ use Krystal\Form\HtmlHelper;
 		
 		<br />
 		
+		<?php if (!empty($pages)): ?>
 		<div>
 			<?php if ($filter->isApplied()): ?>
 			<a href="<?php echo $this->url('Pages:Admin:Browser@indexAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i> <?php $this->show('Reset filter'); ?></a>
 			<?php endif; ?>
 			<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-filter"></i> <?php $this->show('Filter'); ?></button>
 		</div>
+		<?php endif; ?>
 		
 		<?php if (empty($pages)): ?>
 		<div class="center-block">

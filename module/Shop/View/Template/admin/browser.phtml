@@ -157,6 +157,7 @@ use Krystal\Form\HtmlHelper;
 				
 			</table>
 
+			<?php if (!empty($products)): ?>
 			<div>
 				<?php if ($filter->isApplied()): ?>
 				<a href="<?php echo $this->url('Shop:Admin:Browser@indexAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i> <?php $this->show('Reset filter'); ?></a>
@@ -164,6 +165,7 @@ use Krystal\Form\HtmlHelper;
 				<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i> <?php $this->show('Filter'); ?></button>
 				<br />
 			</div>
+			<?php endif; ?>
 			
 			<div class="center-block" id="l" style="display:none;">
 				<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Loading'); ?></h2>
