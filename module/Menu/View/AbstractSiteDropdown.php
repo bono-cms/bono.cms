@@ -65,7 +65,7 @@ abstract class AbstractSiteDropdown extends AbstractDropdown implements WebPageA
 		if ($row['web_page_id'] == $this->homeWebPageId) {
 			return '/';
 		}
-		
+
 		if ((bool) $row['has_link']) {
 			return $row['link'];
 		} else {
