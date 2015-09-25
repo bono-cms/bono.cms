@@ -47,8 +47,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 		}
 
 		if ($sort !== 'rand') {
-			$db->orderBy($sort)
-			   ->desc();
+			$db->orderBy($sort);
 		} else {
 			$db->orderBy()
 			   ->rand();
@@ -99,11 +98,25 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 * Decides which column to use depending on published state
 	 * 
 	 * @param boolean $published
-	 * @return string
+	 * @return array
 	 */
 	private function getSortingColumn($published)
 	{
-		return (bool) $published ? 'timestamp' : 'id';
+		$published = (bool) $published;
+
+		if ($published) {
+			// This method for the site
+			return array(
+				'timestamp' => 'DESC',
+				'id' => 'DESC'
+			);
+
+		} else {
+			// This method for the administration area
+			return array(
+				'id' => 'DESC'
+			);
+		}
 	}
 
 	/**
