@@ -30,7 +30,8 @@ abstract class AbstractPost extends AbstractAdminController
 				'definition' => array(
 					'title' => new Pattern\Title(),
 					'introduction' => new Pattern\IntroText(),
-					'full' => new Pattern\FullText()
+					'full' => new Pattern\FullText(),
+					'date' => new Pattern\DateFormat('m/d/Y')
 				)
 			)
 		));
