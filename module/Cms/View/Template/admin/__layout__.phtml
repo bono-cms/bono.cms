@@ -40,8 +40,11 @@
 			 <li><a href="/" target="_blank"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Open a site'); ?></a></li>
 			 <li><a href="<?php echo $this->url('Cms:Admin:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-remove-circle"></i> <?php $this->show('Logout'); ?></a></li>
 			 <li><a href="#" data-button="refresh"><i class="glyphicon glyphicon-refresh"></i> <?php $this->show('Refresh'); ?></a></li>
+
+			 <?php if (!$role->isGuest()): ?>
 			 <li class="divider"></li>
 			 <li><a href="<?php echo $this->url('Cms:Admin:Users:Edit@indexAction', $role->getId()); ?>"><i class="fa fa-eyedropper"></i> <?php $this->show('Change the password'); ?></a></li>
+			 <?php endif; ?>
 
 			 <?php if ($role->isDeveloper()): ?>
 
