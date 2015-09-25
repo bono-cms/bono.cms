@@ -50,6 +50,32 @@ abstract class AbstractUser extends AbstractController
 	}
 
 	/**
+	 * Returns breadcrumbs for current user
+	 * 
+	 * @param string $title Tile for the last breadcrumb
+	 * @return array
+	 */
+	private function getBreadcrumbs($title)
+	{
+		$breadcrumbs = array();
+
+		// Only developers can see the link to the grid
+		if ($this->getAuthService()->getRole() == 'dev') {
+			array_unshift($breadcrumbs, array(
+				'link' => 'Cms:Admin:Users:Browser@indexAction',
+				'name' => 'Users'
+			));
+		}
+
+		array_push($breadcrumbs, array(
+			'link' => '#',
+			'name' => $title
+		));
+
+		return $breadcrumbs;
+	}
+
+	/**
 	 * Returns shared variables
 	 * 
 	 * @param array $overrides
@@ -57,17 +83,7 @@ abstract class AbstractUser extends AbstractController
 	 */
 	final protected function getWithSharedVars(array $overrides)
 	{
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'link' => 'Cms:Admin:Users:Browser@indexAction',
-				'name' => 'Users'
-			),
-			
-			array(
-				'link' => '#',
-				'name' => $overrides['title']
-			)
-		));
+		$this->view->getBreadcrumbBag()->add($this->getBreadcrumbs($overrides['title']));
 
 		$vars = array(
 			'roles' => array(
