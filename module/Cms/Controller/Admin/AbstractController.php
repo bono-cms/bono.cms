@@ -162,7 +162,10 @@ abstract class AbstractController extends AbstractAuthAwareController
 	}
 
 	/**
-	 * Checks for role
+	 * Protected unwanted roles to access protected area
+	 * 
+	 * @param \Cms\Service\Mode $mode
+	 * @return void
 	 */
 	private function roleCheck($mode)
 	{
