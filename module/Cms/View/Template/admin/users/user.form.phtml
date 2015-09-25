@@ -7,8 +7,8 @@ use Krystal\Form\Widget\DropdownWidget;
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="id" value="<?php echo $user->getId(); ?>" />
-		<input type="hidden" name="password_hash" value="<?php echo $user->getPasswordHash(); ?>" />
+		<input type="hidden" name="user[id]" value="<?php echo $user->getId(); ?>" />
+		<input type="hidden" name="user[password_hash]" value="<?php echo $user->getPasswordHash(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Login'); ?></label>
