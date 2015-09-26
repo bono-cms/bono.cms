@@ -37,29 +37,10 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 					   ->whereEquals('lang_id', $this->getLangId());
 
 		if ($published === true) {
-			$db->andWhereEquals('published', '1')
-			   ->orderBy('timestamp');
-		} else {
-			$db->orderBy('id');
+			$db->andWhereEquals('published', '1');
 		}
 
-		$db->desc();
 		return $db;
-	}
-
-	/**
-	 * Queries for a result
-	 * 
-	 * @param integer $page Current page number
-	 * @param integer $itemsPerPage Per page count
-	 * @param boolean $published Whether to sort only published records
-	 * @return array
-	 */
-	private function getResults($page, $itemsPerPage, $published)
-	{
-		return $this->getSelectQuery($published)
-					->paginate($page, $itemsPerPage)
-					->queryAll();
 	}
 
 	/**
@@ -121,7 +102,11 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->getResults($page, $itemsPerPage, false);
+		return $this->getSelectQuery(false)
+					->orderBy('id')
+					->desc()
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -133,7 +118,10 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->getResults($page, $itemsPerPage, true);
+		return $this->getSelectQuery(true)
+					->orderBy(array('timestamp' => 'DESC', 'id' => 'DESC'))
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
