@@ -51,8 +51,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 			   ->rand();
 			   
 		} else {
-			$db->orderBy($sort)
-			   ->desc();
+			$db->orderBy($sort);
 		}
 
 		return $db;
@@ -234,6 +233,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	public function fetchAllByPage($page, $itemsPerPage, $published)
 	{
 		return $this->getSelectQuery($published)
+					->desc()
 					->paginate($page, $itemsPerPage)
 					->queryAll();
 	}
@@ -249,7 +249,7 @@ final class PostMapper extends AbstractMapper implements PostMapperInterface
 	 */
 	public function fetchAllByCategoryIdAndPage($categoryId, $published, $page, $itemsPerPage)
 	{
-		return $this->getSelectQuery($published, $categoryId)
+		return $this->getSelectQuery($published, $categoryId, array('timestamp' => 'DESC', 'id' => 'DESC'))
 					->paginate($page, $itemsPerPage)
 					->queryAll();
 	}
