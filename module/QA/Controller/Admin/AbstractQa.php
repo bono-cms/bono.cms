@@ -36,7 +36,6 @@ abstract class AbstractQa extends AbstractController
 							)
 						)
 					),
-
 					'questioner' => array(
 						'required' => true,
 						'rules' => array(
@@ -45,7 +44,6 @@ abstract class AbstractQa extends AbstractController
 							)
 						)
 					),
-
 					'answerer' => array(
 						'required' => true,
 						'rules' => array(
@@ -54,7 +52,6 @@ abstract class AbstractQa extends AbstractController
 							)
 						)
 					),
-
 					'answer' => array(
 						'required' => true,
 						'rules' => array(
@@ -63,7 +60,6 @@ abstract class AbstractQa extends AbstractController
 							)
 						)
 					),
-
 					'date_asked' => new Pattern\DateFormat('m/d/Y'),
 					'date_answered' => new Pattern\DateFormat('m/d/Y')
 				)
