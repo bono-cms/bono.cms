@@ -1,7 +1,7 @@
 
 $(function() {
 	
-	$("[name='post[date]'").datepicker();
+	$("[name='post[date]']").datepicker();
 	$.wysiwyg.init(['post[full]', 'post[intro]']);
 	$.setFormGroup('post');
 
