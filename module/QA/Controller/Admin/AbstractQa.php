@@ -122,6 +122,6 @@ abstract class AbstractQa extends AbstractController
 	{
 		$this->view->getPluginBag()
 				   ->appendScript($this->getWithAssetPath('/admin/qa.form.js'))
-				   ->load($this->getWysiwygPluginName());
+				   ->load(array($this->getWysiwygPluginName(), 'datepicker'));
 	}
 }
