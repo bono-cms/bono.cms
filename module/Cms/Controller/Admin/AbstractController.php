@@ -155,7 +155,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 		static $provider = null;
 
 		if (is_null($provider)) {
-			$provider = new PerPageCount($this->sessionBag, 'admin.pgc', 5);
+			$provider = new PerPageCount($this->request->getCookieBag(), 'admin_pgc', 5);
 		}
 
 		return $provider;
