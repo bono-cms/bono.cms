@@ -40,25 +40,7 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 			$db->andWhereEquals('published', '1');
 		}
 
-		$db->orderBy('id')
-		   ->desc();
-
 		return $db;
-	}
-
-	/**
-	 * Queries for result-set
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @param boolean $published Whether to fetch only published records
-	 * @return array
-	 */
-	private function getResults($page, $itemsPerPage, $published)
-	{
-		return $this->getSelectQuery($published)
-					->paginate($page, $itemsPerPage)
-					->queryAll();
 	}
 
 	/**
@@ -70,7 +52,10 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function fetchAllPublishedByPage($page, $itemsPerPage)
 	{
-		return $this->getResults($page, $itemsPerPage, true);
+		return $this->getSelectQuery(true)
+					->orderBy(array('timestamp_asked' => 'DESC', 'id' => 'DESC'))
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
@@ -93,7 +78,11 @@ final class QaMapper extends AbstractMapper implements QaMapperInterface
 	 */
 	public function fetchAllByPage($page, $itemsPerPage)
 	{
-		return $this->getResults($page, $itemsPerPage, false);
+		return $this->getSelectQuery(false)
+					->orderBy('id')
+					->desc()
+					->paginate($page, $itemsPerPage)
+					->queryAll();
 	}
 
 	/**
