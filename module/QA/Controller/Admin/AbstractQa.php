@@ -12,6 +12,7 @@
 namespace Qa\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
+use Krystal\Validate\Pattern;
 
 abstract class AbstractQa extends AbstractController
 {
@@ -61,7 +62,10 @@ abstract class AbstractQa extends AbstractController
 								'message' => 'Answer is required'
 							)
 						)
-					)
+					),
+
+					'date_asked' => new Pattern\DateFormat('m/d/Y'),
+					'date_answered' => new Pattern\DateFormat('m/d/Y')
 				)
 			)
 		));
