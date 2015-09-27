@@ -1,13 +1,10 @@
 
+<p><?php $this->show('Hello there, you have received a new message!'); ?></p>
 
-<?php $this->show('Hello there, you have received a new message!'); ?>
+<p><?php $this->show('From'); ?>: <?php echo $input['name']; ?></p>
 
-<?php $this->show('From'); ?>: <?php echo $input['name']; ?>
+<p><?php $this->show('Contact email'); ?>: <?php echo $input['email']; ?></p>
 
-<?php $this->show('Contact email'); ?>: <?php echo $input['email']; ?>
-
-
-<?php $this->show('Message'); ?>:
-
+<p><?php $this->show('Message'); ?>:</p>
 
 <?php echo $input['message']; ?>
