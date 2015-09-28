@@ -11,6 +11,7 @@ CREATE TABLE `bono_module_photoalbum_albums` (
 	`description` TEXT NOT NULL COMMENT 'Album description that comes from WYSIWYG',
 	`order` INT NOT NULL COMMENT 'Sort order',
 	`keywords` TEXT NOT NULL COMMENT 'Keywords for SEO',
+	`seo` varchar(1) NOT NULL,
 	`meta_description` TEXT NOT NULL COMMENT 'Meta description for SEO',
 	`cover` varchar(255) NOT NULL
 
