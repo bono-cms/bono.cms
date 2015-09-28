@@ -7,6 +7,11 @@ body {
  font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
 }
 
+input[name='query'] {
+ width: 197px !important;
+ margin-right: 4px !important;
+}
+
 ::-moz-selection { /* for Firefox */
  background: black;
  color: white;
