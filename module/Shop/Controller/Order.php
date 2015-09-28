@@ -47,13 +47,14 @@ final class Order extends AbstractShopController
 	{
 		$orderManager = $this->getModuleService('orderManager');
 
+		// Prepare a message first
+		$message = $this->view->renderRaw($this->moduleName, 'messages', 'order', array(
+			'basketManager' => $this->getModuleService('basketManager'),
+			'currency' => $this->getModuleService('configManager')->getEntity()->getCurrency(),
+			'input' => $input
+		));
+		
 		if ($orderManager->make($input)) {
-
-			$message = $this->view->renderRaw($this->moduleName, 'messages', 'order', array(
-				'basketManager' => $this->getModuleService('basketManager'),
-				'currency' => $this->getModuleService('configManager')->getEntity()->getCurrency(),
-				'input' => $input
-			));
 
 			// Prepare the subject
 			$subject = $this->translator->translate('You have a new order from %s', $input['name']);
