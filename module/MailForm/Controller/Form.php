@@ -113,11 +113,16 @@ final class Form extends AbstractController
 	 * 
 	 * @param string $id Form id
 	 * @param array $input
+	 * @throws \RuntimeException If can't fetch message view by associated page id
 	 * @return boolean
 	 */
 	private function sendMessage($id, array $input)
 	{
 		$template = $this->getFormManager()->fetchMessageViewById($id);
+
+		if (!$template) {
+			throw new RuntimeException(sprintf('Can not fetch message view by associated page id "%s"', $id));
+		}
 
 		// Render the body firstly
 		$body = $this->view->renderRaw($this->moduleName, 'messages', $template, array(
