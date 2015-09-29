@@ -15,6 +15,7 @@ use Cms\Service\AbstractManager;
 use Cms\Service\MailerInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Security\Filter;
 use Krystal\Db\Filter\FilterableServiceInterface;
 use Shop\Storage\OrderInfoMapperInterface;
 use Shop\Storage\OrderProductMapperInterface;
@@ -158,17 +159,17 @@ final class OrderManager extends AbstractManager implements OrderManagerInterfac
 	protected function toEntity(array $order)
 	{
 		$entity = new VirtualEntity();
-		$entity->setId($order['id'])
+		$entity->setId((int) $order['id'])
 				 ->setDate($order['date'])
-				 ->setName($order['name'])
+				 ->setName(Filter::stripTags($order['name']))
 				 ->setPhone($order['phone'])
-				 ->setAddress($order['address'])
-				 ->setComment($order['comment'])
-				 ->setDelivery($order['delivery'])
-				 ->setQty($order['qty'])
+				 ->setAddress(Filter::stripTags($order['address']))
+				 ->setComment(Filter::stripTags($order['comment']))
+				 ->setDelivery(Filter::stripTags($order['delivery']))
+				 ->setQty((int) $order['qty'])
 				 ->setTotalPrice($order['total_price'])
 				 ->setApproved((bool) $order['approved']);
-		
+
 		return $entity;
 	}
 
