@@ -83,6 +83,7 @@ final class Order extends AbstractShopController
 					'name' => new Pattern\Name(),
 					'phone' => new Pattern\Phone(),
 					'address' => new Pattern\Address(),
+					'comment' => new Pattern\Comment(),
 					'captcha' => new Pattern\Captcha($this->captcha)
 				)
 			)
