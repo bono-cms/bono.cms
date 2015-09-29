@@ -33,6 +33,9 @@ abstract class AbstractQa extends AbstractController
 						'rules' => array(
 							'NotEmpty' => array(
 								'message' => 'Question is required'
+							),
+							'NoTags' => array(
+								'message' => 'Question can not contain HTML tags'
 							)
 						)
 					),
@@ -41,6 +44,9 @@ abstract class AbstractQa extends AbstractController
 						'rules' => array(
 							'NotEmpty' => array(
 								'message' => 'Questioner is required'
+							),
+							'NoTags' => array(
+								'message' => 'Questioner can not contain HTML tags'
 							)
 						)
 					),
@@ -49,6 +55,9 @@ abstract class AbstractQa extends AbstractController
 						'rules' => array(
 							'NotEmpty' => array(
 								'message' => 'Answerer is required'
+							),
+							'NoTags' => array(
+								'message' => 'Answerer can not contain HTML tags'
 							)
 						)
 					),
