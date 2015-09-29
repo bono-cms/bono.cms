@@ -4,7 +4,7 @@
 <p><?php $this->show('Contact information'); ?>:</p>
 <p><?php $this->show('Phone'); ?>: <?php echo $input['phone']; ?></p>
 <p><?php $this->show('Address'); ?>: <?php echo $input['address']; ?></p>
-<p><?php $this->show('Delivery type'); ?>: <?php echo $input['delivery']; ?></p>
+<p><?php $this->show('Delivery type'); ?>: <?php echo strip_tags($input['delivery']); ?></p>
 
 <?php if (!empty($input['comment'])): ?>
 <p><?php $this->show('Comments'); ?>:</p>
