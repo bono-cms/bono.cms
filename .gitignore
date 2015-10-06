@@ -1,32 +1,18 @@
 
-module/AboutBox
+# Ignore the rest, expect this modules
+/module/*
+!/module/Cms/
+!/module/Site/
 
-# Translations are always ignored
-module/AboutBox/Translations/
-module/Advice/Translations/
-module/Announcement/Translations/
-module/Banner/Translations/
-module/Block/Translations/
-module/Blog/Translations/
-module/Cms/Translations/
-module/Faq/Translations/
-module/MailForm/Translations/
-module/Menu/Translations/
-module/News/Translations/
-module/Pages/Translations/
-module/Photogallery/Translations/
-module/QA/Translations/
-module/Reviews/Translations/
-module/MailForm/Translations/
-module/Search/Translations/
-module/Shop/Translations/
-module/Slider/Translations/
-module/Team/Translations/
 
 # Themes are ignored as well
 module/Site/View/
 
-config/
+# Ignore all translations
+Translations/
+
 data/
 vendor/
-index.php
+
+# Ignore root configuration directory
+/config
