@@ -1,4 +1,6 @@
 
+module/AboutBox
+
 # Translations are always ignored
 module/AboutBox/Translations/
 module/Advice/Translations/
