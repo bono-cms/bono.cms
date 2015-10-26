@@ -1,81 +1,76 @@
 <?php
 
-use Krystal\Form\Widget\DropdownWidget;
+use Krystal\Form\Element;
 
 ?>
 
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="user[id]" value="<?php echo $user->getId(); ?>" />
-		<input type="hidden" name="user[password_hash]" value="<?php echo $user->getPasswordHash(); ?>" />
+        <?php echo Element::hidden('user[id]', $user->getId()); ?>
+        <?php echo Element::hidden('user[password_hash]', $user->getPasswordHash()); ?>
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Login'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="user[login]" class="form-control" value="<?php echo $user->getLogin(); ?>" placeholder="<?php $this->show('Enter desired login'); ?>" />
+                    <?php echo Element::text('user[login]', $user->getLogin(), array('class' => 'form-control', 'placeholder' => $this->translate('Enter desired login'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
 		</div>
-		
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="password" name="user[password]" class="form-control" placeholder="<?php $this->show('Enter new password'); ?>" />
+					<?php echo Element::password('user[password]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Enter new password'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
 		</div>
-		
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Password confirmation'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="password" name="user[password_confirm]" class="form-control" placeholder="<?php $this->show('Enter new password again'); ?>" />
+                    <?php echo Element::password('user[password_confirm]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Enter new password again'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
 		</div>
-		
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="user[email]" class="form-control" value="<?php echo $user->getEmail(); ?>" placeholder="<?php $this->show('Email to be used for notifications and password recovery'); ?>" />
+                    <?php echo Element::text('user[email]', $user->getEmail(), array('class' => 'form-control', 'placeholder' => $this->translate('Email to be used for notifications and password recovery'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
 		</div>
-		
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="user[name]" class="form-control" value="<?php echo $user->getName(); ?>" placeholder="<?php $this->show('First Name of the user to be added'); ?>" />
+                    <?php echo Element::text('user[name]', $user->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('First Name of the user to be added'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
 		</div>
 		
-		
 		<?php if ($role->isDeveloper()): ?>
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Role'); ?></label>
 			<div class="col-lg-10">
-				<?php echo DropdownWidget::render(array('name' => 'user[role]', 'class' => 'form-control'), $roles, $user->getRole(), false); ?>
+                <?php echo Element::select('user[role]', $roles, $user->getRole(), array('class' => 'form-control')); ?>
 			</div>
 		</div>
 		<?php else: ?>
 		
-		<input type="hidden" name="user[role]" value="user" />
-		
+        <?php echo Element::hidden('user[role]', 'user'); ?>
+        
 		<?php endif; ?>
 	</div>
 	

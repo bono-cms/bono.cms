@@ -1,6 +1,6 @@
 <?php
 
-use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Element;
 use Krystal\Form\HtmlHelper;
 
 ?>
@@ -8,13 +8,13 @@ use Krystal\Form\HtmlHelper;
 <form>
 	<div class="well clearfix">
 		
-		<input type="hidden" name="language[id]" value="<?php echo $language->getId(); ?>" />
-		
+        <?php echo Element::hidden('language[id]', $language->getId()); ?>
+        
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="language[name]" class="form-control" value="<?php echo $language->getName(); ?>" placeholder="<?php $this->show('The name of the language to be created'); ?>" />
+                    <?php echo Element::text('language[name]', $language->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('The name of the language to be created'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -24,7 +24,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Code'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="language[code]" class="form-control" value="<?php echo $language->getCode(); ?>" placeholder="<?php $this->show('Unique language identifier'); ?>" />
+                    <?php echo Element::text('language[code]', $language->getCode(), array('class' => 'form-control', 'placeholder' => $this->translate('Unique language identifier'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -51,7 +51,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="number" min="0" name="language[order]" class="form-control" value="<?php echo $language->getOrder(); ?>" placeholder="<?php $this->show('Language sort order in a list'); ?>" />
+                    <?php echo Element::number('language[order]', $language->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Language sort order in a list'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -60,37 +60,20 @@ use Krystal\Form\HtmlHelper;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 			<div class="col-lg-10">
-				
-				<?php echo CheckBoxWidget::render(array(
-
-					'name' => 'language[published]', 
-					'class' => 'form-control'
-
-				), $language->getPublished()); ?>
-				
+				<?php echo Element::checkbox('language[published]', $language->getPublished(), array('class' => 'form-control')); ?>
 			</div>
 		</div>
 		
 		<?php if (!$language->getId()): ?>
-		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
 			<div class="col-lg-10">
-
-				<?php echo CheckBoxWidget::render(array(
-
-					'name' => 'language[default]', 
-					'class' => 'form-control'
-
-				), $language->getDefault()); ?>
-
+				<?php echo Element::checkbox('language[default]', $language->getDefault()); ?>
 			</div>
 		</div>
-		
 		<?php endif; ?>
-		
+ 
 	</div>
-	
 	
 	<?php if (!$language->getId()): ?>
 	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>

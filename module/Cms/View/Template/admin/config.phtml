@@ -1,71 +1,58 @@
 <?php
 
-use Krystal\Form\Widget\DropdownWidget;
-use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Element;
 
 ?>
 
 <form>
-	
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
 		<li role="presentation"><a href="#maintenance" role="tab" data-toggle="tab"><i class="fa fa-life-ring"></i> <?php $this->show('Maintenance'); ?></a></li>
 		<li role="presentation"><a href="#mail" role="tab" data-toggle="tab"><i class="fa fa-envelope"></i> <?php $this->show('Mail'); ?></a></li>
 	</ul>
 	
-	
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="common" role="tabpanel">
-			
 			<div class="well">
-				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Keep the track of latest activity'); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'config[keep_track]', 'class' => 'form-control'), $config->getKeepTrack()); ?>
+                        <?php echo Element::checkbox('config[keep_track]', $config->getKeepTrack(), array('class' => 'form-control')); ?>
 					</div>
 				</div>
-				
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Email for notifications'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="config[notification_email]" value="<?php echo $config->getNotificationEmail(); ?>" />
+                            <?php echo Element::text('config[notification_email]', $config->getNotificationEmail(), array('class' => 'form-control')); ?>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('This email is used as an address for sending notifications'); ?></span>
 					</div>
 				</div>
-				
 			</div>
 		</div>
-		
 		
 		<!--Maintenance tab-->
 		<div class="tab-pane fade" id="maintenance" role="tabpanel">
 			<div class="well">
-				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Site is down for maintenance'); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'config[site_enabled]', 'class' => 'form-control'), $config->getSiteEnabled()); ?>
+						<?php echo Element::checkbox('config[site_enabled]', $config->getSiteEnabled(), array('class' => 'form-control')); ?>
 					</div>
 				</div>
-				
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Message'); ?></label>
 					<div class="col-lg-10">
-						<textarea name="config[site_down_reason]" class="form-control"><?php echo $config->getSiteDownReason(); ?></textarea>
+                        <?php echo Element::textarea('config[site_down_reason]', $config->getSiteDownReason()); ?>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 		<!--/Maintenance tab-->
-		
-		
 		
 		<!--Mail-->
 		<div class="tab-pane fade" id="mail" role="tabpanel">
@@ -74,7 +61,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show("Try using server's native mailer"); ?></label>
 					<div class="col-lg-10">
-						<?php echo CheckBoxWidget::render(array('name' => 'config[use_smtp_driver]', 'class' => 'form-control'), $config->getUseSmtpDriver()); ?>
+                        <?php echo Element::checkbox('config[use_smtp_driver]', $config->getUseSmtpDriver(), array('class' => 'form-control')); ?>
 					</div>
 				</div>
 				
@@ -82,7 +69,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Domain'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" name="config[domain]" class="form-control" value="<?php echo $config->getDomain(); ?>" />
+                            <?php echo Element::text('config[domain]', $config->getDomain(), array('class' => 'form-control')); ?>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('Default domain can be overriden if neccesary'); ?></span>
@@ -92,29 +79,27 @@ use Krystal\Form\Widget\CheckBoxWidget;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Secure layer'); ?> (SSL/TLS)</label>
 					<div class="col-lg-10">
-						<?php echo DropdownWidget::render(array('name' => 'config[smtp_secure_layer]', 'class' => 'form-control'), $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), false); ?>
+                        <?php echo Element::select('config[smtp_secure_layer]', $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), array('class' => 'form-control')); ?>
 						<span class="help-block"><?php $this->show('If your provided requires secure layer, choice required one here'); ?></span>
 					</div>
 				</div>
-				
 				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Host'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="config[smtp_host]" value="<?php echo $config->getSmtpHost(); ?>" />
+                            <?php echo Element::text('config[smtp_host]', $config->getSmtpHost(), array('class' => 'form-control')); ?>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show('STMP host might look like as smtp.yourserver.com'); ?></span>
 					</div>
 				</div>
 				
-				
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Username'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="config[smtp_username]" value="<?php echo $config->getSmtpUsername(); ?>" />
+                            <?php echo Element::text('config[smtp_username]', $config->getSmtpUsername(), array('class' => 'form-control')); ?>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Account's username, which usually represents your login"); ?></span>
@@ -125,7 +110,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="text" class="form-control" name="config[smtp_password]" value="<?php echo $config->getSmtpPassword(); ?>" />
+                            <?php echo Element::text('config[smtp_password]', $config->getSmtpPassword(), array('class' => 'form-control')); ?>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("Account's password"); ?></span>
@@ -136,17 +121,15 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<label class="col-lg-2 control-label"><?php $this->show('Port'); ?></label>
 					<div class="col-lg-10">
 						<div class="input-group">
-							<input type="number" class="form-control" name="config[smtp_port]" value="<?php echo $config->getSmtpPort(); ?>" />
+							<?php echo Element::number('config[smtp_port]', $config->getSmtpPort(), array('class' => 'form-control')); ?>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 						</div>
 						<span class="help-block"><?php $this->show("SMTP server's port. In most cases its 25"); ?></span>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 		<!--/Mail-->
-		
 	</div>
 	
 	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
