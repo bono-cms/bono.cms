@@ -29,6 +29,10 @@ $(function(){
 		},
 		// This method should be invoked on each AJAX request
 		update : function(){
+            if (!this.isStarted()){
+                return false;
+            }
+            
 			if (typeof(CKEDITOR) != 'undefined'){
 				for (instance in CKEDITOR.instances){
 					CKEDITOR.instances[instance].updateElement();
@@ -40,7 +44,7 @@ $(function(){
 			}
 		},
 		// The array of elements to be replaced
-		init : function(elements, options){
+		init : function(elements){
 			// Interface language
 			var language = $("input[name='language']").val();
 
@@ -226,6 +230,51 @@ $(function(){
 		});
 	});
 	
+    
+	$("[data-button='cancel']").click(function(event){
+		event.preventDefault();
+        
+        var url = $(this).data('url');
+		window.location = url;
+	});
+    
+    
+	$("[data-button='remove-selected']").click(function(event){
+		event.preventDefault();
+		var data = $("form").serialize();
+        var url = $(this).data('url');
+		
+		$.ajax({
+			url : url,
+			data : data,
+			success : function(response) {
+				if (response == "1") {
+					window.location.reload();
+				} else {
+					$.showErrors(response);
+				}
+			}
+		});
+	});
+    
+    $("[data-button='save-changes']").click(function(event){
+        event.preventDefault();
+        var url = $(this).data('url');
+        
+        $.ajax({
+            url : url,
+            data : $("form").serialize(),
+			success : function(response) {
+                if (response == "1") {
+                    window.location.reload();
+				} else {
+                    $.showErrors(response);
+				}
+			}
+		});
+	});
+    
+    
 	$("[data-button='refresh']").click(function(event){
 		event.preventDefault();
 		window.location.reload();
@@ -292,12 +341,82 @@ $(function(){
 		});
 	});
 	
-	
 	$("[data-button='options']").click(function(event) {
 		event.preventDefault();
 		$("div.options").slideToggle(1000);
 	});
 	
+    
+	function add(url, callback) {
+		$("form").send({
+			url : url,
+			success : callback,
+			before : function(){
+				$.wysiwyg.update();
+			}
+		});
+	}
+	
+	function update(url, callback) {
+		$("form").send({
+			url : url,
+			success : callback,
+			before : function(){
+				$.wysiwyg.update();
+			}
+		});
+	}
+    
+	$("[data-button='add']").click(function(event){
+        var url = $(this).data('url');
+        var backUrl = $(this).data('back-url');
+        
+		add(url, function(response) {
+			if ($.isNumeric(response)) {
+				window.location = backUrl + response;
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
+	
+	$("[data-button='add-create']").click(function(){
+        var url = $(this).data('url');
+        
+		add(url, function(response){
+			if ($.isNumeric(response)) {
+				window.location.reload();
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
+	
+	$("[data-button='save']").click(function(){
+        var url = $(this).data('url');
+        
+		update(url, function(response) {
+			if (response == "1") {
+				window.location.reload();
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
+	
+	$("[data-button='save-create']").click(function(){
+        var url = $(this).data('url');
+        var backUrl = $(this).data('back-url');
+        
+		update(url, function(response){
+			if (response == "1"){
+				window.location = backUrl;
+			} else {
+				$.showErrors(response);
+			}
+		});
+	});
+    
 	
 	// ------------------------------------ Delete on tables ---------------------
 
@@ -395,6 +514,17 @@ $(function(){
 	$("td > a.view").click(function(event) {
 		event.preventDefault();
 	});
-	
+
+    
+    $form = $("form");
+    
+    //if ($form.attr('data-wysiwyg')){
+        //console.log($form.data('wysiwyg'));
+        //$.wysiwyg.init($form.data('wysiwyg'));
+    //}
+    
+    if ($form.attr('data-group')) {
+        $.setFormGroup($form.data('group'));
+    }
 	
 });
