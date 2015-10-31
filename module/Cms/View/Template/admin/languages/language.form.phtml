@@ -68,7 +68,7 @@ use Krystal\Form\HtmlHelper;
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
 			<div class="col-lg-10">
-				<?php echo Element::checkbox('language[default]', $language->getDefault()); ?>
+				<?php echo Element::checkbox('language[default]', $language->getDefault(), array('class' => 'form-control')); ?>
 			</div>
 		</div>
 		<?php endif; ?>
