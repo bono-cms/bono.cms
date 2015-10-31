@@ -1,6 +1,4 @@
-
 $(function(){
-	
 	$.delete({
 		categories : {
 			main : {

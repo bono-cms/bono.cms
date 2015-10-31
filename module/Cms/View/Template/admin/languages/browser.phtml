@@ -16,7 +16,7 @@ use Krystal\Form\HtmlHelper;
 		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
 		
 		 <?php if (!empty($langs)): ?>
-		 <li><a href="#" data-button="save"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
+		 <li><a href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Languages:Browser@saveAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <?php else: ?>
 		 <li class="disabled"><a><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <?php endif; ?>

@@ -4,7 +4,8 @@ use Krystal\Form\Element;
 
 ?>
 
-<form>
+<form data-group="config">
+
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
 		<li role="presentation"><a href="#maintenance" role="tab" data-toggle="tab"><i class="fa fa-life-ring"></i> <?php $this->show('Maintenance'); ?></a></li>
@@ -132,7 +133,7 @@ use Krystal\Form\Element;
 		<!--/Mail-->
 	</div>
 	
-	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
-	<button data-button="cancel" type="button" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+	<button data-button="save" data-url="<?php echo $this->url('Cms:Admin:Tweaks@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="cancel" data-url="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
 	
 </form>

@@ -1,6 +1,4 @@
-
-$(function() {
-	
+$(function(){
 	$.delete({
 		categories : {
 			main : {
@@ -11,5 +9,4 @@ $(function() {
 			}
 		}
 	});
-	
 });

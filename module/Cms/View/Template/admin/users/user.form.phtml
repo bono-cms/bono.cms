@@ -4,7 +4,7 @@ use Krystal\Form\Element;
 
 ?>
 
-<form>
+<form data-group="user">
 	<div class="well clearfix">
 		
         <?php echo Element::hidden('user[id]', $user->getId()); ?>
@@ -74,17 +74,16 @@ use Krystal\Form\Element;
 		<?php endif; ?>
 	</div>
 	
-	
 	<?php if (!$user->getId()): ?>
-	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+	<button data-button="add" data-back-url="<?php echo $this->url('Cms:Admin:Users:Edit@indexAction', null); ?>" data-url="<?php echo $this->url('Cms:Admin:Users:Add@addAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
 	
 	<?php else: ?>
-	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="save" data-url="<?php echo $this->url('Cms:Admin:Users:Edit@updateAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
 	
 	<?php endif; ?>
 	
 	<?php if ($role->isDeveloper()): ?>
-	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+	<button data-button="cancel" data-url="<?php echo $this->url('Cms:Admin:Users:Browser@indexAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
 	
 	<?php else: ?>
 	<button data-button="dashboard" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
