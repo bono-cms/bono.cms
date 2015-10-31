@@ -15,42 +15,42 @@ use Krystal\Stdlib\VirtualEntity;
 
 final class Add extends AbstractUser
 {
-	/**
-	 * Shows adding form
-	 * 
-	 * @return string
-	 */
-	public function indexAction()
-	{
-		$this->loadSharedPlugins();
+    /**
+     * Shows adding form
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        $this->loadSharedPlugins();
 
-		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
-			'user' => new VirtualEntity(),
-			'title' => 'Add a user'
-		)));
-	}
+        return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+            'user' => new VirtualEntity(),
+            'title' => 'Add a user'
+        )));
+    }
 
-	/**
-	 * Adds a user
-	 * 
-	 * @return string
-	 */
-	public function addAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('user'));
+    /**
+     * Adds a user
+     * 
+     * @return string
+     */
+    public function addAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('user'));
 
-		if ($formValidator->isValid()) {
+        if ($formValidator->isValid()) {
 
-			$userManager = $this->getUserManager();
-			$userManager->add($this->request->getPost('user'));
+            $userManager = $this->getUserManager();
+            $userManager->add($this->request->getPost('user'));
 
-			$this->flashBag->set('success', 'A user has been created successfully');
+            $this->flashBag->set('success', 'A user has been created successfully');
 
-			return $userManager->getLastId();
+            return $userManager->getLastId();
 
-		} else {
+        } else {
 
-			return $formValidator->getErrors();
-		}
-	}
+            return $formValidator->getErrors();
+        }
+    }
 }

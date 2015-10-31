@@ -15,30 +15,30 @@ use Krystal\Validate\Pattern;
 
 final class Tweaks extends AbstractConfigController
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function getValidationRules()
-	{
-		return array(
-			'notification_email' => new Pattern\Email()
-		);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    protected function getValidationRules()
+    {
+        return array(
+            'notification_email' => new Pattern\Email()
+        );
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function loadPlugins()
-	{
-		$this->view->getPluginBag()
-				   ->load($this->getWysiwygPluginName())
-				   ->appendScript($this->getWithAssetPath('/admin/config.js'));
+    /**
+     * {@inheritDoc}
+     */
+    protected function loadPlugins()
+    {
+        $this->view->getPluginBag()
+                   ->load($this->getWysiwygPluginName())
+                   ->appendScript($this->getWithAssetPath('/admin/config.js'));
 
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'link' => '#',
-				'name' => 'Tweaks'
-			)
-		));
-	}
+        $this->view->getBreadcrumbBag()->add(array(
+            array(
+                'link' => '#',
+                'name' => 'Tweaks'
+            )
+        ));
+    }
 }

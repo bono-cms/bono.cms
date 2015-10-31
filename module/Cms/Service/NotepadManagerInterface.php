@@ -13,26 +13,26 @@ namespace Cms\Service;
 
 interface NotepadManagerInterface
 {
-	/**
-	 * Defines id of current logged in user
-	 * 
-	 * @param string $userId
-	 * @return void
-	 */
-	public function setUserId($userId);
+    /**
+     * Defines id of current logged in user
+     * 
+     * @param string $userId
+     * @return void
+     */
+    public function setUserId($userId);
 
-	/**
-	 * Stores notepad's data
-	 * 
-	 * @param string $content
-	 * @return void
-	 */
-	public function store($content);
+    /**
+     * Stores notepad's data
+     * 
+     * @param string $content
+     * @return void
+     */
+    public function store($content);
 
-	/**
-	 * Returns notepad's content
-	 * 
-	 * @return string
-	 */
-	public function fetch();
+    /**
+     * Returns notepad's content
+     * 
+     * @return string
+     */
+    public function fetch();
 }

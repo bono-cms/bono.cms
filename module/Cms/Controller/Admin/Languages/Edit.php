@@ -13,50 +13,50 @@ namespace Cms\Controller\Admin\Languages;
 
 final class Edit extends AbstractLanguage
 {
-	/**
-	 * Shows edit form
-	 * 
-	 * @param string $id Language id
-	 * @return string
-	 */
-	public function indexAction($id)
-	{
-		$language = $this->getLanguageManager()->fetchById($id);
+    /**
+     * Shows edit form
+     * 
+     * @param string $id Language id
+     * @return string
+     */
+    public function indexAction($id)
+    {
+        $language = $this->getLanguageManager()->fetchById($id);
 
-		if ($language !== false) {
-			$this->loadSharedPlugins();
+        if ($language !== false) {
+            $this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
-				'title' => 'Edit the language',
-				'language' => $language
-			)));
+            return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+                'title' => 'Edit the language',
+                'language' => $language
+            )));
 
-		} else {
+        } else {
 
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 
-	/**
-	 * Updates a language
-	 * 
-	 * @return string
-	 */
-	public function updateAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('language'));
+    /**
+     * Updates a language
+     * 
+     * @return string
+     */
+    public function updateAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('language'));
 
-		if ($formValidator->isValid()) {
+        if ($formValidator->isValid()) {
 
-			if ($this->getLanguageManager()->update($this->request->getPost('language'))) {
+            if ($this->getLanguageManager()->update($this->request->getPost('language'))) {
 
-				$this->flashBag->set('success', 'The language has been updated successfully');
-				return '1';
-			}
+                $this->flashBag->set('success', 'The language has been updated successfully');
+                return '1';
+            }
 
-		} else {
+        } else {
 
-			return $formValidator->getErrors();
-		}
-	}
+            return $formValidator->getErrors();
+        }
+    }
 }

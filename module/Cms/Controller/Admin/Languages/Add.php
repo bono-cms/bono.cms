@@ -15,47 +15,47 @@ use Krystal\Stdlib\VirtualEntity;
 
 final class Add extends AbstractLanguage
 {
-	/**
-	 * Shows adding form
-	 * 
-	 * @return string
-	 */
-	public function indexAction()
-	{
-		$this->loadSharedPlugins();
+    /**
+     * Shows adding form
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        $this->loadSharedPlugins();
 
-		$language = new VirtualEntity();
-		$language->setPublished(true)
-				 ->setOrder(0);
+        $language = new VirtualEntity();
+        $language->setPublished(true)
+                 ->setOrder(0);
 
-		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
-			'title' => 'Add a language',
-			'language' => $language
-		)));
-	}
+        return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+            'title' => 'Add a language',
+            'language' => $language
+        )));
+    }
 
-	/**
-	 * Adds a language
-	 * 
-	 * @return string
-	 */
-	public function addAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('language'));
+    /**
+     * Adds a language
+     * 
+     * @return string
+     */
+    public function addAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('language'));
 
-		if ($formValidator->isValid()) {
+        if ($formValidator->isValid()) {
 
-			$languageManager = $this->getLanguageManager();
+            $languageManager = $this->getLanguageManager();
 
-			if ($languageManager->add($this->request->getPost('language'))) {
+            if ($languageManager->add($this->request->getPost('language'))) {
 
-				$this->flashBag->set('success', 'A language has been added successfully');
-				return $languageManager->getLastId();
-			}
+                $this->flashBag->set('success', 'A language has been added successfully');
+                return $languageManager->getLastId();
+            }
 
-		} else {
+        } else {
 
-			return $formValidator->getErrors();
-		}
-	}
+            return $formValidator->getErrors();
+        }
+    }
 }

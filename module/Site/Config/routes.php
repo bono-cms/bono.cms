@@ -10,37 +10,37 @@
  */
 
 return array(
-	
-	'/captcha/render/(:var)' => array(
-		'controller' => 'Captcha@renderAction'
-	),
-	
-	// For changing language
-	'/lang/(:var)' => array(
-		'controller' => 'Main@changeLanguageAction'
-	),
-	
-	'/(:var)/' => array(
-		'controller' => 'Main@slugAction'
-	),
+    
+    '/captcha/render/(:var)' => array(
+        'controller' => 'Captcha@renderAction'
+    ),
+    
+    // For changing language
+    '/lang/(:var)' => array(
+        'controller' => 'Main@changeLanguageAction'
+    ),
+    
+    '/(:var)/' => array(
+        'controller' => 'Main@slugAction'
+    ),
 
-	'/(:var)/page/(:var)' => array(
-		'controller' => 'Main@slugAction'
-	),
-	
-	'/' => array(
-		'controller' => 'Main@homeAction'
-	),
-	
-	'/(:var)/(:var)/' => array(
-		'controller' => 'Main@slugLanguageAwareAction'
-	),
-	
-	'/(:var)/(:var)/page/(:var)' => array(
-		'controller' => 'Main@slugLanguageAwareAction'
-	),
-	
-	'/test' => array(
-		'controller' => 'Main@testAction'
-	)
+    '/(:var)/page/(:var)' => array(
+        'controller' => 'Main@slugAction'
+    ),
+    
+    '/' => array(
+        'controller' => 'Main@homeAction'
+    ),
+    
+    '/(:var)/(:var)/' => array(
+        'controller' => 'Main@slugLanguageAwareAction'
+    ),
+    
+    '/(:var)/(:var)/page/(:var)' => array(
+        'controller' => 'Main@slugLanguageAwareAction'
+    ),
+    
+    '/test' => array(
+        'controller' => 'Main@testAction'
+    )
 );

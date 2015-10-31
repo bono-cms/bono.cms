@@ -13,76 +13,76 @@ namespace Cms\Storage;
 
 interface WebPageMapperInterface
 {
-	/**
-	 * Checks whether slug already exists
-	 * 
-	 * @param string $slug
-	 * @return boolean
-	 */
-	public function exists($slug);
+    /**
+     * Checks whether slug already exists
+     * 
+     * @param string $slug
+     * @return boolean
+     */
+    public function exists($slug);
 
-	/**
-	 * Fetches web page's slug by its associated id
-	 * 
-	 * @param string $webPageId
-	 * @return string
-	 */
-	public function fetchSlugByWebPageId($webPageId);
+    /**
+     * Fetches web page's slug by its associated id
+     * 
+     * @param string $webPageId
+     * @return string
+     */
+    public function fetchSlugByWebPageId($webPageId);
 
-	/**
-	 * Fetches all web pages
-	 * 
-	 * @return array
-	 */
-	public function fetchAll();
+    /**
+     * Fetches all web pages
+     * 
+     * @return array
+     */
+    public function fetchAll();
 
-	/**
-	 * Updates a web page
-	 * 
-	 * @param string $id Web page identification
-	 * @param string $slug Web page's new slug
-	 * @param string $controller Optionally controller can be updated too
-	 * @return boolean
-	 */
-	public function update($id, $slug, $controller = null);
+    /**
+     * Updates a web page
+     * 
+     * @param string $id Web page identification
+     * @param string $slug Web page's new slug
+     * @param string $controller Optionally controller can be updated too
+     * @return boolean
+     */
+    public function update($id, $slug, $controller = null);
 
-	/**
-	 * Inserts web page's data
-	 * 
-	 * @param array $data
-	 * @return boolean
-	 */
-	public function insert(array $data);
+    /**
+     * Inserts web page's data
+     * 
+     * @param array $data
+     * @return boolean
+     */
+    public function insert(array $data);
 
-	/**
-	 * Fetches web page's data by associated slug
-	 * 
-	 * @param string $slug
-	 * @return array
-	 */
-	public function fetchBySlug($slug);
+    /**
+     * Fetches web page's data by associated slug
+     * 
+     * @param string $slug
+     * @return array
+     */
+    public function fetchBySlug($slug);
 
-	/**
-	 * Fetches web page's data by target id
-	 * 
-	 * @param string $targetId
-	 * @return array
-	 */
-	public function fetchSlugByTargetId($targetId);
+    /**
+     * Fetches web page's data by target id
+     * 
+     * @param string $targetId
+     * @return array
+     */
+    public function fetchSlugByTargetId($targetId);
 
-	/**
-	 * Fetches web page's data by its associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id);
+    /**
+     * Fetches web page's data by its associated id
+     * 
+     * @param string $id
+     * @return array
+     */
+    public function fetchById($id);
 
-	/**
-	 * Deletes a web page by its associated id
-	 * 
-	 * @param string $id Web page id
-	 * @return boolean
-	 */
-	public function deleteById($id);
+    /**
+     * Deletes a web page by its associated id
+     * 
+     * @param string $id Web page id
+     * @return boolean
+     */
+    public function deleteById($id);
 }

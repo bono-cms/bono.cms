@@ -11,31 +11,31 @@
 
 return array(
 
-	array(
-		'url' => '/admin/users',
-		'icon' => '/module/Cms/Assets/users.png',
-		'name' => 'Users',
-		'description' => 'Edit users and their privileges'
-	),
+    array(
+        'url' => '/admin/users',
+        'icon' => '/module/Cms/Assets/users.png',
+        'name' => 'Users',
+        'description' => 'Edit users and their privileges'
+    ),
 
-	array(
-		'url' => '/admin/tweaks',
-		'icon' => '/module/Cms/Assets/configuration.png',
-		'name' => 'Tweaks',
-		'description' => 'Tweaks of basic system configuration'
-	),
+    array(
+        'url' => '/admin/tweaks',
+        'icon' => '/module/Cms/Assets/configuration.png',
+        'name' => 'Tweaks',
+        'description' => 'Tweaks of basic system configuration'
+    ),
 
-	array(
-		'url' => '/admin/languages',
-		'icon' => '/module/Cms/Assets/languages.png',
-		'name' => 'Languages',
-		'description' => 'Tweak system languages'
-	),
+    array(
+        'url' => '/admin/languages',
+        'icon' => '/module/Cms/Assets/languages.png',
+        'name' => 'Languages',
+        'description' => 'Tweak system languages'
+    ),
 
-	array(
-		'url' => '/admin/info',
-		'icon' => '/module/Cms/Assets/info.png',
-		'name' => 'System info',
-		'description' => 'View server configuration'
-	),
+    array(
+        'url' => '/admin/info',
+        'icon' => '/module/Cms/Assets/info.png',
+        'name' => 'System info',
+        'description' => 'View server configuration'
+    ),
 );

@@ -11,24 +11,24 @@
 
 return array(
 
-	array(
-		'url' => '/admin/history',
-		'icon' => '/module/Cms/Assets/history.png',
-		'name' => 'History',
-		'description' => 'History of latest actions'
-	),
+    array(
+        'url' => '/admin/history',
+        'icon' => '/module/Cms/Assets/history.png',
+        'name' => 'History',
+        'description' => 'History of latest actions'
+    ),
 
-	array(
-		'url' => '/admin/notepad',
-		'icon' => '/module/Cms/Assets/notepad.png',
-		'name' => 'Notepad',
-		'description' => 'Keep your notes using notepad'
-	),
+    array(
+        'url' => '/admin/notepad',
+        'icon' => '/module/Cms/Assets/notepad.png',
+        'name' => 'Notepad',
+        'description' => 'Keep your notes using notepad'
+    ),
 
-	array(
-		'url' => '/admin/notifications',
-		'icon' => '/module/Cms/Assets/notifications.png',
-		'name' => 'Notifications',
-		'description' => 'All system notifications'
-	),
+    array(
+        'url' => '/admin/notifications',
+        'icon' => '/module/Cms/Assets/notifications.png',
+        'name' => 'Notifications',
+        'description' => 'All system notifications'
+    ),
 );

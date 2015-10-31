@@ -10,12 +10,12 @@
  */
 
 return array(
-	
-	'/install' => array(
-		'controller' => 'Install:Install@indexAction'
-	),
-	
-	'/install.ajax' => array(
-		'controller' => 'Install:Install@installAction'
-	)
+    
+    '/install' => array(
+        'controller' => 'Install:Install@indexAction'
+    ),
+    
+    '/install.ajax' => array(
+        'controller' => 'Install:Install@installAction'
+    )
 );

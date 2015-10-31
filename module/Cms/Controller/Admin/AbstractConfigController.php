@@ -21,100 +21,100 @@ namespace Cms\Controller\Admin;
  */
 abstract class AbstractConfigController extends AbstractController
 {
-	/**
-	 * Returns validation rules for target form input
-	 * 
-	 * @return array
-	 */
-	abstract protected function getValidationRules();
+    /**
+     * Returns validation rules for target form input
+     * 
+     * @return array
+     */
+    abstract protected function getValidationRules();
 
-	/**
-	 * Shows configuration form
-	 * 
-	 * @return string
-	 */
-	public function indexAction()
-	{
-		$this->loadPlugins();
+    /**
+     * Shows configuration form
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        $this->loadPlugins();
 
-		return $this->view->render('config', array(
-			'title' => 'Configuration',
-			'config' => $this->getConfigManager()->getEntity()
-		));
-	}
+        return $this->view->render('config', array(
+            'title' => 'Configuration',
+            'config' => $this->getConfigManager()->getEntity()
+        ));
+    }
 
-	/**
-	 * Saves data from the configuration form
-	 * 
-	 * @return string
-	 */
-	public function saveAction()
-	{
-		// Grab POST request data
-		$input = $this->request->getPost('config');
-		$formValidator = $this->getValidator($input);
+    /**
+     * Saves data from the configuration form
+     * 
+     * @return string
+     */
+    public function saveAction()
+    {
+        // Grab POST request data
+        $input = $this->request->getPost('config');
+        $formValidator = $this->getValidator($input);
 
-		if ($formValidator->isValid()) {
-			// Grab history manager service
-			$historyManager = $this->getService('Cms', 'historyManager');
+        if ($formValidator->isValid()) {
+            // Grab history manager service
+            $historyManager = $this->getService('Cms', 'historyManager');
 
-			if ($this->getConfigManager()->write($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')){
-				$this->flashBag->set('success', 'Configuration has been updated successfully');
-			}
+            if ($this->getConfigManager()->write($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')){
+                $this->flashBag->set('success', 'Configuration has been updated successfully');
+            }
 
-			return '1';
+            return '1';
 
-		} else {
+        } else {
 
-			return $formValidator->getErrors();
-		}
-	}
+            return $formValidator->getErrors();
+        }
+    }
 
-	/**
-	 * Returns configuration for the module being executed
-	 * 
-	 * @return \Krystal\Config\ConfigMangaer
-	 */
-	protected function getConfigManager()
-	{
-		return $this->getModuleService('configManager');
-	}
+    /**
+     * Returns configuration for the module being executed
+     * 
+     * @return \Krystal\Config\ConfigMangaer
+     */
+    protected function getConfigManager()
+    {
+        return $this->getModuleService('configManager');
+    }
 
-	/**
-	 * Returns prepared and configured form validator
-	 * 
-	 * @param array $input Raw input data
-	 * @return \Krystal\Validate\ValidatorChain
-	 */
-	protected function getValidator(array $input)
-	{
-		return $this->validatorFactory->build(array(
-			'input' => array(
-				'source' => $input,
-				'definition' => $this->getValidationRules()
-			)
-		));
-	}
+    /**
+     * Returns prepared and configured form validator
+     * 
+     * @param array $input Raw input data
+     * @return \Krystal\Validate\ValidatorChain
+     */
+    protected function getValidator(array $input)
+    {
+        return $this->validatorFactory->build(array(
+            'input' => array(
+                'source' => $input,
+                'definition' => $this->getValidationRules()
+            )
+        ));
+    }
 
-	/**
-	 * Loads required plugins for view
-	 * 
-	 * @return void
-	 */
-	protected function loadPlugins()
-	{
-		$this->view->getPluginBag()
-				   ->appendScript($this->getWithAssetPath('/admin/config.js'));
+    /**
+     * Loads required plugins for view
+     * 
+     * @return void
+     */
+    protected function loadPlugins()
+    {
+        $this->view->getPluginBag()
+                   ->appendScript($this->getWithAssetPath('/admin/config.js'));
 
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'name' => $this->moduleName,
-				'link' => sprintf('%s:Admin:Browser@indexAction', $this->moduleName)
-			),
-			array(
-				'name' => 'Configuration',
-				'link' => '#'
-			)
-		));
-	}
+        $this->view->getBreadcrumbBag()->add(array(
+            array(
+                'name' => $this->moduleName,
+                'link' => sprintf('%s:Admin:Browser@indexAction', $this->moduleName)
+            ),
+            array(
+                'name' => 'Configuration',
+                'link' => '#'
+            )
+        ));
+    }
 }

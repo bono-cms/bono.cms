@@ -14,139 +14,139 @@ namespace Cms\Service;
 /* API for Language Manager */
 interface LanguageManagerInterface
 {
-	/**
-	 * Defines current language id
-	 * 
-	 * @param string $id Current language id to be set
-	 * @return boolean
-	 */
-	public function setCurrentId($id);
+    /**
+     * Defines current language id
+     * 
+     * @param string $id Current language id to be set
+     * @return boolean
+     */
+    public function setCurrentId($id);
 
-	/**
-	 * Returns current language id
-	 * 
-	 * @return string
-	 */
-	public function getCurrentId();
+    /**
+     * Returns current language id
+     * 
+     * @return string
+     */
+    public function getCurrentId();
 
-	/**
-	 * Fetches a language bag by current id
-	 * 
-	 * @return object|boolean
-	 */
-	public function fetchByCurrentId();
+    /**
+     * Fetches a language bag by current id
+     * 
+     * @return object|boolean
+     */
+    public function fetchByCurrentId();
 
-	/**
-	 * Marks language id as a default one
-	 * 
-	 * @param string $id Language id to be marked as default
-	 * @return boolean
-	 */
-	public function makeDefault($id);
+    /**
+     * Marks language id as a default one
+     * 
+     * @param string $id Language id to be marked as default
+     * @return boolean
+     */
+    public function makeDefault($id);
 
-	/**
-	 * Returns language default id
-	 * 
-	 * @return integer
-	 */
-	public function getDefaultId();
+    /**
+     * Returns language default id
+     * 
+     * @return integer
+     */
+    public function getDefaultId();
 
-	/**
-	 * Checks whether a language id is default
-	 * 
-	 * @param string $id
-	 * @return boolean
-	 */
-	public function isDefault($id);
+    /**
+     * Checks whether a language id is default
+     * 
+     * @param string $id
+     * @return boolean
+     */
+    public function isDefault($id);
 
-	/**
-	 * Checks whether we have a default language id
-	 * 
-	 * @return boolean
-	 */
-	public function hasDefault();
+    /**
+     * Checks whether we have a default language id
+     * 
+     * @return boolean
+     */
+    public function hasDefault();
 
-	/**
-	 * Updates published values by their associated ids
-	 * 
-	 * @param array $pair
-	 * @return boolean Depending on success
-	 */
-	public function updatePublished(array $pair);
+    /**
+     * Updates published values by their associated ids
+     * 
+     * @param array $pair
+     * @return boolean Depending on success
+     */
+    public function updatePublished(array $pair);
 
-	/**
-	 * Update orders by their associated ids
-	 * 
-	 * @param array $pair
-	 * @return boolean
-	 */
-	public function updateOrders(array $pair);
+    /**
+     * Update orders by their associated ids
+     * 
+     * @param array $pair
+     * @return boolean
+     */
+    public function updateOrders(array $pair);
 
-	/**
-	 * Return all available countries in ISO3166-compliant
-	 * 
-	 * @return array
-	 */
-	public function getCountries();
+    /**
+     * Return all available countries in ISO3166-compliant
+     * 
+     * @return array
+     */
+    public function getCountries();
 
-	/**
-	 * Returns last language id
-	 * 
-	 * @return integer
-	 */
-	public function getLastId();
+    /**
+     * Returns last language id
+     * 
+     * @return integer
+     */
+    public function getLastId();
 
-	/**
-	 * Adds a language
-	 * 
-	 * @param array $input Raw input data
-	 * @return boolean
-	 */
-	public function add(array $input);
+    /**
+     * Adds a language
+     * 
+     * @param array $input Raw input data
+     * @return boolean
+     */
+    public function add(array $input);
 
-	/**
-	 * Updates a language
-	 * 
-	 * @param array $input Raw input data
-	 * @return boolean
-	 */
-	public function update(array $input);
+    /**
+     * Updates a language
+     * 
+     * @param array $input Raw input data
+     * @return boolean
+     */
+    public function update(array $input);
 
-	/**
-	 * Fetches language bag by its associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id);
+    /**
+     * Fetches language bag by its associated id
+     * 
+     * @param string $id
+     * @return array
+     */
+    public function fetchById($id);
 
-	/**
-	 * Fetches language bag by its associated code
-	 * 
-	 * @param string $code
-	 * @return \Krystal\Stdlib\VirtualBag
-	 */
-	public function fetchByCode($code);
+    /**
+     * Fetches language bag by its associated code
+     * 
+     * @param string $code
+     * @return \Krystal\Stdlib\VirtualBag
+     */
+    public function fetchByCode($code);
 
-	/**
-	 * Fetches all language bags
-	 * 
-	 * @return array
-	 */
-	public function fetchAll();
+    /**
+     * Fetches all language bags
+     * 
+     * @return array
+     */
+    public function fetchAll();
 
-	/**
-	 * Fetches all only published languages bags
-	 * 
-	 * @return array
-	 */
-	public function fetchAllPublished();
+    /**
+     * Fetches all only published languages bags
+     * 
+     * @return array
+     */
+    public function fetchAllPublished();
 
-	/**
-	 * Deletes a language by its associated id
-	 * 
-	 * @param string $id
-	 * @return void
-	 */
-	public function deleteById($id);
+    /**
+     * Deletes a language by its associated id
+     * 
+     * @param string $id
+     * @return void
+     */
+    public function deleteById($id);
 }

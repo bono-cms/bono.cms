@@ -21,214 +21,214 @@ use Krystal\Stdlib\ArrayUtils;
 
 final class UserManager extends AbstractManager implements UserManagerInterface, UserAuthServiceInterface
 {
-	/**
-	 * Any compliant user mapper
-	 * 
-	 * @var \Cms\Storage\UserMapperInteface
-	 */
-	private $userMapper;
+    /**
+     * Any compliant user mapper
+     * 
+     * @var \Cms\Storage\UserMapperInteface
+     */
+    private $userMapper;
 
-	/**
-	 * Authorization manager
-	 * 
-	 * @var \Krystal\Authentication\AuthManagerInterface
-	 */
-	private $authManager;
+    /**
+     * Authorization manager
+     * 
+     * @var \Krystal\Authentication\AuthManagerInterface
+     */
+    private $authManager;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Cms\Storage\UserMapperInteface $userMapper Any mapper which implements this interface
-	 * @param \Krystal\Authentication\AuthManagerInterface $authManager
-	 * @return void
-	 */
-	public function __construct(UserMapperInterface $userMapper, AuthManagerInterface $authManager)
-	{
-		$this->userMapper = $userMapper;
-		$this->authManager = $authManager;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Cms\Storage\UserMapperInteface $userMapper Any mapper which implements this interface
+     * @param \Krystal\Authentication\AuthManagerInterface $authManager
+     * @return void
+     */
+    public function __construct(UserMapperInterface $userMapper, AuthManagerInterface $authManager)
+    {
+        $this->userMapper = $userMapper;
+        $this->authManager = $authManager;
+    }
 
-	/**
-	 * Fetches user's name by associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchNameById($id)
-	{
-		// This method is called inside foreach, so we need a cache anyway
-		static $cache = array();
+    /**
+     * Fetches user's name by associated id
+     * 
+     * @param string $id
+     * @return array
+     */
+    public function fetchNameById($id)
+    {
+        // This method is called inside foreach, so we need a cache anyway
+        static $cache = array();
 
-		if (isset($cache[$id])) {
-			// $cache[$id] represent user name
-			return $cache[$id];
+        if (isset($cache[$id])) {
+            // $cache[$id] represent user name
+            return $cache[$id];
 
-		} else {
-			$name = $this->userMapper->fetchNameById($id);
-			$cache[$id] = $name;
+        } else {
+            $name = $this->userMapper->fetchNameById($id);
+            $cache[$id] = $name;
 
-			return $name;
-		}
-	}
+            return $name;
+        }
+    }
 
-	/**
-	 * Returns last added user's` id
-	 * 
-	 * @return integer
-	 */
-	public function getLastId()
-	{
-		return $this->userMapper->getLastId();
-	}
+    /**
+     * Returns last added user's` id
+     * 
+     * @return integer
+     */
+    public function getLastId()
+    {
+        return $this->userMapper->getLastId();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function toEntity(array $user)
-	{
-		$entity = new VirtualEntity();
-		$entity->setId((int) $user['id'])
-			->setLogin($user['login'])
-			->setPasswordHash($user['password_hash'])
-			->setRole(Filter::escape($user['role']))
-			->setEmail(Filter::escape($user['email']))
-			->setName(Filter::escape($user['name']));
-			
-		return $entity;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    protected function toEntity(array $user)
+    {
+        $entity = new VirtualEntity();
+        $entity->setId((int) $user['id'])
+            ->setLogin($user['login'])
+            ->setPasswordHash($user['password_hash'])
+            ->setRole(Filter::escape($user['role']))
+            ->setEmail(Filter::escape($user['email']))
+            ->setName(Filter::escape($user['name']));
+            
+        return $entity;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getId()
-	{
-		return $this->authManager->getId();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getId()
+    {
+        return $this->authManager->getId();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getRole()
-	{
-		return $this->authManager->getRole();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getRole()
+    {
+        return $this->authManager->getRole();
+    }
 
-	/**
-	 * Attempts to authenticate a user
-	 * 
-	 * @param string $login
-	 * @param string $password
-	 * @param boolean $remember Whether to remember
-	 * @param boolean $hash Whether to hash password
-	 * @return boolean
-	 */
-	public function authenticate($login, $password, $remember, $hash = true)
-	{
-		if ($hash === true) {
-			$password = $this->getHash($password);
-		}
+    /**
+     * Attempts to authenticate a user
+     * 
+     * @param string $login
+     * @param string $password
+     * @param boolean $remember Whether to remember
+     * @param boolean $hash Whether to hash password
+     * @return boolean
+     */
+    public function authenticate($login, $password, $remember, $hash = true)
+    {
+        if ($hash === true) {
+            $password = $this->getHash($password);
+        }
 
-		$user = $this->userMapper->fetchByCredentials($login, $password);
+        $user = $this->userMapper->fetchByCredentials($login, $password);
 
-		// If it's not empty. then login and password are both value
-		if (!empty($user)) {
-			
-			$this->authManager->storeId($user['id'])
-							  ->storeRole($user['role'])
-							  ->login($login, $password, $remember);
-			return true;
-		}
+        // If it's not empty. then login and password are both value
+        if (!empty($user)) {
+            
+            $this->authManager->storeId($user['id'])
+                              ->storeRole($user['role'])
+                              ->login($login, $password, $remember);
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Log-outs a user
-	 * 
-	 * @return void
-	 */
-	public function logout()
-	{
-		return $this->authManager->logout();
-	}
+    /**
+     * Log-outs a user
+     * 
+     * @return void
+     */
+    public function logout()
+    {
+        return $this->authManager->logout();
+    }
 
-	/**
-	 * Checks whether a user is logged in
-	 * 
-	 * @return boolean
-	 */
-	public function isLoggedIn()
-	{
-		return $this->authManager->isLoggedIn();
-	}
+    /**
+     * Checks whether a user is logged in
+     * 
+     * @return boolean
+     */
+    public function isLoggedIn()
+    {
+        return $this->authManager->isLoggedIn();
+    }
 
-	/**
-	 * Provides a hash of a string
-	 * 
-	 * @param string $string
-	 * @return string
-	 */
-	private function getHash($string)
-	{
-		return sha1($string);
-	}
+    /**
+     * Provides a hash of a string
+     * 
+     * @param string $string
+     * @return string
+     */
+    private function getHash($string)
+    {
+        return sha1($string);
+    }
 
-	/**
-	 * Adds a user
-	 * 
-	 * @param array $input Raw input data
-	 * @return boolean
-	 */
-	public function add(array $input)
-	{
-		$input['password_hash'] = $this->getHash($input['password']);
-		return $this->userMapper->insert(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
-	}
+    /**
+     * Adds a user
+     * 
+     * @param array $input Raw input data
+     * @return boolean
+     */
+    public function add(array $input)
+    {
+        $input['password_hash'] = $this->getHash($input['password']);
+        return $this->userMapper->insert(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
+    }
 
-	/**
-	 * Updates a user
-	 * 
-	 * @param array $input Raw input data
-	 * @return boolean
-	 */
-	public function update(array $input)
-	{
-		if (!empty($input['password'])) {
-			$input['password_hash'] = $this->getHash($input['password']);
-		}
+    /**
+     * Updates a user
+     * 
+     * @param array $input Raw input data
+     * @return boolean
+     */
+    public function update(array $input)
+    {
+        if (!empty($input['password'])) {
+            $input['password_hash'] = $this->getHash($input['password']);
+        }
 
-		return $this->userMapper->update(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
-	}
+        return $this->userMapper->update(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
+    }
 
-	/**
-	 * Deletes a user by associated id
-	 * 
-	 * @param string $id
-	 * @return boolean
-	 */
-	public function deleteById($id)
-	{
-		return $this->userMapper->deleteById($id);
-	}
+    /**
+     * Deletes a user by associated id
+     * 
+     * @param string $id
+     * @return boolean
+     */
+    public function deleteById($id)
+    {
+        return $this->userMapper->deleteById($id);
+    }
 
-	/**
-	 * Fetches user's entity by associated id
-	 * 
-	 * @param string $id User's id
-	 * @return array
-	 */
-	public function fetchById($id)
-	{
-		return $this->prepareResult($this->userMapper->fetchById($id));
-	}
+    /**
+     * Fetches user's entity by associated id
+     * 
+     * @param string $id User's id
+     * @return array
+     */
+    public function fetchById($id)
+    {
+        return $this->prepareResult($this->userMapper->fetchById($id));
+    }
 
-	/**
-	 * Fetches all entities
-	 * 
-	 * @return array
-	 */
-	public function fetchAll()
-	{
-		return $this->prepareResults($this->userMapper->fetchAll());
-	}
+    /**
+     * Fetches all entities
+     * 
+     * @return array
+     */
+    public function fetchAll()
+    {
+        return $this->prepareResults($this->userMapper->fetchAll());
+    }
 }

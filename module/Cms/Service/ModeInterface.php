@@ -13,61 +13,61 @@ namespace Cms\Service;
 
 interface ModeInterface
 {
-	/**
-	 * Checks whether provided id belongs to current active mode
-	 * 
-	 * @param string $id
-	 * @return boolean
-	 */
-	public function isCurrent($id);
+    /**
+     * Checks whether provided id belongs to current active mode
+     * 
+     * @param string $id
+     * @return boolean
+     */
+    public function isCurrent($id);
 
-	/**
-	 * Returns available modes
-	 * 
-	 * @return array
-	 */
-	public function getModes();
+    /**
+     * Returns available modes
+     * 
+     * @return array
+     */
+    public function getModes();
 
-	/**
-	 * Prepares mode manager
-	 * 
-	 * @return void
-	 */
-	public function prepare();
+    /**
+     * Prepares mode manager
+     * 
+     * @return void
+     */
+    public function prepare();
 
-	/**
-	 * Fetches mode value from a storage
-	 * 
-	 * @return string
-	 */
-	public function fetch();
+    /**
+     * Fetches mode value from a storage
+     * 
+     * @return string
+     */
+    public function fetch();
 
-	/**
-	 * Checks whether mode is advanced
-	 * 
-	 * @return boolean
-	 */
-	public function isAdvanced();
+    /**
+     * Checks whether mode is advanced
+     * 
+     * @return boolean
+     */
+    public function isAdvanced();
 
-	/**
-	 * Checks whether mode is simple
-	 * 
-	 * @return boolean
-	 */
-	public function isSimple();
+    /**
+     * Checks whether mode is simple
+     * 
+     * @return boolean
+     */
+    public function isSimple();
 
-	/**
-	 * Activates advanced mode
-	 * 
-	 * @param string $value
-	 * @return void
-	 */
-	public function setAdvanced();
+    /**
+     * Activates advanced mode
+     * 
+     * @param string $value
+     * @return void
+     */
+    public function setAdvanced();
 
-	/**
-	 * Activates simple mode
-	 * 
-	 * @return void
-	 */
-	public function setSimple();
+    /**
+     * Activates simple mode
+     * 
+     * @return void
+     */
+    public function setSimple();
 }

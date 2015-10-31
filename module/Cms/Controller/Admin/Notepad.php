@@ -15,63 +15,63 @@ use Cms\Controller\Admin\AbstractController;
 
 final class Notepad extends AbstractController
 {
-	/**
-	 * Shows a notepad
-	 * 
-	 * @return string
-	 */
-	public function indexAction()
-	{
-		$this->loadPlugins();
+    /**
+     * Shows a notepad
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        $this->loadPlugins();
 
-		return $this->view->render('notepad', array(
-			'content' => $this->getNotepadManager()->fetch(),
-			'title' => 'Notepad'
-		));
-	}
+        return $this->view->render('notepad', array(
+            'content' => $this->getNotepadManager()->fetch(),
+            'title' => 'Notepad'
+        ));
+    }
 
-	/**
-	 * Loads required plugins
-	 * 
-	 * @return void
-	 */
-	private function loadPlugins()
-	{
-		$this->view->getPluginBag()
-				   ->load($this->getWysiwygPluginName())
-				   ->appendScript($this->getWithAssetPath('/admin/notepad.js'));
+    /**
+     * Loads required plugins
+     * 
+     * @return void
+     */
+    private function loadPlugins()
+    {
+        $this->view->getPluginBag()
+                   ->load($this->getWysiwygPluginName())
+                   ->appendScript($this->getWithAssetPath('/admin/notepad.js'));
 
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'link' => '#',
-				'name' => 'Notepad'
-			)
-		));
-	}
+        $this->view->getBreadcrumbBag()->add(array(
+            array(
+                'link' => '#',
+                'name' => 'Notepad'
+            )
+        ));
+    }
 
-	/**
-	 * Returns notepad manager
-	 * 
-	 * @return \Cms\Service\NotepadManager
-	 */
-	private function getNotepadManager()
-	{
-		return $this->getService('Cms', 'notepadManager');
-	}
+    /**
+     * Returns notepad manager
+     * 
+     * @return \Cms\Service\NotepadManager
+     */
+    private function getNotepadManager()
+    {
+        return $this->getService('Cms', 'notepadManager');
+    }
 
-	/**
-	 * Saves notepad's data
-	 * 
-	 * @return string
-	 */
-	public function saveAction()
-	{
-		$content = $this->request->getPost('notepad');
+    /**
+     * Saves notepad's data
+     * 
+     * @return string
+     */
+    public function saveAction()
+    {
+        $content = $this->request->getPost('notepad');
 
-		if ($this->getNotepadManager()->store($content)) {
+        if ($this->getNotepadManager()->store($content)) {
 
-			$this->flashBag->set('success', 'Notepad has been updated successfully');
-			return '1';
-		}
-	}
+            $this->flashBag->set('success', 'Notepad has been updated successfully');
+            return '1';
+        }
+    }
 }

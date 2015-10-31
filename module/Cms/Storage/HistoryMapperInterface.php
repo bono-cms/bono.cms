@@ -13,27 +13,27 @@ namespace Cms\Storage;
 
 interface HistoryMapperInterface
 {
-	/**
-	 * Clears the history
-	 * 
-	 * @return boolean
-	 */
-	public function clear();
+    /**
+     * Clears the history
+     * 
+     * @return boolean
+     */
+    public function clear();
 
-	/**
-	 * Inserts a history track
-	 * 
-	 * @param array $data History data
-	 * @return boolean
-	 */
-	public function insert(array $data);
+    /**
+     * Inserts a history track
+     * 
+     * @param array $data History data
+     * @return boolean
+     */
+    public function insert(array $data);
 
-	/**
-	 * Fetches all history tracks filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @parma integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllByPage($page, $itemsPerPage);
+    /**
+     * Fetches all history tracks filtered by pagination
+     * 
+     * @param integer $page Current page
+     * @parma integer $itemsPerPage Per page count
+     * @return array
+     */
+    public function fetchAllByPage($page, $itemsPerPage);
 }

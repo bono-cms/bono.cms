@@ -13,28 +13,28 @@ namespace Cms\Contract;
 
 interface WebPageMapperAwareInterface
 {
-	/**
-	 * Updates web page id by its associated id
-	 * 
-	 * @param integer $id
-	 * @param integer $webPageId
-	 * @return boolean
-	 */
-	public function updateWebPageIdById($id, $webPageId);
+    /**
+     * Updates web page id by its associated id
+     * 
+     * @param integer $id
+     * @param integer $webPageId
+     * @return boolean
+     */
+    public function updateWebPageIdById($id, $webPageId);
 
-	/**
-	 * Fetches web page id by target id
-	 * 
-	 * @param integer $id
-	 * @return integer
-	 */
-	public function fetchWebPageIdById($id);
+    /**
+     * Fetches web page id by target id
+     * 
+     * @param integer $id
+     * @return integer
+     */
+    public function fetchWebPageIdById($id);
 
-	/**
-	 * Fetches title by web page id
-	 * 
-	 * @param string $webPageId
-	 * @return string
-	 */
-	public function fetchTitleByWebPageId($webPageId);
+    /**
+     * Fetches title by web page id
+     * 
+     * @param string $webPageId
+     * @return string
+     */
+    public function fetchTitleByWebPageId($webPageId);
 }

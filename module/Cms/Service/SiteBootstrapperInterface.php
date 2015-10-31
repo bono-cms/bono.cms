@@ -13,10 +13,10 @@ namespace Cms\Service;
 
 interface SiteBootstrapperInterface
 {
-	/**
-	 * Bootstraps a module for the site
-	 * 
-	 * @return void
-	 */
-	public function bootstrap();
+    /**
+     * Bootstraps a module for the site
+     * 
+     * @return void
+     */
+    public function bootstrap();
 }

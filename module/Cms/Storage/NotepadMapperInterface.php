@@ -13,37 +13,37 @@ namespace Cms\Storage;
 
 interface NotepadMapperInterface
 {
-	/**
-	 * Checks whether notepad's data with provided user's id exists
-	 * 
-	 * @param string $userId
-	 * @return boolean
-	 */
-	public function exists($userId);
+    /**
+     * Checks whether notepad's data with provided user's id exists
+     * 
+     * @param string $userId
+     * @return boolean
+     */
+    public function exists($userId);
 
-	/**
-	 * Inserts notepad's data
-	 * 
-	 * @param string $userId
-	 * @param string $content
-	 * @return boolean
-	 */
-	public function insert($userId, $content);
+    /**
+     * Inserts notepad's data
+     * 
+     * @param string $userId
+     * @param string $content
+     * @return boolean
+     */
+    public function insert($userId, $content);
 
-	/**
-	 * Updates notepad's data
-	 * 
-	 * @param string $userId
-	 * @param string $content
-	 * @return boolean
-	 */
-	public function update($userId, $content);
+    /**
+     * Updates notepad's data
+     * 
+     * @param string $userId
+     * @param string $content
+     * @return boolean
+     */
+    public function update($userId, $content);
 
-	/**
-	 * Fetches notepad's content by associated user id
-	 * 
-	 * @param string $userId
-	 * @return string
-	 */
-	public function fetchByUserId($userId);
+    /**
+     * Fetches notepad's content by associated user id
+     * 
+     * @param string $userId
+     * @return string
+     */
+    public function fetchByUserId($userId);
 }

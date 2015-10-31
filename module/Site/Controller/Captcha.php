@@ -15,13 +15,13 @@ use Krystal\Application\Controller\AbstractController;
 
 final class Captcha extends AbstractController
 {
-	/**
-	 * Renders the CAPTCHA
-	 * 
-	 * @return void
-	 */
-	public function renderAction()
-	{
-		$this->captcha->render();
-	}
+    /**
+     * Renders the CAPTCHA
+     * 
+     * @return void
+     */
+    public function renderAction()
+    {
+        $this->captcha->render();
+    }
 }

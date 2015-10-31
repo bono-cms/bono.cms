@@ -15,14 +15,14 @@ use Cms\Controller\Admin\AbstractController;
 
 final class Info extends AbstractController
 {
-	/**
-	 * Just outputs default PHP info
-	 * 
-	 * @return string
-	 */
-	public function indexAction()
-	{
-		phpinfo();
-		exit(1);
-	}
+    /**
+     * Just outputs default PHP info
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        phpinfo();
+        exit(1);
+    }
 }
