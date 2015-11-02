@@ -39,14 +39,9 @@ final class Notepad extends AbstractController
     {
         $this->view->getPluginBag()
                    ->load($this->getWysiwygPluginName())
-                   ->appendScript($this->getWithAssetPath('/admin/notepad.js'));
+                   ->appendScript('@Cms/admin/notepad.js');
 
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'link' => '#',
-                'name' => 'Notepad'
-            )
-        ));
+        $this->view->getBreadcrumbBag()->addOne('Notepad');
     }
 
     /**
@@ -69,7 +64,6 @@ final class Notepad extends AbstractController
         $content = $this->request->getPost('notepad');
 
         if ($this->getNotepadManager()->store($content)) {
-
             $this->flashBag->set('success', 'Notepad has been updated successfully');
             return '1';
         }

@@ -100,7 +100,7 @@ abstract class AbstractController extends AbstractAuthAwareController
     {
         if ($this->moduleManager->isLoaded('Menu')) {
             $this->view->getPluginBag()
-                       ->appendScript($this->getWithAssetPath('/admin/menu.widget.js', 'Menu'));
+                       ->appendScript('@Menu/admin/menu.widget.js');
         }
     }
 

@@ -34,7 +34,6 @@ final class Browser extends AbstractController
         $this->loadPlugins();
 
         return $this->view->render('languages/browser', array(
-
             // We can't define an array which is called "languages", because that name is already in template's global scope
             'langs' => $this->getLanguageManager()->fetchAll(),
             'title' => 'Languages'
@@ -49,14 +48,9 @@ final class Browser extends AbstractController
     private function loadPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/language/browser.js'));
-        
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'name' => 'Languages',
-                'link' => '#'
-            )
-        ));
+                   ->appendScript('@Cms/admin/language/browser.js');
+
+        $this->view->getBreadcrumbBag()->addOne('Languages');
     }
 
     /**
@@ -77,7 +71,6 @@ final class Browser extends AbstractController
     public function changeAction()
     {
         if ($this->request->hasPost('id') && $this->request->isAjax()) {
-
             $id = $this->request->getPost('id');
 
             $this->getLanguageManager()->setCurrentId($id);
@@ -88,7 +81,7 @@ final class Browser extends AbstractController
     /**
      * Saves the data
      * 
-     * @return string The response
+     * @return string
      */
     public function saveAction()
     {
@@ -117,16 +110,14 @@ final class Browser extends AbstractController
     /**
      * Deletes a language by its associated id
      * 
-     * @return string The response
+     * @return string
      */
     public function deleteAction()
     {
         if ($this->request->hasPost('id')) {
-
             $id = $this->request->getPost('id');
 
             if ($this->getLanguageManager()->deleteById($id)) {
-
                 $this->flashBag->set('success', 'Selected language has been removed successfully');
                 return '1';
             }

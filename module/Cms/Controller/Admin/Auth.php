@@ -33,8 +33,8 @@ final class Auth extends AbstractController
             $this->redirectToRoute('Cms:Admin:Dashboard@indexAction');
 
         } else {
-            $this->view->getPluginBag()->appendStylesheet($this->getWithAssetPath('/css/login.css'))
-                                       ->appendScript($this->getWithAssetPath('/admin/login.js'));
+            $this->view->getPluginBag()->appendStylesheet('@Cms/css/login.css')
+                                       ->appendScript('@Cms/admin/login.js');
 
             return $this->view->disableLayout()->render('login');
         }

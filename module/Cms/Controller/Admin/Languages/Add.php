@@ -23,15 +23,17 @@ final class Add extends AbstractLanguage
     public function indexAction()
     {
         $this->loadSharedPlugins();
+        $this->loadBreadcrumbs('Add a language');
 
         $language = new VirtualEntity();
         $language->setPublished(true)
                  ->setOrder(0);
 
-        return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+        return $this->view->render($this->getTemplatePath(), array(
+            'countries' => $this->getLanguageManager()->getCountries(),
             'title' => 'Add a language',
             'language' => $language
-        )));
+        ));
     }
 
     /**
@@ -44,17 +46,14 @@ final class Add extends AbstractLanguage
         $formValidator = $this->getValidator($this->request->getPost('language'));
 
         if ($formValidator->isValid()) {
-
             $languageManager = $this->getLanguageManager();
 
             if ($languageManager->add($this->request->getPost('language'))) {
-
                 $this->flashBag->set('success', 'A language has been added successfully');
                 return $languageManager->getLastId();
             }
 
         } else {
-
             return $formValidator->getErrors();
         }
     }

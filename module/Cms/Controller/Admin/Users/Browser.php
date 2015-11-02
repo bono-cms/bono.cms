@@ -38,14 +38,9 @@ final class Browser extends AbstractController
     private function loadPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/users/browser.js'));
+                   ->appendScript('@Cms/admin/users/browser.js');
 
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'link' => '#',
-                'name' => 'Users'
-            )
-        ));
+        $this->view->getBreadcrumbBag()->addOne('Users');
     }
 
     /**
@@ -59,7 +54,6 @@ final class Browser extends AbstractController
             $id = $this->request->getPost('id');
 
             if ($this->getService('Cms', 'userManager')->deleteById($id)) {
-
                 $this->flashBag->set('success', 'Selected user has been removed successfully');
                 return '1';
             }

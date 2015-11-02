@@ -1,7 +1,6 @@
 <?php
 
-use Krystal\Form\Widget\CheckBoxWidget;
-use Krystal\Form\HtmlHelper;
+use Krystal\Form\Element;
 
 ?>
 
@@ -50,13 +49,13 @@ use Krystal\Form\HtmlHelper;
 					<td class="text-center"><i class="<?php printf('famfamfam-flag-%s', $language->getCode()); ?>"></i> <?php echo $language->getName(); ?></td>
 					<td class="text-center"><?php echo $language->getCode(); ?></td>
 					<td class="text-center col-md-1">
-						<input type="number" class="form-control center-block" min="0" value="<?php echo $language->getOrder(); ?>" name="order[<?php echo $language->getId(); ?>]" />
+                        <?php echo Element::number(sprintf('order[%s]', $language->getId()), $language->getOrder(), array('class' => 'form-control center-block', 'min' => '0')); ?>
 					</td>
 					<td class="text-center">
-						<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $language->getId())), $language->getPublished()); ?>
+                        <?php echo Element::checkbox(sprintf('published[%s]', $language->getId()), $language->getPublished()); ?>
 					</td>
 					<td class="text-center">
-						<input type="radio" name="default" value="<?php echo $language->getId(); ?>" <?php HtmlHelper::checkOnDemand($language->getDefault()); ?>/>
+                        <?php echo Element::radio('default', $language->getId(), $language->getDefault()); ?>
 					</td>
 					<td class="text-center">
 						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this language'); ?>" data-button="edit" href="<?php echo $this->url('Cms:Admin:Languages:Edit@indexAction', $language->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>

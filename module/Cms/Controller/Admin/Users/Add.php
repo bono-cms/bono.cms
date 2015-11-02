@@ -40,16 +40,13 @@ final class Add extends AbstractUser
         $formValidator = $this->getValidator($this->request->getPost('user'));
 
         if ($formValidator->isValid()) {
-
             $userManager = $this->getUserManager();
             $userManager->add($this->request->getPost('user'));
 
             $this->flashBag->set('success', 'A user has been created successfully');
-
             return $userManager->getLastId();
 
         } else {
-
             return $formValidator->getErrors();
         }
     }

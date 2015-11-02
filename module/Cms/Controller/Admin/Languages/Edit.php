@@ -25,14 +25,15 @@ final class Edit extends AbstractLanguage
 
         if ($language !== false) {
             $this->loadSharedPlugins();
+            $this->loadBreadcrumbs('Edit the language');
 
             return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+                'countries' => $this->getLanguageManager()->getCountries(),
                 'title' => 'Edit the language',
                 'language' => $language
             )));
 
         } else {
-
             return false;
         }
     }
@@ -47,15 +48,12 @@ final class Edit extends AbstractLanguage
         $formValidator = $this->getValidator($this->request->getPost('language'));
 
         if ($formValidator->isValid()) {
-
             if ($this->getLanguageManager()->update($this->request->getPost('language'))) {
-
                 $this->flashBag->set('success', 'The language has been updated successfully');
                 return '1';
             }
 
         } else {
-
             return $formValidator->getErrors();
         }
     }

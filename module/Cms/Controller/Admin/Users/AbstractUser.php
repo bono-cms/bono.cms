@@ -104,7 +104,7 @@ abstract class AbstractUser extends AbstractController
     final protected function loadSharedPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/users/user.form.js'));
+                   ->appendScript('@Cms/admin/users/user.form.js');
     }
 
     /**

@@ -25,7 +25,6 @@ final class Edit extends AbstractUser
 
         if ($user !== false) {
             $this->loadSharedPlugins();
-
             return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
                 'editing' => true,
                 'title' => 'Edit the user',
@@ -33,7 +32,6 @@ final class Edit extends AbstractUser
             )));
 
         } else {
-
             return false;
         }
     }
@@ -48,15 +46,12 @@ final class Edit extends AbstractUser
         $formValidator = $this->getValidator($this->request->getPost('user'), true);
 
         if ($formValidator->isValid()) {
-
             if ($this->getUserManager()->update($this->request->getPost('user'))) {
-
                 $this->flashBag->set('success', 'The user has been updated successfully');
                 return '1';
             }
 
         } else {
-
             return $formValidator->getErrors();
         }
     }

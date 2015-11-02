@@ -26,10 +26,8 @@ final class History extends AbstractController
         $this->loadPlugins();
 
         $historyManager = $this->getService('Cms', 'historyManager');
-        // User manager is used for providing user's name by his associated id in iteration
         $userManager = $this->getService('Cms', 'userManager');
 
-        // Tweak paginator
         $paginator = $historyManager->getPaginator();
         $paginator->setUrl('/admin/history/page/(:var)');
 
@@ -51,7 +49,6 @@ final class History extends AbstractController
         $historyManager = $this->getService('Cms', 'historyManager');
 
         if ($historyManager->clear()) {
-
             $this->flashBag->set('success', 'History has been cleared successfully');
             return '1';
         }
@@ -64,13 +61,7 @@ final class History extends AbstractController
      */
     private function loadPlugins()
     {
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'link' => '#',
-                'name' => 'History'
-            )
-        ));
-
-        $this->view->getPluginBag()->appendScript($this->getWithAssetPath('/admin/history.js'));
+        $this->view->getBreadcrumbBag()->addOne('History');
+        $this->view->getPluginBag()->appendScript('@Cms/admin/history.js');
     }
 }

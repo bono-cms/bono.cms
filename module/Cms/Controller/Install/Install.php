@@ -60,7 +60,7 @@ final class Install extends AbstractInstallController
 	private function loadPlugins()
 	{
 		$this->view->getPluginBag()
-				   ->appendScript($this->getWithAssetPath('/install.js'));
+				   ->appendScript('@Cms/install.js');
 
 		$this->view->getBlockBag()
 				   ->setBlocksDir($this->getWithViewPath('/blocks/', 'Cms', 'admin'));

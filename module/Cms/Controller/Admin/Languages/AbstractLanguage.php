@@ -53,7 +53,7 @@ abstract class AbstractLanguage extends AbstractController
     final protected function loadSharedPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/language/language.form.js'));
+                   ->appendScript('@Cms/admin/language/language.form.js');
     }
 
     /**
@@ -67,29 +67,15 @@ abstract class AbstractLanguage extends AbstractController
     }
 
     /**
-     * Returns shared variables for Add and Edit
+     * Loads breadcrumbs
      * 
-     * @param array $overrides
-     * @return array
+     * @param string $title
+     * @return void
      */
-    final protected function getWithSharedVars(array $overrides)
+    final protected function loadBreadcrumbs($title)
     {
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'link' => 'Cms:Admin:Languages:Browser@indexAction',
-                'name' => 'Languages'
-            ),
-            array(
-                'link' => '#',
-                'name' => $overrides['title']
-            )
-        ));
-
-        $vars = array(
-            'countries' => $this->getLanguageManager()->getCountries(),
-        );
-        
-        return array_replace_recursive($vars, $overrides);
+        $this->view->getBreadcrumbBag()->addOne('Languages', 'Cms:Admin:Languages:Browser@indexAction')
+                                       ->addOne($title);
     }
 
     /**

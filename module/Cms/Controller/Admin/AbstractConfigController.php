@@ -65,7 +65,6 @@ abstract class AbstractConfigController extends AbstractController
             return '1';
 
         } else {
-
             return $formValidator->getErrors();
         }
     }
@@ -106,15 +105,7 @@ abstract class AbstractConfigController extends AbstractController
         $this->view->getPluginBag()
                    ->appendScript($this->getWithAssetPath('/admin/config.js'));
 
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'name' => $this->moduleName,
-                'link' => sprintf('%s:Admin:Browser@indexAction', $this->moduleName)
-            ),
-            array(
-                'name' => 'Configuration',
-                'link' => '#'
-            )
-        ));
+        $this->view->getBreadcrumbBag()->addOne($this->moduleName, sprintf('%s:Admin:Browser@indexAction', $this->moduleName))
+                                       ->addOne('Configuration');
     }
 }

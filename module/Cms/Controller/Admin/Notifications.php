@@ -32,7 +32,6 @@ final class Notifications extends AbstractController
 
         // This is a very special case, so it needs to be rendered like this
         $response = $this->view->render('notifications', array(
-            
             'title' => 'Notifications',
             'dateFormat' => 'd.m.y H:i:s',
             'notifications' => $notificationManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
@@ -51,14 +50,9 @@ final class Notifications extends AbstractController
     private function loadPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/notifications.js'));
+                   ->appendScript('@Cms/admin/notifications.js');
 
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'link' => '#',
-                'name' => 'Notifications'
-            )
-        ));
+        $this->view->getBreadcrumbBag()->addOne('Notifications');
     }
 
     /**
@@ -82,7 +76,6 @@ final class Notifications extends AbstractController
             $id = $this->request->getPost('id');
 
             if ($this->getNotificationManager()->deleteById($id)) {
-
                 $this->flashBag->set('success', 'Selected notification has been removed successfully');
                 return '1';
             }
@@ -97,7 +90,6 @@ final class Notifications extends AbstractController
     public function clearAction()
     {
         if ($this->getNotificationManager()->clearAll()) {
-
             $this->flashBag->set('success', 'All notifications have been removed');
             return '1';
         }

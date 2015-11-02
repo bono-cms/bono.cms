@@ -32,13 +32,8 @@ final class Tweaks extends AbstractConfigController
     {
         $this->view->getPluginBag()
                    ->load($this->getWysiwygPluginName())
-                   ->appendScript($this->getWithAssetPath('/admin/config.js'));
+                   ->appendScript('@Cms/admin/config.js');
 
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'link' => '#',
-                'name' => 'Tweaks'
-            )
-        ));
+        $this->view->getBreadcrumbBag()->addOne('Tweaks');
     }
 }
