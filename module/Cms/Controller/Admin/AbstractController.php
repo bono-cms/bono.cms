@@ -205,7 +205,7 @@ abstract class AbstractController extends AbstractAuthAwareController
             'paramBag' => $this->paramBag,
             'languages' => $contentLanguages,
             'currentLanguage' => $languageManager->fetchByCurrentId(),
-            'perPageCounts' => $this->getPerPageCountProvider()->getPerPageCountValues(),
+            'ppc' => $this->getPerPageCountProvider()
         ));
 
         $this->view->getPluginBag()->load(array(
