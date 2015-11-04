@@ -1,6 +1,6 @@
 <?php
 
-use Krystal\Form\HtmlHelper;
+use Krystal\Form\Element;
 
 ?>
 
@@ -15,15 +15,7 @@ use Krystal\Form\HtmlHelper;
 	
 	<div class="pull-right">
 		<span class="help-block inline"><?php $this->show('Items per page'); ?>: </span>
-		
-		<select data-button="per-page-changer">
-			
-			<?php foreach($perPageCounts as $count): ?>
-			<option value="<?php echo $count->getValue(); ?>" <?php HtmlHelper::selectOnDemand($count->isCurrent()); ?>><?php echo $count->getName(); ?></option>
-			<?php endforeach; ?>
-			
-		</select>
-		
+        <?php echo Element::select(null, $ppc->getPerPageCountValues(), $ppc->getPerPageCount(), array('data-button' => 'per-page-changer')); ?>
 	</div>
 	
 	<div class="clearfix"></div>
