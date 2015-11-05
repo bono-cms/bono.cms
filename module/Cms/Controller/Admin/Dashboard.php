@@ -11,6 +11,9 @@
 
 namespace Cms\Controller\Admin;
 
+use Krystal\Db\Sql\TableBuilder;
+use Cms\Install\ModuleInstaller;
+
 final class Dashboard extends AbstractController
 {
     /**
@@ -86,11 +89,26 @@ final class Dashboard extends AbstractController
     public function installModuleAction()
     {
         if ($this->request->hasFiles('module')) {
-
+            // Get uploaded file
             $files = $this->request->getFiles('module');
-            $module = $files[0];
+            $file = $files[0];
 
-            // Logic to install a module ....
+            $installer = new ModuleInstaller('module/');
+
+            if ($installer->installFromZipFile($file->getTmpName(), $file->getName())) {
+                $schema = $installer->getSchemaContents('MySQL', 'schema.sql');
+                $pdo = $this->db['mysql']->getPdo();
+
+                $builder = new TableBuilder($pdo);
+                $builder->loadFromString($schema);
+                $builder->run();
+
+                $this->flashBag->set('success', 'A module has been installed successfully');
+            } else {
+                $this->flashBag->set('warning', 'Failed to install a module');
+            }
+
+            return '1';
         }
     }
 
