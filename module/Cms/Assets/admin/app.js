@@ -210,7 +210,30 @@ $(function(){
         errorHandler.handleResponse(response);
         $("#scroller").click();
     }
+    
+    $('[data-button="module-install"]').click(function(event){
+        event.preventDefault();
+        $('[name="module"]').click().change(function(){
 
+            var formData = new FormData();
+            formData.append('module', $(this)[0].files[0]);
+
+            $.ajax({
+                contentType: false,
+                processData: false,
+                url : '/admin/kernel/install-module.ajax',
+                data : formData,
+                success : function(response){
+                    if (response == "1"){
+                        window.location.reload();
+                    } else {
+                        console.log(response);
+                    }
+                }
+            });
+        });
+    });
+    
     $("a.mode-link").click(function(event){
         event.preventDefault();
         var mode = $(this).data('mode-id');
