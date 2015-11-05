@@ -17,5 +17,9 @@ return array(
     
     '/install.ajax' => array(
         'controller' => 'Install:Install@installAction'
+    ),
+    
+    '/install/ready' => array(
+        'controller' => 'Install:Install@readyAction'
     )
 );

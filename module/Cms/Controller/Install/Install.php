@@ -44,9 +44,7 @@ final class Install extends AbstractInstallController
             if ($formValidator->isValid()) {
 
                 $installer = new StorageInstaller();
-                $result = $installer->install('db.config.php', $input);
-
-                $result = $this->processAll($input);
+                $result = $installer->installFromDump('db.config.php', 'dump.sql', $input);
 
                 if (!$result) {
                     return $this->translator->translate('Cannot connect to database server. Make sure the data is valid!');
@@ -58,6 +56,20 @@ final class Install extends AbstractInstallController
                 return $formValidator->getErrors();
             }
         }
+    }
+
+    /**
+     * Renders congratulations
+     * 
+     * @return string
+     */
+    public function readyAction()
+    {
+        $this->loadPlugins();
+
+        return $this->view->render('ready', array(
+            'title' => 'You are arrived!'
+        ));
     }
 
     /**
