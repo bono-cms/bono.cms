@@ -79,6 +79,22 @@ final class Dashboard extends AbstractController
     }
 
     /**
+     * Installs a module from ZIP archive
+     * 
+     * @return string
+     */
+    public function installModuleAction()
+    {
+        if ($this->request->hasFiles('module')) {
+
+            $files = $this->request->getFiles('module');
+            $module = $files[0];
+
+            // Logic to install a module ....
+        }
+    }
+
+    /**
      * Changes a mode
      * 
      * @return string
