@@ -25,8 +25,9 @@ interface ModuleInstallerInterface
     /**
      * Installs a module from ZIP archive
      * 
-     * @param string $file
+     * @param string $path
+     * @param string $name
      * @return boolean
      */
-    public function installFromZipFile($file);
+    public function installFromZipFile($path, $name);
 }

@@ -11,6 +11,8 @@
 
 namespace Cms\Install;
 
+use ZipArchive;
+
 final class ModuleInstaller implements ModuleInstallerInterface
 {
     /**
@@ -65,14 +67,15 @@ final class ModuleInstaller implements ModuleInstallerInterface
     /**
      * Installs a module from ZIP archive
      * 
-     * @param string $file
+     * @param string $path
+     * @param string $name
      * @return boolean
      */
-    public function installFromZipFile($file)
+    public function installFromZipFile($path, $name)
     {
-        if (!$this->isAlreadyInstalled($file)) {
-            if ($this->extractFromZip($file) && $this->renameFreshFolder($file)){
-                $this->module = $this->sanitizeFolderName($this->extractFileName($file));
+        if (!$this->isAlreadyInstalled($name)) {
+            if ($this->extractFromZip($path) && $this->renameFreshFolder($name)) {
+                $this->module = $this->sanitizeFolderName($this->extractFileName($name));
                 return true;
             } else {
                 return false;
