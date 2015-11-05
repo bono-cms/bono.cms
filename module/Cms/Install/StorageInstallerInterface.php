@@ -17,8 +17,9 @@ interface StorageInstallerInterface
      * Installs storage-relevant data
      * 
      * @param string $path The path to database configuration file
+     * @param string $dumpFile The path to the dump file
      * @param array $details
      * @return boolean
      */
-    public function install($path, array $details);
+    public function installFromDump($path, $dumpFile, array $details);
 }
