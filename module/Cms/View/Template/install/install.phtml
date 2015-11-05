@@ -1,3 +1,8 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
 
 <form>
 	<div class="panel panel-primary">
@@ -20,7 +25,7 @@
 		<label class="col-lg-2 control-label"><?php $this->show('Host'); ?></label>
 		<div class="col-lg-10">
 			<div class="input-group">
-				<input type="text" name="db[host]" class="form-control" placeholder="<?php $this->show('The path to remote host, where MySQL installed'); ?>" />
+				<?php echo Element::text('db[host]', null, array('class' => 'form-control', 'placeholder' => $this->translate('The path to remote host, where MySQL installed'))); ?>
 				<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 			</div>
 		</div>
@@ -30,7 +35,7 @@
 		<label class="col-lg-2 control-label"><?php $this->show('Database'); ?></label>
 		<div class="col-lg-10">
 			<div class="input-group">
-				<input type="text" name="db[dbname]" class="form-control" placeholder="<?php $this->show('Database name. It must be created before'); ?>" />
+                <?php echo Element::text('db[dbname]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Database name. It must be created before'))); ?>
 				<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 			</div>
 		</div>
@@ -40,7 +45,7 @@
 		<label class="col-lg-2 control-label"><?php $this->show('User'); ?></label>
 		<div class="col-lg-10">
 			<div class="input-group">
-				<input type="text" name="db[username]" class="form-control" placeholder="<?php $this->show('Database user'); ?>" />
+                <?php echo Element::text('db[username]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Database user'))); ?>
 				<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 			</div>
 		</div>
@@ -50,12 +55,11 @@
 		<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
 		<div class="col-lg-10">
 			<div class="input-group">
-				<input type="text" name="db[password]" class="form-control" placeholder="<?php $this->show('Password'); ?>" />
+                <?php echo Element::text('db[password]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Password'))); ?>
 				<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 			</div>
 		</div>
 	</div>
 
 	<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-hdd"></i> <?php $this->show('Install'); ?></button>
-	
 </form>
