@@ -11,7 +11,7 @@ $(function(){
 			type : 'POST',
 			success : function(response){
 				if (response == "1") {
-					alert('OK');
+                    window.location = '/install/ready';
 				} else {
 					$.showErrors(response);
 				}
