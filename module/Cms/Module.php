@@ -27,18 +27,6 @@ final class Module extends AbstractCmsModule
     /**
      * {@inheritDoc}
      */
-    public function getRoutes()
-    {
-        return array_merge(
-            // Installation wizard, is not completely ready yet, so its routes are ignored for now
-            // include(__DIR__ . '/Config/routes.install.php')
-            include(__DIR__ . '/Config/routes.php')
-        );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getTranslations($language)
     {
         return array_merge(
