@@ -44,7 +44,7 @@ final class Install extends AbstractInstallController
             if ($formValidator->isValid()) {
 
                 $installer = new StorageInstaller();
-                $result = $installer->installFromDump('db.config.php', 'dump.sql', $input);
+                $result = $installer->installFromDump('config/mysql.config.php', 'dump.sql', $input);
 
                 if (!$result) {
                     return $this->translator->translate('Cannot connect to database server. Make sure the data is valid!');
