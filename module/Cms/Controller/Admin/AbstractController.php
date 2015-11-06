@@ -13,7 +13,7 @@ namespace Cms\Controller\Admin;
 
 use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Application\Controller\AbstractAuthAwareController;
-use Krystal\Form\Providers\PerPageCount;
+use Krystal\Form\Gadget\PerPageCount;
 use Cms\View\RoleHelper;
 
 abstract class AbstractController extends AbstractAuthAwareController
@@ -111,7 +111,7 @@ abstract class AbstractController extends AbstractAuthAwareController
      */
     final protected function getSharedPerPageCount()
     {
-        return $this->getPerPageCountProvider()->getPerPageCount();
+        return $this->getPerPageCountGadget()->getPerPageCount();
     }
 
     /**
@@ -146,19 +146,19 @@ abstract class AbstractController extends AbstractAuthAwareController
     }
 
     /**
-     * Returns per page count provider
+     * Returns per page count gadget
      * 
-     * @return \Krystal\Form\Provider\PerPageCount
+     * @return \Krystal\Form\Gadget\PerPageCount
      */
-    final protected function getPerPageCountProvider()
+    final protected function getPerPageCountGadget()
     {
-        static $provider = null;
+        static $gadget = null;
 
-        if (is_null($provider)) {
-            $provider = new PerPageCount($this->request->getCookieBag(), 'admin_pgc', 5);
+        if (is_null($gadget)) {
+            $gadget = new PerPageCount($this->request->getCookieBag(), 'admin_pgc', 5);
         }
 
-        return $provider;
+        return $gadget;
     }
 
     /**
@@ -205,7 +205,7 @@ abstract class AbstractController extends AbstractAuthAwareController
             'paramBag' => $this->paramBag,
             'languages' => $contentLanguages,
             'currentLanguage' => $languageManager->fetchByCurrentId(),
-            'ppc' => $this->getPerPageCountProvider()
+            'ppc' => $this->getPerPageCountGadget()
         ));
 
         $this->view->getPluginBag()->load(array(

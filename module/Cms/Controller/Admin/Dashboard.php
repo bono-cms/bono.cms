@@ -146,7 +146,7 @@ final class Dashboard extends AbstractController
     {
         $count = $this->request->getPost('count');
         
-        $this->getPerPageCountProvider()->setPerPageCount($count);
+        $this->getPerPageCountGadget()->setPerPageCount($count);
         return '1';
     }
 
