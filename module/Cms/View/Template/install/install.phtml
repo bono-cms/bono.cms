@@ -5,22 +5,8 @@ use Krystal\Form\Element;
 ?>
 
 <form>
-	<div class="panel panel-primary">
-	  <div class="panel-heading">
-		<h3 class="panel-title"><i class="glyphicon glyphicon-wrench"></i> <?php $this->show('Installation wizard'); ?></h3>
-	  </div>
-	  <div class="panel-body">
-		<p>
-			In order to install the system, just provide following data. 
-			Bono CMS is distributed under <a href="http://www.gnu.org/licenses/quick-guide-gplv3.html">GPL licence</a>. 
-			By installing the system, you'd agree to the license automatically.
-			If you don't agree don't install and don't use it.
-		</p>
-	  </div>
-	</div>
-	
-	<br />
-	
+    <h2 class="page-header"><i class="glyphicon glyphicon-hdd"></i> <?php $this->show('Database configuration'); ?> / MySQL</h2>
+    
 	<div class="form-group clearfix">
 		<label class="col-lg-2 control-label"><?php $this->show('Host'); ?></label>
 		<div class="col-lg-10">
