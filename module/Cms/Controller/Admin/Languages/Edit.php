@@ -27,11 +27,11 @@ final class Edit extends AbstractLanguage
             $this->loadSharedPlugins();
             $this->loadBreadcrumbs('Edit the language');
 
-            return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+            return $this->view->render($this->getTemplatePath(), array(
                 'countries' => $this->getLanguageManager()->getCountries(),
                 'title' => 'Edit the language',
                 'language' => $language
-            )));
+            ));
 
         } else {
             return false;
