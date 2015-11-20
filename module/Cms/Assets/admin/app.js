@@ -537,14 +537,8 @@ $(function(){
     $("td > a.view").click(function(event) {
         event.preventDefault();
     });
-
     
     $form = $("form");
-    
-    //if ($form.attr('data-wysiwyg')){
-        //console.log($form.data('wysiwyg'));
-        //$.wysiwyg.init($form.data('wysiwyg'));
-    //}
     
     if ($form.attr('data-group')) {
         $.setFormGroup($form.data('group'));
