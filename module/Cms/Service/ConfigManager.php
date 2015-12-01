@@ -44,6 +44,7 @@ final class ConfigManager extends AbstractConfigManager
                ->setKeepTrack((bool) ($this->get('keep_track')))
                ->setSiteEnabled((bool) ($this->get('site_enabled')))
                // No need to escape this
-               ->setSiteDownReason(($this->get('site_down_reason')));
+               ->setSiteDownReason(($this->get('site_down_reason')))
+               ->setInstalled((bool) $this->get('installed'));
     }
 }
