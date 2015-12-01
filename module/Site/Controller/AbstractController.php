@@ -160,6 +160,7 @@ abstract class AbstractController extends BaseController
     final protected function bootstrap()
     {
         $this->validateRequest();
+        $this->validateInstallationState();
 
         $this->validatorFactory->setRenderer(new Renderer\StandardJson());
         $this->view->setLayout('__layout__');
@@ -186,6 +187,21 @@ abstract class AbstractController extends BaseController
             ));
 
             die($response);
+        }
+    }
+
+    /**
+     * Validates installation status
+     * 
+     * @return void
+     */
+    private function validateInstallationState()
+    {
+        $configManager = $this->getService('Cms', 'configManager');
+        $installed = $configManager->get('installed');
+
+        if (!$installed) {
+            $this->redirectToRoute('Cms:Install:Install@indexAction');
         }
     }
 
