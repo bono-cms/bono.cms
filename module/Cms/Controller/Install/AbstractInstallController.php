@@ -25,6 +25,21 @@ abstract class AbstractInstallController extends AbstractController
     }
 
     /**
+     * Checks whether the system has been already installed
+     * 
+     * @return void
+     */
+    final protected function checkIfInstalled()
+    {
+        $configManager = $this->getModuleService('configManager');
+        $installed = $configManager->get('installed') == true;
+        
+        if ($installed) {
+            die('Already installed');
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     final protected function bootstrap()

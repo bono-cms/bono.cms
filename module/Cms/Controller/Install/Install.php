@@ -22,6 +22,7 @@ final class Install extends AbstractInstallController
      */
     public function indexAction()
     {
+        $this->checkIfInstalled();
         $this->loadPlugins();
 
         return $this->view->render('install', array(
@@ -36,6 +37,8 @@ final class Install extends AbstractInstallController
      */
     public function installAction()
     {
+        $this->checkIfInstalled();
+
         if ($this->request->hasPost('db')) {
 
             $input = $this->request->getPost('db');
@@ -49,6 +52,12 @@ final class Install extends AbstractInstallController
                 if (!$result) {
                     return $this->translator->translate('Cannot connect to database server. Make sure the data is valid!');
                 } else {
+                    // Save for the next action
+                    $this->sessionBag->set('installed', true);
+
+                    $configManager = $this->getModuleService('configManager');
+                    $configManager->write(array('installed' => true));
+
                     return '1';
                 }
 
@@ -65,6 +74,13 @@ final class Install extends AbstractInstallController
      */
     public function readyAction()
     {
+        // Direct call protection
+        if (!$this->sessionBag->has('installed')) {
+            $this->checkIfInstalled();
+        } else {
+            $this->sessionBag->remove('installed');
+        }
+
         $this->loadPlugins();
 
         return $this->view->render('ready', array(
