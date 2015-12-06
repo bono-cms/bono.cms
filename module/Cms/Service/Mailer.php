@@ -43,17 +43,6 @@ final class Mailer implements MailerInterface
     }
 
     /**
-     * Loads mailer library
-     * 
-     * @return void
-     */
-    private function loadLibrary()
-    {
-        // Yeah, obviously that's not the best way to include the library
-        require(dirname(dirname(dirname(__DIR__)))) . '/vendor/SwiftMailer/swift_required.php';
-    }
-
-    /**
      * Sends a mail
      * 
      * @param string Message's subject
@@ -63,8 +52,6 @@ final class Mailer implements MailerInterface
      */
     public function send($subject, $text, $notification = 'You have received a new message')
     {
-        $this->loadLibrary();
-
         // If we have SMTP transport turned on, then we'd use appropriate Swift's transport
         if ($this->config->getUseSmtpDriver() != true) {
             // SMTP transport
