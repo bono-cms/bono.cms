@@ -1,0 +1,11 @@
+{
+    "require": {
+        "no-global-state/krystal": "dev-master#1.2",
+        "swiftmailer/swiftmailer": "^5.4"
+    },
+    "autoload": {
+    	"psr-0": {
+    		"": "module/"
+    	}
+    }
+}
