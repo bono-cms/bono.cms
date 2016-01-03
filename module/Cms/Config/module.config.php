@@ -18,4 +18,5 @@
   'keep_track' => '1',
   'notification_email' => 'admin@example.cz',
   'domain' => 'bono.ml',
+  'installed' => true,
 );

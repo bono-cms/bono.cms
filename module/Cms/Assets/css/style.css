@@ -38,7 +38,7 @@ header {
 
 main {
  margin : 20px;
- background-color : #F7F7F7;
+ background-color : #fff;
  border : 3px solid #ccc;
  padding : 8px;
  border-radius : 18px;
@@ -64,6 +64,7 @@ a > img:hover, a > img:focus {
 
 ul.breadcrumb {
  margin-bottom: 19px;
+ background-color: #fff;
 }
 
 textarea {
