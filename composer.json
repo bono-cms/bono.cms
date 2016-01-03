@@ -1,6 +1,6 @@
 {
     "require": {
-        "no-global-state/krystal": "dev-master#1.2",
+        "no-global-state/krystal": "1.2.x",
         "swiftmailer/swiftmailer": "^5.4"
     },
     "autoload": {
