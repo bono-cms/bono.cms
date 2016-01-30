@@ -82,6 +82,8 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     {
         return $this->db->select('*')
                         ->from(static::getTableName())
+                        ->orderBy('id')
+                        ->desc()
                         ->queryAll();
     }
 
