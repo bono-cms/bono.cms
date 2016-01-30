@@ -22,6 +22,13 @@ namespace Cms\Controller\Admin;
 abstract class AbstractConfigController extends AbstractController
 {
     /**
+     * Parent breadcrumb
+     * 
+     * @var string
+     */
+    protected $parent = null;
+
+    /**
      * Returns validation rules for target form input
      * 
      * @return array
@@ -105,7 +112,11 @@ abstract class AbstractConfigController extends AbstractController
         $this->view->getPluginBag()
                    ->appendScript($this->getWithAssetPath('/admin/config.js'));
 
-        $this->view->getBreadcrumbBag()->addOne($this->moduleName, sprintf('%s:Admin:Browser@indexAction', $this->moduleName))
+        if (is_null($this->parent)) {
+            $this->parent = sprintf('%s:Admin:Browser@indexAction', $this->moduleName);
+        }
+
+        $this->view->getBreadcrumbBag()->addOne($this->moduleName, $this->parent)
                                        ->addOne('Configuration');
     }
 }

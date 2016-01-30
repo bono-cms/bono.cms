@@ -10,12 +10,12 @@ use Krystal\Form\Element;
 		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
 	  </button>
 	  <ul class="dropdown-menu">
-		 <li><a href="<?php echo $this->url('Cms:Admin:Languages:Add@indexAction'); ?>"><i class="glyphicon glyphicon-globe"></i> <?php $this->show('Add a language'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Cms:Admin:Languages@addAction'); ?>"><i class="glyphicon glyphicon-globe"></i> <?php $this->show('Add a language'); ?></a></li>
 		 <li class="divider"></li>
 		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
 		
 		 <?php if (!empty($langs)): ?>
-		 <li><a href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Languages:Browser@saveAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
+		 <li><a href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Languages@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <?php else: ?>
 		 <li class="disabled"><a><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <?php endif; ?>
@@ -58,7 +58,7 @@ use Krystal\Form\Element;
                         <?php echo Element::radio('default', $language->getId(), $language->getDefault()); ?>
 					</td>
 					<td class="text-center">
-						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this language'); ?>" data-button="edit" href="<?php echo $this->url('Cms:Admin:Languages:Edit@indexAction', $language->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this language'); ?>" data-button="edit" href="<?php echo $this->url('Cms:Admin:Languages@editAction', $language->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
 						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this language'); ?>" data-button="delete" data-id="<?php echo $language->getId(); ?>" data-category="language" href="#"><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
 				</tr>
