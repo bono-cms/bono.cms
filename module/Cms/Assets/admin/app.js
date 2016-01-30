@@ -470,14 +470,14 @@ $(function(){
             });
         };
         
-        $(btnSelector).click(function(event) {
+        $(btnSelector).click(function(event){
             event.preventDefault();
             $(modalSelector).modal();
-            
+
             var category = $(this).data('category');
             var id = $(this).data('id');
             var message = $(this).data('message');
-            
+
             // If there's a custom message, then display it instead of default one
             if (message){
                 $(modalSelector).find('.modal-body').html(message);
