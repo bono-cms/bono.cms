@@ -4,7 +4,7 @@
   <textarea class="full" name="notepad"><?php echo $content; ?></textarea>
  </div>
 
- <button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
- <button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+ <button data-button="save" data-url="<?php echo $this->url('Cms:Admin:Notepad@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+ <button data-button="cancel" data-url="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
 
 </form>

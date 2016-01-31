@@ -16,35 +16,6 @@ use Cms\Controller\Admin\AbstractController;
 final class Notepad extends AbstractController
 {
     /**
-     * Shows a notepad
-     * 
-     * @return string
-     */
-    public function indexAction()
-    {
-        $this->loadPlugins();
-
-        return $this->view->render('notepad', array(
-            'content' => $this->getNotepadManager()->fetch(),
-            'title' => 'Notepad'
-        ));
-    }
-
-    /**
-     * Loads required plugins
-     * 
-     * @return void
-     */
-    private function loadPlugins()
-    {
-        $this->view->getPluginBag()
-                   ->load($this->getWysiwygPluginName())
-                   ->appendScript('@Cms/admin/notepad.js');
-
-        $this->view->getBreadcrumbBag()->addOne('Notepad');
-    }
-
-    /**
      * Returns notepad manager
      * 
      * @return \Cms\Service\NotepadManager
@@ -52,6 +23,28 @@ final class Notepad extends AbstractController
     private function getNotepadManager()
     {
         return $this->getService('Cms', 'notepadManager');
+    }
+
+    /**
+     * Renders a notepad
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        // Load view plugins
+        $this->view->getPluginBag()
+                   ->load($this->getWysiwygPluginName())
+                   ->appendScript('@Cms/admin/notepad.js');
+
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Notepad');
+
+        return $this->view->render('notepad', array(
+            'content' => $this->getNotepadManager()->fetch(),
+            'title' => 'Notepad'
+        ));
     }
 
     /**
