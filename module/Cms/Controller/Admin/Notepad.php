@@ -34,8 +34,7 @@ final class Notepad extends AbstractController
     {
         // Load view plugins
         $this->view->getPluginBag()
-                   ->load($this->getWysiwygPluginName())
-                   ->appendScript('@Cms/admin/notepad.js');
+                   ->load($this->getWysiwygPluginName());
 
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()

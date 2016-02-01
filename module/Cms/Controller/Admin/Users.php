@@ -110,14 +110,7 @@ final class Users extends AbstractController
      */
     public function deleteAction()
     {
-        if ($this->request->hasPost('id')) {
-            $id = $this->request->getPost('id');
-
-            if ($this->getUserManager()->deleteById($id)) {
-                $this->flashBag->set('success', 'Selected user has been removed successfully');
-                return '1';
-            }
-        }
+        return $this->invokeRemoval('userManager');
     }
 
     /**
@@ -129,7 +122,7 @@ final class Users extends AbstractController
     {
         $input = $this->request->getPost('user');
 
-        $formValidator = $this->validatorFactory->build(array(
+        return $this->invokeSave('userManager', $input['id'], $input, array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
@@ -141,25 +134,5 @@ final class Users extends AbstractController
                 )
             )
         ));
-
-        if ($formValidator->isValid()) {
-            $userManager = $this->getUserManager();
-
-            if ($input['id']) {
-                if ($userManager->update($input)) {
-                    $this->flashBag->set('success', 'The user has been updated successfully');
-                    return '1';
-                }
-
-            } else {
-                $userManager->add($input);
-
-                $this->flashBag->set('success', 'A user has been created successfully');
-                return $userManager->getLastId();
-            }
-
-        } else {
-            return $formValidator->getErrors();
-        }
     }
 }

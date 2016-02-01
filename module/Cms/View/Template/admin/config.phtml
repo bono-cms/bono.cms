@@ -48,7 +48,7 @@ use Krystal\Form\Element;
 				<div class="form-group clearfix">
 					<label class="col-lg-2 control-label"><?php $this->show('Message'); ?></label>
 					<div class="col-lg-10">
-                        <?php echo Element::textarea('config[site_down_reason]', $config->getSiteDownReason()); ?>
+                        <?php echo Element::textarea('config[site_down_reason]', $config->getSiteDownReason(), array('data-wysiwyg' => 'true')); ?>
 					</div>
 				</div>
 			</div>

@@ -1,7 +1,7 @@
 <form>
  
  <div class="well clearfix">
-  <textarea class="full" name="notepad"><?php echo $content; ?></textarea>
+  <textarea class="full" data-wysiwyg="true" name="notepad"><?php echo $content; ?></textarea>
  </div>
 
  <button data-button="save" data-url="<?php echo $this->url('Cms:Admin:Notepad@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
