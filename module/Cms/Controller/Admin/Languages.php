@@ -96,14 +96,7 @@ final class Languages extends AbstractController
      */
     public function deleteAction()
     {
-        if ($this->request->hasPost('id')) {
-            $id = $this->request->getPost('id');
-
-            if ($this->getLanguageManager()->deleteById($id)) {
-                $this->flashBag->set('success', 'Selected language has been removed successfully');
-                return '1';
-            }
-        }
+        return $this->invokeRemoval('languageManager');
     }
 
     /**
@@ -176,7 +169,7 @@ final class Languages extends AbstractController
     {
         $input = $this->request->getPost('language');
 
-        $formValidator = $this->validatorFactory->build(array(
+        return $this->invokeSave('languageManager', $input['id'], $input, array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
@@ -186,25 +179,5 @@ final class Languages extends AbstractController
                 )
             )
         ));
-
-        if ($formValidator->isValid()) {
-            $languageManager = $this->getModuleService('languageManager');
-
-            if ($input['id']) {
-                if ($languageManager->update($this->request->getPost('language'))) {
-                    $this->flashBag->set('success', 'The language has been updated successfully');
-                    return '1';
-                }
-
-            } else {
-                if ($languageManager->add($this->request->getPost('language'))) {
-                    $this->flashBag->set('success', 'A language has been added successfully');
-                    return $languageManager->getLastId();
-                }
-            }
-            
-        } else {
-            return $formValidator->getErrors();
-        }
     }
 }
