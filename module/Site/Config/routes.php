@@ -10,9 +10,8 @@
  */
 
 return array(
-    
     '/captcha/render/(:var)' => array(
-        'controller' => 'Captcha@renderAction'
+        'controller' => 'Main@captchaAction'
     ),
     
     // For changing language

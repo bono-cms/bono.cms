@@ -54,6 +54,16 @@ final class Main extends AbstractController
     }
 
     /**
+     * Renders CAPTCHA
+     * 
+     * @return void
+     */
+    public function captchaAction()
+    {
+        $this->captcha->render();
+    }
+
+    /**
      * This action is executed when user requested not-existing page
      * 
      * @return string
