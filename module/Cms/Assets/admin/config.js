@@ -1,6 +1,4 @@
 $(function(){
-	$.wysiwyg.init(['config[site_down_reason]']);
-	
 	var handle = function(state){
 		// Do the batch for email elements
 		$("[name='config[smtp_secure_layer]'], [name='config[smtp_host]'], [name='config[smtp_username]'], [name='config[smtp_password]'], [name='config[smtp_port]']")

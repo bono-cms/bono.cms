@@ -1,3 +1,0 @@
-$(function(){
-	$.wysiwyg.init(['notepad']);
-});
