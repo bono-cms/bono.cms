@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Deprecated PNG icons. Since now FA-icons are used instead
  * Renamed "Menu" item to "System" at the top right corner
  * Fixed issue with responsiveness
  * Changed sorting order to DESC for users grid
