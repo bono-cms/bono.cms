@@ -2,7 +2,15 @@
  * Copyright (c) No Global State Lab
  */
 
- 
+.well {
+  background-color: initial;
+  border: none;
+}
+
+.white {
+ color: #fff !important;
+}
+
 ::-moz-selection { /* for Firefox */
  background: black;
  color: white;
@@ -47,13 +55,17 @@ main {
  -khtml-border-radius : 18px;
 }
 
-a > img {
+.fa {
+  color: #444444;
+}
+
+a > i {
  transition: opacity .7s;
  -webkit-transition: opacity .7s;
  -moz-transition: opacity .7s;
 }
 
-a > img:hover, a > img:focus {
+a > i:hover, a > i:focus {
  opacity: 0.5;
  -moz-opacity: 0.5;
  -webkit-opacity: 0.5;
