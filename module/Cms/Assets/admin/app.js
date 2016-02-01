@@ -67,7 +67,7 @@ $(function(){
             }
         }
     };
-
+    
     // Error handler class written for Bootstrap 3.x
     var errorHandler = {
         /**
@@ -210,6 +210,12 @@ $(function(){
         errorHandler.handleResponse(response);
         $("#scroller").click();
     }
+    
+    // Automatic initialization based on element attribute
+    $("[data-wysiwyg='true']").each(function(){
+        var name = $(this).attr('name');
+        $.wysiwyg.init([name]);
+    });
     
     $('[data-button="module-install"]').click(function(event){
         event.preventDefault();
