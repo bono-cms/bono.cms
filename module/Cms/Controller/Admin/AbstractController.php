@@ -80,6 +80,72 @@ abstract class AbstractController extends AbstractAuthAwareController
     }
 
     /**
+     * Invokes a removal process on service object
+     * That's a shared invoker for all module controllers
+     * 
+     * @param object $on Module service name
+     * @return string
+     */
+    final protected function invokeRemoval($on)
+    {
+        $service = $this->getModuleService($on);
+
+        // Batch removal
+        if ($this->request->hasPost('toDelete') && method_exists($service, 'deleteByIds')) {
+            $ids = array_keys($this->request->getPost('toDelete'));
+
+            $service->deleteByIds($ids);
+            $this->flashBag->set('success', 'Selected elements have been removed successfully');
+
+        } else {
+            $this->flashBag->set('warning', 'You should select at least one element to remove');
+        }
+
+        // Single removal
+        if ($this->request->hasPost('id') && method_exists($service, 'deleteById')) {
+            $id = $this->request->getPost('id');
+
+            $service->deleteById($id);
+            $this->flashBag->set('success', 'Selected element has been removed successfully');
+        }
+
+        return '1';
+    }
+
+    /**
+     * Invokes save process
+     * 
+     * @param string $on
+     * @param array $data
+     * @param array $rules
+     * @return string
+     */
+    final protected function invokeSave($on, $id, array $data, array $rules)
+    {
+        $formValidator = $this->createValidator($rules);
+
+        if ($formValidator->isValid()) {
+            $service = $this->getModuleService($on);
+
+            if (!empty($id)) {
+                if ($service->update($data)) {
+                    $this->flashBag->set('success', 'The element has been updated successfully');
+                    return '1';
+                }
+
+            } else {
+                if ($service->add($data)) {
+                    $this->flashBag->set('success', 'The element has been created successfully');
+                    return $service->getLastId();
+                }
+            }
+
+        } else {
+            return $formValidator->getErrors();
+        }
+    }
+
+    /**
      * Calls filter() method in provided service
      * 
      * @param \Krystal\Db\Filter\FilterableServiceInterface $service
