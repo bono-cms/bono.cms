@@ -70,10 +70,15 @@ final class Main extends AbstractController
      */
     public function notFoundAction()
     {
-        $controller = 'Pages:Page@notFoundAction';
+        // If triggering 404 from administration area
+        if (strpos($this->request->getUri(), '/admin') !== false) {
+            return $this->translator->translate('Invalid parameter supplied');
+        } else {
+            $controller = 'Pages:Page@notFoundAction';
 
-        // Passing null will trigger 404's action
-        return $this->forward($controller, array(null));
+            // Passing null will trigger 404's action
+            return $this->forward($controller, array(null));
+        }
     }
 
     /**

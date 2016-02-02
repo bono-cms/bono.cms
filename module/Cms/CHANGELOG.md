@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with 404 page for administration controllers
  * Deprecated PNG icons. Since now FA-icons are used instead
  * Renamed "Menu" item to "System" at the top right corner
  * Fixed issue with responsiveness
