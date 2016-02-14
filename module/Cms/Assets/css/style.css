@@ -11,6 +11,10 @@
  color: #fff !important;
 }
 
+td {
+ vertical-align: middle !important;
+}
+
 ::-moz-selection { /* for Firefox */
  background: black;
  color: white;
