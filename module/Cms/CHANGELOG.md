@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Forced to always display summary in grids
  * Fixed issue with country flags when creating languages
  * Fixed issue with 404 page for administration controllers
  * Deprecated PNG icons. Since now FA-icons are used instead
