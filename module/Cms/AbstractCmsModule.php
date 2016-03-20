@@ -160,14 +160,13 @@ abstract class AbstractCmsModule extends AbstractModule
     final protected function getMapper($namespace, $withLang = true)
     {
         $mapperFactory = $this->getServiceLocator()->get('mapperFactory');
-
         $mapper = $mapperFactory->build($namespace);
 
         if ($withLang && method_exists($mapper, 'setLangId')) {
             $languageManager = $this->getCmsModule()->getService('languageManager');
             $mapper->setLangId($languageManager->getCurrentId());
         }
-        
+
         return $mapper;
     }
 }
