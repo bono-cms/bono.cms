@@ -37,7 +37,7 @@ use Krystal\Form\HtmlHelper;
 					<select name="language[flag]" class="form-control">
 						
 						<?php foreach ($countries as $code => $name): ?>
-						<option data-flag="<?php printf('famfamfam-flag-%s', $code); ?>" <?php HtmlHelper::selectOnDemand($code == $language->getCode()); ?> value="<?php echo $code; ?>"><?php echo $name; ?></option>
+						<option data-flag="<?php printf('famfamfam-flag-%s', $code); ?>" <?php HtmlHelper::selectOnDemand($code == $language->getFlag()); ?> value="<?php echo $code; ?>"><?php echo $name; ?></option>
 						<?php endforeach; ?>
 						
 					</select>

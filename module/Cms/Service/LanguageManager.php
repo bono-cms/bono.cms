@@ -72,7 +72,8 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
             ->setPublished((bool) $language['published'])
             ->setOrder((int) $language['order'])
             ->setDefault((bool) $this->isDefault($language['id']))
-            ->setCode(Filter::escape($language['code']));
+            ->setCode(Filter::escape($language['code']))
+            ->setFlag($language['flag']);
 
         return $entity;
     }

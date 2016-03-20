@@ -46,7 +46,7 @@ use Krystal\Form\Element;
 				<?php foreach ($langs as $language): ?>
 				<tr>
 					<td class="text-center text-muted"><?php echo $language->getId(); ?></td>
-					<td class="text-center"><i class="<?php printf('famfamfam-flag-%s', $language->getCode()); ?>"></i> <?php echo $language->getName(); ?></td>
+					<td class="text-center"><i class="<?php printf('famfamfam-flag-%s', $language->getFlag()); ?>"></i> <?php echo $language->getName(); ?></td>
 					<td class="text-center"><?php echo $language->getCode(); ?></td>
 					<td class="text-center col-md-1">
                         <?php echo Element::number(sprintf('order[%s]', $language->getId()), $language->getOrder(), array('class' => 'form-control center-block', 'min' => '0')); ?>
