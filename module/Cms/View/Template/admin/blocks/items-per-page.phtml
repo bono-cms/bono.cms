@@ -4,7 +4,7 @@ use Krystal\Form\Element;
 
 ?>
 
-<?php if (isset($paginator) && $paginator->hasPages()): ?>
+<?php if (isset($paginator)): ?>
 
 <div class="per-page-container">
 	<h4 class="inline"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show($caption); ?> 
@@ -19,7 +19,7 @@ use Krystal\Form\Element;
 	</div>
 	
 	<div class="clearfix"></div>
-	
+    
 </div>
 
 <?php else: ?>
