@@ -80,7 +80,7 @@
 			<?php foreach ($languages as $language): ?>
 			<li>
 				<a data-button="change-content-language" data-language-id="<?php echo $language->getId(); ?>" href="#">
-					<i class="<?php printf('famfamfam-flag-%s', $language->getCode()); ?>"></i> 
+					<i class="<?php printf('famfamfam-flag-%s', $language->getFlag()); ?>"></i> 
 					<?php if ($language->getId() == $currentLanguage->getId()): ?>
 					<strong><?php echo $language->getName(); ?></strong>
 					<?php else: ?>
