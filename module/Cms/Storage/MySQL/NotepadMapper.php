@@ -19,7 +19,10 @@ final class NotepadMapper extends AbstractMapper implements NotepadMapperInterfa
     /**
      * {@inheritDoc}
      */
-    protected $table = 'bono_module_cms_notepad';
+    public static function getTableName()
+    {
+        return self::getWithPrefix('bono_module_cms_notepad');
+    }
 
     /**
      * Checks whether notepad's data with provided user's id exists
@@ -31,7 +34,7 @@ final class NotepadMapper extends AbstractMapper implements NotepadMapperInterfa
     {
         return (bool) $this->db->select()
                         ->count('user_id', 'count')
-                        ->from($this->table)
+                        ->from(self::getTableName())
                         ->whereEquals('user_id', $userId)
                         ->query('count');
     }
@@ -45,11 +48,9 @@ final class NotepadMapper extends AbstractMapper implements NotepadMapperInterfa
      */
     public function insert($userId, $content)
     {
-        return $this->db->insert($this->table, array(
-            
+        return $this->db->insert(self::getTableName(), array(
             'user_id' => $userId,
             'content' => $content
-            
         ))->execute();
     }
 
@@ -62,7 +63,7 @@ final class NotepadMapper extends AbstractMapper implements NotepadMapperInterfa
      */
     public function update($userId, $content)
     {
-        return $this->db->update($this->table, array('content' => $content))
+        return $this->db->update(self::getTableName(), array('content' => $content))
                         ->whereEquals('user_id', $userId)
                         ->execute();
     }
@@ -76,7 +77,7 @@ final class NotepadMapper extends AbstractMapper implements NotepadMapperInterfa
     public function fetchByUserId($userId)
     {
         return $this->db->select('content')
-                        ->from($this->table)
+                        ->from(self::getTableName())
                         ->whereEquals('user_id', $userId)
                         ->query('content');
     }

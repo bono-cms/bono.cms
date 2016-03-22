@@ -21,7 +21,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
      */
     public static function getTableName()
     {
-        return 'bono_module_cms_users';
+        return self::getWithPrefix('bono_module_cms_users');
     }
 
     /**

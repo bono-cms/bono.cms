@@ -21,7 +21,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
      */
     public static function getTableName()
     {
-        return 'bono_module_cms_webpages';
+        return self::getWithPrefix('bono_module_cms_webpages');
     }
 
     /**

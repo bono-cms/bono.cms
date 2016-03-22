@@ -21,7 +21,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
      */
     public static function getTableName()
     {
-        return 'bono_module_cms_languages';
+        return self::getWithPrefix('bono_module_cms_languages');
     }
 
     /**

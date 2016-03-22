@@ -21,7 +21,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
      */
     public static function getTableName()
     {
-        return 'bono_module_cms_notifications';
+        return self::getWithPrefix('bono_module_cms_notifications');
     }
 
     /**

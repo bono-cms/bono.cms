@@ -75,7 +75,7 @@
 		  <!--Languages-->
 		  <?php if (count($languages) > 1): ?>
 		  <li class="dropdown">
-		  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="<?php printf('famfamfam-flag-%s',$currentLanguage->getCode()); ?>"></i> <?php $this->show('Content'); ?><span class="caret"></span></a>
+		  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="<?php printf('famfamfam-flag-%s',$currentLanguage->getFlag()); ?>"></i> <?php $this->show('Content'); ?><span class="caret"></span></a>
 		  <ul class="dropdown-menu" aria-labelledby="content">
 			<?php foreach ($languages as $language): ?>
 			<li>
