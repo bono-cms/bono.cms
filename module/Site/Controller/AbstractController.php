@@ -37,7 +37,7 @@ abstract class AbstractController extends BaseController
         return array(
             // Class bootstrappers with their dependencies
             '\Announcement\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Menu\Service\SiteBootstrapper' => array($this->moduleManager, $this->view, $this->getThemeConfig()),
+            '\Menu\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
             '\Shop\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
             '\Slider\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
             '\Block\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
@@ -49,7 +49,8 @@ abstract class AbstractController extends BaseController
             '\Advice\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
             '\Photogallery\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
             '\Team\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Contact\Service\SiteBootstrapper' => array($this->moduleManager, $this->view)
+            '\Contact\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
+            '\Testimonials\Service\SiteBootstrapper' => array($this->moduleManager, $this->view)
         );
     }
 
@@ -85,10 +86,8 @@ abstract class AbstractController extends BaseController
         static $cache = null;
 
         if (is_null($cache)) {
-
             // Build a path to the configuration file
             $file = $this->view->getResolver()->getWithThemePath('theme.config.php');
-
             // Initial state
             $config = array();
 
@@ -96,7 +95,6 @@ abstract class AbstractController extends BaseController
             if (is_file($file)) {
                 $config = include($file);
             }
-
             $cache = $config;
         }
 
@@ -230,5 +228,4 @@ abstract class AbstractController extends BaseController
             }
         }
     }
-    
 }
