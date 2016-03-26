@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * Internally improved the way of changing languages on site
+ * Added SiteMap generator
  * Added support for table prefix
  * Forced to always display summary in grids
  * Fixed issue with country flags when creating languages
