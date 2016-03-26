@@ -26,16 +26,6 @@ final class Languages extends AbstractController
     }
 
     /**
-     * Returns language manager
-     * 
-     * @return \Admin\Service\LanguageManager
-     */
-    private function getLanguageManager()
-    {
-        return $this->getService('Cms', 'languageManager');
-    }
-
-    /**
      * Creates a form
      * 
      * @param \Krystal\Stdlib\VirtualEntity $language
@@ -109,7 +99,7 @@ final class Languages extends AbstractController
         if ($this->request->hasPost('id') && $this->request->isAjax()) {
             $id = $this->request->getPost('id');
 
-            $this->getLanguageManager()->setCurrentId($id);
+            $this->getService('Cms', 'languageManager')->setCurrentId($id);
             return '1';
         }
     }
@@ -122,14 +112,13 @@ final class Languages extends AbstractController
     public function tweakAction()
     {
         if ($this->request->hasPost('default', 'published', 'order')) {
-
             // Grab request data
             $default    = $this->request->getPost('default');
             $published  = $this->request->getPost('published');
             $orders     = $this->request->getPost('order');
 
             // Grab a service
-            $languageManager = $this->getLanguageManager();
+            $languageManager = $this->getService('Cms', 'languageManager');
 
             // Mark language id as a default
             $languageManager->makeDefault($default);
@@ -156,7 +145,7 @@ final class Languages extends AbstractController
 
         return $this->view->render('languages/browser', array(
             // We can't define an array which is called "languages", because that name is already in template's global scope
-            'langs' => $this->getLanguageManager()->fetchAll()
+            'langs' => $this->getService('Cms', 'languageManager')->fetchAll()
         ));
     }
 
