@@ -93,7 +93,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
      * Defines interface language
      * 
      * @param string $code New interface's language code
-     * @return \Admin\Service\LanguageManager
+     * @return \Cms\Service\LanguageManager
      */
     public function setInterfaceLangCode($code)
     {
@@ -105,7 +105,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
      * Defines current language id
      * 
      * @param string $id Current language id to be set
-     * @return \Admin\Service\LanguageManager
+     * @return \Cms\Service\LanguageManager
      */
     public function setCurrentId($id)
     {
