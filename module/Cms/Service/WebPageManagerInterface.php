@@ -39,6 +39,15 @@ interface WebPageManagerInterface
     public function fetchSlugByWebPageId($webPageId);
 
     /**
+     * Fetches all URLs
+     * 
+     * @param string $base
+     * @param string $language Optional language code
+     * @return array
+     */
+    public function fetchURLs($base, $language);
+
+    /**
      * Surrounds a slug using provided language id to generate a language code if needed
      * 
      * @param string $slug

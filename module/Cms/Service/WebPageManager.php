@@ -114,6 +114,38 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     }
 
     /**
+     * Fetches all URLs
+     * 
+     * @param string $base
+     * @param string $language Optional language code
+     * @return array
+     */
+    public function fetchURLs($base, $language)
+    {
+        // Grab language id by its associated code first
+        $langId = $this->languageMapper->fetchIdByCode($language);
+
+        // Stop if invalid language id supplied
+        if (empty($langId)) {
+            return false;
+        }
+
+        $rows = $this->webPageMapper->fetchAll($langId);
+        $result = array();
+
+        foreach ($rows as $row) {
+            // Build the URL first
+            $url = $base . $this->surround($row['slug'], $row['lang_id']);
+            // Now make sure all special characters are escaped
+            $url = htmlspecialchars($url, \ENT_QUOTES, 'UTF-8');
+
+            $result[] = $url;
+        }
+
+        return $result;
+    }
+
+    /**
      * Surrounds a slug using provided language id to generate a language code if needed
      * 
      * @param string $slug
