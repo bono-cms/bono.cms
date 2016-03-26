@@ -79,6 +79,17 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Count languages
+     * 
+     * @param boolean $published Whether to filter by published attribute
+     * @return integer
+     */
+    public function getCount($published)
+    {
+        return (int) $this->languageMapper->countAll($published);
+    }
+
+    /**
      * Fetches language id by its associated code
      * 
      * @param string $code

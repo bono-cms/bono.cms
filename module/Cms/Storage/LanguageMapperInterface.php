@@ -64,6 +64,14 @@ interface LanguageMapperInterface
     public function deleteById($id);
 
     /**
+     * Count languages
+     * 
+     * @param boolean $published Whether to filter by published attribute
+     * @return integer
+     */
+    public function countAll($published);
+
+    /**
      * Fetches all language entities
      * 
      * @param boolean $published Whether to filter by published attribute

@@ -93,6 +93,25 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
     }
 
     /**
+     * Count languages
+     * 
+     * @param boolean $published Whether to filter by published attribute
+     * @return integer
+     */
+    public function countAll($published)
+    {
+        $db = $this->db->select()
+                       ->count('id', 'count')
+                       ->from(self::getTableName());
+
+        if ($published === true) {
+            $db->whereEquals('published', '1');
+        }
+        
+        return $db->query('count');
+    }
+
+    /**
      * Fetches all languages
      * 
      * @param boolean $published Whether to filter by published attribute

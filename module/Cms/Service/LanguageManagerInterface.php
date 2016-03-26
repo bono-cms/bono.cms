@@ -15,6 +15,14 @@ namespace Cms\Service;
 interface LanguageManagerInterface
 {
     /**
+     * Count languages
+     * 
+     * @param boolean $published Whether to filter by published attribute
+     * @return integer
+     */
+    public function getCount($published);
+
+    /**
      * Fetches language id by its associated code
      * 
      * @param string $code
