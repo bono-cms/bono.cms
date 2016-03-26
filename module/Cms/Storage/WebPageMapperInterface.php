@@ -32,9 +32,10 @@ interface WebPageMapperInterface
     /**
      * Fetches all web pages
      * 
+     * @param string $langId Optional language id
      * @return array
      */
-    public function fetchAll();
+    public function fetchAll($langId = null);
 
     /**
      * Updates a web page

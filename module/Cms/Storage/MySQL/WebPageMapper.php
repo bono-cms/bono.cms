@@ -66,11 +66,16 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
     /**
      * Fetches all web pages
      * 
+     * @param string $langId Optional language id
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll($langId = null)
     {
-        return $this->findAllByColumn('lang_id', $this->getLangId());
+        if (is_null($langId)) {
+            $langId = $this->getLangId();
+        }
+
+        return $this->findAllByColumn('lang_id', $langId);
     }
 
     /**
