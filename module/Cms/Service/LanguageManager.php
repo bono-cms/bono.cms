@@ -114,6 +114,20 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Returns current language code
+     * 
+     * @return string
+     */
+    public function getCurrentCode()
+    {
+        if ($this->storage->has(self::LANGUAGE_INTERFACE_STORAGE_KEY)) {
+            return $this->storage->get(self::LANGUAGE_INTERFACE_STORAGE_KEY);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Returns current language id
      * 
      * @return string
