@@ -123,7 +123,10 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
         if ($this->storage->has(self::LANGUAGE_INTERFACE_STORAGE_KEY)) {
             return $this->storage->get(self::LANGUAGE_INTERFACE_STORAGE_KEY);
         } else {
-            return null;
+            $id = $this->getDefaultId();
+            $entity = $this->fetchById($id);
+
+            return $entity->getCode();
         }
     }
 
