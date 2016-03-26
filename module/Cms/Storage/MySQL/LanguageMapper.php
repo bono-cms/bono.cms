@@ -60,6 +60,17 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
     }
 
     /**
+     * Fetches language id by its associated code
+     * 
+     * @param string $code
+     * @return string
+     */
+    public function fetchIdByCode($code)
+    {
+        return $this->fetchOneColumn('id', 'code', $code);
+    }
+
+    /**
      * Fetches language data by its associated code
      * 
      * @param string $code Language's code

@@ -14,6 +14,14 @@ namespace Cms\Storage;
 interface LanguageMapperInterface
 {
     /**
+     * Fetches language id by its associated code
+     * 
+     * @param string $code
+     * @return string
+     */
+    public function fetchIdByCode($code);
+
+    /**
      * Updates published state by its associated language id
      * 
      * @param string $id Language id

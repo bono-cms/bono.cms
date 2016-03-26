@@ -79,6 +79,17 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Fetches language id by its associated code
+     * 
+     * @param string $code
+     * @return string
+     */
+    public function fetchIdByCode($code)
+    {
+        return $this->languageMapper->fetchIdByCode($code);
+    }
+
+    /**
      * Defines interface language
      * 
      * @param string $code New interface's language code

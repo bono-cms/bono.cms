@@ -15,6 +15,14 @@ namespace Cms\Service;
 interface LanguageManagerInterface
 {
     /**
+     * Fetches language id by its associated code
+     * 
+     * @param string $code
+     * @return string
+     */
+    public function fetchIdByCode($code);
+
+    /**
      * Defines current language id
      * 
      * @param string $id Current language id to be set
