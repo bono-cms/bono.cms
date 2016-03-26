@@ -64,18 +64,12 @@ interface LanguageMapperInterface
     public function deleteById($id);
 
     /**
-     * Fetches all published languages
+     * Fetches all language entities
      * 
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllPublished();
-
-    /**
-     * Fetches all languages
-     * 
-     * @return array
-     */
-    public function fetchAll();
+    public function fetchAll($published);
 
     /**
      * Inserts language data

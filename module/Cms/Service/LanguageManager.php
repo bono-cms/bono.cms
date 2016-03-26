@@ -314,21 +314,12 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     /**
      * Fetches all language entities
      * 
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll($published)
     {
-        return $this->prepareResults($this->languageMapper->fetchAll());
-    }
-
-    /**
-     * Fetches all only published languages bags
-     * 
-     * @return array
-     */
-    public function fetchAllPublished()
-    {
-        return $this->prepareResults($this->languageMapper->fetchAllPublished());
+        return $this->prepareResults($this->languageMapper->fetchAll($published));
     }
 
     /**

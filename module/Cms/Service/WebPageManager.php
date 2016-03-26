@@ -159,7 +159,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 
             // Cache fetching calls
             if (is_null($languages)) {
-                $languages = $this->languageMapper->fetchAllPublished();
+                $languages = $this->languageMapper->fetchAll(true);
             }
 
             // If we have more that one language, then URL itself should look like as /lang-code/slug/

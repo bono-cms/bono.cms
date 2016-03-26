@@ -145,7 +145,7 @@ final class Languages extends AbstractController
 
         return $this->view->render('languages/browser', array(
             // We can't define an array which is called "languages", because that name is already in template's global scope
-            'langs' => $this->getService('Cms', 'languageManager')->fetchAll()
+            'langs' => $this->getService('Cms', 'languageManager')->fetchAll(false)
         ));
     }
 

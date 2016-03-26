@@ -139,7 +139,7 @@ abstract class AbstractController extends BaseController
         }
 
         $this->view->addVariables(array(
-            'languages' => $this->getService('Cms', 'languageManager')->fetchAllPublished(),
+            'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
         ));
 
         $instanceProvider = new InstanceProvider($this->getBootstrappers());

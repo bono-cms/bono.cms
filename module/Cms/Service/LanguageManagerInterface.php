@@ -137,18 +137,12 @@ interface LanguageManagerInterface
     public function fetchByCode($code);
 
     /**
-     * Fetches all language bags
+     * Fetches all language entities
      * 
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAll();
-
-    /**
-     * Fetches all only published languages bags
-     * 
-     * @return array
-     */
-    public function fetchAllPublished();
+    public function fetchAll($published);
 
     /**
      * Deletes a language by its associated id

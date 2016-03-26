@@ -93,30 +93,24 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
     }
 
     /**
-     * Fetches all published languages
-     * 
-     * @return array
-     */
-    public function fetchAllPublished()
-    {
-        return $this->db->select('*')
-                        ->from(static::getTableName())
-                        ->whereEquals('published', '1')
-                        ->queryAll();
-    }
-
-    /**
      * Fetches all languages
      * 
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll($published)
     {
-        return $this->db->select('*')
-                        ->from(static::getTableName())
-                        ->orderBy('id')
-                        ->desc()
-                        ->queryAll();
+        $db = $this->db->select('*')
+                       ->from(static::getTableName());
+
+        if ($published === true) {
+            $db->whereEquals('published', '1');
+        } else {
+            $db->orderBy('id')
+               ->desc();
+        }
+
+        return $db->queryAll();
     }
 
     /**

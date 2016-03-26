@@ -256,7 +256,7 @@ abstract class AbstractController extends AbstractAuthAwareController
         $this->roleCheck($mode);
         $this->extendedMode = !$mode->isSimple();
         
-        $contentLanguages = $languageManager->fetchAllPublished();
+        $contentLanguages = $languageManager->fetchAll(true);
 
         // If no published languages for now then, die
         if ($this->languageCheck === true && count($contentLanguages) == 0) {
