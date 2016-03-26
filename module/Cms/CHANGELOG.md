@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In administration panel, forced to switch to default language, when there's only one published language
  * Internally improved the way of changing languages on site
  * Added SiteMap generator
  * Added support for table prefix
