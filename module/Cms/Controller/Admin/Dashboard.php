@@ -33,10 +33,10 @@ final class Dashboard extends AbstractController
     public function indexAction()
     {
         // We don't need breadcrumbs on the dashboard
-        $this->view->getBreadcrumbBag()->clear();
+        $this->view->getBreadcrumbBag()
+                   ->clear();
 
         return $this->view->render('dashboard', array_merge($this->getItems(), array(
-
             'title' => 'Control panel',
             'notifications' => $this->getService('Cms', 'notificationManager')->getUnviewedCount(),
         )));
@@ -51,7 +51,6 @@ final class Dashboard extends AbstractController
     {
         $modules = array();
         $utilites = array();
-
         $current = $this->moduleManager->getLoadedModules();
 
         foreach ($current as $module) {
@@ -63,19 +62,16 @@ final class Dashboard extends AbstractController
         array_multisort($modules, \SORT_NUMERIC);
 
         $path = dirname(dirname(__DIR__));
-
         $basicItems = include($path . '/Config/dashboard.items.php');
 
         if ($this->extendedMode) {
             $extendeditems = include($path . '/Config/dashboard.items.rest.php');
             $utilites = array_merge($basicItems, $extendeditems);
-
         } else {
             $utilites = $basicItems;
         }
 
         return array(
-
             'modules' => $modules,
             'utilites' => $utilites
         );
