@@ -35,20 +35,18 @@ final class Main extends AbstractController
     {
         $languageManager = $this->getService('Cms', 'languageManager');
 
-        // @TODO fetchIdByCode() should be here instead
-        $language = $languageManager->fetchByCode($code);
+        $id = $languageManager->fetchIdByCode($code);
 
-        // If $language isn't false, then $code was a valid one
-        if ($language !== false) {
+        // If $language is true-like, then process updating
+        if ($id) {
             // Set content language id
-            $languageManager->setCurrentId($language->getId())
+            $languageManager->setCurrentId($id)
                             ->setInterfaceLangCode($code);
 
             // And finally redirect to a home page
             $this->response->redirect('/');
 
         } else {
-
             return false;
         }
     }
