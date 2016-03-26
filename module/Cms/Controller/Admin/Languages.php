@@ -125,6 +125,12 @@ final class Languages extends AbstractController
             $languageManager->updatePublished($published);
             $languageManager->updateOrders($orders);
 
+            // Extra check. If we have only one published language, make sure its id is set
+            if ($languageManager->getCount(true) == 1) {
+                $id = $languageManager->getDefaultId();
+                $languageManager->setCurrentId($id);
+            }
+
             $this->flashBag->set('success', 'Settings have been updated successfully');
             return '1';
         }
