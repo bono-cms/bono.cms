@@ -39,6 +39,14 @@ return array(
         'controller' => 'Main@slugLanguageAwareAction'
     ),
     
+    '/sitemap' => array(
+        'controller' => 'Main@sitemapAction'
+    ),
+    
+    '/sitemap/lang/(:var)' => array(
+        'controller' => 'Main@sitemapAction'
+    ),
+    
     '/test' => array(
         'controller' => 'Main@testAction'
     )

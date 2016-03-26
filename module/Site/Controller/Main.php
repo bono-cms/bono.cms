@@ -14,6 +14,36 @@ namespace Site\Controller;
 final class Main extends AbstractController
 {
     /**
+     * Renders site map
+     * 
+     * @param string $language Optional language code
+     * @return string
+     */
+    public function sitemapAction($language = null)
+    {
+        if (is_null($language)) {
+            $language = $this->getService('Cms', 'languageManager')->getCurrentCode();
+        }
+
+        $urls = $this->getService('Cms', 'webPageManager')->fetchURLs($this->request->getBaseUrl(), $language);
+
+        if ($urls !== false) {
+            // Define response as XML 
+            $this->response->getHeaderBag()
+                           ->appendPair('Content-type', 'text/xml; charset=UTF-8');
+
+            // Render sitemap.pthml located under Cms module inside administration template
+            return $this->view->renderRaw('Cms', 'admin', 'sitemap', array(
+                'urls' => $urls
+            ));
+
+        } else {
+            // Invalid language code supplied, so simply trigger 404
+            return false;
+        }
+    }
+
+    /**
      * Invokes home page's controller
      * 
      * @return string
