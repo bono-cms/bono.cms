@@ -140,6 +140,8 @@ abstract class AbstractController extends BaseController
 
         $this->view->addVariables(array(
             'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
+            'locale' => $this->appConfig->getLanguage(),
+            'currentUrl' => $this->request->getCurrentUrl()
         ));
 
         $instanceProvider = new InstanceProvider($this->getBootstrappers());
@@ -174,6 +176,10 @@ abstract class AbstractController extends BaseController
                         'name' => $this->translator->translate('Home page')
                     ))
         );
+
+        // Get default language code
+        $language = $this->getService('Cms', 'languageManager')->getInterfaceLangCode();
+        $this->loadTranslations($language);
 
         // Get core configuration entity of the system itself
         $config = $this->getService('Cms', 'configManager')->getEntity();
