@@ -338,5 +338,4 @@ abstract class AbstractController extends AbstractAuthAwareController
             $this->getService('Cms', 'notepadManager')->setUserId($userId);
         }
     }
-
 }
