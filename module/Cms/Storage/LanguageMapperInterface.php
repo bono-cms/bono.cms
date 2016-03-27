@@ -22,6 +22,14 @@ interface LanguageMapperInterface
     public function fetchIdByCode($code);
 
     /**
+     * Fetches language code by its associated id
+     * 
+     * @param string $id
+     * @return string
+     */
+    public function fetchCodeById($id);
+
+    /**
      * Updates published state by its associated language id
      * 
      * @param string $id Language id
