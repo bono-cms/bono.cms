@@ -15,7 +15,6 @@ use Krystal\Application\Controller\AbstractController as BaseController;
 use Krystal\Application\View\Resolver\Module as Resolver;
 use Krystal\Paginate\Paginator;
 use Krystal\Validate\Renderer;
-use Krystal\InstanceManager\InstanceProvider;
 
 abstract class AbstractController extends BaseController
 {
@@ -28,30 +27,21 @@ abstract class AbstractController extends BaseController
     }
 
     /**
-     * Returns site bootstrappers
+     * Bootstrap site services
      * 
      * @return array
      */
-    private function getBootstrappers()
+    private function bootstrapSiteServices()
     {
-        return array(
-            // Class bootstrappers with their dependencies
-            '\Announcement\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Menu\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Shop\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Slider\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Block\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\AboutBox\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Search\Service\SiteBootstrapper' => array($this->view),
-            '\Blog\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\News\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Banner\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Advice\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Photogallery\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Team\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Contact\Service\SiteBootstrapper' => array($this->moduleManager, $this->view),
-            '\Testimonials\Service\SiteBootstrapper' => array($this->moduleManager, $this->view)
-        );
+        foreach ($this->moduleManager->getLoadedModuleNames() as $module) {
+            // Build PSR-0 compliant class name
+            $class = sprintf('\%s\Service\SiteBootstrapper', $module);
+
+            if (class_exists($class)) {
+                $bootstrapper = new $class($this->moduleManager, $this->view);
+                $bootstrapper->bootstrap();
+            }
+        }
     }
 
     /**
@@ -144,11 +134,7 @@ abstract class AbstractController extends BaseController
             'currentUrl' => $this->request->getCurrentUrl()
         ));
 
-        $instanceProvider = new InstanceProvider($this->getBootstrappers());
-
-        foreach ($instanceProvider->getAll() as $bs) {
-            $bs->bootstrap();
-        }
+        $this->bootstrapSiteServices();
 
         // And lastly, do load global site plugin
         $this->view->getPluginBag()->load('site');
