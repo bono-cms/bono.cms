@@ -15,6 +15,14 @@ namespace Cms\Service;
 interface LanguageManagerInterface
 {
     /**
+     * Changes site language
+     * 
+     * @param string $code Language code
+     * @return boolean Depending on success
+     */
+    public function changeSiteLanguage($code);
+
+    /**
      * Returns interface language code
      * 
      * @return string

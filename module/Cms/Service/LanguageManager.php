@@ -101,6 +101,28 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Changes site language
+     * 
+     * @param string $code Language code
+     * @return boolean Depending on success
+     */
+    public function changeSiteLanguage($code)
+    {
+        $id = $this->fetchIdByCode($code);
+
+        // If $language is true-like, then process updating
+        if ($id) {
+            // Set content language id
+            $this->setCurrentId($id)
+                 ->setInterfaceLangCode($code);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Returns interface language code
      * 
      * @return string
