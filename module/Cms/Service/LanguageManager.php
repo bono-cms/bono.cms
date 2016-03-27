@@ -101,6 +101,20 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Returns interface language code
+     * 
+     * @return string
+     */
+    public function getInterfaceLangCode()
+    {
+        if ($this->storage->has(self::LANGUAGE_INTERFACE_STORAGE_KEY)) {
+            return $this->storage->get(self::LANGUAGE_INTERFACE_STORAGE_KEY);
+        } else {
+            return $this->getDefaultCode();
+        }
+    }
+
+    /**
      * Defines interface language
      * 
      * @param string $code New interface's language code
@@ -134,10 +148,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
         if ($this->storage->has(self::LANGUAGE_INTERFACE_STORAGE_KEY)) {
             return $this->storage->get(self::LANGUAGE_INTERFACE_STORAGE_KEY);
         } else {
-            $id = $this->getDefaultId();
-            $entity = $this->fetchById($id);
-
-            return $entity->getCode();
+            return $this->getDefaultCode();
         }
     }
 
@@ -157,6 +168,16 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
         }
 
         return null;
+    }
+
+    /**
+     * Returns default language code
+     * 
+     * @return string
+     */
+    public function getDefaultCode()
+    {
+        return $this->languageMapper->fetchCodeById($this->getDefaultId());
     }
 
     /**

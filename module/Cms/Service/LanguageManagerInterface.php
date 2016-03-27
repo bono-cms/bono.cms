@@ -15,6 +15,20 @@ namespace Cms\Service;
 interface LanguageManagerInterface
 {
     /**
+     * Returns interface language code
+     * 
+     * @return string
+     */
+    public function getInterfaceLangCode();
+
+    /**
+     * Returns default language code
+     * 
+     * @return string
+     */
+    public function getDefaultCode();
+
+    /**
      * Count languages
      * 
      * @param boolean $published Whether to filter by published attribute
