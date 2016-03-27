@@ -128,15 +128,12 @@ final class Main extends AbstractController
 
         // Not empty means that existing slug is supplied
         if (!empty($webPage)) {
-            
             // Data to be passed to a controller
             $args = array($webPage['target_id'], $pageNumber, $code, $slug);
 
             // Now we have a controller, action, params and page params
             return $this->forward($webPage['controller'], $args);
-
         } else {
-
             // Trigger 404 if not found
             return false;
         }
@@ -155,7 +152,6 @@ final class Main extends AbstractController
             // Change language based on slug
             $this->getService('Cms', 'languageManager')
                  ->changeSiteLanguage($code);
-            
         }
 
         return $this->slugAction($slug, $page, $code);
