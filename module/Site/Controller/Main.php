@@ -63,19 +63,9 @@ final class Main extends AbstractController
      */
     public function changeLanguageAction($code)
     {
-        $languageManager = $this->getService('Cms', 'languageManager');
-
-        $id = $languageManager->fetchIdByCode($code);
-
-        // If $language is true-like, then process updating
-        if ($id) {
-            // Set content language id
-            $languageManager->setCurrentId($id)
-                            ->setInterfaceLangCode($code);
-
+        if ($this->appConfig->getLanguage() !== $code && $this->getService('Cms', 'languageManager')->changeSiteLanguage($code)) {
             // And finally redirect to a home page
             $this->response->redirect('/');
-
         } else {
             return false;
         }
@@ -138,7 +128,7 @@ final class Main extends AbstractController
 
         // Not empty means that existing slug is supplied
         if (!empty($webPage)) {
-
+            
             // Data to be passed to a controller
             $args = array($webPage['target_id'], $pageNumber, $code, $slug);
 
@@ -161,6 +151,13 @@ final class Main extends AbstractController
      */
     public function slugLanguageAwareAction($code, $slug, $page = 1)
     {
+        if ($this->appConfig->getLanguage() !== $code) {
+            // Change language based on slug
+            $this->getService('Cms', 'languageManager')
+                 ->changeSiteLanguage($code);
+            
+        }
+
         return $this->slugAction($slug, $page, $code);
     }
 }
