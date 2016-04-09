@@ -98,21 +98,24 @@ abstract class AbstractController extends BaseController
             // Plugins must have higher priority
             if (isset($config['plugins']) && is_array($config['plugins'])) {
                 foreach ($config['plugins'] as $plugin) {
-                    $this->view->getPluginBag()->load($plugin);
+                    $this->view->getPluginBag()
+                               ->load($plugin);
                 }
             }
 
             // Append script paths to the stack
             if (isset($config['theme']['scripts']) && is_array($config['theme']['scripts'])) {
                 foreach ($config['theme']['scripts'] as $script) {
-                    $this->view->getPluginBag()->appendScript($this->getWithThemePath($script, 'Site'));
+                    $this->view->getPluginBag()
+                               ->appendScript($this->getWithThemePath($script, 'Site'));
                 }
             }
 
             // Append stylesheet paths to stack
             if (isset($config['theme']['stylesheets']) && is_array($config['theme']['stylesheets'])) {
                 foreach ($config['theme']['stylesheets'] as $stylesheet) {
-                    $this->view->getPluginBag()->appendStylesheet($this->getWithThemePath($stylesheet, 'Site'));
+                    $this->view->getPluginBag()
+                               ->appendStylesheet($this->getWithThemePath($stylesheet, 'Site'));
                 }
             }
 
