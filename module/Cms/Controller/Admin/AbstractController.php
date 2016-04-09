@@ -193,14 +193,6 @@ abstract class AbstractController extends AbstractAuthAwareController
     /**
      * {@inheritDoc}
      */
-    protected function getResolverThemeName()
-    {
-        return 'admin';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected function bootstrap()
     {
         // Force to load specific administration language if defined
@@ -209,6 +201,8 @@ abstract class AbstractController extends AbstractAuthAwareController
         }
 
         $this->validateRequest();
+
+        $this->view->setTheme('admin');
         $this->view->getBlockBag()->setBlocksDir($this->getWithViewPath('/blocks/', 'Cms', 'admin'))
                                   ->addStaticBlock($this->getViewPath('Menu', 'admin'), 'menu-widget');
 

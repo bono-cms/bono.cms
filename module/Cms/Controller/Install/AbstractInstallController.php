@@ -17,14 +17,6 @@ use Krystal\Application\View\Resolver\Module as Resolver;
 abstract class AbstractInstallController extends AbstractController
 {
     /**
-     * {@inheritDoc}
-     */
-    protected function getResolverThemeName()
-    {
-        return 'install';
-    }
-
-    /**
      * Checks whether the system has been already installed
      * 
      * @return void
@@ -33,7 +25,7 @@ abstract class AbstractInstallController extends AbstractController
     {
         $configManager = $this->getModuleService('configManager');
         $installed = $configManager->get('installed') == true;
-        
+
         if ($installed) {
             die('Already installed');
         }
@@ -44,8 +36,11 @@ abstract class AbstractInstallController extends AbstractController
      */
     final protected function bootstrap()
     {
-        $this->view->getBlockBag()->setBlocksDir($this->appConfig->getModulesDir() . '/Cms/View/Template/install/blocks/');
-        $this->view->setLayout('layout', 'Cms');
+        $this->view->getBlockBag()
+                   ->setBlocksDir($this->appConfig->getModulesDir() . '/Cms/View/Template/install/blocks/');
+
+        $this->view->setLayout('layout', 'Cms')
+                   ->setTheme('install');
 
         $this->view->getPluginBag()->load(array(
             'jquery',
