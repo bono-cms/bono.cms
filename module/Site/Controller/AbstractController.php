@@ -12,20 +12,11 @@
 namespace Site\Controller;
 
 use Krystal\Application\Controller\AbstractController as BaseController;
-use Krystal\Application\View\Resolver\Module as Resolver;
 use Krystal\Paginate\Paginator;
 use Krystal\Validate\Renderer;
 
 abstract class AbstractController extends BaseController
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function getResolverModuleName()
-    {
-        return 'Site';
-    }
-
     /**
      * Bootstrap site services
      * 
@@ -77,7 +68,8 @@ abstract class AbstractController extends BaseController
 
         if (is_null($cache)) {
             // Build a path to the configuration file
-            $file = $this->view->getResolver()->getWithThemePath('theme.config.php');
+            $file = $this->view->getWithThemePath('theme.config.php');
+            
             // Initial state
             $config = array();
 
@@ -149,12 +141,15 @@ abstract class AbstractController extends BaseController
         $this->validateInstallationState();
 
         $this->validatorFactory->setRenderer(new Renderer\StandardJson());
-        $this->view->setLayout('__layout__');
+
+        // Configure view
+        $this->view->setLayout('__layout__')
+                   ->setModule('Site');
 
         $this->view->getBlockBag()
-                   ->setBlocksDir($this->getWithViewPath('/blocks/', 'Site', $this->getResolverThemeName()));
+                   ->setBlocksDir($this->getWithViewPath('/blocks/', 'Site', $this->appConfig->getTheme()));
 
-        // Tweak first breadcrumb
+        // Tweak breadcrumbs
         $this->view->getBreadcrumbBag()
                    ->removeFirst()
                    ->add(array(array(
