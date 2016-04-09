@@ -107,7 +107,7 @@ abstract class AbstractController extends BaseController
             if (isset($config['theme']['scripts']) && is_array($config['theme']['scripts'])) {
                 foreach ($config['theme']['scripts'] as $script) {
                     $this->view->getPluginBag()
-                               ->appendScript($this->getWithThemePath($script, 'Site'));
+                               ->appendScript($this->view->createThemeUrl('Site').$script);
                 }
             }
 
@@ -115,7 +115,7 @@ abstract class AbstractController extends BaseController
             if (isset($config['theme']['stylesheets']) && is_array($config['theme']['stylesheets'])) {
                 foreach ($config['theme']['stylesheets'] as $stylesheet) {
                     $this->view->getPluginBag()
-                               ->appendStylesheet($this->getWithThemePath($stylesheet, 'Site'));
+                               ->appendStylesheet($this->view->createThemeUrl('Site').$stylesheet);
                 }
             }
 
@@ -150,7 +150,7 @@ abstract class AbstractController extends BaseController
                    ->setModule('Site');
 
         $this->view->getBlockBag()
-                   ->setBlocksDir($this->getWithViewPath('/blocks/', 'Site', $this->appConfig->getTheme()));
+                   ->setBlocksDir($this->view->createThemePath('Site', $this->appConfig->getTheme()).'/blocks/');
 
         // Tweak breadcrumbs
         $this->view->getBreadcrumbBag()

@@ -110,7 +110,7 @@ abstract class AbstractConfigController extends AbstractController
     protected function loadPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/config.js'));
+                   ->appendScript($this->view->createAssetUrl(null, '/admin/config.js'));
 
         if (is_null($this->parent)) {
             $this->parent = sprintf('%s:Admin:Browser@indexAction', $this->moduleName);
