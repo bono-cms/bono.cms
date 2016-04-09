@@ -12,7 +12,7 @@
 		<?php if ($post->hasCover()): ?>
 		<div class="col-xs-6 col-md-2">
 			<a href="<?php echo $post->getUrl(); ?>" class="thumbnail">
-				<img src="<?php echo $post->getImageBag()->getUrl('180x180'); ?>" alt="<?php echo $post->getTitle(); ?>" />
+				<img src="<?php echo $post->getImageUrl('180x180'); ?>" alt="<?php echo $post->getTitle(); ?>" />
 			</a>
 		</div>
 		<?php endif; ?>
