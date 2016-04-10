@@ -29,8 +29,7 @@ final class Main extends AbstractController
 
         if ($urls !== false) {
             // Define response as XML 
-            $this->response->getHeaderBag()
-                           ->appendPair('Content-type', 'text/xml; charset=UTF-8');
+            $this->response->respondAsXml();
 
             // Render sitemap.pthml located under Cms module inside administration template
             return $this->view->renderRaw('Cms', 'admin', 'sitemap', array(
