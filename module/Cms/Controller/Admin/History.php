@@ -29,7 +29,7 @@ final class History extends AbstractController
         $userManager = $this->getService('Cms', 'userManager');
 
         $paginator = $historyManager->getPaginator();
-        $paginator->setUrl('/admin/history/page/(:var)');
+        $paginator->setUrl($this->createUrl('Cms:Admin:History@indexAction', array(), 1));
 
         return $this->view->render('history', array(
             'title' => 'History',

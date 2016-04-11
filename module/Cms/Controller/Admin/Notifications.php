@@ -28,7 +28,7 @@ final class Notifications extends AbstractController
         $notificationManager = $this->getNotificationManager();
 
         $paginator = $notificationManager->getPaginator();
-        $paginator->setUrl('/admin/notifications/page/%s');
+        $paginator->setUrl($this->createUrl('Cms:Admin:Notifications@indexAction', array(), 1));
 
         // This is a very special case, so it needs to be rendered like this
         $response = $this->view->render('notifications', array(
