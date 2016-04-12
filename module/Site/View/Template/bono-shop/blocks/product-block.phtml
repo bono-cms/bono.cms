@@ -2,7 +2,7 @@
   <?php foreach($products as $product): ?>
   <div class="col-sm-6 col-md-4">
 	<div class="thumbnail">
-	  <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo $product->getImageBag()->getUrl('120x120'); ?>" alt="<?php echo $product->getTitle(); ?>" /></a>
+	  <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo $product->getImageUrl('120x120'); ?>" alt="<?php echo $product->getTitle(); ?>" /></a>
 	  <div class="caption text-center">
 		<h3><?php echo $product->getTitle(); ?></h3>
 		
