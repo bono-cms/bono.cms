@@ -116,6 +116,7 @@ abstract class AbstractController extends AbstractAuthAwareController
      * Invokes save process
      * 
      * @param string $on
+     * @param string $id
      * @param array $data
      * @param array $rules
      * @return string
@@ -254,7 +255,7 @@ abstract class AbstractController extends AbstractAuthAwareController
         $languageManager = $this->getService('Cms', 'languageManager');
         $this->roleCheck($mode);
         $this->extendedMode = !$mode->isSimple();
-        
+
         $contentLanguages = $languageManager->fetchAll(true);
 
         // If no published languages for now then, die

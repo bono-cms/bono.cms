@@ -59,13 +59,18 @@ abstract class AbstractConfigController extends AbstractController
     {
         // Grab POST request data
         $input = $this->request->getPost('config');
-        $formValidator = $this->getValidator($input);
+        $formValidator = $this->createValidator(array(
+            'input' => array(
+                'source' => $input,
+                'definition' => $this->getValidationRules()
+            )
+        ));
 
         if ($formValidator->isValid()) {
             // Grab history manager service
             $historyManager = $this->getService('Cms', 'historyManager');
 
-            if ($this->getConfigManager()->write($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')){
+            if ($this->getConfigManager()->write($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')) {
                 $this->flashBag->set('success', 'Configuration has been updated successfully');
             }
 
@@ -87,31 +92,12 @@ abstract class AbstractConfigController extends AbstractController
     }
 
     /**
-     * Returns prepared and configured form validator
-     * 
-     * @param array $input Raw input data
-     * @return \Krystal\Validate\ValidatorChain
-     */
-    protected function getValidator(array $input)
-    {
-        return $this->validatorFactory->build(array(
-            'input' => array(
-                'source' => $input,
-                'definition' => $this->getValidationRules()
-            )
-        ));
-    }
-
-    /**
      * Loads required plugins for view
      * 
      * @return void
      */
     protected function loadPlugins()
     {
-        $this->view->getPluginBag()
-                   ->appendScript($this->view->createAssetUrl(null, '/admin/config.js'));
-
         if (is_null($this->parent)) {
             $this->parent = sprintf('%s:Admin:Browser@indexAction', $this->moduleName);
         }
