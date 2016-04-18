@@ -108,7 +108,6 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
             return '';
         } else {
             $webPageId = (int) $webPageId;
-            
             return $this->webPageMapper->fetchSlugByWebPageId($webPageId);
         }
     }
