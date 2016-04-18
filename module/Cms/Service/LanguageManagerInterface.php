@@ -15,28 +15,6 @@ namespace Cms\Service;
 interface LanguageManagerInterface
 {
     /**
-     * Changes site language
-     * 
-     * @param string $code Language code
-     * @return boolean Depending on success
-     */
-    public function changeSiteLanguage($code);
-
-    /**
-     * Returns interface language code
-     * 
-     * @return string
-     */
-    public function getInterfaceLangCode();
-
-    /**
-     * Returns default language code
-     * 
-     * @return string
-     */
-    public function getDefaultCode();
-
-    /**
      * Count languages
      * 
      * @param boolean $published Whether to filter by published attribute
@@ -53,12 +31,42 @@ interface LanguageManagerInterface
     public function fetchIdByCode($code);
 
     /**
+     * Changes site language
+     * 
+     * @param string $code Language code
+     * @return boolean Depending on success
+     */
+    public function changeSiteLanguage($code);
+
+    /**
+     * Returns interface language code
+     * 
+     * @return string
+     */
+    public function getInterfaceLangCode();
+
+    /**
+     * Defines interface language
+     * 
+     * @param string $code New interface's language code
+     * @return \Cms\Service\LanguageManager
+     */
+    public function setInterfaceLangCode($code);
+
+    /**
      * Defines current language id
      * 
      * @param string $id Current language id to be set
-     * @return boolean
+     * @return \Cms\Service\LanguageManager
      */
     public function setCurrentId($id);
+
+    /**
+     * Returns current language code
+     * 
+     * @return string
+     */
+    public function getCurrentCode();
 
     /**
      * Returns current language id
@@ -66,6 +74,13 @@ interface LanguageManagerInterface
      * @return string
      */
     public function getCurrentId();
+
+    /**
+     * Returns default language code
+     * 
+     * @return string
+     */
+    public function getDefaultCode();
 
     /**
      * Fetches a language bag by current id
@@ -151,7 +166,7 @@ interface LanguageManagerInterface
     public function update(array $input);
 
     /**
-     * Fetches language bag by its associated id
+     * Fetches language's entity by its associated id
      * 
      * @param string $id
      * @return array
@@ -162,7 +177,7 @@ interface LanguageManagerInterface
      * Fetches language bag by its associated code
      * 
      * @param string $code
-     * @return \Krystal\Stdlib\VirtualBag
+     * @return \Krystal\Stdlib\VirtualEntity
      */
     public function fetchByCode($code);
 
