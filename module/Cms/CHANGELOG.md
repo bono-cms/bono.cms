@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * No longer throwing exception when there's no `theme` section in theme's configuration
  * Forced to load theme plugins even if there's no `theme` section
  * Added `getSwitchUrl()` in language entities
  * Removed `CHANGELOG.md` from Site module

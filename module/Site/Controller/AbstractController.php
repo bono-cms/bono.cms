@@ -117,9 +117,6 @@ abstract class AbstractController extends BaseController
                                ->appendStylesheet($this->view->createThemeUrl('Site').$stylesheet);
                 }
             }
-
-        } else {
-            throw new \Exception('You have to provide theme configuration');
         }
 
         $this->view->addVariables(array(
