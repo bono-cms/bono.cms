@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Forced to load theme plugins even if there's no `theme` section
  * Added `getSwitchUrl()` in language entities
  * Removed `CHANGELOG.md` from Site module
  * Added shared view variables `$locale` and `$currentUrl` for the site layout

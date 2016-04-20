@@ -92,17 +92,16 @@ abstract class AbstractController extends BaseController
     {
         $config = $this->getThemeConfig();
 
+        // Plugins must have higher priority
+        if (isset($config['plugins']) && is_array($config['plugins'])) {
+            foreach ($config['plugins'] as $plugin) {
+                $this->view->getPluginBag()
+                           ->load($plugin);
+            }
+        }
+
         // If we have theme a section for theme configuration
         if (isset($config['theme'])) {
-
-            // Plugins must have higher priority
-            if (isset($config['plugins']) && is_array($config['plugins'])) {
-                foreach ($config['plugins'] as $plugin) {
-                    $this->view->getPluginBag()
-                               ->load($plugin);
-                }
-            }
-
             // Append script paths to the stack
             if (isset($config['theme']['scripts']) && is_array($config['theme']['scripts'])) {
                 foreach ($config['theme']['scripts'] as $script) {
