@@ -58,7 +58,7 @@ abstract class AbstractController extends AbstractAuthAwareController
      */
     protected function onFailure()
     {
-        $this->response->redirect('/admin/login');
+        $this->response->redirect($this->createUrl('Cms:Admin:Auth@indexAction'));
     }
 
     /**
