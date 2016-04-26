@@ -62,12 +62,11 @@ final class Main extends AbstractController
      */
     public function changeLanguageAction($code)
     {
-        if ($this->appConfig->getLanguage() !== $code && $this->getService('Cms', 'languageManager')->changeSiteLanguage($code)) {
-            // And finally redirect to a home page
-            $this->response->redirect('/');
-        } else {
-            return false;
+        if ($this->appConfig->getLanguage() !== $code) {
+            $this->getService('Cms', 'languageManager')->changeSiteLanguage($code);
         }
+
+        $this->response->redirect('/');
     }
 
     /**
