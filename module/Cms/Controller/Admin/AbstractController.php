@@ -84,9 +84,10 @@ abstract class AbstractController extends AbstractAuthAwareController
      * That's a shared invoker for all module controllers
      * 
      * @param object $on Module service name
+     * @param string $id
      * @return string
      */
-    final protected function invokeRemoval($on)
+    final protected function invokeRemoval($on, $id = null)
     {
         $service = $this->getModuleService($on);
 
@@ -102,9 +103,7 @@ abstract class AbstractController extends AbstractAuthAwareController
         }
 
         // Single removal
-        if ($this->request->hasPost('id') && method_exists($service, 'deleteById')) {
-            $id = $this->request->getPost('id');
-
+        if (!empty($id) && method_exists($service, 'deleteById')) {
             $service->deleteById($id);
             $this->flashBag->set('success', 'Selected element has been removed successfully');
         }
