@@ -11,25 +11,31 @@
 
 return array(
     array(
-        'url' => '/admin/users',
+        'route' => 'Cms:Admin:Users@gridAction',
         'icon' => 'fa fa-users fa-5x',
         'name' => 'Users',
         'description' => 'Edit users and their privileges'
     ),
     array(
-        'url' => '/admin/tweaks',
+        'route' => 'Cms:Admin:Tweaks@indexAction',
         'icon' => 'fa fa-wrench fa-5x',
         'name' => 'Tweaks',
         'description' => 'Tweaks of basic system configuration'
     ),
     array(
-        'url' => '/admin/languages',
+        'route' => 'Cms:Admin:ModuleManager@indexAction',
+        'icon' => 'fa fa-code fa-5x',
+        'name' => 'Module manager',
+        'description' => 'Install or drop system modules'
+    ),
+    array(
+        'route' => 'Cms:Admin:Languages@gridAction',
         'icon' => 'fa fa-language fa-5x',
         'name' => 'Languages',
         'description' => 'Tweak system languages'
     ),
     array(
-        'url' => '/admin/info',
+        'route' => 'Cms:Admin:Info@indexAction',
         'icon' => 'fa fa-info-circle fa-5x',
         'name' => 'System info',
         'description' => 'View server configuration'

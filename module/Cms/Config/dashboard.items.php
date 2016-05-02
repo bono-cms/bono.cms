@@ -11,19 +11,19 @@
 
 return array(
     array(
-        'url' => '/admin/history',
+        'route' => 'Cms:Admin:History@indexAction',
         'icon' => 'fa fa-history fa-5x',
         'name' => 'History',
         'description' => 'History of latest actions'
     ),
     array(
-        'url' => '/admin/notepad',
+        'route' => 'Cms:Admin:Notepad@indexAction',
         'icon' => 'fa fa-sticky-note-o fa-5x',
         'name' => 'Notepad',
         'description' => 'Keep your notes using notepad'
     ),
     array(
-        'url' => '/admin/notifications',
+        'route' => 'Cms:Admin:Notifications@indexAction',
         'icon' => 'fa fa-child fa-5x',
         'name' => 'Notifications',
         'description' => 'All system notifications'
