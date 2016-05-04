@@ -15,7 +15,7 @@ use Krystal\Form\Element;
 	
 	<div class="pull-right">
 		<span class="help-block inline"><?php $this->show('Items per page'); ?>: </span>
-        <?php echo Element::select(null, $ppc->getPerPageCountValues(), $ppc->getPerPageCount(), array('data-button' => 'per-page-changer')); ?>
+        <?php echo Element::select(null, $ppc->getPerPageCountValues(), $ppc->getPerPageCount(), array('data-button' => 'per-page-changer', 'data-url' => $this->url('Cms:Admin:Dashboard@itemsPerPageChangeAction'))); ?>
 	</div>
 	
 	<div class="clearfix"></div>

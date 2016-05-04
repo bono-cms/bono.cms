@@ -227,7 +227,7 @@ $(function(){
             $.ajax({
                 contentType: false,
                 processData: false,
-                url : '/admin/kernel/install-module.ajax',
+                url : $(this).data('url'),
                 data : formData,
                 success : function(response){
                     if (response == "1"){
@@ -240,12 +240,12 @@ $(function(){
         });
     });
     
-    $("a.mode-link").click(function(event){
+    $("[data-button='mode']").click(function(event){
         event.preventDefault();
         var mode = $(this).data('mode-id');
         
         $.ajax({
-            url : "/admin/kernel/mode-change",
+            url : $(this).data('url'),
             data : {
                 mode : mode
             },
@@ -316,7 +316,7 @@ $(function(){
         var id = $(this).data('language-id');
         
         $.ajax({
-            url : "/admin/languages/change.ajax",
+            url : $(this).data('url'),
             data : {
                 id : id
             },
@@ -356,7 +356,7 @@ $(function(){
     $("[data-button='per-page-changer']").change(function(event){
         var value = $(this).val();
         $.ajax({
-            url : "/admin/kernel/items-per-page",
+            url : $(this).data('url'),
             data : {
                 count : value,
             },
@@ -449,12 +449,12 @@ $(function(){
     // Removal buttons
     $('[data-button="delete"], [data-button="remove"]').click(function(event){
         event.preventDefault();
-        
+
         var url = $(this).data('url');
         var $self = $(this);
         var $modal = $('#myModal');
         var message = $modal.data('message');
-        
+
         if (!url) {
             throw new Error('URL for delete button is not provided');
         }
@@ -500,7 +500,6 @@ $(function(){
             $row.removeClass(hg);
         }
     });
-
 
     $("table > thead > tr > th > input[type='checkbox']").change(function(){
         var $self = $(this);
