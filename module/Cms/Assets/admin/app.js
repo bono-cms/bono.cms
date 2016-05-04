@@ -446,75 +446,47 @@ $(function(){
         });
     });
     
-    
-    // ------------------------------------ Delete on tables ---------------------
+    // Removal buttons
+    $('[data-button="delete"], [data-button="remove"]').click(function(event){
+        event.preventDefault();
+        
+        var url = $(this).data('url');
+        var $self = $(this);
+        var $modal = $('#myModal');
+        var message = $modal.data('message');
+        
+        if (!url) {
+            throw new Error('URL for delete button is not provided');
+        }
+        
+        // If there's a custom message, then display it instead of default one
+        if (message){
+            $modal.find('.modal-body').html(message);
+        }
 
-    $.delete = function(options){
-        var modalSelector = '#myModal';
+        // Then show the modal box
+        $modal.modal();
         
-        // Sometimes CSS styles might conflict, so it would be nice to add alternate name
-        var btnSelector = '[data-button="delete"], [data-button="remove"]';
-        
-        var ajaxHandler = function(url, id, callback){
-            // In future version we might need a promise
-            return $.ajax({
+        // Then every time attach the click listener
+        $("#delete-yes-modal-btn").off('click').click(function(event){
+            $.ajax({
                 url : url,
-                data : {
-                    id : id
-                },
                 success : function(response) {
-                    if (typeof(callback) != "undefined") {
-                        callback(response);
-                    } else {
-                        if (response == "1") {
-                            window.location.reload();
+                    if (response == "1") {
+                        if ($self.data('success-url')) {
+                            window.location = $self.data('success-url');
                         } else {
-                            $.showErrors(response);
-                        }
-                    }
-                }
-            });
-        };
-        
-        $(btnSelector).click(function(event){
-            event.preventDefault();
-            $(modalSelector).modal();
-
-            var category = $(this).data('category');
-            var id = $(this).data('id');
-            var message = $(this).data('message');
-
-            // If there's a custom message, then display it instead of default one
-            if (message){
-                $(modalSelector).find('.modal-body').html(message);
-            }
-            
-            // Ensure both are provided
-            if (category == "undefined" || id == "undefined") {
-                throw new Error('A button should provide both id and category');
-            }
-            
-            // Detach and attach onclick listener to avoid appending
-            $("#delete-yes-modal-btn").off('click').click(function(event){
-                if (typeof(options.categories) != "undefined") {
-                    for (var key in options.categories) {
-                        var url = options.categories[key].url;
-                        if (key == category) {
                             // By default
-                            var callback = undefined;
-                            
-                            if (typeof(options.categories[key].success) != "undefined"){
-                                callback = options.categories[key].success;
-                            }
-                            
-                            ajaxHandler(url, id, callback);
-                            break;
+                            window.location.reload();
                         }
+                        
+                    } else {
+                        $.showErrors(response);
                     }
                 }
             });
         });
-    };
+    });
 
     // Highlight a row on selecting
     $("table > tbody > tr > td > input[type='checkbox']").change(function(){
