@@ -148,7 +148,7 @@ return array(
     ),
     
     // History
-    '/admin/history/clear.ajax' => array(
+    '/admin/history/clear' => array(
         'controller' => 'Admin:History@clearAction',
         'disallow' => array('user')
     ),

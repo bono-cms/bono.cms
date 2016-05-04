@@ -11,8 +11,6 @@
 
 namespace Cms\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
 final class History extends AbstractController
 {
     /**
@@ -23,7 +21,8 @@ final class History extends AbstractController
      */
     public function indexAction($page = 1)
     {
-        $this->loadPlugins();
+        $this->view->getBreadcrumbBag()
+                   ->addOne('History');
 
         $historyManager = $this->getService('Cms', 'historyManager');
         $userManager = $this->getService('Cms', 'userManager');
@@ -52,16 +51,5 @@ final class History extends AbstractController
             $this->flashBag->set('success', 'History has been cleared successfully');
             return '1';
         }
-    }
-
-    /**
-     * Loads required plugins
-     * 
-     * @return void
-     */
-    private function loadPlugins()
-    {
-        $this->view->getBreadcrumbBag()->addOne('History');
-        $this->view->getPluginBag()->appendScript('@Cms/admin/history.js');
     }
 }
