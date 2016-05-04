@@ -452,7 +452,7 @@ $(function(){
 
         var url = $(this).data('url');
         var $self = $(this);
-        var $modal = $('#myModal');
+        var $modal = $('#confirmation-modal');
         var message = $modal.data('message');
 
         if (!url) {
@@ -466,9 +466,9 @@ $(function(){
 
         // Then show the modal box
         $modal.modal();
-        
+
         // Then every time attach the click listener
-        $("#delete-yes-modal-btn").off('click').click(function(event){
+        $("[data-button='confirm-removal']").off('click').click(function(event){
             $.ajax({
                 url : url,
                 success : function(response) {

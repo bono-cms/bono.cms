@@ -156,7 +156,7 @@
  
 </footer>
 	
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="confirmation-modal">
   <div class="modal-dialog">
 	<div class="modal-content">
 	  <div class="modal-header">
@@ -167,7 +167,7 @@
 		<p><?php $this->show('Do you really want to delete this permanently?'); ?></p>
 	  </div>
 	  <div class="modal-footer">
-		<button type="button" id="delete-yes-modal-btn" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> <?php $this->show('Yes'); ?></button>
+		<button type="button" data-button="confirm-removal" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> <?php $this->show('Yes'); ?></button>
 		<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> <?php $this->show('No'); ?></button>
 	  </div>
 	</div>
