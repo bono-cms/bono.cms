@@ -11,8 +11,6 @@
 
 namespace Cms\Controller\Admin;
 
-use Cms\Controller\Admin\AbstractController;
-
 final class Notifications extends AbstractController
 {
     /**
