@@ -59,7 +59,7 @@ use Krystal\Form\Element;
 					</td>
 					<td class="text-center">
 						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this language'); ?>" data-button="edit" href="<?php echo $this->url('Cms:Admin:Languages@editAction', $language->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this language'); ?>" data-button="delete" data-id="<?php echo $language->getId(); ?>" data-category="language" href="#"><i class="glyphicon glyphicon-remove"></i></a>
+						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this language'); ?>" data-button="delete" data-url="<?php echo $this->url('Cms:Admin:Languages@deleteAction', $language->getId()); ?>" href="#"><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
 				</tr>
 				<?php endforeach; ?>

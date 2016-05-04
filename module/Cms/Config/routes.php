@@ -110,7 +110,7 @@ return array(
         'disallow' => array('guest', 'user')
     ),
     
-    '/admin/languages/delete' => array(
+    '/admin/languages/delete/(:var)' => array(
         'controller' => 'Admin:Languages@deleteAction',
         'disallow' => array('guest', 'user')
     ),

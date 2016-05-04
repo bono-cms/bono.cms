@@ -36,7 +36,7 @@ final class Languages extends AbstractController
     {
         // Load view plugins
         $this->view->getPluginBag()
-                   ->appendScript('@Cms/admin/language/language.form.js');
+                   ->appendScript('@Cms/admin/language.form.js');
 
         // Append breadcrumbs
         $this->view->getBreadcrumbBag()->addOne('Languages', 'Cms:Admin:Languages@gridAction')
@@ -82,11 +82,12 @@ final class Languages extends AbstractController
     /**
      * Deletes a language by its associated id
      * 
+     * @param string $id
      * @return string
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
-        return $this->invokeRemoval('languageManager');
+        return $this->invokeRemoval('languageManager', $id);
     }
 
     /**
@@ -143,9 +144,6 @@ final class Languages extends AbstractController
      */
     public function gridAction()
     {
-        $this->view->getPluginBag()
-                   ->appendScript('@Cms/admin/language/browser.js');
-
         $this->view->getBreadcrumbBag()
                    ->addOne('Languages');
 
