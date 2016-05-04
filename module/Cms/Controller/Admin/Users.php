@@ -37,7 +37,7 @@ final class Users extends AbstractController
     {
         // Load view plugins
         $this->view->getPluginBag()
-                   ->appendScript('@Cms/admin/users/user.form.js');
+                   ->appendScript('@Cms/admin/user.form.js');
 
         // Only developers can see the link to the grid
         if ($this->getAuthService()->getRole() == 'dev') {
@@ -92,9 +92,6 @@ final class Users extends AbstractController
      */
     public function gridAction()
     {
-        $this->view->getPluginBag()
-                   ->appendScript('@Cms/admin/users/browser.js');
-
         $this->view->getBreadcrumbBag()
                    ->addOne('Users');
 
@@ -106,11 +103,12 @@ final class Users extends AbstractController
     /**
      * Removes selected user
      * 
+     * @param string $id
      * @return string
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
-        return $this->invokeRemoval('userManager');
+        return $this->invokeRemoval('userManager', $id);
     }
 
     /**

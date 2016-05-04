@@ -83,7 +83,7 @@ return array(
         'disallow' => array('guest', 'user')
     ),
     
-    '/admin/users/delete' => array(
+    '/admin/users/delete/(:var)' => array(
         'controller' => 'Admin:Users@deleteAction',
         'ajax' => true,
         'method' => 'POST'
