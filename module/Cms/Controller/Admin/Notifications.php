@@ -23,7 +23,8 @@ final class Notifications extends AbstractController
      */
     public function indexAction($page = 1)
     {
-        $this->loadPlugins();
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Notifications');
 
         $notificationManager = $this->getNotificationManager();
 
@@ -43,19 +44,6 @@ final class Notifications extends AbstractController
     }
 
     /**
-     * Loads required plugins for view
-     * 
-     * @return void
-     */
-    private function loadPlugins()
-    {
-        $this->view->getPluginBag()
-                   ->appendScript('@Cms/admin/notifications.js');
-
-        $this->view->getBreadcrumbBag()->addOne('Notifications');
-    }
-
-    /**
      * Returns notification manager
      * 
      * @return \Admin\Service\NotificationManager
@@ -68,17 +56,14 @@ final class Notifications extends AbstractController
     /**
      * Removes selected notification
      * 
+     * @param string $id
      * @return string
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
-        if ($this->request->hasPost('id')) {
-            $id = $this->request->getPost('id');
-
-            if ($this->getNotificationManager()->deleteById($id)) {
-                $this->flashBag->set('success', 'Selected notification has been removed successfully');
-                return '1';
-            }
+        if ($this->getNotificationManager()->deleteById($id)) {
+            $this->flashBag->set('success', 'Selected notification has been removed successfully');
+            return '1';
         }
     }
 

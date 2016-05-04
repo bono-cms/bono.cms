@@ -26,7 +26,7 @@
 					<td class="text-center"><?php echo date($dateFormat, $notification->getTimestamp()); ?></td>
 					<?php endif; ?>
 					<td class="text-center">
-						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this notification'); ?>" data-button="delete" data-id="<?php echo $notification->getId(); ?>" data-category="main" href="#" ><i class="glyphicon glyphicon-remove"></i></a>
+						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this notification'); ?>" data-button="delete" data-url="<?php echo $this->url('Cms:Admin:Notifications@deleteAction', $notification->getId()); ?>" href="#" ><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
 				</tr>
 				<?php endforeach; ?>
@@ -41,7 +41,7 @@
 		<?php endif; ?>
 
 		<?php if (!empty($notifications)): ?>
-		<button data-button="remove" data-category="all" class="btn btn-default"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
+		<button data-button="remove" data-message="<?php $this->show('Do you really want to clear all notifications?'); ?>" data-url="<?php echo $this->url('Cms:Admin:Notifications@clearAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
 		<?php endif; ?>
 		
 	</div>

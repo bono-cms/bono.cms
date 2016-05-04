@@ -133,11 +133,11 @@ return array(
         'controller' => 'Admin:Notifications@indexAction'
     ),
     
-    '/admin/notifications/delete.ajax' => array(
+    '/admin/notifications/delete/(:var)' => array(
         'controller' => 'Admin:Notifications@deleteAction'
     ),
     
-    '/admin/notifications/clear.ajax' => array(
+    '/admin/notifications/clear' => array(
         'controller' => 'Admin:Notifications@clearAction'
     ),
     
