@@ -453,7 +453,7 @@ $(function(){
         var url = $(this).data('url');
         var $self = $(this);
         var $modal = $('#confirmation-modal');
-        var message = $modal.data('message');
+        var message = $(this).data('message');
 
         if (!url) {
             throw new Error('URL for delete button is not provided');
