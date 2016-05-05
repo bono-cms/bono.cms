@@ -11,6 +11,8 @@
 
 namespace Cms\Service;
 
+use Krystal\Application\Module\ModuleManagerInterface;
+
 interface WebPageManagerInterface
 {
     /**
@@ -43,9 +45,10 @@ interface WebPageManagerInterface
      * 
      * @param string $base
      * @param string $language Optional language code
+     * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManager
      * @return array
      */
-    public function fetchURLs($base, $language);
+    public function fetchURLs($base, $language, ModuleManagerInterface $moduleManager);
 
     /**
      * Surrounds a slug using provided language id to generate a language code if needed

@@ -14,6 +14,7 @@ namespace Cms\Service;
 use Cms\Storage\WebPageMapperInterface;
 use Cms\Storage\LanguageMapperInterface;
 use Krystal\Text\SlugGenerator;
+use Krystal\Application\Module\ModuleManagerInterface;
 
 final class WebPageManager extends AbstractManager implements WebPageManagerInterface
 {
@@ -117,9 +118,10 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
      * 
      * @param string $base
      * @param string $language Optional language code
+     * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManager
      * @return array
      */
-    public function fetchURLs($base, $language)
+    public function fetchURLs($base, $language, ModuleManagerInterface $moduleManager)
     {
         // Grab language id by its associated code first
         $langId = $this->languageMapper->fetchIdByCode($language);
@@ -136,15 +138,35 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         $result[] = $this->createHomeUrl($base, $language);
 
         foreach ($rows as $row) {
-            // Build the URL first
-            $url = $base . $this->surround($row['slug'], $row['lang_id']);
-            // Now make sure all special characters are escaped
-            $url = htmlspecialchars($url, \ENT_QUOTES, 'UTF-8');
+            $module = $this->cleanModuleName($row['module']);
 
-            $result[] = $url;
+            // Append only from active (loaded) modules
+            if ($moduleManager->isLoaded($module)) {
+                // Build the URL first
+                $url = $base . $this->surround($row['slug'], $row['lang_id']);
+                // Now make sure all special characters are escaped
+                $url = htmlspecialchars($url, \ENT_QUOTES, 'UTF-8');
+
+                $result[] = $url;
+            }
         }
 
         return $result;
+    }
+
+    /**
+     * Cleans module name
+     * 
+     * @param string $module
+     * @return string
+     */
+    private function cleanModuleName($module)
+    {
+        // Take out description characters
+        $module = preg_replace('~(\(.*?\))~', '', $module);
+        $module = trim($module);
+
+        return $module;
     }
 
     /**
