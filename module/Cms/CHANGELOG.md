@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * Added support for dynamic administration segment
+ * In administration area, replaced static URLs with their corresponding generators in templates
  * No longer throwing exception when there's no `theme` section in theme's configuration
  * Forced to load theme plugins even if there's no `theme` section
  * Added `getSwitchUrl()` in language entities
