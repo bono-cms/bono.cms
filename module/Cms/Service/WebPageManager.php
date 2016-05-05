@@ -131,7 +131,10 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 
         $rows = $this->webPageMapper->fetchAll($langId);
         $result = array();
-        
+
+        // Append home URL first
+        $result[] = $this->createHomeUrl($base, $language);
+
         foreach ($rows as $row) {
             // Build the URL first
             $url = $base . $this->surround($row['slug'], $row['lang_id']);
@@ -142,6 +145,24 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         }
 
         return $result;
+    }
+
+    /**
+     * Creates home URL
+     * 
+     * @param string $base Base URL to be prepended
+     * @param string $language
+     * @return string
+     */
+    private function createHomeUrl($base, $language)
+    {
+        $languages = $this->getLanguages();
+
+        if (count($languages) > 1) {
+            return sprintf('%s/lang/%s', $base, $language);
+        } else {
+            return sprintf('%s/', $base);
+        }
     }
 
     /**
