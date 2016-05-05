@@ -1,0 +1,43 @@
+
+<div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    <?php if (!empty($modules)): ?>
+                    <input type="checkbox" />
+                    <?php endif; ?>
+                </th>
+                <th class="text-center"><?php $this->show('Icon'); ?></th>
+                <th class="text-center"><?php $this->show('Name'); ?></th>
+                <th class="text-center"><?php $this->show('Description'); ?></th>
+            </tr>
+        </thead>
+        
+        <?php if (!empty($modules)): ?>
+        <tbody>
+            <?php foreach ($modules as $module): ?>
+            <tr>
+                <td class="text-center">
+                    <input type="checkbox" name="toDelete[<?php echo $module['name']; ?>]" />
+                </td>
+                <td class="text-center col-lg-2"><a href="<?php echo $this->url($module['route']); ?>"><i class="<?php echo $module['icon']; ?>"></i></a></td>
+                <td class="text-center"><?php $this->show($module['name']); ?></td>
+                <td class="text-center"><?php $this->show($module['description']); ?></td>
+                <td class="text-center">
+                    <a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this module'); ?>" data-button="delete" href="#" data-url="<?php echo $module['name']; ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+            
+            <?php endforeach; ?>
+        </tbody>
+        <?php endif; ?>
+    </table>
+    
+    <?php if (empty($modules)): ?>
+    <div class="center-block">
+        <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No modules'); ?></h2>
+    </div>
+    <?php endif; ?>
+    
+</div>
