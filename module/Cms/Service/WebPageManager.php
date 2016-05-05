@@ -131,7 +131,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 
         $rows = $this->webPageMapper->fetchAll($langId);
         $result = array();
-
+        
         foreach ($rows as $row) {
             // Build the URL first
             $url = $base . $this->surround($row['slug'], $row['lang_id']);
@@ -145,6 +145,23 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     }
 
     /**
+     * Fetch all published languages
+     * 
+     * @return array
+     */
+    private function getLanguages()
+    {
+        static $languages = null;
+
+        // Cache fetching calls
+        if (is_null($languages)) {
+            $languages = $this->languageMapper->fetchAll(true);
+        }
+
+        return $languages;
+    }
+
+    /**
      * Surrounds a slug using provided language id to generate a language code if needed
      * 
      * @param string $slug
@@ -154,12 +171,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     public function surround($slug, $langId)
     {
         if ($slug != null && $langId != null) {
-            static $languages = null;
-
-            // Cache fetching calls
-            if (is_null($languages)) {
-                $languages = $this->languageMapper->fetchAll(true);
-            }
+            $languages = $this->getLanguages();
 
             // If we have more that one language, then URL itself should look like as /lang-code/slug/
             if (count($languages) > 1) {
@@ -170,7 +182,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
                 }
 
             } else {
-                return '/' . $slug . '/';
+                return sprintf('/%s/', $slug);
             }
 
         } else {
