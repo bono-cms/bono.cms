@@ -176,6 +176,7 @@
 
 <!-- This value represents application language, which comes from application's configuration array -->
 <input type="hidden" name="language" value="<?php echo $appConfig->getLanguage(); ?>" />
+<input type="hidden" name="slug-refresh-url" value="<?php echo $this->url('Cms:Admin:Dashboard@slugAction'); ?>" />
 
 <?php $this->loadBlock('ajax'); ?>
 

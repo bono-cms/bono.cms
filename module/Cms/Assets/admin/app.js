@@ -303,12 +303,10 @@ $(function(){
         });
     });
     
-    
     $("[data-button='refresh']").click(function(event){
         event.preventDefault();
         window.location.reload();
     });
-    
     
     $("[data-button='change-content-language']").click(function(event){
         event.preventDefault();
@@ -330,16 +328,14 @@ $(function(){
         });
     });
     
-    
     $("[data-toggle='tooltip']").tooltip({
         placement: $(this).data('placement')
     });
     
-    
     $("[data-button='slug']").click(function(event){
         event.preventDefault();
         $.ajax({
-            url : "/admin/kernel/generate-slug",
+            url : $("[name='slug-refresh-url']").val(),
             data : {
                 title : $("[data-input='title']").val()
             },
@@ -351,7 +347,6 @@ $(function(){
             }
         });
     });
-    
     
     $("[data-button='per-page-changer']").change(function(event){
         var value = $(this).val();
