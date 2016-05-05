@@ -1,6 +1,6 @@
 $(function(){
     $("[data-button='dashboard']").click(function(event){
         event.preventDefault();
-        window.location = '/admin';
+        window.location = $(this).data('url');
     });
 });
