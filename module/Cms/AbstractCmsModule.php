@@ -58,6 +58,28 @@ abstract class AbstractCmsModule extends AbstractModule
     }
 
     /**
+     * Creates dynamic routes
+     * 
+     * @param array $routes
+     * @param string $segment
+     * @return array
+     */
+    private function createDynamicRoutes(array $routes, $segment)
+    {
+        $result = array();
+
+        foreach ($routes as $key => $value) {
+            if (strpos($key, '%s') !== false) {
+                $key = sprintf($key, $segment);
+            }
+
+            $result[$key] = $value;
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns configuration entity
      * 
      * @return \Krystal\Stdlib\VirtualEntity
@@ -72,7 +94,12 @@ abstract class AbstractCmsModule extends AbstractModule
      */
     public function getRoutes()
     {
-        return include($this->getPathProvider()->getWithConfigDir('routes.php'));
+        $segment = $this->getServiceLocator()->get('paramBag')->get('admin_segment');
+        
+        $routes = include($this->getPathProvider()->getWithConfigDir('routes.php'));
+        $routes = $this->createDynamicRoutes($routes, $segment);
+
+        return $routes;
     }
 
     /**
