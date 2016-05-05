@@ -7,14 +7,15 @@ $(function(){
     
     $("form").submit(function(event){
         event.preventDefault();
-        var data = $(this).serialize();
+        var $self = $(this);
+        var data = $self.serialize();
 
         $.ajax({
-            url : "/admin/login.ajax",
+            url : $self.data('submit-url'),
             data : data,
             success : function(response){
                 if (response == "1") {
-                    window.location = '/admin';
+                    window.location = $self.data('success-url');
                 } else {
                     $.showErrors(response);
                 }

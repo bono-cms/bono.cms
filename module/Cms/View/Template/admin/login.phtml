@@ -11,7 +11,7 @@
 <body>
  <main>
   <div class="container">
-  <form class="form-signin" role="form">
+  <form class="form-signin" role="form" data-success-url="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" data-submit-url="<?php echo $this->url('Cms:Admin:Auth@loginAction'); ?>">
 	<h2 class="form-signin-heading" style="color:white;"><?php $this->show('Enter the system'); ?></h2>
 	
 	<input type="text" class="form-control" placeholder="<?php $this->show('Login'); ?>" required="required" autofocus="true" name="login" />
