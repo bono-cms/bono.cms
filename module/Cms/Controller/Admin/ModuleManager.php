@@ -36,4 +36,15 @@ final class ModuleManager extends AbstractController
             'modules' => $modules
         ));
     }
+
+    /**
+     * Deletes a module by its associated name
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function deleteAction($module)
+    {
+        return $module;
+    }
 }

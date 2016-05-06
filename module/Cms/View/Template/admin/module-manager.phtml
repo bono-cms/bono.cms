@@ -25,7 +25,7 @@
                 <td class="text-center"><?php $this->show($module['name']); ?></td>
                 <td class="text-center"><?php $this->show($module['description']); ?></td>
                 <td class="text-center">
-                    <a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this module'); ?>" data-button="delete" href="#" data-url="<?php echo $module['name']; ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    <a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this module'); ?>" data-button="delete" href="#" data-url="<?php echo $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
             </tr>
             

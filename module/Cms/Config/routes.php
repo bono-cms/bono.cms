@@ -174,5 +174,10 @@ return array(
     '/%s/module-manager' => array(
         'controller' => 'Admin:ModuleManager@indexAction',
         'disallow' => array('guest')
+    ),
+    
+    '/%s/module-manager/delete/(:var)' => array(
+        'controller' => 'Admin:ModuleManager@deleteAction',
+        'disallow' => array('guest', 'user')
     )
 );
