@@ -12,6 +12,23 @@ body {
   background-color: #eee;
 }
 
+div.captcha-container {
+ background-color: white;
+ width: 305px;
+ height: 177px;
+ margin-bottom: 17px;
+ padding-top: 14px;
+ display: none;
+}
+
+div.captcha-container > span {
+ margin-bottom: 10px;
+ display: block;
+ min-height: 36px;
+ font-size: 17px;
+ white-space: initial !important;
+}
+
 .form-signin {
   max-width: 330px;
   padding: 15px;
