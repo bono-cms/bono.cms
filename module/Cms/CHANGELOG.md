@@ -25,6 +25,7 @@ CHANGELOG
  * Fixed issue with responsiveness
  * Changed sorting order to DESC for users grid
  * Improved internal structure
+ * Improvements in templates and layout
  * Fixed wrong caption in users grid
 
 1.1
