@@ -14,7 +14,7 @@
   <form class="form-signin" role="form" data-success-url="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" data-submit-url="<?php echo $this->url('Cms:Admin:Auth@loginAction'); ?>">
 	<h2 class="form-signin-heading" style="color:white;"><?php $this->show('Enter the system'); ?></h2>
 	
-	<input type="text" class="form-control" placeholder="<?php $this->show('Login'); ?>" required="required" autofocus="true" name="login" />
+	<input type="text" class="form-control" placeholder="<?php $this->show('Login'); ?>" required="required" autofocus="true" name="login" value="<?php echo $login; ?>" />
 	<input type="password" class="form-control" placeholder="<?php $this->show('Password'); ?>" required="required" name="password" />
 	
 	<div class="checkbox">
@@ -24,6 +24,7 @@
 	  </label>
 	</div>
 
+    <?php if ($captcha === true): ?>
     <div class="captcha-container">
         <span class="label label-danger"><?php $this->show('Please confirm that you are not a bot'); ?></span>
         
@@ -41,6 +42,7 @@
             </div>
         </div>
     </div>
+    <?php endif; ?>
     
 	<button class="btn btn-lg btn-primary btn-block disabled" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> <?php $this->show('Enter'); ?></button>
   </form>
