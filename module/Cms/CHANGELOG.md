@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added brand favicon for administration panel. It no longer uses the shared one
  * Added automatic CAPTCHA protection in administration panel. It will be shown after 5 invalid login attempts
  * Added support for dynamic administration segment
  * In administration area, replaced static URLs with their corresponding generators in templates
