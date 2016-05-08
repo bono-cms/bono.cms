@@ -34,6 +34,10 @@ div.captcha-container > span {
   margin: 0 auto;
 }
 
+.form-signin-heading, .checkbox > label {
+    color: white;
+}
+
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
   margin-bottom: 10px;

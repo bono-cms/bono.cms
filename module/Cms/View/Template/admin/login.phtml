@@ -12,13 +12,13 @@
  <main>
   <div class="container">
   <form class="form-signin" role="form" data-success-url="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" data-submit-url="<?php echo $this->url('Cms:Admin:Auth@loginAction'); ?>">
-	<h2 class="form-signin-heading" style="color:white;"><?php $this->show('Enter the system'); ?></h2>
+	<h2 class="form-signin-heading"><?php $this->show('Enter the system'); ?></h2>
 	
 	<input type="text" class="form-control" placeholder="<?php $this->show('Login'); ?>" required="required" autofocus="true" name="login" value="<?php echo $login; ?>" />
 	<input type="password" class="form-control" placeholder="<?php $this->show('Password'); ?>" required="required" name="password" />
 	
 	<div class="checkbox">
-	  <label style="color:white;">
+	  <label>
 		<input type="hidden" name="remember" value="0" />
 		<input type="checkbox" name="remember" value="1" /> <?php $this->show('Remember me'); ?>
 	  </label>
