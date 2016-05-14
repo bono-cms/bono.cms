@@ -145,8 +145,12 @@ abstract class AbstractController extends BaseController
         $this->view->setLayout('__layout__')
                    ->setModule('Site');
 
+        // Append blocks
         $this->view->getBlockBag()
-                   ->setBlocksDir($this->view->createThemePath('Site', $this->appConfig->getTheme()).'/blocks/');
+                   ->addBlockDirs(array(
+                                    $this->view->createThemePath('Site', $this->appConfig->getTheme()).'/blocks/',
+                                    $this->view->createThemePath('Site', 'shared')
+                                 ));
 
         // Tweak breadcrumbs
         $this->view->getBreadcrumbBag()
