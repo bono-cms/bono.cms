@@ -4,15 +4,8 @@
 !/module/Cms/
 !/module/Site/
 
-
 # Themes are ignored as well
 module/Site/View/
 
-# Ignore all translations
-Translations/
-
-data/
+# Vendors are always ignored
 vendor/
-
-# Ignore root configuration directory
-/config
