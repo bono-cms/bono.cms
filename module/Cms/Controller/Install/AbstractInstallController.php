@@ -37,7 +37,7 @@ abstract class AbstractInstallController extends AbstractController
     final protected function bootstrap()
     {
         $this->view->getBlockBag()
-                   ->setBlocksDir($this->appConfig->getModulesDir() . '/Cms/View/Template/install/blocks/');
+                   ->addBlockDir($this->appConfig->getModulesDir() . '/Cms/View/Template/install/blocks/');
 
         $this->view->setLayout('layout', 'Cms')
                    ->setTheme('install');
