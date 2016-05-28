@@ -92,9 +92,9 @@ abstract class AbstractMapper extends BaseMapper
      * @param string $webPageId Target web page id
      * @return string
      */
-    final public function fetchTitleByWebPageId($webPageId)
+    final public function fetchNameByWebPageId($webPageId)
     {
-        return $this->fetchOneColumn('title', 'web_page_id', $webPageId);
+        return $this->fetchOneColumn('name', 'web_page_id', $webPageId);
     }
 
     /**

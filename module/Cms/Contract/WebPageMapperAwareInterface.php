@@ -31,10 +31,10 @@ interface WebPageMapperAwareInterface
     public function fetchWebPageIdById($id);
 
     /**
-     * Fetches title by web page id
+     * Fetches name by web page id
      * 
      * @param string $webPageId
      * @return string
      */
-    public function fetchTitleByWebPageId($webPageId);
+    public function fetchNameByWebPageId($webPageId);
 }
