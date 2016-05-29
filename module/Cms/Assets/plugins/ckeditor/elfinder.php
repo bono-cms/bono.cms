@@ -1,6 +1,6 @@
 <?php
 
-// Can't rely on $_SERVER['ROOT'], that's why building path to the root folter manually
+// Can't rely on $_SERVER['ROOT'], that's why building path to the root folder manually
 $root = dirname(dirname(dirname(dirname(dirname(__DIR__)))));
 
 // Grab service locator
