@@ -87,7 +87,7 @@ final class Main extends AbstractController
     public function notFoundAction()
     {
         // If triggering 404 from administration area
-        if (strpos($this->request->getUri(), '/admin') !== false) {
+        if (strpos($this->request->getUri(), $this->paramBag->get('admin_segment')) !== false) {
             return $this->translator->translate('Invalid parameter supplied');
         } else {
             $controller = 'Pages:Page@notFoundAction';
