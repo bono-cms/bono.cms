@@ -6,12 +6,12 @@ use Krystal\Form\Element;
 ?>
 
 <form data-group="user">
-	<div class="well clearfix">
+	<div class="well">
 		
         <?php echo Element::hidden('user[id]', $user->getId()); ?>
         <?php echo Element::hidden('user[password_hash]', $user->getPasswordHash()); ?>
 		
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Login'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
@@ -21,7 +21,7 @@ use Krystal\Form\Element;
 			</div>
 		</div>
 		
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
@@ -31,7 +31,7 @@ use Krystal\Form\Element;
 			</div>
 		</div>
 		
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Password confirmation'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
@@ -41,7 +41,7 @@ use Krystal\Form\Element;
 			</div>
 		</div>
 		
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
@@ -51,7 +51,7 @@ use Krystal\Form\Element;
 			</div>
 		</div>
 		
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
@@ -62,7 +62,7 @@ use Krystal\Form\Element;
 		</div>
 		
 		<?php if ($role->isDeveloper()): ?>
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Role'); ?></label>
 			<div class="col-lg-10">
                 <?php echo Element::select('user[role]', $roles, $user->getRole(), array('class' => 'form-control')); ?>
