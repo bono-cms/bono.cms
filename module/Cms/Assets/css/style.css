@@ -7,6 +7,12 @@
   border: none;
 }
 
+.form-group:after {
+    content: " ";
+    display: table;
+    clear:both;
+}
+
 .white {
  color: #fff !important;
 }
