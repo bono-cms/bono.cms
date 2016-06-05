@@ -126,13 +126,13 @@ final class HistoryManager extends AbstractManager implements HistoryManagerInte
     protected function toEntity(array $record)
     {
         $entity = new VirtualEntity();
-        $entity->setId((int) $record['id'])
-            ->setTimestamp((int) $record['timestamp'])
-            ->setModule($record['module'])
-            ->setUserId($record['user_id'])
-            ->setComment($record['comment'])
-            ->setPlaceholder($record['placeholder']);
-        
+        $entity->setId($record['id'], VirtualEntity::FILTER_INT)
+            ->setTimestamp($record['timestamp'], VirtualEntity::FILTER_INT)
+            ->setModule($record['module'], VirtualEntity::FILTER_TAGS)
+            ->setUserId($record['user_id'], VirtualEntity::FILTER_INT)
+            ->setComment($record['comment'], VirtualEntity::FILTER_TAGS)
+            ->setPlaceholder($record['placeholder'], VirtualEntity::FILTER_TAGS);
+
         return $entity;
     }
 

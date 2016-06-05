@@ -41,9 +41,9 @@ final class NotificationManager extends AbstractManager implements NotificationM
     protected function toEntity(array $notification)
     {
         $entity = new VirtualEntity();
-        $entity->setId((int) $notification['id'])
-                  ->setViewed((bool) $notification['viewed'])
-                  ->setTimestamp((int) $notification['timestamp'])
+        $entity->setId($notification['id'], VirtualEntity::FILTER_INT)
+                  ->setViewed($notification['viewed'], VirtualEntity::FILTER_INT)
+                  ->setTimestamp($notification['timestamp'], VirtualEntity::FILTER_INT)
                   // No need to filter "message" from XSS, because that message never comes from user's input
                   ->setMessage($notification['message']);
         
