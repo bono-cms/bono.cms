@@ -180,7 +180,7 @@
 <input type="hidden" name="language" value="<?php echo $appConfig->getLanguage(); ?>" />
 <input type="hidden" name="slug-refresh-url" value="<?php echo $this->url('Cms:Admin:Dashboard@slugAction'); ?>" />
 
-<?php $this->loadBlock('ajax'); ?>
+<?php $this->loadPartial('ajax'); ?>
 
 <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
 <script src="<?php echo $script; ?>"></script>

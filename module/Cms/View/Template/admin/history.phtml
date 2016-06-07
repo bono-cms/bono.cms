@@ -1,5 +1,5 @@
 <?php defined('KRYSTAL') or die; ?>
-<?php $this->loadBlock('items-per-page', array('caption' => 'History')); ?>
+<?php $this->loadPartial('items-per-page', array('caption' => 'History')); ?>
 
 <div class="table-responsive">
 	<table class="table table-striped table-hover table-bordered">
@@ -42,4 +42,4 @@
 <button data-message="<?php $this->show('Do you really want to clear the history?'); ?>" data-button="remove" data-url="<?php echo $this->url('Cms:Admin:History@clearAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
 <?php endif; ?>
 
-<?php $this->loadBlock('paginator'); ?>
+<?php $this->loadPartial('paginator'); ?>

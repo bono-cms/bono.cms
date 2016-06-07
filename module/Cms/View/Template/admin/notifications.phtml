@@ -1,5 +1,5 @@
 <?php defined('KRYSTAL') or die; ?>
-<?php $this->loadBlock('items-per-page', array('caption' => 'Notifications')); ?>
+<?php $this->loadPartial('items-per-page', array('caption' => 'Notifications')); ?>
 
 <form>
 	<div class="table-responsive">
@@ -48,4 +48,4 @@
 	</div>
 </form>
 
-<?php $this->loadBlock('paginator'); ?>
+<?php $this->loadPartial('paginator'); ?>

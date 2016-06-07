@@ -2,7 +2,7 @@
 	
 	<div class="row">
 		<h2 class="text-muted"><?php $this->show('New products'); ?></h2>
-		<?php $this->loadBlock('product-block', array('products' => $shop->getLatest())); ?>
+		<?php $this->loadPartial('product-block', array('products' => $shop->getLatest())); ?>
 		
 		<article><?php echo $page->getContent(); ?></article>
 		

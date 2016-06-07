@@ -203,8 +203,8 @@ abstract class AbstractController extends AbstractAuthAwareController
         $this->validateRequest();
 
         $this->view->setTheme('admin');
-        $this->view->getBlockBag()->addBlockDir($this->view->createThemePath('Cms', 'admin') . '/blocks/')
-                                  ->addStaticBlock($this->view->createThemePath('Menu', 'admin'), 'menu-widget');
+        $this->view->getPartialBag()->addPartialDir($this->view->createThemePath('Cms', 'admin') . '/partials/')
+                                    ->addStaticPartial($this->view->createThemePath('Menu', 'admin'), 'menu-widget');
 
         $this->view->setLayout('__layout__', 'Cms');
         $this->loadAllShared();

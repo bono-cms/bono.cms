@@ -146,9 +146,9 @@ abstract class AbstractController extends BaseController
                    ->setModule('Site');
 
         // Append blocks
-        $this->view->getBlockBag()
-                   ->addBlockDirs(array(
-                                    $this->view->createThemePath('Site', $this->appConfig->getTheme()).'/blocks/',
+        $this->view->getPartialBag()
+                   ->addPartialDirs(array(
+                                    $this->view->createThemePath('Site', $this->appConfig->getTheme()).'/partials/',
                                     $this->view->createThemePath('Site', 'shared')
                                  ));
 

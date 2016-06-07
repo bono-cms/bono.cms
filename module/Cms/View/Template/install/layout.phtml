@@ -21,7 +21,7 @@
 
 <main><?php echo $fragment; ?></main>
 
-<?php $this->loadBlock('ajax'); ?>
+<?php $this->loadPartial('ajax'); ?>
 
 <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
 <script src="<?php echo $script; ?>"></script>
