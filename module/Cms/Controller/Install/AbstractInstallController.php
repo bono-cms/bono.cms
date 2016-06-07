@@ -27,7 +27,7 @@ abstract class AbstractInstallController extends AbstractController
         $installed = $configManager->get('installed') == true;
 
         if ($installed) {
-            die('Already installed');
+           die('Already installed');
         }
     }
 
@@ -36,10 +36,10 @@ abstract class AbstractInstallController extends AbstractController
      */
     final protected function bootstrap()
     {
-        $this->view->getBlockBag()
-                   ->addBlockDir($this->appConfig->getModulesDir() . '/Cms/View/Template/install/blocks/');
+        $this->view->getPartialBag()
+                   ->addPartialDir($this->appConfig->getModulesDir() . '/Cms/View/Template/install/blocks/');
 
-        $this->view->setLayout('layout', 'Cms')
+        $this->view->setLayout('__layout__', 'Cms')
                    ->setTheme('install');
 
         $this->view->getPluginBag()->load(array(

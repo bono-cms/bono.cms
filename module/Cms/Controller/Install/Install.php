@@ -98,7 +98,7 @@ final class Install extends AbstractInstallController
         $this->view->getPluginBag()
                    ->appendScript('@Cms/install.js');
 
-        $this->view->getBlockBag()
-                   ->setBlocksDir($this->view->createThemePath('Cms', 'admin').'/blocks/');
+        $this->view->getPartialBag()
+                   ->addPartialDir($this->view->createThemePath('Cms', 'admin').'/partials/');
     }
 }
