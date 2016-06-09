@@ -1,6 +1,7 @@
 <?php defined('KRYSTAL') or die; ?>
 
 <div class="module-button-box">
+    <button href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></button>
     <button href="#" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-url="<?php echo $this->url('Cms:Admin:Dashboard@installModuleAction'); ?>" data-button="module-install" title="<?php $this->show('Click to Install a module from ZIP archive'); ?>">
         <i class="glyphicon glyphicon-wrench"></i> <?php $this->show('Install a module'); ?>
     </button>
