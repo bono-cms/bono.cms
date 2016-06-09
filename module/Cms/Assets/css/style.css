@@ -2,6 +2,14 @@
  * Copyright (c) No Global State Lab
  */
 
+a[data-button='slug'] > i {
+ color: wheat;
+}
+
+div.module-button-box {
+ margin-bottom: 16px;
+}
+
 .well {
   background-color: initial;
   border: none;
