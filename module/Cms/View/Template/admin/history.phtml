@@ -21,7 +21,14 @@
 				<td class="text-center"><?php echo date('d.m.y H:i:s', $record->getTimestamp()); ?></td>
 				<td class="text-center"><?php echo $this->translate($record->getComment(), $record->getPlaceholder()); ?></td>
 				<td class="text-center"><?php $this->show($record->getModule()); ?></td>
-				<td class="text-center"><?php echo $userManager->fetchNameById($record->getUserId()); ?></td>
+				<td class="text-center">
+                    <?php $user = $userManager->fetchNameById($record->getUserId()); ?>
+                    <?php if ($user): ?>
+                    <?php echo $user; ?>
+                    <?php else: ?>
+                    <span class="text-danger">(<em><?php $this->show('User no longer exists'); ?></em>)</span>
+                    <?php endif; ?>
+                </td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>

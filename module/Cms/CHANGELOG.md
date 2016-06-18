@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed display name for non-existing users in History view. Since now it displays a warning message instead of empty string
  * Fixes in .gitignore
  * Added ability to deal with shared template blocks. Added very common ones as well
  * Added brand favicon for administration panel. It no longer uses the shared one
