@@ -33,7 +33,8 @@ final class ModuleManager extends AbstractController
                    ->addOne('Module manager');
 
         return $this->view->render('module-manager', array(
-            'modules' => $modules
+            'modules' => $modules,
+            'moduleManager' => $this->moduleManager
         ));
     }
 
