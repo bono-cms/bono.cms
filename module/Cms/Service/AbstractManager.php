@@ -11,13 +11,13 @@
 
 namespace Cms\Service;
 
-use Krystal\Application\Model\AbstractManager as BaseManager;
+use Krystal\Application\Model\AbstractService;
 use Menu\Service\MenuWidgetInterface;
 
 /**
  * Very common services for the widget must be here
  */
-abstract class AbstractManager extends BaseManager
+abstract class AbstractManager extends AbstractService
 {
     /**
      * Menu widget manager
