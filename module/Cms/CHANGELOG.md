@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Decreased font size of the footer in administration panel
  * Fixed display name for non-existing users in History view. Since now it displays a warning message instead of empty string
  * Fixes in .gitignore
  * Added ability to deal with shared template blocks. Added very common ones as well
