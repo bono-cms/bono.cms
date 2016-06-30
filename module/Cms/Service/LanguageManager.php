@@ -192,7 +192,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
             return $this->getDefaultId();
         }
 
-        return null;
+        return '1';
     }
 
     /**
@@ -258,7 +258,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
      */
     public function hasDefault()
     {
-        return $this->config->exists(self::LANGUAGE_DEFAULT_KEY);
+        return $this->config->has(self::LANGUAGE_DEFAULT_KEY);
     }
 
     /**
