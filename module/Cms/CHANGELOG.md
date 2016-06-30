@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed CSS issue with double-background on the login page
  * Changed the way of storing configuration data. Since now its stored in the database
  * Decreased font size of the footer in administration panel
  * Fixed display name for non-existing users in History view. Since now it displays a warning message instead of empty string

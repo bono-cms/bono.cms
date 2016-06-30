@@ -1,9 +1,7 @@
 
 main {
-  top: 0px;
   border:none;
-  background: url("../images/background.jpg") no-repeat center center fixed;
-  background-size: cover;
+  background: transparent;
 }
 
 body {
