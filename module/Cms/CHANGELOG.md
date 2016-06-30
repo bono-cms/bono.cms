@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Changed the way of storing configuration data. Since now its stored in the database
  * Decreased font size of the footer in administration panel
  * Fixed display name for non-existing users in History view. Since now it displays a warning message instead of empty string
  * Fixes in .gitignore

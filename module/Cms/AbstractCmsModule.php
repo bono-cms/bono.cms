@@ -12,8 +12,6 @@
 namespace Cms;
 
 use Krystal\Application\Module\AbstractModule;
-use Krystal\Config\File\FileArray;
-use RuntimeException;
 
 /**
  * One module with shortcut methods for all CMS modules
@@ -24,37 +22,21 @@ use RuntimeException;
 abstract class AbstractCmsModule extends AbstractModule
 {
     /**
-     * Configuration service
+     * Creates configuration entity object
      * 
-     * @var \Krystal\Config\AbstractConfigManager
+     * @return \Krystal\Stdlib\VirtualEntity
      */
-    protected $configService;
-
-    /**
-     * Returns configuration service of descendant's module
-     * 
-     * @return \Krystal\Config\AbstractConfigManager
-     */
-    final protected function getConfigService()
+    final protected function createConfigService()
     {
-        // Lazy initialization
-        if (is_null($this->configService)) {
+        // Build qualified manager's class name
+        $ns = sprintf('\%s\Service\ConfigManager', $this->getCurrentModuleName());
 
-            // Build qualified manager's class name
-            $manager = sprintf('\%s\Service\ConfigManager', $this->getCurrentModuleName());
-
-            // Make sure the manager class exists, before processing
-            if (!class_exists($manager)) {
-                throw new RuntimeException(sprintf('Module %s does not have ConfigManager service', $this->getCurrentModuleName()));
-            }
-
-            $adapter = new FileArray($this->getPathProvider()->getWithConfigDir('module.config.php'));
-            $adapter->load();
-
-            $this->configService = new $manager($adapter);
+        // Make sure the manager class exists, before processing
+        if (!class_exists($ns)) {
+            throw new RuntimeException(sprintf('Module %s does not have ConfigManager service', $this->getCurrentModuleName()));
         }
 
-        return $this->configService;
+        return new $ns($this->getCurrentModuleName(), $this->getServiceLocator()->get('config'));
     }
 
     /**

@@ -59,7 +59,7 @@ final class Module extends AbstractCmsModule
         $mapperFactory = $this->getServiceLocator()->get('mapperFactory');
         $authManager = $this->getServiceLocator()->get('authManager');
 
-        $config = $this->getConfigService();
+        $config = $this->createConfigService();
 
         // Language
         $languageMapper = $mapperFactory->build('/Cms/Storage/MySQL/LanguageMapper');

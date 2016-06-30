@@ -11,26 +11,27 @@
 
 namespace Cms\Service;
 
-use Krystal\Config\File\AbstractConfigManager;
+use Krystal\Config\ConfigModuleService;
+use Krystal\Stdlib\VirtualEntity;
 use Krystal\Security\Filter;
 
-final class ConfigManager extends AbstractConfigManager
+final class ConfigManager extends ConfigModuleService
 {
     /**
      * {@inheritDoc}
      */
-    protected function populate()
+    public function getEntity()
     {
-        $entity = $this->getEntity();
+        $entity = new VirtualEntity();
 
         // SMTP configuration
-        $entity->setSmtpPassword(Filter::escape($this->get('smtp_password')))
-               ->setSmtpHost(Filter::escape($this->get('smtp_host')))
-               ->setSmtpUsername(Filter::escape($this->get('smtp_username')))
-               ->setSmtpSecureLayer(Filter::escape($this->get('smtp_secure_layer')))
-               ->setSmtpPort(Filter::escape($this->get('smtp_port')))
-               ->setUseSmtpDriver((bool)($this->get('use_smtp_driver')))
-               ->setDomain($this->get('domain', $_SERVER['HTTP_HOST']));
+        $entity->setSmtpPassword($this->get('smtp_password'), VirtualEntity::FILTER_TAGS)
+               ->setSmtpHost($this->get('smtp_host'), VirtualEntity::FILTER_TAGS)
+               ->setSmtpUsername($this->get('smtp_username'), VirtualEntity::FILTER_TAGS)
+               ->setSmtpSecureLayer($this->get('smtp_secure_layer'), VirtualEntity::FILTER_TAGS)
+               ->setSmtpPort($this->get('smtp_port'), VirtualEntity::FILTER_INT)
+               ->setUseSmtpDriver($this->get('use_smtp_driver', true), VirtualEntity::FILTER_BOOL)
+               ->setDomain($this->get('domain', $_SERVER['HTTP_HOST']), VirtualEntity::FILTER_TAGS);
 
         // SMTP Secure layers
         $entity->setSmtpSecureLayers(array(
@@ -40,11 +41,13 @@ final class ConfigManager extends AbstractConfigManager
         ));
 
         // The rest
-        $entity->setNotificationEmail(Filter::escape($this->get('notification_email')))
-               ->setKeepTrack((bool) ($this->get('keep_track')))
-               ->setSiteEnabled((bool) ($this->get('site_enabled')))
+        $entity->setNotificationEmail($this->get('notification_email'), VirtualEntity::FILTER_TAGS)
+               ->setKeepTrack($this->get('keep_track', true), VirtualEntity::FILTER_BOOL)
+               ->setSiteEnabled($this->get('site_enabled'), VirtualEntity::FILTER_BOOL)
                // No need to escape this
-               ->setSiteDownReason(($this->get('site_down_reason')))
-               ->setInstalled((bool) $this->get('installed'));
+               ->setSiteDownReason($this->get('site_down_reason'), VirtualEntity::FILTER_SAFE_TAGS)
+               ->setInstalled($this->get('installed'), VirtualEntity::FILTER_BOOL);
+
+        return $entity;
     }
 }

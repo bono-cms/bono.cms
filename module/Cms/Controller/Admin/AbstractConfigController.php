@@ -70,7 +70,7 @@ abstract class AbstractConfigController extends AbstractController
             // Grab history manager service
             $historyManager = $this->getService('Cms', 'historyManager');
 
-            if ($this->getConfigManager()->write($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')) {
+            if ($this->getConfigManager()->storeMany($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')) {
                 $this->flashBag->set('success', 'Configuration has been updated successfully');
             }
 
