@@ -1,3 +1,5 @@
+<?php if ($basket->isEnabled()): ?>
+
 <?php if (!empty($products)): ?>
 
 <div class="pull-right clearfix">
@@ -42,7 +44,6 @@
 						<textarea class="form-control" rows="3" name="address" id="inputAddress" placeholder="<?php $this->show("Delivery address"); ?>"></textarea>
 					</div>
 				</div>
-
 				
 				<div class="form-group">
 					<label for="inputComment" class="col-lg-3 control-label"><?php $this->show('Comment'); ?></label>
@@ -50,7 +51,6 @@
 						<textarea class="form-control" rows="3" name="comment" id="inputComment" placeholder="<?php $this->show("If you have additional information for us, type it here"); ?>"></textarea>
 					</div>
 				</div>
-				
 				
 				<div class="form-group">
 					<label for="select" class="col-lg-3 control-label"><?php $this->show('Delivery type'); ?></label>
@@ -193,5 +193,11 @@
 </div>
 
 <div class="clearfix"></div>
+
+<?php endif; ?>
+
+<?php else: ?>
+
+<h2><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Basket is disabled'); ?></h2>
 
 <?php endif; ?>
