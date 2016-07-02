@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Wrapped login form into transparent box
  * Fixed CSS issue with double-background on the login page
  * Changed the way of storing configuration data. Since now its stored in the database
  * Decreased font size of the footer in administration panel

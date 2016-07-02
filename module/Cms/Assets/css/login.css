@@ -1,7 +1,9 @@
 
 main {
   border:none;
-  background: transparent;
+  max-width: 368px;
+  margin: 0 auto;  
+  background: rgba(255, 255, 255, 0.9);
 }
 
 body {
@@ -33,12 +35,13 @@ div.captcha-container > span {
 }
 
 .form-signin-heading, .checkbox > label {
-    color: white;
+  text-align: center;
 }
 
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
   margin-bottom: 10px;
+  color: gray;
 }
 
 .form-signin .checkbox {
