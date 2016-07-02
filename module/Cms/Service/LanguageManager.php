@@ -223,7 +223,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
      */
     public function makeDefault($id)
     {
-        return $this->config->write(array(self::LANGUAGE_DEFAULT_KEY => $id));
+        return $this->config->store(self::LANGUAGE_DEFAULT_KEY, $id);
     }
 
     /**
