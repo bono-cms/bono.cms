@@ -64,7 +64,7 @@ header {
 
 main {
  margin : 20px;
- background-color : #fff;
+ background-color: rgba(255, 255, 255, 0.95);
  border : 3px solid #ccc;
  padding : 8px;
  border-radius : 18px;
@@ -94,7 +94,7 @@ a > i:hover, a > i:focus {
 
 ul.breadcrumb {
  margin-bottom: 19px;
- background-color: #fff;
+ background-color: transparent;
 }
 
 textarea {

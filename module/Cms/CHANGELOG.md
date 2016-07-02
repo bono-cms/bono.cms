@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Made a main container a little bit transparent
  * Changed background image in administration panel
  * Wrapped login form into transparent box
  * Fixed CSS issue with double-background on the login page
