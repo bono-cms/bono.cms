@@ -41,11 +41,11 @@ final class SitemapLinks extends AbstractController
         if (count($languages) > 1) {
             foreach ($languages as $language) {
                 $url = $this->request->getBaseUrl().$this->createUrl('Site:Main@sitemapAction', array($language->getCode()), 1);
-                $links[]= $url;
+                $links[$language->getName()]= $url;
             }
 
         } else {
-            $links[] = $this->request->getBaseUrl().$this->createUrl('Site:Main@sitemapAction');
+            $links[$languages[0]->getName()] = $this->request->getBaseUrl().$this->createUrl('Site:Main@sitemapAction');
         }
 
         return $links;
