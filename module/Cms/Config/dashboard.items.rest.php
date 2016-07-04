@@ -35,9 +35,15 @@ return array(
         'description' => 'Tweak system languages'
     ),
     array(
+        'route' => 'Cms:Admin:SitemapLinks@indexAction',
+        'icon' => 'fa fa-info-circle fa-5x',
+        'name' => 'Sitemap links',
+        'description' => 'View site map links that can be used to submit your site to search engines'
+    ),
+    array(
         'route' => 'Cms:Admin:Info@indexAction',
         'icon' => 'fa fa-info-circle fa-5x',
         'name' => 'System info',
         'description' => 'View server configuration'
-    ),
+    )
 );

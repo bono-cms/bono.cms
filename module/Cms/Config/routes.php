@@ -140,6 +140,12 @@ return array(
     '/%s/notifications/clear' => array(
         'controller' => 'Admin:Notifications@clearAction'
     ),
+
+    // Info
+    '/%s/sitemap-links' => array(
+        'controller' => 'Admin:SitemapLinks@indexAction',
+        'disallow' => array('guest', 'user')
+    ),
     
     // Info
     '/%s/info' => array(
