@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In administration panel added SiteMap link previewer
  * Made a main container a little bit transparent
  * Changed background image in administration panel
  * Wrapped login form into transparent box
