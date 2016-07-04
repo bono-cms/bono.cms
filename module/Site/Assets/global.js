@@ -207,10 +207,15 @@ $(function(){
 
         $form.off('submit').submit(function(event){
             event.preventDefault();
-            var data = $(this).serialize();
+
+            var $self = $(this);
+            var data = $self.serialize();
+            var url = $self.attr('action') ? $self.attr('action') : '/';
+            var method = $self.attr('method') ? $self.attr('method') : 'POST';
 
             $.ajax({
-                type : "POST",
+                url : url,
+                type : method,
                 data : data,
                 success : function(response){
                     $.getValidator($form).handleAll(response);
