@@ -24,7 +24,7 @@ return array(
     ),
     array(
         'route' => 'Cms:Admin:ModuleManager@indexAction',
-        'icon' => 'fa fa-code fa-5x',
+        'icon' => 'fa fa-plug fa-5x',
         'name' => 'Module manager',
         'description' => 'Install or drop system modules'
     ),
@@ -36,7 +36,7 @@ return array(
     ),
     array(
         'route' => 'Cms:Admin:SitemapLinks@indexAction',
-        'icon' => 'fa fa-info-circle fa-5x',
+        'icon' => 'fa fa-sitemap fa-5x',
         'name' => 'Sitemap links',
         'description' => 'View site map links that can be used to submit your site to search engines'
     ),
