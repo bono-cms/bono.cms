@@ -25,6 +25,10 @@ div.module-button-box {
  color: #fff !important;
 }
 
+tr.filter {
+ background-color: rgba(23, 188, 214, 0.17);
+}
+
 td {
  vertical-align: middle !important;
 }

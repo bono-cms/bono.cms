@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added CSS class for table filters
  * In administration panel added SiteMap link previewer
  * Made a main container a little bit transparent
  * Changed background image in administration panel
