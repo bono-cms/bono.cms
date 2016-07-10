@@ -1,0 +1,62 @@
+
+<div class="page-header">
+	<h2><?php echo $page->getTitle(); ?></h2>
+</div>
+
+<?php foreach ($pairs as $pair): ?>
+
+<div>
+	
+	<h3><?php echo $pair->getQuestion(); ?> <small>by <?php echo $pair->getQuestioner(); ?></small></h3>
+	<article><?php echo $pair->getAnswer(); ?></article>
+	<span class="help-block">Answered: <?php echo $pair->getAnswerer(); ?></span>
+	
+</div>
+
+<?php endforeach; ?>
+
+<?php $this->loadPartial('bs-pagination'); ?>
+
+<br />
+
+<form class="form-horizontal" method="POST">
+  <fieldset>
+	<legend><?php $this->show('Do you have a question? Just ask us!'); ?></legend>
+	
+	<div class="form-group">
+	  <label for="inputName" class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+	  <div class="col-lg-10">
+		<input type="text" class="form-control" name="questioner" id="inputName" placeholder="<?php $this->show('Type your name'); ?>" />
+	  </div>
+	</div>
+	
+	<div class="form-group">
+	  <label for="inputQuestion" class="col-lg-2 control-label"><?php $this->show('Question'); ?></label>
+	  <div class="col-lg-10">
+		<textarea class="form-control" name="question" id="inputQuestion" placeholder="<?php $this->show('Type your question'); ?>"></textarea>
+	  </div>
+	</div>
+	
+	<div class="form-group">
+		<label for="inputCaptcha" class="col-lg-3 control-label"></label>
+		<div class="col-lg-9">
+			<a href="#" title="Click to refresh" data-captcha="button-refresh"><img data-captcha="image" src="/captcha/render/" /></a>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="inputCaptcha" class="col-lg-2 control-label"></label>
+		<div class="col-lg-10">
+			<input type="text" class="form-control" name="captcha" placeholder="<?php $this->show('Enter what you see on image'); ?>" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+	  <div class="col-lg-10 col-lg-offset-2">
+		<button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Cancel'); ?></button>
+		<button type="submit" class="btn btn-primary" data-button="submit"><i class="glyphicon glyphicon-envelope"></i> <?php $this->show('Submit'); ?></button>
+	  </div>
+	</div>
+	
+  </fieldset>
+</form>

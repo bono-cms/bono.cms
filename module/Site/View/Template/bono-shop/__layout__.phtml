@@ -1,0 +1,134 @@
+<?php
+
+use Krystal\Form\HtmlHelper;
+use Menu\View\Dropdown;
+
+?>
+<!DOCTYPE html>
+<html lang="<?php echo $locale; ?>">
+<?php $this->loadPartial('head'); ?>
+<body>
+
+<main>
+ <header>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="/"><i class="glyphicon glyphicon-th-large"></i> <?php echo $block->render('header'); ?></a>
+		</div>
+	    <div id="navbar" class="navbar-collapse collapse">
+		  <form action="<?php echo $search->getUrl(); ?>" class="navbar-form navbar-right">
+			<div class="form-group">
+			  <input type="text" name="<?php echo $search->getElementName(); ?>" class="form-control" placeholder="<?php $this->show('Looking for something?'); ?>" value="<?php echo $search->getKeyword(); ?>" />
+			</div>
+			<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Search'); ?></button>
+		  </form>
+		  <ul class="nav navbar-nav navbar-right">
+			<li>
+			 <a href="<?php echo $basket->getUrl(); ?>"><i class="glyphicon glyphicon-shopping-cart"></i> <?php $this->show('Basket'); ?>&nbsp;
+			 (<?php $this->show('Total products'); ?> <label data-basket-label="total-products-qty"> <?php echo $basket->getTotalQty(); ?></label>, 
+			 <label data-basket-label="total-products-price"><?php echo $basket->getTotalPrice(); ?></label> <?php echo $basket->getCurrency(); ?>)
+			 </a>
+			</li>
+		  </ul>
+	    </div>
+	</div>
+   </nav>
+	
+	<?php if ($slider->has('main')): ?>
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	  <!-- Indicators -->
+	  <ol class="carousel-indicators">
+       <?php foreach($slider->getAll('main') as $index => $slide): ?>
+       <li data-target="#carousel-example-generic" data-slide-to="<?php echo $index; ?>" <?php HtmlHelper::addClassOnDemand($index == 0, 'active'); ?>></li>
+       <?php endforeach; ?>
+	  </ol>
+	  
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner" role="listbox">
+		<?php foreach ($slider->getAll('main') as $index => $slide): ?>
+		<div class="item <?php HtmlHelper::addOnDemand($index == 0, 'active'); ?>">
+		  <img src="<?php echo $slide->getImageUrl('1600x356'); ?>" alt="<?php echo $slide->getName(); ?>" />
+		  <div class="carousel-caption">
+			<h3><?php echo $slide->getName(); ?></h3>
+			<p><?php echo $slide->getDescription(); ?></p>
+		  </div>
+		</div>
+		<?php endforeach; ?>
+	  </div>
+	  
+	   <!-- Controls -->
+	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	  </a>
+	</div>
+	<?php endif; ?>
+   
+ </header>
+ 
+ <section>
+  <nav class="top-menu">
+   <?php echo $menu->renderByClass('top', $page->getWebPageId(), new Dropdown(array(
+        'class' => array(
+            'base' => 'sf-menu',
+        )
+    ))); ?>
+  </nav>
+  
+  <?php $this->loadPartial('bs-breadcrumbs'); ?>
+  <?php $this->loadPartial('bs-flash'); ?>
+  
+  <?php echo $fragment; ?>
+  
+
+ <footer>
+  <div class="row">
+   <div class="col-lg-3">
+    <h3><?php echo $menu->getCategoryNameByClass('nav'); ?></h3>
+    <?php echo $menu->renderByClass('nav', null, new Dropdown()); ?>
+   </div>
+  
+   <div class="col-lg-3">
+	 <h3><?php echo $menu->getCategoryNameByClass('partners'); ?></h3>
+	 <?php echo $menu->renderByClass('partners', null, new Dropdown()); ?>
+   </div>
+  </div>
+	
+ <div class="row">
+  <div class="pull-right">
+	<!--Counter can be place here
+	<img src="<?php echo $this->asset('/img/counter.png'); ?>" >
+	<img src="<?php echo $this->asset('/img/counter.png'); ?>" >
+	-->
+  </div>
+ </div>
+	
+ <address>
+  <div class="social-block block-center text-center"></div>
+  <h2><small><?php echo $block->render('footer'); ?></small></h2>
+ </address>
+ 
+ </footer>
+</section>
+
+<?php $this->loadPartial('modal-added-to-basket'); ?>
+<?php $this->loadPartial('bs-ajax-modal'); ?>
+
+</main>
+
+<?php $this->loadPartial('scripts'); ?>
+
+</body>
+</html>
+		

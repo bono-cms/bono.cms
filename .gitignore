@@ -4,8 +4,5 @@
 !/module/Cms/
 !/module/Site/
 
-# Themes are ignored as well
-module/Site/View/
-
 # Vendors are always ignored
 vendor/

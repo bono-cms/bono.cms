@@ -1,0 +1,68 @@
+
+<div class="page-header">
+	<h2>Reviews</h2>
+</div>
+
+<?php foreach ($reviews as $review): ?>
+
+<div>
+	
+	<h3><?php echo $review->getName(); ?></h3>
+	<article><?php echo $review->getReview(); ?></article>
+	
+</div>
+
+<?php endforeach; ?>
+
+<?php $this->loadPartial('bs-pagination'); ?>
+
+<br />
+
+<form class="form-horizontal" method="POST">
+  <fieldset>
+	<legend><?php $this->show('Leave your review'); ?></legend>
+	
+	<div class="form-group">
+	  <label for="inputName" class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+	  <div class="col-lg-10">
+		<input type="text" class="form-control" name="name" id="inputName" placeholder="<?php $this->show('Type your name'); ?>" />
+	  </div>
+	</div>
+	
+	<div class="form-group">
+	  <label for="inputEmail" class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
+	  <div class="col-lg-10">
+		<input class="form-control" name="email" id="inputEmail" placeholder="<?php $this->show('Type your email here. It will never be shown'); ?>" />
+	  </div>
+	</div>
+
+	<div class="form-group">
+	  <label for="inputReview" class="col-lg-2 control-label"><?php $this->show('Review'); ?></label>
+	  <div class="col-lg-10">
+		<textarea class="form-control" name="review" id="inputReview" placeholder="<?php $this->show('Type your review here'); ?>"></textarea>
+	  </div>
+	</div>
+	
+	<div class="form-group">
+		<label for="inputCaptcha" class="col-lg-3 control-label"></label>
+		<div class="col-lg-9">
+			<a href="#" title="Click to refresh" data-captcha="button-refresh"><img data-captcha="image" src="/captcha/render/" /></a>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="inputCaptcha" class="col-lg-2 control-label"></label>
+		<div class="col-lg-10">
+			<input type="text" class="form-control" name="captcha" placeholder="<?php $this->show('Enter what you see on image'); ?>" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+	  <div class="col-lg-10 col-lg-offset-2">
+		<button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Cancel'); ?></button>
+		<button type="submit" class="btn btn-primary" data-button="submit"><i class="glyphicon glyphicon-envelope"></i> <?php $this->show('Submit'); ?></button>
+	  </div>
+	</div>
+	
+  </fieldset>
+</form>

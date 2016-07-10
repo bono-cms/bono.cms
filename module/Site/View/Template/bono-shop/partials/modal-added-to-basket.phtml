@@ -1,0 +1,33 @@
+
+<!--Product added success modal-->
+<div class="modal fade" id="added-success" tabindex="-1" role="dialog" aria-labelledby="mdLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="mdLabel"><?php $this->show('Added'); ?></h4>
+      </div>
+      <div class="modal-body">
+        <h2 class="text-success"><i class="glyphicon glyphicon-ok"></i> <?php $this->show('The product has been added to your basket'); ?></h2>
+        
+        <div class="row">
+            <div class="col-lg-6">
+                <img class="img-responsive" data-qv-product="cover" />
+            </div>
+            
+            <div class="col-lg-6">
+                <h3><span data-qv-product="name"></span></h3>
+                <h3><?php $this->show('Quantity'); ?>: <span data-qv-product="qty"></span></h3>
+                <h3><?php $this->show('Price'); ?>: <span data-qv-product="price"></span> <span><?php echo $basket->getCurrency(); ?></span></h3>
+            </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <a class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-chevron-left"></i> <?php $this->show('Continue shopping'); ?></a>
+        <a class="btn btn-primary" href="<?php echo $basket->getUrl(); ?>"><?php $this->show("To basket's page"); ?> <i class="glyphicon glyphicon-shopping-cart"></i> </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/Product added success modal-->

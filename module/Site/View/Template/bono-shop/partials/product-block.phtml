@@ -1,0 +1,23 @@
+  
+  <?php foreach($products as $product): ?>
+  <div class="col-sm-6 col-md-4">
+	<div class="thumbnail">
+	  <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo $product->getImageUrl('120x120'); ?>" alt="<?php echo $product->getTitle(); ?>" /></a>
+	  <div class="caption text-center">
+		<h3><?php echo $product->getTitle(); ?></h3>
+		
+		<?php if (!$product->hasStokePrice()): ?>
+		<h3><span data-basket-label="currency"><?php echo $basket->getCurrency(); ?></span><?php echo $product->getPrice(); ?></h3>
+		<?php else: ?>
+		<h3><span data-basket-label="currency"><?php echo $basket->getCurrency(); ?></span><?php echo $product->getStokePrice(); ?></h3>
+		<h3 class="text-muted"><strike><span data-basket-label="currency"><?php echo $basket->getCurrency(); ?></span><?php echo $product->getPrice(); ?></strike></h3>
+		
+		<?php endif; ?>
+		<p><a data-toggle="modal" data-target="#added-success" href="#" class="btn btn-primary" role="button" data-basket-product-id="<?php echo $product->getId(); ?>" data-basket-button="add"><i class="glyphicon glyphicon-shopping-cart"></i> <?php $this->show('Add to cart'); ?></a></p>
+	  </div>
+	</div>
+  </div>
+  <?php endforeach; ?>
+  
+  <div class="clearfix"></div>
+  
