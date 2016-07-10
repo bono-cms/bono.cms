@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now themes may have their own translation files. They must be located at `{theme}/translations/{language}.php`
  * Added CSS class for table filters
  * In administration panel added SiteMap link previewer
  * Made a main container a little bit transparent
