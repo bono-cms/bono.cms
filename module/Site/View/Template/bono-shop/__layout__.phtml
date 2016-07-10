@@ -4,11 +4,7 @@ use Krystal\Form\HtmlHelper;
 use Menu\View\Dropdown;
 
 ?>
-<!DOCTYPE html>
-<html lang="<?php echo $locale; ?>">
-<?php $this->loadPartial('head'); ?>
-<body>
-
+<?php $this->loadPartial('begin'); ?>
 <main>
  <header>
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -127,8 +123,4 @@ use Menu\View\Dropdown;
 
 </main>
 
-<?php $this->loadPartial('scripts'); ?>
-
-</body>
-</html>
-		
+<?php $this->loadPartial('end'); ?>

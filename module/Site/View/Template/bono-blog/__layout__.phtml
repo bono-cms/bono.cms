@@ -1,83 +1,75 @@
-<!DOCTYPE html>
-<html lang="<?php echo $locale; ?>">
-  <?php $this->loadPartial('head'); ?>
-  
-  <body>
-    <div class="blog-masthead">
-		<nav class="navbar navbar-default navbar-fixed-top">
-		  <div class="container-fluid">
-			<div class="navbar-header">
-			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a class="navbar-brand" href="/"><?php echo $block->render('name'); ?></a>
-			</div>
+<?php $this->loadPartial('begin'); ?>
+<div class="blog-masthead">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><?php echo $block->render('name'); ?></a>
+        </div>
 
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			  <?php echo $menu->renderByClass('top', $page->getWebPageId(), new \Menu\View\BootstrapDropdown()); ?>
-			  <form class="navbar-form navbar-right" role="search" action="<?php echo $search->getUrl(); ?>">
-				<div class="form-group">
-				  <input type="text" name="<?php echo $search->getElementName(); ?>" class="form-control" placeholder="<?php $this->show('Looking for something?'); ?>" value="<?php echo $search->getKeyword(); ?>" />
-				</div>
-				<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Search'); ?></button>
-			  </form>
-			</div>
-		  </div>
-		</nav>
-    </div>
-
-    <div class="container">
-
-      <div class="blog-header">
-        <h1 class="blog-title"><?php echo $block->render('header'); ?></h1>
-        <p class="lead blog-description"><i class="glyphicon glyphicon-th-large"></i> <?php echo $block->render('slogan'); ?></p>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <?php echo $menu->renderByClass('top', $page->getWebPageId(), new \Menu\View\BootstrapDropdown()); ?>
+          <form class="navbar-form navbar-right" role="search" action="<?php echo $search->getUrl(); ?>">
+            <div class="form-group">
+              <input type="text" name="<?php echo $search->getElementName(); ?>" class="form-control" placeholder="<?php $this->show('Looking for something?'); ?>" value="<?php echo $search->getKeyword(); ?>" />
+            </div>
+            <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Search'); ?></button>
+          </form>
+        </div>
       </div>
-	  
-      <?php $this->loadPartial('bs-breadcrumbs'); ?>
-	  
-      <div class="row">
-	   <div class="col-sm-8 blog-main">
-         <?php $this->loadPartial('bs-flash'); ?>
-	     <?php echo $fragment; ?>
-	   </div>
+    </nav>
+</div>
 
-		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-		  
-		  <div class="sidebar-module sidebar-module-inset">
-			<h4><?php $this->show('About this blog'); ?></h4>
-			<?php echo $aboutBox; ?>
-		  </div>
-		  
-		  <div class="sidebar-module">
-			<h4><?php $this->show('Categories'); ?></h4>
-			
-			<ol class="list-unstyled">
-			  <?php foreach($blog->getAllCategoriesWithCount() as $category): ?>
-			  <li><a href="<?php echo $category->getUrl(); ?>"><?php echo $category->getTitle(); ?></a></li>
-			  <?php endforeach; ?>
-			</ol>
-		  </div>
-		  
-		  <div class="sidebar-module">
-			<h4><?php echo $menu->getCategoryNameByClass('friends'); ?></h4>
-			<?php echo $menu->renderByClass('friends', null, new \Menu\View\Dropdown); ?>
-		  </div>
-		</div><!-- /.blog-sidebar -->	   
-	  </div>
+<div class="container">
 
-		<footer class="blog-footer">
-		  <p>Powered by <a target="_blank" href="http://bono-cms.ml">Bono CMS</a></p>
-		  <p>Copyright (c) 2015 No Global State Lab</p>
-		</footer>
-	
-        <?php $this->loadPartial('bs-ajax-modal'); ?>
+  <div class="blog-header">
+    <h1 class="blog-title"><?php echo $block->render('header'); ?></h1>
+    <p class="lead blog-description"><i class="glyphicon glyphicon-th-large"></i> <?php echo $block->render('slogan'); ?></p>
+  </div>
+  
+  <?php $this->loadPartial('bs-breadcrumbs'); ?>
+  
+  <div class="row">
+   <div class="col-sm-8 blog-main">
+     <?php $this->loadPartial('bs-flash'); ?>
+     <?php echo $fragment; ?>
+   </div>
+
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+      
+      <div class="sidebar-module sidebar-module-inset">
+        <h4><?php $this->show('About this blog'); ?></h4>
+        <?php echo $aboutBox; ?>
+      </div>
+      
+      <div class="sidebar-module">
+        <h4><?php $this->show('Categories'); ?></h4>
         
-	</div>
+        <ol class="list-unstyled">
+          <?php foreach($blog->getAllCategoriesWithCount() as $category): ?>
+          <li><a href="<?php echo $category->getUrl(); ?>"><?php echo $category->getTitle(); ?></a></li>
+          <?php endforeach; ?>
+        </ol>
+      </div>
+      
+      <div class="sidebar-module">
+        <h4><?php echo $menu->getCategoryNameByClass('friends'); ?></h4>
+        <?php echo $menu->renderByClass('friends', null, new \Menu\View\Dropdown); ?>
+      </div>
+    </div><!-- /.blog-sidebar -->	   
+  </div>
+
+    <footer class="blog-footer">
+      <p>Powered by <a target="_blank" href="http://bono-cms.ml">Bono CMS</a></p>
+      <p>Copyright (c) 2015 No Global State Lab</p>
+    </footer>
+
+    <?php $this->loadPartial('bs-ajax-modal'); ?>
     
-    <?php $this->loadPartial('scripts'); ?>
-	
-  </body>
-</html>
+</div>
+<?php $this->loadPartial('end'); ?>
