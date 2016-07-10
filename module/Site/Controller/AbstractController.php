@@ -14,6 +14,7 @@ namespace Site\Controller;
 use Krystal\Application\Controller\AbstractController as BaseController;
 use Krystal\Paginate\Paginator;
 use Krystal\Validate\Renderer;
+use RuntimeException;
 
 abstract class AbstractController extends BaseController
 {
@@ -126,9 +127,45 @@ abstract class AbstractController extends BaseController
         ));
 
         $this->bootstrapSiteServices();
+        $this->loadThemeTranslations();
 
         // And lastly, do load global site plugin
         $this->view->getPluginBag()->load('site');
+    }
+
+    /**
+     * Returns current theme path on the file system
+     * 
+     * @return string
+     */
+    private function getCurrentThemePath()
+    {
+        return $this->view->createThemePath('Site', $this->appConfig->getTheme());
+    }
+
+    /**
+     * Load theme translations if available
+     * 
+     * @throws \RuntimeException If translation file doesn't return an array
+     * @return void
+     */
+    private function loadThemeTranslations()
+    {
+        // Create a path to the translation path
+        $file = sprintf('%s/translations/%s.php', $this->getCurrentThemePath(), $this->appConfig->getLanguage());
+
+        // Do load only if present
+        if (is_file($file)) {
+            $data = include($file);
+
+            if (is_array($data)) {
+                $this->translator->extend($data);
+            } else {
+                throw new RuntimeException(sprintf(
+                    'Translation file must return an array of translations. Got "%s" in %s', gettype($data), $file
+                ));
+            }
+        }
     }
 
     /**
@@ -148,7 +185,7 @@ abstract class AbstractController extends BaseController
         // Append blocks
         $this->view->getPartialBag()
                    ->addPartialDirs(array(
-                                    $this->view->createThemePath('Site', $this->appConfig->getTheme()).'/partials/',
+                                    $this->getCurrentThemePath().'/partials/',
                                     $this->view->createThemePath('Site', 'shared')
                                  ));
 
