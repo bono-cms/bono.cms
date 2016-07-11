@@ -278,6 +278,7 @@ abstract class AbstractController extends AbstractAuthAwareController
             'bootstrap.core',
             'bootstrap.cosmo',
             'famfam-flag',
+            'font-awesome',
             'admin',
             'to-top'
         ));
