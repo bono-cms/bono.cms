@@ -107,7 +107,7 @@ abstract class AbstractController extends BaseController
             if (isset($config['theme']['scripts']) && is_array($config['theme']['scripts'])) {
                 foreach ($config['theme']['scripts'] as $script) {
                     $this->view->getPluginBag()
-                               ->appendScript($this->view->createThemeUrl('Site').$script);
+                               ->appendScript($this->request->isUrlLike($script) ? $script : $this->view->createThemeUrl('Site').$script);
                 }
             }
 
@@ -115,7 +115,7 @@ abstract class AbstractController extends BaseController
             if (isset($config['theme']['stylesheets']) && is_array($config['theme']['stylesheets'])) {
                 foreach ($config['theme']['stylesheets'] as $stylesheet) {
                     $this->view->getPluginBag()
-                               ->appendStylesheet($this->view->createThemeUrl('Site').$stylesheet);
+                               ->appendStylesheet($this->request->isUrlLike($stylesheet) ? $stylesheet : $this->view->createThemeUrl('Site').$stylesheet);
                 }
             }
         }
