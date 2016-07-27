@@ -66,7 +66,7 @@ final class Main extends AbstractController
             $this->getService('Cms', 'languageManager')->changeSiteLanguage($code);
         }
 
-        $this->response->redirect('/');
+        $this->response->redirectToHome();
     }
 
     /**
