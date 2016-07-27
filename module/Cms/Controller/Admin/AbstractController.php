@@ -196,7 +196,7 @@ abstract class AbstractController extends AbstractAuthAwareController
     protected function bootstrap()
     {
         // Force to load specific administration language if defined
-        if ($this->paramBag->exists('admin_language')) {
+        if ($this->paramBag->has('admin_language')) {
             $this->loadTranslations($this->paramBag->get('admin_language'));
         }
 
