@@ -22,7 +22,7 @@ final class Main extends AbstractController
     public function sitemapAction($language = null)
     {
         if (is_null($language)) {
-            $language = $this->getService('Cms', 'languageManager')->getCurrentCode();
+            $language = $this->getService('Cms', 'languageManager')->getDefaultCode();
         }
 
         // Grab all URLs
