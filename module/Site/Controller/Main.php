@@ -25,7 +25,9 @@ final class Main extends AbstractController
             $language = $this->getService('Cms', 'languageManager')->getCurrentCode();
         }
 
-        $urls = $this->getService('Cms', 'webPageManager')->fetchURLs($this->request->getBaseUrl(), $language, $this->moduleManager);
+        // Grab all URLs
+        $urls = $this->getService('Cms', 'webPageManager')
+                     ->fetchURLs($this->request->getBaseUrl(), $language, $this->moduleManager);
 
         if ($urls !== false) {
             // Define response as XML 
