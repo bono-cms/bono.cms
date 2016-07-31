@@ -45,15 +45,33 @@ final class Main extends AbstractController
     }
 
     /**
+     * Returns home page controller
+     * 
+     * @return string
+     */
+    private function getHomePageController()
+    {
+        $default = 'Pages:Page@homeAction';
+        $key = 'home_controller';
+
+        if ($this->paramBag->has($key)) {
+            $controller = $this->paramBag->get($key);
+            return $controller == null ? $default : $controller;
+
+        } else {
+            // By default
+            return $default;
+        }
+    }
+
+    /**
      * Invokes home page's controller
      * 
      * @return string
      */
     public function homeAction()
     {
-        $controller = 'Pages:Page@homeAction';
-        //$controller = 'Blog:Home@indexAction';
-        return $this->forward($controller);
+        return $this->forward($this->getHomePageController());
     }
 
     /**
