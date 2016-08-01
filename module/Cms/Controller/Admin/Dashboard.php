@@ -54,8 +54,8 @@ final class Dashboard extends AbstractController
         $current = $this->moduleManager->getLoadedModules();
 
         foreach ($current as $module) {
-            if ($module->hasConfig('module')) {
-                $modules[] = $module->getConfig('module');
+            if ($module->hasConfig()) {
+                $modules[] = $module->getConfig();
             }
         }
 
