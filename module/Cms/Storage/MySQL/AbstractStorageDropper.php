@@ -11,9 +11,9 @@
 
 namespace Cms\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
+use Krystal\Db\Sql\AbstractMapper as CoreMapper;
 
-abstract class AbstractStorageDropper extends AbstractMapper
+abstract class AbstractStorageDropper extends CoreMapper
 {
     /**
      * Returns a collection of tables to be dropped
