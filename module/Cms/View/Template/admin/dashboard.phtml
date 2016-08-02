@@ -23,7 +23,7 @@
 	<?php foreach ($modules as $module): ?>
 	<li>
 	 <a href="<?php echo $this->url($module['route']); ?>" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php $this->show($module['description']); ?>">
-     <i class="<?php echo $module['icon']; ?>"></i> <label><?php $this->show($module['name']); ?></label>
+     <i class="<?php echo $module['icon']; ?>"></i> <label><?php isset($module['caption']) and $this->show($module['caption']); ?></label>
 	 </a>
 	</li>
 	 <?php endforeach; ?>
