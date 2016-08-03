@@ -84,6 +84,11 @@ final class ModuleManager extends AbstractController
      */
     public function deleteAction($module)
     {
-        return $module;
+        $this->dropFromStorage($module);
+        $this->dropFromFileSystem($module);
+
+        // Always assume success
+        $this->flashBag->set('success', 'Selected module has been successfully removed');
+        return '1';
     }
 }
