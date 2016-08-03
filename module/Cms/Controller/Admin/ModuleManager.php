@@ -20,6 +20,22 @@ final class ModuleManager extends AbstractController
      */
     public function indexAction()
     {
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Module manager');
+
+        return $this->view->render('module-manager', array(
+            'modules' => $this->getModules(),
+            'moduleManager' => $this->moduleManager
+        ));
+    }
+
+    /**
+     * Return modules
+     * 
+     * @return boolean
+     */
+    private function getModules()
+    {
         $modules = array();
         $current = $this->moduleManager->getLoadedModules();
 
@@ -29,13 +45,7 @@ final class ModuleManager extends AbstractController
             }
         }
 
-        $this->view->getBreadcrumbBag()
-                   ->addOne('Module manager');
-
-        return $this->view->render('module-manager', array(
-            'modules' => $modules,
-            'moduleManager' => $this->moduleManager
-        ));
+        return $modules;
     }
 
     /**
