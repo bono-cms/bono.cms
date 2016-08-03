@@ -39,6 +39,44 @@ final class ModuleManager extends AbstractController
     }
 
     /**
+     * Drops module related data from the storage
+     * 
+     * @param string $module Module name
+     * @return boolean
+     */
+    private function dropFromStorage($module)
+    {
+        $ns = sprintf('\%s\Storage\MySQL\Dropper', $module);
+
+        if (class_exists($ns)) {
+            $dropper = $this->createMapper($ns);
+            $dropper->dropAll();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Drops a module from the file system
+     * 
+     * @param string $module
+     * @return boolean
+     */
+    private function dropFromFileSystem($module)
+    {
+        // Remove from cache directory if present
+        $this->moduleManager->removeFromCacheDir($module);
+
+        // Remove from uploading directory if present
+        $this->moduleManager->removeFromUploadsDir($module);
+
+        // And finally remove the module itself from the file system
+        $this->moduleManager->removeFromFileSysem($module);
+
+        return true;
+    }
+
+    /**
      * Deletes a module by its associated name
      * 
      * @param string $module
