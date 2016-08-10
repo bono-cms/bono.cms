@@ -87,6 +87,17 @@ final class ModuleManager extends AbstractController
     }
 
     /**
+     * Drop all slugs associated with a module
+     * 
+     * @param string $module Module name
+     * @return boolean
+     */
+    private function dropSlugs($module)
+    {
+        return $this->getModuleService('webPageManager')->removePksByModule($module);
+    }
+
+    /**
      * Deletes a module by its associated name
      * 
      * @param string $module
@@ -95,6 +106,7 @@ final class ModuleManager extends AbstractController
     public function deleteAction($module)
     {
         $this->dropFromStorage($module);
+        $this->dropSlugs($module);
         $this->dropFromFileSystem($module);
 
         // Always assume success
