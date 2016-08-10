@@ -155,56 +155,6 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     }
 
     /**
-     * Cleans module name
-     * 
-     * @param string $module
-     * @return string
-     */
-    private function cleanModuleName($module)
-    {
-        // Take out description characters
-        $module = preg_replace('~(\(.*?\))~', '', $module);
-        $module = trim($module);
-
-        return $module;
-    }
-
-    /**
-     * Creates home URL
-     * 
-     * @param string $base Base URL to be prepended
-     * @param string $language
-     * @return string
-     */
-    private function createHomeUrl($base, $language)
-    {
-        $languages = $this->getLanguages();
-
-        if (count($languages) > 1) {
-            return sprintf('%s/lang/%s', $base, $language);
-        } else {
-            return sprintf('%s/', $base);
-        }
-    }
-
-    /**
-     * Fetch all published languages
-     * 
-     * @return array
-     */
-    private function getLanguages()
-    {
-        static $languages = null;
-
-        // Cache fetching calls
-        if (is_null($languages)) {
-            $languages = $this->languageMapper->fetchAll(true);
-        }
-
-        return $languages;
-    }
-
-    /**
      * Surrounds a slug using provided language id to generate a language code if needed
      * 
      * @param string $slug
@@ -354,30 +304,6 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     }
 
     /**
-     * Returns unique slug
-     * 
-     * @param string $slug
-     * @return string
-     */
-    private function getUniqueSlug($slug)
-    {
-        if ($this->webPageMapper->exists($slug)) {
-            $count = 0;
-
-            while (true) {
-                $count++;
-                $target = sprintf('%s-%s', $slug, $count);
-
-                if (!$this->webPageMapper->exists($target)) {
-                    return $target;
-                }
-            }
-        }
-
-        return $slug;
-    }
-
-    /**
      * Adds a web page
      * 
      * @param string $targetId Data to be supplied to controller
@@ -417,5 +343,79 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         }
 
         return $this->webPageMapper->update($id, $slug, $controller);
+    }
+
+    /**
+     * Cleans module name
+     * 
+     * @param string $module
+     * @return string
+     */
+    private function cleanModuleName($module)
+    {
+        // Take out description characters
+        $module = preg_replace('~(\(.*?\))~', '', $module);
+        $module = trim($module);
+
+        return $module;
+    }
+
+    /**
+     * Creates home URL
+     * 
+     * @param string $base Base URL to be prepended
+     * @param string $language
+     * @return string
+     */
+    private function createHomeUrl($base, $language)
+    {
+        $languages = $this->getLanguages();
+
+        if (count($languages) > 1) {
+            return sprintf('%s/lang/%s', $base, $language);
+        } else {
+            return sprintf('%s/', $base);
+        }
+    }
+
+    /**
+     * Fetch all published languages
+     * 
+     * @return array
+     */
+    private function getLanguages()
+    {
+        static $languages = null;
+
+        // Cache fetching calls
+        if (is_null($languages)) {
+            $languages = $this->languageMapper->fetchAll(true);
+        }
+
+        return $languages;
+    }
+
+    /**
+     * Returns unique slug
+     * 
+     * @param string $slug
+     * @return string
+     */
+    private function getUniqueSlug($slug)
+    {
+        if ($this->webPageMapper->exists($slug)) {
+            $count = 0;
+
+            while (true) {
+                $count++;
+                $target = sprintf('%s-%s', $slug, $count);
+
+                if (!$this->webPageMapper->exists($target)) {
+                    return $target;
+                }
+            }
+        }
+
+        return $slug;
     }
 }

@@ -16,13 +16,21 @@ use Krystal\Application\Module\ModuleManagerInterface;
 interface WebPageManagerInterface
 {
     /**
+     * An alias for self::getUrlByWebPageId()
+     * 
+     * @param string $webPageId
+     * @return string
+     */
+    public function generate($webPageId);
+
+    /**
      * Generates URL by web page id
      * 
      * @param string $webPageId
      * @return string|boolean false on failure
      */
     public function getUrlByWebPageId($webPageId);
-
+    
     /**
      * Builds URL by provided web page and language ids
      * 
@@ -31,7 +39,7 @@ interface WebPageManagerInterface
      * @return string
      */
     public function getUrl($webPageId, $langId);
-
+    
     /**
      * Fetches associated slug by web page id
      * 
@@ -58,7 +66,7 @@ interface WebPageManagerInterface
      * @return string
      */
     public function surround($slug, $langId);
-
+    
     /**
      * Sluggifies a string
      * 
@@ -73,6 +81,14 @@ interface WebPageManagerInterface
      * @return integer
      */
     public function getLastId();
+
+    /**
+     * Fetches by URL slug
+     * 
+     * @param string $slug
+     * @return string
+     */
+    public function fetchBySlug($slug);
 
     /**
      * Fetches web page data its associated id
@@ -105,6 +121,22 @@ interface WebPageManagerInterface
      * @return boolean
      */
     public function deleteById($id, $childMapper = null);
+
+    /**
+     * Finds web page PKs by associated module
+     * 
+     * @param string $module Module name or module name with description
+     * @return array
+     */
+    public function findPksByModule($module);
+
+    /**
+     * Remove PKs by module
+     * 
+     * @param string $module
+     * @return boolean
+     */
+    public function removePksByModule($module);
 
     /**
      * Adds a web page
