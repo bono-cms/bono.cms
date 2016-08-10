@@ -33,7 +33,7 @@
                     <?php endif; ?>
                 </td>
                 <td class="text-center col-lg-2"><a href="<?php echo $this->url($module['route']); ?>"><i class="<?php echo $module['icon']; ?>"></i></a></td>
-                <td class="text-center"><?php $this->show($module['name']); ?></td>
+                <td class="text-center"><?php $this->show($module['caption']); ?></td>
                 <td class="text-center"><?php $this->show($module['description']); ?></td>
                 <td class="text-center">
                     <?php if (!$moduleManager->isCoreModule($module['name'])): ?>
