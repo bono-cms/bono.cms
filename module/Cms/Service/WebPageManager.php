@@ -273,6 +273,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
      */
     public function fetchById($id)
     {
+        $this->findPksByModule('Shop');
         return $this->webPageMapper->fetchById($id);
     }
 
@@ -310,6 +311,43 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 
         if ($childMapper !== null) {
             $webPageId = $childMapper->fetchWebPageIdById($id);
+        }
+
+        return true;
+    }
+
+    /**
+     * Finds web page PKs by associated module
+     * 
+     * @param string $module Module name or module name with description
+     * @return array
+     */
+    public function findPksByModule($module)
+    {
+        $module - $this->cleanModuleName($module);
+        $result = array();
+
+        foreach ($this->fetchAll() as $record) {
+            if ($this->cleanModuleName($record['module']) == $module) {
+                $result[] = $record['id'];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Remove PKs by module
+     * 
+     * @param string $module
+     * @return boolean
+     */
+    public function removePksByModule($module)
+    {
+        $ids = $this->findPksByModule($module);
+
+        foreach ($ids as $id) {
+            $this->webPageMapper->deleteById($id);
         }
 
         return true;
