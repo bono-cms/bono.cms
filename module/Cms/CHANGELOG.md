@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Switch to environment variables
  * Added module manager to install and uninstall modules
  * Removed extra `module` key in configuration arrays
  * Ability to change home page controller right from the site configuration

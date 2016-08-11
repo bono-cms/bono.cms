@@ -1,2 +1,4 @@
-*
-!.gitignore
+# Ignore environment config
+environment.php
+
+mysql.config.php
