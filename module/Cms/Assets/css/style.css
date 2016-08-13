@@ -6,6 +6,20 @@ a[data-button='slug'] > i {
  color: wheat;
 }
 
+
+.select2-selection {
+  height: 47px;
+  border: none !important;
+}
+
+.select2-selection__choice {
+ height: 36px;
+ padding-top: 7px !important;
+ background-color: #2f2929 !important;
+ color: #fff;
+}
+
+
 div.module-button-box {
  margin-bottom: 16px;
 }
