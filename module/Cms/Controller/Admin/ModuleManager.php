@@ -98,6 +98,21 @@ final class ModuleManager extends AbstractController
     }
 
     /**
+     * Removes a module completely
+     * 
+     * @param string $module
+     * @return boolean
+     */
+    private function removeModule($module)
+    {
+        $this->dropFromStorage($module);
+        $this->dropSlugs($module);
+        $this->dropFromFileSystem($module);
+
+        return true;
+    }
+    
+    /**
      * Deletes a module by its associated name
      * 
      * @param string $module
@@ -105,12 +120,27 @@ final class ModuleManager extends AbstractController
      */
     public function deleteAction($module)
     {
-        $this->dropFromStorage($module);
-        $this->dropSlugs($module);
-        $this->dropFromFileSystem($module);
+        $this->removeModule($module);
 
         // Always assume success
         $this->flashBag->set('success', 'Selected module has been successfully removed');
+        return '1';
+    }
+
+    /**
+     * Delete many modules at once
+     * 
+     * @return string
+     */
+    public function deleteManyAction()
+    {
+        $modules = array_keys($this->request->getPost('toDelete', array()));
+
+        foreach ($modules as $module) {
+            $this->removeModule($module);
+        }
+
+        $this->flashBag->set('success', 'Selected modules have been successfully removed');
         return '1';
     }
 }

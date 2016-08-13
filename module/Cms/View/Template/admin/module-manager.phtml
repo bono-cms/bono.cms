@@ -1,7 +1,7 @@
 <?php defined('KRYSTAL') or die; ?>
 
 <div class="module-button-box">
-    <button href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></button>
+    <button href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" data-button="remove-selected" data-url="<?php echo $this->url('Cms:Admin:ModuleManager@deleteManyAction'); ?>"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></button>
     <button href="#" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-url="<?php echo $this->url('Cms:Admin:Dashboard@installModuleAction'); ?>" data-button="module-install" title="<?php $this->show('Click to Install a module from ZIP archive'); ?>">
         <i class="glyphicon glyphicon-wrench"></i> <?php $this->show('Install a module'); ?>
     </button>
@@ -9,48 +9,49 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table table-hover table-bordered table-striped table-condensed">
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <?php if (!empty($modules)): ?>
-                    <input type="checkbox" />
-                    <?php endif; ?>
-                </th>
-                <th class="text-center"><?php $this->show('Icon'); ?></th>
-                <th class="text-center"><?php $this->show('Name'); ?></th>
-                <th class="text-center"><?php $this->show('Description'); ?></th>
-            </tr>
-        </thead>
-        
-        <?php if (!empty($modules)): ?>
-        <tbody>
-            <?php foreach ($modules as $module): ?>
-            <tr>
-                <td class="text-center">
-                    <?php if (!$moduleManager->isCoreModule($module['name'])): ?>
-                    <input type="checkbox" name="toDelete[<?php echo $module['name']; ?>]" />
-                    <?php endif; ?>
-                </td>
-                <td class="text-center col-lg-2"><a href="<?php echo $this->url($module['route']); ?>"><i class="<?php echo $module['icon']; ?>"></i></a></td>
-                <td class="text-center"><?php $this->show($module['caption']); ?></td>
-                <td class="text-center"><?php $this->show($module['description']); ?></td>
-                <td class="text-center">
-                    <?php if (!$moduleManager->isCoreModule($module['name'])): ?>
-                    <a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this module'); ?>" data-button="delete" href="#" data-url="<?php echo $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                    <?php endif; ?>
-                </td>
-            </tr>
+    <form>
+        <table class="table table-hover table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        <?php if (!empty($modules)): ?>
+                        <input type="checkbox" />
+                        <?php endif; ?>
+                    </th>
+                    <th class="text-center"><?php $this->show('Icon'); ?></th>
+                    <th class="text-center"><?php $this->show('Name'); ?></th>
+                    <th class="text-center"><?php $this->show('Description'); ?></th>
+                </tr>
+            </thead>
             
-            <?php endforeach; ?>
-        </tbody>
+            <?php if (!empty($modules)): ?>
+            <tbody>
+                <?php foreach ($modules as $module): ?>
+                <tr>
+                    <td class="text-center">
+                        <?php if (!$moduleManager->isCoreModule($module['name'])): ?>
+                        <input type="checkbox" name="toDelete[<?php echo $module['name']; ?>]" />
+                        <?php endif; ?>
+                    </td>
+                    <td class="text-center col-lg-2"><a href="<?php echo $this->url($module['route']); ?>"><i class="<?php echo $module['icon']; ?>"></i></a></td>
+                    <td class="text-center"><?php $this->show($module['caption']); ?></td>
+                    <td class="text-center"><?php $this->show($module['description']); ?></td>
+                    <td class="text-center">
+                        <?php if (!$moduleManager->isCoreModule($module['name'])): ?>
+                        <a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this module'); ?>" data-button="delete" href="#" data-url="<?php echo $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                
+                <?php endforeach; ?>
+            </tbody>
+            <?php endif; ?>
+        </table>
+        
+        <?php if (empty($modules)): ?>
+        <div class="center-block">
+            <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No modules'); ?></h2>
+        </div>
         <?php endif; ?>
-    </table>
-    
-    <?php if (empty($modules)): ?>
-    <div class="center-block">
-        <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No modules'); ?></h2>
-    </div>
-    <?php endif; ?>
-    
+    </form>
 </div>
