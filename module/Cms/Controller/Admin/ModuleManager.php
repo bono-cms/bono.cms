@@ -136,11 +136,17 @@ final class ModuleManager extends AbstractController
     {
         $modules = array_keys($this->request->getPost('toDelete', array()));
 
-        foreach ($modules as $module) {
-            $this->removeModule($module);
+        if (!empty($modules)) {
+            foreach ($modules as $module) {
+                $this->removeModule($module);
+            }
+
+            $this->flashBag->set('success', 'Selected modules have been successfully removed');
+
+        } else {
+            $this->flashBag->set('warning', 'No modules were selected for removal');
         }
 
-        $this->flashBag->set('success', 'Selected modules have been successfully removed');
         return '1';
     }
 }
