@@ -174,17 +174,42 @@ header {
  padding-top: 46px;
 }
 
+
 textarea {
  resize: vertical;
 }
 
-footer {
-  padding-top: 30px;
+.footer-links > ul > li > a,
+.contact-box > ul > li > a,
+ footer {
+ color: #fff;
 }
 
-footer address {
-  border-top: 1px solid #cccccc;
+footer {
+  padding-top: 30px;
+  background-color: #333;
+}
+
+footer > address {
   text-align: center;
   margin-top: 30px;
   padding: 30px 0;
+}
+
+footer address > .social-box > ul > li {
+  list-style: none;
+  float: left;
+  margin-right: 10px;
+}
+
+footer address > .social-box > ul {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+footer address > .social-box > ul::after {
+ content: " ";
+ clear: both;
+ display: table;
 }

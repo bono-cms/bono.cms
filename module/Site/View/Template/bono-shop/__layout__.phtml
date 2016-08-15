@@ -88,16 +88,33 @@ use Menu\View\Dropdown;
   <?php echo $fragment; ?>
   
 
- <footer>
+</section>
+
+<?php $this->loadPartial('modal-added-to-basket'); ?>
+<?php $this->loadPartial('bs-ajax-modal'); ?>
+
+</main>
+
+<footer>
+ <div class="container">
   <div class="row">
-   <div class="col-lg-3">
+   <div class="col-lg-3 footer-links">
     <h3><?php echo $menu->getCategoryNameByClass('nav'); ?></h3>
     <?php echo $menu->renderByClass('nav', null, new Dropdown()); ?>
    </div>
   
-   <div class="col-lg-3">
+   <div class="col-lg-3 footer-links">
 	 <h3><?php echo $menu->getCategoryNameByClass('partners'); ?></h3>
 	 <?php echo $menu->renderByClass('partners', null, new Dropdown()); ?>
+   </div>
+   
+   <div class="col-lg-4 contact-box">
+     <h3><?php $this->show('Store Information'); ?></h3>
+     <ul>
+       <li>Your Store, USA, Manhetten, Some Street 123</li>
+       <li><a href="#">info@yourstore.com</a></li>
+       <li>Call us now: (+1) 212 123-45-67</li>
+     </ul>
    </div>
   </div>
 	
@@ -109,18 +126,18 @@ use Menu\View\Dropdown;
 	-->
   </div>
  </div>
-	
- <address>
-  <div class="social-block block-center text-center"></div>
-  <h2><small><?php echo $block->render('footer'); ?></small></h2>
- </address>
  
- </footer>
-</section>
-
-<?php $this->loadPartial('modal-added-to-basket'); ?>
-<?php $this->loadPartial('bs-ajax-modal'); ?>
-
-</main>
+ <address>
+   <div class="social-box">
+    <ul>
+        <li><a href="#"><i class="fa fa-facebook-square fa-3x"></i></a></li>
+        <li><a href="#"><i class="fa fa-twitter-square fa-3x"></i></a></li>
+    </ul>
+   </div>
+    
+    <h2><small><?php echo $block->render('footer'); ?></small></h2>
+ </address>
+ </div>
+</footer>
 
 <?php $this->loadPartial('end'); ?>

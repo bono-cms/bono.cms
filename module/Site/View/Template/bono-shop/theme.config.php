@@ -19,7 +19,8 @@ return array(
 		'superfish', 
 		'to-top', 
 		'bootstrap.blue', 
-		'bootstrap.core'
+		'bootstrap.core',
+        'font-awesome'
 	),
 	
 	// Style sheets and scripts for this theme to load
