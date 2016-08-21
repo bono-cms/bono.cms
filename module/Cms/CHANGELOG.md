@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added static about resource usage in the footer
  * Switch to environment variables
  * Added module manager to install and uninstall modules
  * Removed extra `module` key in configuration arrays
