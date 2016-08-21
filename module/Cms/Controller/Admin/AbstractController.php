@@ -270,7 +270,8 @@ abstract class AbstractController extends AbstractAuthAwareController
             'paramBag' => $this->paramBag,
             'languages' => $contentLanguages,
             'currentLanguage' => $languageManager->fetchByCurrentId(),
-            'ppc' => $this->getPerPageCountGadget()
+            'ppc' => $this->getPerPageCountGadget(),
+            'queryLogger' => $this->db['mysql']->getQueryLogger()
         ));
 
         $this->view->getPluginBag()->load(array(
@@ -286,7 +287,7 @@ abstract class AbstractController extends AbstractAuthAwareController
         $this->tweakInternalServices();
     }
 
-    /**
+   /**
      * Validates the request
      * 
      * @return void

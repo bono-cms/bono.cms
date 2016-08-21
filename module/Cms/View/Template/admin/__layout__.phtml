@@ -145,6 +145,7 @@
  <?php if ($extendedMode): ?>
  <p><?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?> </p>
  <p><?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></p>
+ <p><?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></p>
  <?php endif; ?>
  
 </footer>
