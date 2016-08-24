@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Improvement in theme configuration file. Added optional protection for required modules
  * Added static about resource usage in the footer
  * Switch to environment variables
  * Added module manager to install and uninstall modules

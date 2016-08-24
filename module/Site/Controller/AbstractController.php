@@ -118,6 +118,15 @@ abstract class AbstractController extends BaseController
                                ->appendStylesheet($this->request->isUrlLike($stylesheet) ? $stylesheet : $this->view->createThemeUrl('Site').$stylesheet);
                 }
             }
+
+            // Optional validation for modules
+            if (isset($config['modules']) && is_array($config['modules'])) {
+                $unloaded = $this->moduleManager->getUnloadedModules($config['modules']);
+
+                if (!empty($unloaded)) {
+                    throw new RuntimeException(sprintf('The theme requires the following modules: %s', implode(', ', $unloaded)));
+                }
+            }
         }
 
         $this->view->addVariables(array(
