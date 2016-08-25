@@ -36,6 +36,20 @@
 	<div class="navbar-collapse collapse" id="navbar-main">
 	  <ul class="nav navbar-nav"></ul>
 	  <ul class="nav navbar-nav navbar-right">
+        
+        <?php if ($extendedMode): ?>
+        <!-- Debug -->
+		<li class="dropdown">
+		  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="debug"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Debug'); ?><span class="caret"></span></a>
+		  <ul class="dropdown-menu" aria-labelledby="debug">
+			 <li><a><?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?></a></li>
+			 <li><a><?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></a></li>
+			 <li><a><?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></a></li>
+		  </ul>
+		</li>
+        <!-- Debug -->
+        <?php endif; ?>
+      
 		<!--System-->
 		<li class="dropdown">
 		  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="system"><i class="glyphicon glyphicon-align-left"></i> <?php $this->show('System'); ?><span class="caret"></span></a>
@@ -138,16 +152,8 @@
 	
 
 <footer>
-
  <?php /* No, you may not remove this copyright notice! */ ?>
  <p><?php $this->show('Powered by'); ?> <a href="<?php echo $paramBag->get('site'); ?>" target="_blank">Bono CMS v <?php echo $paramBag->get('version'); ?></a></p>
- 
- <?php if ($extendedMode): ?>
- <p><?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?> </p>
- <p><?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></p>
- <p><?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></p>
- <?php endif; ?>
- 
 </footer>
 	
 <div class="modal fade" id="confirmation-modal">
