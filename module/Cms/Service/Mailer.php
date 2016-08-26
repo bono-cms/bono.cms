@@ -54,11 +54,14 @@ final class Mailer implements MailerInterface
     {
         // If we have SMTP transport turned on, then we'd use appropriate Swift's transport
         if ($this->config->getUseSmtpDriver() != true) {
+            $from = $this->config->getSmtpUsername();
+
             // SMTP transport
             $transport = \Swift_SmtpTransport::newInstance($this->config->getSmtpHost(), $this->config->getSmtpPort(), $this->config->getSmtpSecureLayer())
-                                          ->setUsername($this->config->getSmtpUsername())
+                                          ->setUsername($from)
                                           ->setPassword($this->config->getSmtpPassword());
         } else {
+            $from = array('no-reply@'.$this->config->getDomain());
             $transport = \Swift_MailTransport::newInstance(null);
         }
 
@@ -67,7 +70,7 @@ final class Mailer implements MailerInterface
 
         // Build Swift's message
         $message = \Swift_Message::newInstance($subject)
-                              ->setFrom(array('no-reply@'.$this->config->getDomain()))
+                              ->setFrom($from)
                               ->setContentType('text/html')
                               ->setTo(array($this->config->getNotificationEmail()))
                               ->setBody($text);
