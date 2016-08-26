@@ -42,9 +42,9 @@
 		<li class="dropdown">
 		  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="debug"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Debug'); ?><span class="caret"></span></a>
 		  <ul class="dropdown-menu" aria-labelledby="debug">
-			 <li><a><?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?></a></li>
-			 <li><a><?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></a></li>
-			 <li><a><?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></a></li>
+			 <li><a><i class="fa fa-rocket" aria-hidden="true"></i> <?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?></a></li>
+			 <li><a><i class="fa fa-hourglass-o" aria-hidden="true"></i> <?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></a></li>
+			 <li><a><i class="fa fa-database" aria-hidden="true"></i> <?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></a></li>
 		  </ul>
 		</li>
         <!-- Debug -->
