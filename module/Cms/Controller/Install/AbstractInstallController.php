@@ -58,7 +58,7 @@ abstract class AbstractInstallController extends AbstractController
      */
     final protected function getValidator(array $input)
     {
-        return $this->validatorFactory->build(array(
+        return $this->createValidator(array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
