@@ -16,7 +16,6 @@ use PDOException;
 use ReflectionClass;
 use Krystal\Db\Sql\Connector\MySQL as Connector;
 use Krystal\Config\File\FileArray;
-use Krystal\Db\Sql\TableBuilder;
 
 final class StorageInstaller implements StorageInstallerInterface
 {
@@ -34,9 +33,8 @@ final class StorageInstaller implements StorageInstallerInterface
 
         if ($pdo !== false) {
 
-            $builder = new TableBuilder($pdo);
-            $builder->loadFromFile($dumpFile);
-            $builder->run();
+            $content = file_get_contents($dumpFile);
+            $pdo->exec($content);
 
             $this->createConfigFile($path, $details);
             return true;
