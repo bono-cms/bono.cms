@@ -83,11 +83,14 @@ final class Themes extends AbstractController
     {
         if ($this->request->hasPost('toDelete')) {
             // Grab theme names to be removed
-            $themes = $this->request->getPost('toDelete');
+            $themes = array_keys($this->request->getPost('toDelete'));
 
             if ($this->createThemeService()->dropThemes($themes)) {
                 $this->flashBag->set('success', 'Selected themes have been removed successfully');
             }
+
+        } else {
+            $this->flashBag->set('warning', 'Select at least one theme to remove');
         }
 
         return '1';
