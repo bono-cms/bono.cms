@@ -45,6 +45,10 @@
 			 <li><a><i class="fa fa-rocket" aria-hidden="true"></i> <?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?></a></li>
 			 <li><a><i class="fa fa-hourglass-o" aria-hidden="true"></i> <?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></a></li>
 			 <li><a><i class="fa fa-database" aria-hidden="true"></i> <?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></a></li>
+             <li class="divider"></li>
+			 <li class="dropdown-header"><?php $this->show('Web-server'); ?></li>
+             <li><a><?php $this->show('PHP Version'); ?>: <?php echo PHP_VERSION; ?></a></li>
+             <li><a><?php $this->show('OS'); ?>: <?php echo PHP_OS; ?></a></li>
 		  </ul>
 		</li>
         <!-- Debug -->
