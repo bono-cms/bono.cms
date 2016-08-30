@@ -177,6 +177,7 @@ return array(
         'disallow' => array('guest')
     ),
     
+    // Module manager
     '/%s/module-manager' => array(
         'controller' => 'Admin:ModuleManager@indexAction',
         'disallow' => array('guest')
@@ -189,6 +190,27 @@ return array(
 
     '/%s/module-manager/delete-many' => array(
         'controller' => 'Admin:ModuleManager@deleteManyAction',
+        'disallow' => array('guest', 'user')
+    ),
+    
+    // Themes
+    '/%s/themes' => array(
+        'controller' => 'Admin:Themes@indexAction',
+        'disallow' => array('guest', 'user')
+    ),
+    
+    '/%s/themes/tweak' => array(
+        'controller' => 'Admin:Themes@tweakAction',
+        'disallow' => array('guest', 'user')
+    ),
+    
+    '/%s/themes/delete/(:var)' => array(
+        'controller' => 'Admin:Themes@deleteAction',
+        'disallow' => array('guest', 'user')
+    ),
+    
+    '/%s/themes/delete-many' => array(
+        'controller' => 'Admin:Themes@deleteManyAction',
         'disallow' => array('guest', 'user')
     )
 );
