@@ -2,7 +2,7 @@
 
 return array(
 
-	'theme' => 'bono-shop',
+	'theme' => 'welcome', // Default theme
 	'obfuscate' => true,
 
 	// Global template plugins
