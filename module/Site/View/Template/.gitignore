@@ -1,5 +1,3 @@
-bono-landing
-bono-blog
-bono-shop
-!/welcome
-!/shared
+*
+!welcome
+!shared
