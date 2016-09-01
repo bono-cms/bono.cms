@@ -91,6 +91,8 @@ abstract class AbstractController extends BaseController
      */
     final protected function loadSitePlugins()
     {
+        $this->loadSiteTheme();
+        
         $config = $this->getThemeConfig();
 
         // Plugins must have higher priority
@@ -178,10 +180,27 @@ abstract class AbstractController extends BaseController
     }
 
     /**
+     * Loads site theme
+     * 
+     * @return void
+     */
+    private function loadSiteTheme()
+    {
+        $theme = $this->config->get('Cms', 'theme');
+
+        if ($theme !== false) {
+            $this->appConfig->setTheme($theme);
+        } else {
+            throw new RuntimeException('Can not load site theme. Probably a default theme was not selected in administration panel');
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     final protected function bootstrap()
     {
+        $this->loadSiteTheme();
         $this->validateRequest();
         $this->validateInstallationState();
 
