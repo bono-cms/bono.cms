@@ -35,6 +35,12 @@ return array(
         'description' => 'Tweak system languages'
     ),
     array(
+        'route' => 'Cms:Admin:Themes@indexAction',
+        'icon' => 'fa fa-language fa-5x',
+        'name' => 'Themes',
+        'description' => 'View and manage installed themes'
+    ),
+    array(
         'route' => 'Cms:Admin:SitemapLinks@indexAction',
         'icon' => 'fa fa-sitemap fa-5x',
         'name' => 'Sitemap links',
