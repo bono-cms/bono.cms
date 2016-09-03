@@ -36,7 +36,7 @@ return array(
     ),
     array(
         'route' => 'Cms:Admin:Themes@indexAction',
-        'icon' => 'fa fa-language fa-5x',
+        'icon' => 'fa fa-paint-brush fa-5x',
         'name' => 'Themes',
         'description' => 'View and manage installed themes'
     ),
