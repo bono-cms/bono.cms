@@ -6,6 +6,12 @@ a[data-button='slug'] > i {
  color: wheat;
 }
 
+select[data-button='per-page-changer'] {
+ border: 1px solid #cccccc;
+ padding: 6px;
+ margin-left: 9px;
+ color: #929292;
+}
 
 .select2-selection {
   height: 47px;

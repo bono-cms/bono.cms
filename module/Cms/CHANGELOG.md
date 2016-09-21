@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Improved the look of shared per page changer input
  * Added Theme item in administration panel. Ability to switch default themes right from administration panel without touching a configuration file
  * Fixed minor issue with Mailer service regarding SPAM. Since now it must work in all hosting providers
  * Moved debug information from footer to menu
