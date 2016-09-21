@@ -53,6 +53,12 @@ td {
  vertical-align: middle !important;
 }
 
+th > select {
+ padding: 1px 10px;
+ min-width: 82px;    
+}
+
+
 ::-moz-selection { /* for Firefox */
  background: black;
  color: white;
