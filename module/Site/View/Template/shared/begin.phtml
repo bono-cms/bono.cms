@@ -1,4 +1,9 @@
-<?php defined('KRYSTAL') or die; ?>
+<?php
+
+use Krystal\Security\Filter;
+defined('KRYSTAL') or die;
+
+?>
 <!DOCTYPE html>
 <html lang="<?php echo $locale; ?>">
 <head>
@@ -11,8 +16,8 @@
  <title><?php echo $page->getTitle(); ?></title>
  
  <?php if ($page->getSeo()): ?>
- <meta name="description" content="<?php echo htmlentities($page->getMetaDescription()); ?>" />
- <meta name="keywords" content="<?php echo htmlentities($page->getKeywords()); ?>" />
+ <meta name="description" content="<?php echo Filter::escape($page->getMetaDescription()); ?>" />
+ <meta name="keywords" content="<?php echo Filter::escape($page->getKeywords()); ?>" />
  <?php else: ?>
  
  <meta name="robots" content="noindex, nofollow, noarchive" />
