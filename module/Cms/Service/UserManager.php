@@ -88,11 +88,11 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
     {
         $entity = new VirtualEntity();
         $entity->setId($user['id'], VirtualEntity::FILTER_INT)
-            ->setLogin($user['login'], VirtualEntity::FILTER_TAGS)
+            ->setLogin($user['login'], VirtualEntity::FILTER_HTML)
             ->setPasswordHash($user['password_hash'])
-            ->setRole($user['role'], VirtualEntity::FILTER_TAGS)
-            ->setEmail($user['email'], VirtualEntity::FILTER_TAGS)
-            ->setName($user['name'], VirtualEntity::FILTER_TAGS);
+            ->setRole($user['role'], VirtualEntity::FILTER_HTML)
+            ->setEmail($user['email'], VirtualEntity::FILTER_HTML)
+            ->setName($user['name'], VirtualEntity::FILTER_HTML);
 
         return $entity;
     }

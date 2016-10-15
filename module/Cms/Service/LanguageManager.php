@@ -70,12 +70,12 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
 
         $entity = new VirtualEntity();
         $entity->setId($language['id'], VirtualEntity::FILTER_INT)
-            ->setName($language['name'], VirtualEntity::FILTER_TAGS)
+            ->setName($language['name'], VirtualEntity::FILTER_HTML)
             ->setPublished($language['published'], VirtualEntity::FILTER_BOOL)
             ->setOrder($language['order'], VirtualEntity::FILTER_INT)
             ->setDefault($this->isDefault($language['id']), VirtualEntity::FILTER_BOOL)
             ->setCode($code)
-            ->setFlag($language['flag'], VirtualEntity::FILTER_TAGS)
+            ->setFlag($language['flag'], VirtualEntity::FILTER_HTML)
             ->setSwitchUrl(sprintf('/lang/%s', $code));
 
         return $entity;
