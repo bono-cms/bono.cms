@@ -13,7 +13,7 @@ defined('KRYSTAL') or die;
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <meta charset="UTF-8" />
  <meta name="csrf-token" content="<?php echo $csrfToken; ?>" />
- <title><?php echo $page->getTitle(); ?></title>
+ <title><?php echo Filter::escape($page->getTitle()); ?></title>
  
  <?php if ($page->getSeo()): ?>
  <meta name="description" content="<?php echo Filter::escape($page->getMetaDescription()); ?>" />
