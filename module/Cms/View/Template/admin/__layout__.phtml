@@ -119,7 +119,7 @@
 	  <?php if ($breadcrumb->isActive()): ?>
 	  <li class="active"><?php $this->show($breadcrumb->getName()); ?></li>
 	  <?php else: ?>
-	  <li><a href="<?php echo $this->url($breadcrumb->getLink()); ?>"><?php $this->show($breadcrumb->getName()); ?></a></li>
+	  <li><a href="<?php echo strpos($breadcrumb->getLink(), ':') !== false ? $this->url($breadcrumb->getLink()) : $breadcrumb->getLink(); ?>"><?php $this->show($breadcrumb->getName()); ?></a></li>
 	  <?php endif; ?>
 	  <?php endforeach; ?>
 	</ul>
