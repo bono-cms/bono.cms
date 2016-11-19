@@ -240,6 +240,10 @@ $(function(){
         });
     });
     
+    $("[data-color]").each(function(){
+        $(this).css('color', $(this).attr('data-color'));
+    });
+    
     $("[data-button='mode']").click(function(event){
         event.preventDefault();
         var mode = $(this).data('mode-id');
