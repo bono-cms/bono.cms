@@ -5,7 +5,7 @@
   <?php foreach ($utilites as $utility): ?>
   <li>
 	<a href="<?php echo $this->url($utility['route']); ?>" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php $this->show($utility['description']); ?>">
-	<i class="<?php echo $utility['icon']; ?>"></i> 
+	<i data-color="<?php echo $utility['color'];?>" class="<?php echo $utility['icon']; ?>"></i> 
 	<?php if ($utility['name'] == 'Notifications' && $notifications > 0): ?>
 	<label class="urgent"><?php $this->show($utility['name']); ?> (<?php echo $notifications; ?>)</label>
 	<?php else: ?>
