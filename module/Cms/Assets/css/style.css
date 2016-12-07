@@ -220,6 +220,7 @@ aside > ul > li > a {
 
 aside > ul > li > a:hover {
  color: #666666;
+ text-decoration: none;
 }
 
 label.urgent {
