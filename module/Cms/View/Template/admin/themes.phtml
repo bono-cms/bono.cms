@@ -84,7 +84,9 @@ use Krystal\Form\Element;
                         <?php endif; ?>
                     </td>
                     <td class="text-center">
+                        <?php if ($current !== $data['theme']): ?>
 						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this theme'); ?>" data-button="delete" data-url="<?php echo $this->url('Cms:Admin:Themes@deleteAction', $data['theme']); ?>" href="#" ><i class="glyphicon glyphicon-remove"></i></a>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
