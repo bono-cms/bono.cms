@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added YouTube plugin in CKEditor
  * In administration panel, changed default validation colors
  * Fixed quote escaping issue
  * Improved the look of shared per page changer input

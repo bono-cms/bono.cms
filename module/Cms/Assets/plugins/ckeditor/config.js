@@ -11,5 +11,5 @@ CKEDITOR.editorConfig = function(config){
 	config.filebrowserBrowseUrl = '/module/Cms/Assets/plugins/ckeditor/elfinder.php';
 	config.height = 400;
 	config.allowedContent = true;
-	//config.extraPlugins  = 'dialog,syntaxhighlight';
+    config.extraPlugins = 'youtube';
 };
