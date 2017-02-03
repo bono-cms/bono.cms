@@ -21,7 +21,7 @@ CHANGELOG
  * Added shared partials for themes. Most of them can be reused in various themes
  * Since now themes may have their own translation files. They must be located at `{theme}/translations/{language}.php`
  * Added CSS class for table filters
- * In administration panel added SiteMap link previewer
+ * In administration panel added SiteMap link previewer (with basic configuration support and automatic SE pinger)
  * Changed background image in administration panel
  * Wrapped login form into transparent box
  * Fixed CSS issue with double-background on the login page
