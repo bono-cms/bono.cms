@@ -48,6 +48,10 @@ final class ConfigManager extends ConfigModuleService
                ->setSiteDownReason($this->get('site_down_reason'), VirtualEntity::FILTER_SAFE_TAGS)
                ->setInstalled($this->get('installed'), VirtualEntity::FILTER_BOOL);
 
+        // Sitemap
+        $entity->setSitemapFrequency($this->get('sitemap_frequency', 'weekly'))
+               ->setSitemapPriority($this->get('sitemap_priority', '0.5'));
+
         return $entity;
     }
 }

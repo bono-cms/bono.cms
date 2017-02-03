@@ -146,6 +146,16 @@ return array(
         'controller' => 'Admin:SitemapLinks@indexAction',
         'disallow' => array('guest', 'user')
     ),
+
+    '/%s/sitemap-links/ping' => array(
+        'controller' => 'Admin:SitemapLinks@pingAction',
+        'disallow' => array('guest')
+    ),
+
+    '/%s/sitemap-links/save' => array(
+        'controller' => 'Admin:SitemapLinks@saveAction',
+        'disallow' => array('guest')
+    ),
     
     // Info
     '/%s/info' => array(

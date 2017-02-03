@@ -30,12 +30,17 @@ final class Main extends AbstractController
                      ->fetchURLs($this->request->getBaseUrl(), $language, $this->moduleManager);
 
         if ($urls !== false) {
+            // Grab configration entity
+            $config = $this->getService('Cms', 'configManager')->getEntity();
+
             // Define response as XML 
             $this->response->respondAsXml();
 
             // Render sitemap.pthml located under Cms module inside administration template
             return $this->view->renderRaw('Cms', 'admin', 'sitemap', array(
-                'urls' => $urls
+                'urls' => $urls,
+                'priority' => $config->getSitemapPriority(),
+                'changefreq' => $config->getSitemapFrequency()
             ));
 
         } else {

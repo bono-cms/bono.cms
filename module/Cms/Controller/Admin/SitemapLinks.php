@@ -11,6 +11,8 @@
 
 namespace Cms\Controller\Admin;
 
+use Cms\Service\SitemapTool;
+
 final class SitemapLinks extends AbstractController
 {
     /**
@@ -20,12 +22,40 @@ final class SitemapLinks extends AbstractController
      */
     public function indexAction()
     {
+        $config = $this->getModuleService('configManager')->getEntity();
+
         $this->view->getBreadcrumbBag()
                    ->addOne('Sitemap links');
 
         return $this->view->render('sitemap-links', array(
-            'links' => $this->createLinks()
+            'links' => $this->createLinks(),
+            'priorities' => SitemapTool::getPriorities(),
+            'changefreqs' => SitemapTool::getChangefreqs(),            
+            'priority' => $config->getSitemapPriority(),
+            'changefreq' => $config->getSitemapFrequency()
         ));
+    }
+
+    /**
+     * Save sitemap confuguration
+     * 
+     * @return string
+     */
+    public function saveAction()
+    {
+        $this->flashBag->set('success', 'Sitemap confuguration has been successfully updated!');
+        $this->getModuleService('configManager')->storeMany($this->request->getPost());
+
+        return '1';
+    }
+
+    /**
+     * Ping sitemaps
+     * 
+     * @return void
+     */
+    public function pingAction()
+    {
     }
 
     /**

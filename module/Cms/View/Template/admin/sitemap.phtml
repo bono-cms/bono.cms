@@ -6,8 +6,8 @@
     <?php foreach ($urls as $url): ?>
     <url>
         <loc><?php echo $url; ?></loc>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
+        <changefreq><?php echo $changefreq; ?></changefreq>
+        <priority><?php echo $priority; ?></priority>
     </url>
     <?php endforeach; ?>
 
