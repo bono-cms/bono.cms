@@ -56,6 +56,13 @@ final class SitemapLinks extends AbstractController
      */
     public function pingAction()
     {
+        if (SitemapTool::ping($this->createLinks())) {
+            $this->flashBag->set('success', 'Search engines have been informed about new version of your sitemap!');
+        } else {
+            $this->flashBag->set('warning', 'There was a connection error while submitting the sitemap');
+        }
+
+        return '1';
     }
 
     /**

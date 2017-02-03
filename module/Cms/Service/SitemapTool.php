@@ -76,12 +76,14 @@ final class SitemapTool
     {
         foreach (self::$engines as $engine) {
             foreach ($urls as $url) {
-                $target = urlencode(sprintf($engine, $url));
-                // @TODO
+                $target = sprintf($engine, urlencode($url));
+
+                // Issue a GET request
+                $hasError = @file_get_contents($target) !== false;
             }
         }
 
         // Assume success
-        return true;
+        return $hasError;
     }
 }
