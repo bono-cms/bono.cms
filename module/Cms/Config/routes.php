@@ -173,7 +173,7 @@ return array(
         'controller' => 'Admin:History@indexAction'
     ),
     
-    '/%s/history/page/(:var)' => array(
+    '/%s/history/view/page/(:var)' => array(
         'controller' => 'Admin:History@indexAction'
     ),
     
