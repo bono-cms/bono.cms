@@ -468,12 +468,18 @@ $(function(){
                 url : url,
                 success : function(response) {
                     if (response == "1") {
+                        if ($self.data('back-url')) {
+                            window.location = $self.data('back-url');
+                            return false;
+                        }
+
                         if ($self.data('success-url')) {
                             window.location = $self.data('success-url');
-                        } else {
-                            // By default
-                            window.location.reload();
+                            return false;
                         }
+                        
+                        // By default
+                        window.location.reload();
                         
                     } else {
                         $.showErrors(response);
