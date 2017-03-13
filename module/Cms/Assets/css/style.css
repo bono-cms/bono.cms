@@ -41,6 +41,11 @@ div.module-button-box {
     clear:both;
 }
 
+.form-control {
+ border: 3px solid #f7f7f7 !important;
+}
+
+
 .has-success .form-control, .has-success .form-control:focus, .has-success .input-group-addon {
   border: 1px solid #c2e8b6;
 }
