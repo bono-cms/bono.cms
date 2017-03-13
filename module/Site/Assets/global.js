@@ -209,19 +209,20 @@ $(function(){
             event.preventDefault();
 
             var $self = $(this);
-            var data = $self.serialize();
             var url = $self.attr('action') ? $self.attr('action') : '/';
             var method = $self.attr('method') ? $self.attr('method') : 'POST';
 
             $.ajax({
-                url : url,
-                type : method,
-                data : data,
-                success : function(response){
+                url: url,
+                contentType: false,
+                processData: false,
+                data: new FormData($(this)[0]),
+                type: method,
+                success: function(response){
                     $.getValidator($form).handleAll(response);
                 }
             });
         });
     });
-    
+
 });

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Support for sending multi-part forms for modules that require it (via AJAX)
  * Added YouTube plugin in CKEditor
  * In administration panel, changed default validation colors
  * Fixed quote escaping issue
