@@ -59,6 +59,10 @@ div.module-button-box {
 }
 
 
+.navbar-brand img {
+ display: inline-block;
+}
+
 td {
  vertical-align: middle !important;
 }
