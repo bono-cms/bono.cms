@@ -25,6 +25,16 @@ select[data-button='per-page-changer'] {
  color: #fff;
 }
 
+/* Dropdowns */
+.open >.dropdown-menu {
+ background: #222222;
+}
+
+.dropdown-menu > li > a {
+ color: #fff;
+}
+/* Dropdowns */
+
 
 div.module-button-box {
  margin-bottom: 16px;
