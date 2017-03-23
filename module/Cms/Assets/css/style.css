@@ -26,8 +26,13 @@ select[data-button='per-page-changer'] {
 }
 
 /* Dropdowns */
-.open >.dropdown-menu {
+.dropdown-menu {
  background: #222222;
+ box-shadow: #222222 13px 11px 35px 9px;
+}
+
+.dropdown-menu .divider {
+ background-color: #403f3f;
 }
 
 .dropdown-menu > li > a {
