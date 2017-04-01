@@ -210,6 +210,14 @@ $(function(){
         errorHandler.handleResponse(response);
         $("#scroller").click();
     }
+
+    // Shared chosen plugin
+    if ($.fn.chosen){
+        $("[data-plugin='chosen']").chosen({
+            disable_search_threshold: 5,
+            width: "100%"
+        });
+    }
     
     // Automatic initialization based on element attribute
     $("[data-wysiwyg='true']").each(function(){
