@@ -13,16 +13,13 @@ select[data-button='per-page-changer'] {
  color: #929292;
 }
 
-.select2-selection {
-  height: 47px;
-  border: none !important;
+body {
+ overflow-x: hidden;
 }
 
-.select2-selection__choice {
- height: 36px;
- padding-top: 7px !important;
- background-color: #2f2929 !important;
- color: #fff;
+.chosen-container-multi .chosen-choices li.search-field input[type="text"],
+.chosen-container-multi .chosen-choices {
+ padding: 8px !important;
 }
 
 /* Dropdowns */
