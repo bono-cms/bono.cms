@@ -13,7 +13,18 @@ return array(
 				'@Site/global.js',
 			),
 		),
-		
+
+        // Improved plugin for dropdowns
+        'chosen' => array(
+            'stylesheets' => array(
+                '@Cms/plugins/chosen/chosen.css',
+                '@Cms/plugins/chosen/chosen-bootstrap.css'
+            ),
+            'scripts' => array(
+				'@Cms/plugins/chosen/chosen.jquery.min.js'
+            )
+        ),
+        
         'select2' => array(
             'stylesheets' => array(
 				'@Cms/plugins/select2/select2.min.css'
