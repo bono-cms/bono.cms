@@ -28,6 +28,10 @@ body {
  box-shadow: #222222 13px 11px 35px 9px;
 }
 
+.datepicker {
+ background: #fff; /* Conflict fixing */
+}
+
 .dropdown-menu .divider {
  background-color: #403f3f;
 }
@@ -78,30 +82,33 @@ label {
  display: inline-block;
 }
 
-td {
+
+/* Shared table decorations */
+.table td {
  vertical-align: middle !important;
 }
 
-th > select {
+.table th > select {
  padding: 1px 10px;
  min-width: 82px;    
 }
 
-thead {
+.table thead {
  background-image: -webkit-linear-gradient(top, #fdfdfd, #d8d5d5);
  background-image: -moz-linear-gradient(top, #fdfdfd, #d8d5d5);
  background-image: linear-gradient(top, #fdfdfd, #d8d5d5);
 }
 
-table a:not(.btn), .table a:not(.btn){
+.table a:not(.btn), .table a:not(.btn){
  text-decoration: none;
  color: #757373;
 }
 
-tr.info > td > a,
-tr.success > td > a {
+.table tr.info > td > a,
+.table tr.success > td > a {
  color: #fff !important;
 }
+/* Shared table decorations */
 
 ::-moz-selection { /* for Firefox */
  background: black;
