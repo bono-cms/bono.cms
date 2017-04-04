@@ -24,16 +24,7 @@ return array(
 				'@Cms/plugins/chosen/chosen.jquery.min.js'
             )
         ),
-        
-        'select2' => array(
-            'stylesheets' => array(
-				'@Cms/plugins/select2/select2.min.css'
-            ),
-            'scripts' => array(
-				'@Cms/plugins/select2/select2.min.js'
-            )
-        ),
-        
+
 		'lightbox' => array(
 			'stylesheets' => array(
 				'@Cms/plugins/lightbox/css/lightbox.css',
