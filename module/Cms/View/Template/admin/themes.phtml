@@ -50,7 +50,7 @@ use Krystal\Form\Element;
                         <?php echo Element::checkbox(sprintf('toDelete[%s]', $data['theme']), null, array(), false); ?>
                     </td>
                     <td class="text-center">
-                        <img class="img-reponsive" src="<?php echo $data['cover']; ?>" />
+                        <img class="img-responsive" src="<?php echo $data['cover']; ?>" />
                     </td>
                     <td class="text-center">
                         <?php echo Element::radio('current', $data['theme'], $current == $data['theme']); ?>
