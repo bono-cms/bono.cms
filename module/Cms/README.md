@@ -14,3 +14,15 @@ which includes notifications, users and history.
  - Purely modular architecture
  - Most options are already set for you
  - Insanely easiest way of installing your own very custom themes
+ 
+# Third party plugins & extensions
+
+ - Jquery (http://jquery.com)
+ - Chosen (https://github.com/harvesthq/chosen)
+ - CKEditor (http://ckeditor.com)
+ - Twitter bootstrap (http://getbootstrap.com)
+ - Font Awesome (http://fontawesome.io)
+ - Twitter Bootstrap Date Picker (http://www.eyecon.ro/bootstrap-datepicker)
+ - ElFinder 2 (http://elfinder.org)
+ - LightBox (http://lokeshdhakar.com/projects/lightbox2/)
+ - FamFam Flag
