@@ -28,7 +28,6 @@ abstract class AbstractController extends BaseController
         foreach ($this->moduleManager->getLoadedModuleNames() as $module) {
             // Build PSR-0 compliant class name
             $class = sprintf('\%s\Service\SiteBootstrapper', $module);
-
             if (class_exists($class)) {
                 $bootstrapper = new $class($this->moduleManager, $this->view);
                 $bootstrapper->bootstrap();
@@ -134,7 +133,9 @@ abstract class AbstractController extends BaseController
         $this->view->addVariables(array(
             'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
             'locale' => $this->appConfig->getLanguage(),
-            'currentUrl' => $this->request->getCurrentUrl()
+            'currentUrl' => $this->request->getCurrentUrl(),
+            // Inject parameter bag service
+            'paramBag' => $this->paramBag
         ));
 
         $this->bootstrapSiteServices();
@@ -190,6 +191,7 @@ abstract class AbstractController extends BaseController
 
         if ($theme !== false) {
             $this->appConfig->setTheme($theme);
+            $this->view->setTheme($theme);
         } else {
             throw new RuntimeException('Can not load site theme. Probably a default theme was not selected in administration panel');
         }
@@ -198,7 +200,7 @@ abstract class AbstractController extends BaseController
     /**
      * {@inheritDoc}
      */
-    final protected function bootstrap()
+    protected function bootstrap()
     {
         $this->loadSiteTheme();
         $this->validateRequest();
