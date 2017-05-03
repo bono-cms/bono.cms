@@ -49,6 +49,17 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
     }
 
     /**
+     * Determines whether login exists
+     * 
+     * @param string $login
+     * @return boolean
+     */
+    public function loginExists($login)
+    {
+        return $this->userMapper->loginExists($login);
+    }
+
+    /**
      * Fetches user's name by associated id
      * 
      * @param string $id

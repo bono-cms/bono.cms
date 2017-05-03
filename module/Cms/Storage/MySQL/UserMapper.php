@@ -25,6 +25,21 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     }
 
     /**
+     * Determines whether login exists
+     * 
+     * @param string $login
+     * @return boolean
+     */
+    public function loginExists($login)
+    {
+        return (bool) $this->db->select()
+                               ->count('login')
+                               ->from(self::getTableName())
+                               ->whereEquals('login', $login)
+                               ->queryScalar();
+    }
+
+    /**
      * Inserts user's data
      * 
      * @param array $input Raw input data

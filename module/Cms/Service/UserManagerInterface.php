@@ -17,6 +17,14 @@ namespace Cms\Service;
 interface UserManagerInterface
 {
     /**
+     * Determines whether login exists
+     * 
+     * @param string $login
+     * @return boolean
+     */
+    public function loginExists($login);
+
+    /**
      * Fetches user's name by associated id
      * 
      * @param string $id

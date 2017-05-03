@@ -14,6 +14,14 @@ namespace Cms\Storage;
 interface UserMapperInterface
 {
     /**
+     * Determines whether login exists
+     * 
+     * @param string $login
+     * @return boolean
+     */
+    public function loginExists($login);
+
+    /**
      * Inserts user's data
      * 
      * @param array $data
