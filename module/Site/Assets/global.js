@@ -130,16 +130,23 @@ $(function(){
          * Shows error messages
          * 
          * @param string response Server's response
+         * @param undefined|string backUrl
          * @return void
          */
-        handleAll : function(response){
+        handleAll : function(response, backUrl){
             // Clear all previous messages and added classes
             this.resetAll();
 
             // if its not JSON, but "1" then we'd assume success
             if (response == "1") {
-                // Since we might have a flash messenger, we'd simply reload current page
-                window.location.reload();
+                // If its provided, then do redirect to that URL
+                if (backUrl){
+                    window.location = backUrl;
+                } else {
+                    // Otherwise, just reload the page
+                    window.location.reload();
+                }
+
             } else {
                 // Otherwise, try to handle JSON data
                 try {
@@ -219,10 +226,9 @@ $(function(){
                 data: new FormData($(this)[0]),
                 type: method,
                 success: function(response){
-                    $.getValidator($form).handleAll(response);
+                    $.getValidator($form).handleAll(response, $self.data('back-url'));
                 }
             });
         });
     });
-
 });
