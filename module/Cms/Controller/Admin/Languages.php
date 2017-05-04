@@ -87,7 +87,11 @@ final class Languages extends AbstractController
      */
     public function deleteAction($id)
     {
-        return $this->invokeRemoval('languageManager', $id);
+        $service = $this->getModuleService('languageManager');
+        $service->deleteById($id);
+
+        $this->flashBag->set('success', 'Selected element has been removed successfully');
+        return '1';
     }
 
     /**
@@ -162,7 +166,7 @@ final class Languages extends AbstractController
     {
         $input = $this->request->getPost('language');
 
-        return $this->invokeSave('languageManager', $input['id'], $input, array(
+        $formValidator = $this->createValidator(array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
@@ -172,5 +176,25 @@ final class Languages extends AbstractController
                 )
             )
         ));
+
+        if ($formValidator->isValid()) {
+            $service = $this->getModuleService('languageManager');
+
+            if (!empty($input['id'])) {
+                if ($service->update($input)) {
+                    $this->flashBag->set('success', 'The element has been updated successfully');
+                    return '1';
+                }
+
+            } else {
+                if ($service->add($input)) {
+                    $this->flashBag->set('success', 'The element has been created successfully');
+                    return $service->getLastId();
+                }
+            }
+
+        } else {
+            return $formValidator->getErrors();
+        }
     }
 }
