@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with quote escaping in dashboard for description keys
  * Fixed issue with uniqueness validation regarding email and login when creating users
  * Added `sendTo()` in `\Cms\Service\Mailer`
  * Set brand new Bono logo on the header
