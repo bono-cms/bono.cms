@@ -225,6 +225,16 @@ $(function(){
         $.wysiwyg.init([name]);
     });
     
+    $("[data-button='upload']").click(function(event){
+        event.preventDefault();
+
+        // Grab the attached selector
+        var selector = $(this).data('target');
+
+        // And trigger clicking
+        $(selector).click();
+    });
+    
     $('[data-button="module-install"]').click(function(event){
         event.preventDefault();
         $('[name="module"]').click().change(function(){
