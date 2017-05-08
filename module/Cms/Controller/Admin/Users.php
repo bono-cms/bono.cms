@@ -79,6 +79,12 @@ final class Users extends AbstractController
         $user = $this->getUserManager()->fetchById($id);
 
         if ($user !== false) {
+            // Save old attributes
+            $this->formAttribute->setOldAttributes(array(
+                'email' => $user->getEmail(),
+                'login' => $user->getLogin()
+            ));
+
             return $this->createForm($user, 'Edit the user');
         } else {
             return false;
@@ -124,14 +130,21 @@ final class Users extends AbstractController
     {
         $input = $this->request->getPost('user');
 
+        // Set new attributes
+        $this->formAttribute->setNewAttributes($input);
+
+        // Check attributes for change
+        $emailChanged = $this->formAttribute->hasChanged('email') ? $this->getUserManager()->emailExists($input['email']) : false;
+        $loginChanged = $this->formAttribute->hasChanged('login') ? $this->getUserManager()->loginExists($input['login']) : false;
+
         $formValidator = $this->createValidator(array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
-                    'login' => new Pattern\Login(),
+                    'login' => new Pattern\Login($loginChanged),
                     'password' => new Pattern\Password(),
                     'password_confirm' => new Pattern\PasswordConfirmation($input['password'], array('required' => !$input['id'])),
-                    'email' => new Pattern\Email(),
+                    'email' => new Pattern\Email($emailChanged),
                     'name' => new Pattern\Name()
                 )
             )
