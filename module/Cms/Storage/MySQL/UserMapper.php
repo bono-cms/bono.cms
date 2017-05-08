@@ -25,18 +25,25 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     }
 
     /**
-     * Determines whether login exists
+     * Determines whether email already exists
+     * 
+     * @param string $email
+     * @return boolean
+     */
+    public function emailExists($email)
+    {
+        return $this->valueExists('email', $email);
+    }
+
+    /**
+     * Determines whether login already exists
      * 
      * @param string $login
      * @return boolean
      */
     public function loginExists($login)
     {
-        return (bool) $this->db->select()
-                               ->count('login')
-                               ->from(self::getTableName())
-                               ->whereEquals('login', $login)
-                               ->queryScalar();
+        return $this->valueExists('login', $login);
     }
 
     /**

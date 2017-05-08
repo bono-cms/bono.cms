@@ -14,7 +14,15 @@ namespace Cms\Storage;
 interface UserMapperInterface
 {
     /**
-     * Determines whether login exists
+     * Determines whether email already exists
+     * 
+     * @param string $email
+     * @return boolean
+     */
+    public function emailExists($email);
+
+    /**
+     * Determines whether login already exists
      * 
      * @param string $login
      * @return boolean
