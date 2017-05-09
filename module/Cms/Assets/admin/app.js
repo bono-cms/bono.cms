@@ -539,5 +539,13 @@ $(function(){
     if ($form.attr('data-group')) {
         $.setFormGroup($form.data('group'));
     }
-    
+
+    // If preview plugin is loaded
+	if (jQuery().preview){
+        $("[data-plugin='preview']").each(function(){
+            $(this).preview(function(data) {
+                $("[data-image='preview']").fadeIn(1000).attr('src', data);
+            });
+        });
+    }
 });
