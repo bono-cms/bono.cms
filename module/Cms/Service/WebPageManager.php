@@ -131,7 +131,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
             return false;
         }
 
-        $rows = $this->webPageMapper->fetchAll($langId);
+        $rows = $this->webPageMapper->fetchAll(array(), $langId);
         $result = array();
 
         // Append home URL first
@@ -230,11 +230,12 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     /**
      * Fetch all web page records
      * 
+     * @param array $excludedModules
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll(array $excludedModules)
     {
-        return $this->webPageMapper->fetchAll();
+        return $this->webPageMapper->fetchAll($excludedModules);
     }
 
     /**

@@ -101,9 +101,10 @@ interface WebPageManagerInterface
     /**
      * Fetch all web page records
      * 
+     * @param array $excludedModules
      * @return array
      */
-    public function fetchAll();
+    public function fetchAll(array $excludedModules);
 
     /**
      * Fetches slug by target id (Target id is id which supplies to framework controllers by dispatcher)

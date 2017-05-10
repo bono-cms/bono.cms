@@ -66,16 +66,25 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
     /**
      * Fetches all web pages
      * 
+     * @param array $excludedModules Modules to be ignored
      * @param string $langId Optional language id
      * @return array
      */
-    public function fetchAll($langId = null)
+    public function fetchAll(array $excludedModules = array(), $langId = null)
     {
         if (is_null($langId)) {
             $langId = $this->getLangId();
         }
 
-        return $this->findAllByColumn('lang_id', $langId);
+        $db = $this->db->select('*')
+                       ->from(self::getTableName())
+                       ->whereEquals('lang_id', $langId);
+
+        if (!empty($excludedModules)) {
+            $db->andWhereNotIn('module', $excludedModules);
+        }
+
+        return $db->queryAll();
     }
 
     /**
