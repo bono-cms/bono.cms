@@ -83,19 +83,14 @@ final class HistoryManager extends AbstractManager implements HistoryManagerInte
     {
         // Do write in case enabled, otherwise ignore
         if ($this->isEnabled()) {
-
-            $data = array(
+            return $this->historyMapper->insert(array(
                 'timestamp' => time(),
-                'user_id' => $this->userId,
+                'user_id' => (int) $this->userId,
                 'module' => $module,
                 'comment' => $comment,
                 'placeholder' => $placeholder
-            );
-            
-            return $this->historyMapper->insert($data);
-            
+            ));
         } else {
-        
             return true;
         }
     }
