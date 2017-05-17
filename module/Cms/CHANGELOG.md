@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `Users` and `Languages` grids added a counter
  * `WebPageManager::surround()` is now aware of base domain name
  * `WebPageManager::fetchAll()` can not exclude modules from result-set
  * Fixed issue with quote escaping in dashboard for description keys

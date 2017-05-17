@@ -1,5 +1,5 @@
 <?php defined('KRYSTAL') or die; ?>
-<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Users'); ?> </h4>
+<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Users'); ?> <small>(<?php echo count($users); ?>)</small></h4>
 
 <form>
 	<div class="table-responsive">
@@ -30,18 +30,16 @@
 				<?php endforeach; ?>
 			</tbody>
 			<?php endif; ?>
-			
 		</table>
-		
+
 		<?php if (empty($users)): ?>
 		<div class="center-block">
 			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No users'); ?></h2>
 		</div>
 		<?php endif; ?>
 
-		<div class="pull-left">
-			<a class="btn btn-primary btn-sm" href="<?php echo $this->url('Cms:Admin:Users@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add new user'); ?></a>
+        <div class="pull-left">
+            <a class="btn btn-primary btn-sm" href="<?php echo $this->url('Cms:Admin:Users@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add new user'); ?></a>
 		</div>
-		
 	</div>
 </form>
