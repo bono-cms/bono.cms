@@ -53,6 +53,8 @@ final class Module extends AbstractCmsModule
      */
     public function getServiceProviders()
     {
+        $baseUrl = $this->getServiceLocator()->get('request')->getBaseUrl();
+
         // Cookie storage
         $storage = $this->getServiceLocator()->get('request')->getCookieBag();
 
@@ -77,14 +79,13 @@ final class Module extends AbstractCmsModule
         $webPageMapper = $mapperFactory->build('/Cms/Storage/MySQL/WebPageMapper');
         $webPageMapper->setLangId($languageManager->getCurrentId());
 
-        $webPageManager = new WebPageManager($webPageMapper, $languageMapper, new SlugGenerator());
+        $webPageManager = new WebPageManager($webPageMapper, $languageMapper, new SlugGenerator(), $baseUrl);
         $notificationManager = new NotificationManager($notificationMapper);
 
         $userManager = new UserManager($userMapper, $authManager);
         $authManager->setAuthService($userManager);
 
         return array(
-
             'mailer' => new Mailer($notificationManager, $config->getEntity()),
             'configManager' => $config,
             'webPageManager' => $webPageManager,

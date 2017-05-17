@@ -40,18 +40,27 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     private $slugGenerator;
 
     /**
+     * Base URL to be prepended when generating URL
+     * 
+     * @var string
+     */
+    private $baseUrl;
+
+    /**
      * State initialization
      * 
      * @param \Cms\Storage\WebPageMapperInterface $webPageMapper
      * @param \Cms\Storage\LanguageMapperInterface $languageMapper
      * @param \Krystal\Text\SlugGenerator $slugGenerator
+     * @param string $baseUrl
      * @return void
      */
-    public function __construct(WebPageMapperInterface $webPageMapper, LanguageMapperInterface $languageMapper, SlugGenerator $slugGenerator)
+    public function __construct(WebPageMapperInterface $webPageMapper, LanguageMapperInterface $languageMapper, SlugGenerator $slugGenerator, $baseUrl)
     {
         $this->webPageMapper = $webPageMapper;
         $this->languageMapper = $languageMapper;
         $this->slugGenerator = $slugGenerator;
+        $this->baseUrl = $baseUrl;
     }
 
     /**
@@ -170,12 +179,12 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
             if (count($languages) > 1) {
                 foreach ($languages as $language) {
                     if ($language['id'] == $langId) {
-                        return sprintf('/%s/%s/', $language['code'], $slug);
+                        return sprintf('%s/%s/%s/', $this->baseUrl, $language['code'], $slug);
                     }
                 }
 
             } else {
-                return sprintf('/%s/', $slug);
+                return sprintf('%s/%s/', $this->baseUrl, $slug);
             }
 
         } else {

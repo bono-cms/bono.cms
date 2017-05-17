@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * `WebPageManager::surround()` is now aware of base domain name
  * `WebPageManager::fetchAll()` can not exclude modules from result-set
  * Fixed issue with quote escaping in dashboard for description keys
  * Fixed issue with uniqueness validation regarding email and login when creating users
