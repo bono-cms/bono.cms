@@ -36,10 +36,11 @@ final class Dashboard extends AbstractController
         $this->view->getBreadcrumbBag()
                    ->clear();
 
-        return $this->view->render('dashboard', array_merge($this->getItems(), array(
+        return $this->view->render('dashboard', array(
+            'utilites' => $this->getItems(),
             'title' => 'Control panel',
             'notifications' => $this->getService('Cms', 'notificationManager')->getUnviewedCount(),
-        )));
+        ));
     }
 
     /**
@@ -49,18 +50,7 @@ final class Dashboard extends AbstractController
      */
     private function getItems()
     {
-        $modules = array();
         $utilites = array();
-        $current = $this->moduleManager->getLoadedModules();
-
-        foreach ($current as $module) {
-            if ($module->hasConfig()) {
-                $modules[] = $module->getConfig();
-            }
-        }
-
-        array_multisort($modules, \SORT_NUMERIC);
-
         $path = dirname(dirname(__DIR__));
         $basicItems = include($path . '/Config/dashboard.items.php');
 
@@ -71,10 +61,7 @@ final class Dashboard extends AbstractController
             $utilites = $basicItems;
         }
 
-        return array(
-            'modules' => $modules,
-            'utilites' => $utilites
-        );
+        return $utilites;
     }
 
     /**

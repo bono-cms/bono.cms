@@ -53,11 +53,30 @@
 		</li>
         <!-- Debug -->
         <?php endif; ?>
-      
+
+        <?php if (!empty($bookmarks)): ?>
+		<!--Bookmarks-->
+		<li class="dropdown">
+		  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="bookmarks"><i class="glyphicon glyphicon-star"></i> <?php $this->show('Bookmarks'); ?><span class="caret"></span></a>
+          <ul class="dropdown-menu" aria-labelledby="bookmarks">
+            <?php foreach ($bookmarks as $name => $bookmark): ?>
+			<li class="dropdown-header"><?php $this->show($name); ?></li>
+
+            <?php foreach ($bookmark as $item): ?>
+            <li><a href="<?php echo $this->url($item['controller']); ?>"><i class="<?php echo $item['icon']; ?>"></i>  <?php $this->show($item['name']); ?></a></li>
+            <?php endforeach; ?>
+
+            <?php endforeach; ?>
+		  </ul>
+		</li>
+		<!--/Bookmarks-->
+        <?php endif; ?>
+          
+          
 		<!--System-->
 		<li class="dropdown">
 		  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="system"><i class="glyphicon glyphicon-align-left"></i> <?php $this->show('System'); ?><span class="caret"></span></a>
-		  <ul class="dropdown-menu" aria-labelledby="system">
+          <ul class="dropdown-menu" aria-labelledby="system">
 			 <li><a href="/" target="_blank"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Open a site'); ?></a></li>
 			 <li><a data-button="logout" href="<?php echo $this->url('Cms:Admin:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-remove-circle"></i> <?php $this->show('Logout'); ?></a></li>
 			 <li><a href="#" data-button="refresh"><i class="glyphicon glyphicon-refresh"></i> <?php $this->show('Refresh'); ?></a></li>

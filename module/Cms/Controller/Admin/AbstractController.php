@@ -70,6 +70,45 @@ abstract class AbstractController extends AbstractAuthAwareController
     }
 
     /**
+     * Extra bookmarks from modules configuration
+     * 
+     * @param array $modulesConfiguration
+     * @return array
+     */
+    private function createBookmarks(array $modulesConfiguration)
+    {
+        $output = array();
+
+        foreach ($modulesConfiguration as $module) {
+            if (isset($module['bookmarks'])) {
+                $output[$module['name']] = $module['bookmarks'];
+            }
+        }
+
+        return $output;
+    }
+
+    /**
+     * Returns a collection of modules configuration
+     * 
+     * @return array
+     */
+    private function getModulesConfiguration()
+    {
+        $modules = array();
+        $current = $this->moduleManager->getLoadedModules();
+
+        foreach ($current as $module) {
+            if ($module->hasConfig()) {
+                $modules[] = $module->getConfig();
+            }
+        }
+
+        array_multisort($modules, \SORT_NUMERIC);
+        return $modules;
+    }
+
+    /**
      * Disables language checking
      * 
      * @return void
@@ -262,6 +301,8 @@ abstract class AbstractController extends AbstractAuthAwareController
             die($this->translator->translate("Error: You must have at least one published system's language for a content"));
         }
 
+        $modulesConfiguration = $this->getModulesConfiguration();
+
         // Shared variables for all templates
         $this->view->addVariables(array(
             'appConfig' => $this->appConfig,
@@ -271,7 +312,9 @@ abstract class AbstractController extends AbstractAuthAwareController
             'languages' => $contentLanguages,
             'currentLanguage' => $languageManager->fetchByCurrentId(),
             'ppc' => $this->getPerPageCountGadget(),
-            'queryLogger' => $this->db['mysql']->getQueryLogger()
+            'queryLogger' => $this->db['mysql']->getQueryLogger(),
+            'bookmarks' => $this->createBookmarks($modulesConfiguration),
+            'modulesConfiguration' => $modulesConfiguration
         ));
 
         $this->view->getPluginBag()->load(array(
