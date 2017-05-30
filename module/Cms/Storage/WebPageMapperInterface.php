@@ -14,6 +14,14 @@ namespace Cms\Storage;
 interface WebPageMapperInterface
 {
     /**
+     * Find links with their corresponding names
+     * 
+     * @param array $target A collection of tableName => aliasName
+     * @return array
+     */
+    public function findAllLinks(array $target);
+
+    /**
      * Checks whether slug already exists
      * 
      * @param string $slug

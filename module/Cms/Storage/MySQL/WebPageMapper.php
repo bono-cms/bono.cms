@@ -13,6 +13,7 @@ namespace Cms\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Cms\Storage\WebPageMapperInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class WebPageMapper extends AbstractMapper implements WebPageMapperInterface
 {
@@ -22,6 +23,44 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
     public static function getTableName()
     {
         return self::getWithPrefix('bono_module_cms_webpages');
+    }
+
+    /**
+     * Find links with their corresponding names
+     * 
+     * @param array $target A collection of tableName => aliasName
+     * @return array
+     */
+    public function findAllLinks(array $target)
+    {
+        // Default columns to be selected
+        $defaults = array(
+            self::getFullColumnName('id'),
+            self::getFullColumnName('module')
+        );
+
+        $columns = array();
+
+        // Append static column name
+        foreach ($target as $table => $alias) {
+            $columns[sprintf('%s.name', $table)] = sprintf('`%s`', $alias);
+        }
+
+        $db = $this->db->select(array_merge($defaults, $columns))
+                       ->from(self::getTableName());
+
+        // Append relations from dynamic tables
+        foreach (array_keys($target) as $table) {
+            $db->leftJoin($table)
+               ->on()
+               ->equals(sprintf('%s.web_page_id', $table), new RawSqlFragment(self::getFullColumnName('id')));
+        }
+
+        // Filter by language ID
+        $db->whereEquals(self::getFullColumnName('lang_id'), $this->getLangId())
+           ->andWhereIn(self::getFullColumnName('module'), array_values($target));
+
+        return $db->queryAll();
     }
 
     /**
