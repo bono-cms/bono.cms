@@ -15,6 +15,7 @@ use Cms\Storage\WebPageMapperInterface;
 use Cms\Storage\LanguageMapperInterface;
 use Krystal\Text\SlugGenerator;
 use Krystal\Application\Module\ModuleManagerInterface;
+use Krystal\Stdlib\ArrayUtils;
 
 final class WebPageManager extends AbstractManager implements WebPageManagerInterface
 {
@@ -61,6 +62,36 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         $this->languageMapper = $languageMapper;
         $this->slugGenerator = $slugGenerator;
         $this->baseUrl = $baseUrl;
+    }
+
+    /**
+     * Find and process all links
+     * 
+     * @param array $target A collection of table names and associated module
+     * @return array
+     */
+    public function findAllLinks(array $target)
+    {
+        // Visitor
+        $callback = function($row){
+            $output = array();
+
+            foreach ($row as $column => $value) {
+                // Append only if non-empty value found
+                if (!empty($value)) {
+                    // Normalize column name
+                    if (!in_array($column, array('id', 'module'))) {
+                        $column = 'title';
+                    }
+
+                    $output[$column] = $value;
+                }
+            }
+
+            return $output;
+        };
+
+        return ArrayUtils::filterArray($this->webPageMapper->findAllLinks($target), $callback);
     }
 
     /**

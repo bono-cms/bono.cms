@@ -16,6 +16,14 @@ use Krystal\Application\Module\ModuleManagerInterface;
 interface WebPageManagerInterface
 {
     /**
+     * Find and process all links
+     * 
+     * @param array $target A collection of table names and associated module
+     * @return array
+     */
+    public function findAllLinks(array $target);
+
+    /**
      * An alias for self::getUrlByWebPageId()
      * 
      * @param string $webPageId
