@@ -16,12 +16,12 @@ use Krystal\Application\Module\ModuleManagerInterface;
 interface WebPageManagerInterface
 {
     /**
-     * Find and process all links
+     * Extract links from registered namespaces
      * 
-     * @param array $target A collection of table names and associated module
+     * @param array $namespaces
      * @return array
      */
-    public function findAllLinks(array $target);
+    public function createPrettyLinks(array $namespaces);
 
     /**
      * An alias for self::getUrlByWebPageId()

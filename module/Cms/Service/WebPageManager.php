@@ -65,12 +65,34 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     }
 
     /**
+     * Extract links from registered namespaces
+     * 
+     * @param array $namespaces
+     * @return array
+     */
+    public function createPrettyLinks(array $namespaces)
+    {
+        $collection = array();
+
+        // Filter by loaded mappers
+        foreach ($namespaces as $namespace => $caption) {
+            // Add only loaded mappers
+            if (class_exists($namespace)) {
+                $collection[$namespace::getTableName()] = $caption;
+            }
+        }
+
+        $raw = $this->findAllLinks($collection);
+        return ArrayUtils::arrayDropdown($raw, 'module', 'id', 'title');
+    }
+
+    /**
      * Find and process all links
      * 
      * @param array $target A collection of table names and associated module
      * @return array
      */
-    public function findAllLinks(array $target)
+    private function findAllLinks(array $target)
     {
         // Visitor
         $callback = function($row){
