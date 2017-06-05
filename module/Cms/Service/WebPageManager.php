@@ -205,7 +205,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
             // Append only from active (loaded) modules
             if ($moduleManager->isLoaded($module)) {
                 // Build the URL first
-                $url = $base . $this->surround($row['slug'], $row['lang_id']);
+                $url = $this->surround($row['slug'], $row['lang_id']);
                 // Now make sure all special characters are escaped
                 $url = htmlspecialchars($url, \ENT_QUOTES, 'UTF-8');
 
@@ -285,19 +285,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
      */
     public function fetchById($id)
     {
-        $this->findPksByModule('Shop');
         return $this->webPageMapper->fetchById($id);
-    }
-
-    /**
-     * Fetch all web page records
-     * 
-     * @param array $excludedModules
-     * @return array
-     */
-    public function fetchAll(array $excludedModules)
-    {
-        return $this->webPageMapper->fetchAll($excludedModules);
     }
 
     /**
@@ -340,7 +328,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         $module - $this->cleanModuleName($module);
         $result = array();
 
-        foreach ($this->fetchAll() as $record) {
+        foreach ($this->webPageMapper->fetchAll() as $record) {
             if ($this->cleanModuleName($record['module']) == $module) {
                 $result[] = $record['id'];
             }
