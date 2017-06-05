@@ -154,10 +154,6 @@ main {
  -khtml-border-radius : 18px;
 }
 
-.fa {
-  color: #444444;
-}
-
 a > i {
  transition: opacity .7s;
  -webkit-transition: opacity .7s;
