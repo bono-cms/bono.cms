@@ -62,6 +62,26 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Finds entity in collection by associated language ID
+     * 
+     * @param string $languageId
+     * @param mixed $entity
+     * @return mixed
+     */
+    public static function findByLangId($languageId, $entity)
+    {
+        if (is_object($entity)) {
+            return $entity;
+        }
+
+        foreach ($entity as $translation) {
+            if ($translation->getLangId() == $languageId){
+                return $translation;
+            }
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function toEntity(array $language)
