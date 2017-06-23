@@ -23,6 +23,17 @@ abstract class AbstractMapper extends BaseMapper
      */
     protected $language;
 
+    /* Shared column names */
+    const PARAM_COLUMN_ID = 'id';
+    const PARAM_COLUMN_LANG_ID = 'lang_id';
+    const PARAM_COLUMN_WEB_PAGE_ID = 'web_page_id';
+    const PARAM_COLUMN_TARGET_ID = 'target_id';
+    const PARAM_COLUMN_TITLE = 'title';
+    const PARAM_COLUMN_NAME = 'name';
+    const PARAM_COLUMN_SLUG = 'slug';
+    const PARAM_COLUMN_CONTROLLER = 'controller';
+    const PARAM_COLUMN_MODULE = 'module';
+
     /**
      * Prepare translation
      * 
@@ -32,20 +43,21 @@ abstract class AbstractMapper extends BaseMapper
     private function prepareTranslation(array $translation)
     {
         // Take empty title from name
-        if (empty($translation['title'])) {
-            $translation['title'] = $translation['name'];
+        if (empty($translation[self::PARAM_COLUMN_TITLE])) {
+            $translation[self::PARAM_COLUMN_TITLE] = $translation[self::PARAM_COLUMN_NAME];
         }
 
         // Empty slug is taken from name
-        if (empty($translation['slug'])) {
-            $translation['slug'] = $translation['name'];
+        if (empty($translation[self::PARAM_COLUMN_SLUG])) {
+            $translation[self::PARAM_COLUMN_SLUG] = $translation[self::PARAM_COLUMN_NAME];
         }
 
-        $translation['slug'] = TextUtils::sluggify($translation['slug']);
+        $translation[self::PARAM_COLUMN_SLUG] = TextUtils::sluggify($translation[self::PARAM_COLUMN_SLUG]);
 
-        $translation['id'] = (int) $translation['id'];
-        $translation['lang_id'] = (int) $translation['lang_id'];
-        $translation['web_page_id'] = (int) $translation['web_page_id'];
+        // Safe type casting
+        $translation[self::PARAM_COLUMN_ID] = (int) $translation[self::PARAM_COLUMN_ID];
+        $translation[self::PARAM_COLUMN_LANG_ID] = (int) $translation[self::PARAM_COLUMN_LANG_ID];
+        $translation[self::PARAM_COLUMN_WEB_PAGE_ID] = (int) $translation[self::PARAM_COLUMN_WEB_PAGE_ID];
 
         return $translation;
     }
@@ -60,10 +72,10 @@ abstract class AbstractMapper extends BaseMapper
     private function translationExists($id, $languageId)
     {
         $count = $this->db->select()
-                          ->count('id')
+                          ->count(self::PARAM_COLUMN_ID)
                           ->from(static::getTranslationTable())
-                          ->whereEquals('id', $id)
-                          ->andWhereEquals('lang_id', $languageId)
+                          ->whereEquals(self::PARAM_COLUMN_ID, $id)
+                          ->andWhereEquals(self::PARAM_COLUMN_LANG_ID, $languageId)
                           ->queryScalar();
 
         return intval($count) > 0;
@@ -81,23 +93,22 @@ abstract class AbstractMapper extends BaseMapper
     {
         // Web page data
         $webPage = array(
-            'lang_id' => (int) $translation['lang_id'],
-            'target_id' => (int) $translation['id'],
-            'module' => $module,
-            'controller' => $controller,
-            'slug' => $translation['slug']
+            self::PARAM_COLUMN_LANG_ID => (int) $translation[self::PARAM_COLUMN_LANG_ID],
+            self::PARAM_COLUMN_TARGET_ID => (int) $translation[self::PARAM_COLUMN_ID],
+            self::PARAM_COLUMN_MODULE => $module,
+            self::PARAM_COLUMN_CONTROLLER => $controller,
+            self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG]
         );
 
         // Add web page entry
         $this->db->insert(WebPageMapper::getTableName(), $webPage)
                  ->execute();
 
-        $webPageId = $this->getLastPk(WebPageMapper::getTableName());
-
-        $translation['web_page_id'] = (int) $webPageId;
+        // Append a web page
+        $translation[self::PARAM_COLUMN_WEB_PAGE_ID] = (int) $this->getLastPk(WebPageMapper::getTableName());
 
         // Slug is not stored in translations
-        unset($translation['slug']);
+        unset($translation[self::PARAM_COLUMN_SLUG]);
 
         // Add entity translation
         $this->db->insert(static::getTranslationTable(), $translation)
@@ -115,17 +126,17 @@ abstract class AbstractMapper extends BaseMapper
     private function updateTranslation(array $translation)
     {
         // Update web page
-        $this->db->update(WebPageMapper::getTableName(), array('slug' => $translation['slug']))
-                 ->whereEquals('id', $translation['web_page_id'])
+        $this->db->update(WebPageMapper::getTableName(), array(self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG]))
+                 ->whereEquals(self::PARAM_COLUMN_ID, $translation[self::PARAM_COLUMN_WEB_PAGE_ID])
                  ->execute();
-        
+
         // Slug is not stored in translation table
-        unset($translation['slug']);
+        unset($translation[self::PARAM_COLUMN_SLUG]);
 
         // Update translations
         $this->db->update(static::getTranslationTable(), $translation)
-                 ->whereEquals('id', $translation['id'])
-                 ->andWhereEquals('lang_id', $translation['lang_id'])
+                 ->whereEquals(self::PARAM_COLUMN_ID, $translation[self::PARAM_COLUMN_ID])
+                 ->andWhereEquals(self::PARAM_COLUMN_LANG_ID, $translation[self::PARAM_COLUMN_LANG_ID])
                  ->execute();
 
         return true;
@@ -144,7 +155,7 @@ abstract class AbstractMapper extends BaseMapper
     {
         // Update entity
         $this->db->update(static::getTableName(), $options)
-                 ->whereEquals('id', $options['id'])
+                 ->whereEquals(self::PARAM_COLUMN_ID, $options[self::PARAM_COLUMN_ID])
                  ->execute();
 
         // Process translations
@@ -152,7 +163,7 @@ abstract class AbstractMapper extends BaseMapper
             $translation = $this->prepareTranslation($translation);
 
             // Is there a translation for current entity ID and its attached language ID?
-            if ($this->translationExists($translation['id'], $translation['lang_id'])) {
+            if ($this->translationExists($translation[self::PARAM_COLUMN_ID], $translation[self::PARAM_COLUMN_LANG_ID])) {
                 // If exists, then update it
                 $this->updateTranslation($translation);
             } else {
@@ -187,8 +198,8 @@ abstract class AbstractMapper extends BaseMapper
             $translation = $this->prepareTranslation($translation);
 
             // Append relational keys
-            $translation['id'] = (int) $id;
-            $translation['lang_id'] = (int) $languageId;
+            $translation[self::PARAM_COLUMN_ID] = (int) $id;
+            $translation[self::PARAM_COLUMN_LANG_ID] = (int) $languageId;
 
             $this->insertTranslation($module, $controller, $translation);
         }
