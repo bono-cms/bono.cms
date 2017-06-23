@@ -35,7 +35,7 @@ abstract class AbstractMapper extends BaseMapper
     const PARAM_COLUMN_MODULE = 'module';
 
     /**
-     * Prepare translation
+     * Prepare translation before inserting or updating
      * 
      * @param array $translation
      * @return array
@@ -163,7 +163,7 @@ abstract class AbstractMapper extends BaseMapper
     }
 
     /**
-     * Insert/update a translation
+     * Updates a page with translations and slug
      * 
      * @param string $module Module name
      * @param string $controller Framework-compliant controller name
