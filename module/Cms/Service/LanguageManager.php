@@ -74,11 +74,18 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
             return $entity;
         }
 
+        // Find attached entity
         foreach ($entity as $translation) {
             if ($translation->getLangId() == $languageId){
                 return $translation;
             }
         }
+
+        // If couldn't find a related entity, then return a dummy one
+        $dummy = new VirtualEntity();
+        $dummy->setId($entity[0]->getId());
+
+        return $dummy;
     }
 
     /**
