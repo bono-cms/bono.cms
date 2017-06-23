@@ -143,6 +143,26 @@ abstract class AbstractMapper extends BaseMapper
     }
 
     /**
+     * Inserts or updates page
+     * 
+     * @param string $module Module name
+     * @param string $controller Framework-compliant controller name
+     * @param array $options Entity options
+     * @param array $translation Entity translations
+     * @return boolean
+     */
+    final public function savePage($module, $controller, array $options, array $translations)
+    {
+        if (!empty($options[self::PARAM_COLUMN_ID])) {
+            return $this->updatePage($module, $controller, $options, $translations);
+        } else {
+            // ID is incremented automatically, so no need to insert it
+            unset($options[self::PARAM_COLUMN_ID]);
+            return $this->insertPage($module, $controller, $options, $translations);
+        }
+    }
+
+    /**
      * Insert/update a translation
      * 
      * @param string $module Module name
