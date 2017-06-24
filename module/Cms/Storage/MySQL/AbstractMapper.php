@@ -12,7 +12,9 @@
 namespace Cms\Storage\MySQL;
 
 use Krystal\Db\Sql\AbstractMapper as BaseMapper;
+use Krystal\Db\Sql\RawSqlFragment;
 use Krystal\Text\TextUtils;
+use Krystal\Stdlib\VirtualEntity;
 
 abstract class AbstractMapper extends BaseMapper
 {
@@ -33,6 +35,76 @@ abstract class AbstractMapper extends BaseMapper
     const PARAM_COLUMN_SLUG = 'slug';
     const PARAM_COLUMN_CONTROLLER = 'controller';
     const PARAM_COLUMN_MODULE = 'module';
+
+    /**
+     * Find switching URLs
+     * 
+     * @param string $id Entity ID
+     * @param string $module
+     * @param string $controller
+     * @return array
+     */
+    final public function createSwitchUrls($id, $module, $controller)
+    {
+        $output = array();
+
+        $urls  = $this->findSwitchUrls($id, $module, $controller);
+        $count = count($urls);
+
+        foreach ($urls as $url) {
+            if ($count > 1) {
+                $switchUrl = sprintf('/%s/%s/', $url['code'], $url['slug']);
+            } else {
+                $switchUrl = sprintf('/%s/', $url['slug']);
+            }
+
+            $entity = new VirtualEntity();
+            $entity->setName($url['name'])
+                   ->setCode($url['code'])
+                   ->setFlag($url['flag'])
+                   ->setSwitchUrl($switchUrl)
+                   ->setActive($this->getLangId() == $url[self::PARAM_COLUMN_ID]);
+
+            $output[] = $entity;
+        }
+
+        return $output;
+    }
+
+    /**
+     * Find switching URLs
+     * 
+     * @param string $id Entity ID
+     * @param string $module
+     * @param string $controller
+     * @return array
+     */
+    private function findSwitchUrls($id, $module, $controller)
+    {
+        // Columns to be selected
+        $columns = array(
+            LanguageMapper::getFullColumnName(self::PARAM_COLUMN_ID),
+            LanguageMapper::getFullColumnName(self::PARAM_COLUMN_NAME),
+            LanguageMapper::getFullColumnName('code'),
+            LanguageMapper::getFullColumnName('flag'),
+            WebPageMapper::getFullColumnName(self::PARAM_COLUMN_SLUG)
+        );
+
+        return $this->db->select($columns)
+                        ->from(WebPageMapper::getTableName())
+                        ->innerJoin(LanguageMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            LanguageMapper::getFullColumnName(self::PARAM_COLUMN_ID), 
+                            new RawSqlFragment(WebPageMapper::getFullColumnName(self::PARAM_COLUMN_LANG_ID))
+                        )
+                        // Filter by these constraints
+                        ->whereEquals(self::PARAM_COLUMN_TARGET_ID, $id)
+                        ->andWhereEquals(self::PARAM_COLUMN_MODULE, $module)
+                        ->andWhereEquals(self::PARAM_COLUMN_CONTROLLER, $controller)
+                        ->andWhereEquals(LanguageMapper::getFullColumnName('published'), new RawSqlFragment('1'))
+                        ->queryAll();
+    }
 
     /**
      * Prepare translation before inserting or updating
