@@ -215,6 +215,46 @@ abstract class AbstractMapper extends BaseMapper
     }
 
     /**
+     * Delete a page completely
+     * 
+     * @param string|array $id
+     * @return bolean
+     */
+    final public function deletePage($id)
+    {
+        if (!is_array($id)) {
+            $id = array($id);
+        }
+
+        $tables = array(
+            static::getTableName(),
+            static::getTranslationTable(),
+            WebPageMapper::getTableName()
+        );
+
+        // Delete entity with all its relational data
+        return $this->db->delete($tables)
+                     ->from(static::getTableName())
+                     // Translation relation
+                     ->innerJoin(static::getTranslationTable())
+                     ->on()
+                     ->equals(
+                        static::getFullColumnName(self::PARAM_COLUMN_ID), 
+                        new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+                     )
+                     // Web page relation
+                     ->innerJoin(WebPageMapper::getTableName())
+                     ->on()
+                     ->equals(
+                        WebPageMapper::getFullColumnName(self::PARAM_COLUMN_ID), 
+                        new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable()))
+                     )
+                     // Current ID
+                     ->whereIn(static::getFullColumnName(self::PARAM_COLUMN_ID), $id)
+                     ->execute();
+    }
+
+    /**
      * Inserts or updates page
      * 
      * @param string $module Module name
