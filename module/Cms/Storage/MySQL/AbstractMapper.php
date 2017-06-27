@@ -37,6 +37,58 @@ abstract class AbstractMapper extends BaseMapper
     const PARAM_COLUMN_MODULE = 'module';
 
     /**
+     * Finds a web page
+     * 
+     * @param array $columns Columns to be selected
+     * @param string $id Entity ID
+     * @param boolean $withTranslations Whether to fetch all translations or not
+     * @return array
+     */
+    final protected function findWebPage(array $columns, $id, $withTranslations)
+    {
+        $db = $this->createWebPageSelect($columns)
+                   ->whereEquals(self::getFullColumnName(self::PARAM_COLUMN_ID), $id);
+
+        if ($withTranslations === true) {
+            return $db->queryAll();
+        } else {
+            return $db->andWhereEquals(self::getFullColumnName(self::PARAM_COLUMN_LANG_ID, self::getTranslationTable()), $this->getLangId())
+                      ->query();
+        }
+    }
+
+    /**
+     * Creates shared web page select
+     * 
+     * @param array $columns Columns to be selected
+     * @return \Krystal\Db\Db
+     */
+    final protected function createWebPageSelect(array $columns)
+    {
+        return $this->db->select($columns)
+                       ->from(static::getTableName())
+                       // Translation relation
+                       ->innerJoin(static::getTranslationTable())
+                       ->on()
+                       ->equals(
+                            static::getFullColumnName(self::PARAM_COLUMN_ID), 
+                            new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+                        )
+                        // Web page relation
+                        ->innerJoin(WebPageMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            WebPageMapper::getFullColumnName(self::PARAM_COLUMN_ID),
+                            new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable()))
+                        )
+                        ->rawAnd()
+                        ->equals(
+                            WebPageMapper::getFullColumnName(self::PARAM_COLUMN_LANG_ID),
+                            new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()))
+                        );
+    }
+
+    /**
      * Find switching URLs
      * 
      * @param string $id Entity ID
