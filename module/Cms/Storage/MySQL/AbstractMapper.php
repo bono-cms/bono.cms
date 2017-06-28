@@ -52,7 +52,7 @@ abstract class AbstractMapper extends BaseMapper
         if ($withTranslations === true) {
             return $db->queryAll();
         } else {
-            return $db->andWhereEquals(self::getFullColumnName(self::PARAM_COLUMN_LANG_ID, self::getTranslationTable()), $this->getLangId())
+            return $db->andWhereEquals(self::getFullColumnName(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $this->getLangId())
                       ->query();
         }
     }
