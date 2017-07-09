@@ -78,7 +78,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         foreach ($namespaces as $namespace => $caption) {
             // Add only loaded mappers
             if (class_exists($namespace)) {
-                $collection[$namespace::getTableName()] = $caption;
+                $collection[$namespace::getTranslationTable()] = $caption;
             }
         }
 
