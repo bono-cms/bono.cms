@@ -61,21 +61,26 @@ abstract class AbstractMapper extends BaseMapper
      * Creates shared web page select
      * 
      * @param array $columns Columns to be selected
+     * @param string $table Table name in case needs to be overridden
      * @return \Krystal\Db\Db
      */
-    final protected function createWebPageSelect(array $columns)
+    final protected function createWebPageSelect(array $columns, $table = null)
     {
+        if ($table === null) {
+            $table = static::getTableName();
+        }
+
         return $this->db->select($columns)
-                       ->from(static::getTableName())
+                       ->from($table)
                        // Translation relation
-                       ->innerJoin(static::getTranslationTable())
+                       ->leftJoin(static::getTranslationTable())
                        ->on()
                        ->equals(
                             static::getFullColumnName(self::PARAM_COLUMN_ID), 
                             new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_ID, static::getTranslationTable()))
                         )
                         // Web page relation
-                        ->innerJoin(WebPageMapper::getTableName())
+                        ->leftJoin(WebPageMapper::getTableName())
                         ->on()
                         ->equals(
                             WebPageMapper::getFullColumnName(self::PARAM_COLUMN_ID),
@@ -260,7 +265,7 @@ abstract class AbstractMapper extends BaseMapper
         // Update translations
         $this->db->update(static::getTranslationTable(), $translation)
                  ->whereEquals(self::PARAM_COLUMN_ID, $translation[self::PARAM_COLUMN_ID])
-                 ->andWhereEquals(self::PARAM_COLUMN_LANG_ID, $translation[self::PARAM_COLUMN_LANG_ID])
+                 ->andWhereEquals(self::PARAM_COLUMN_LANG_ID, (int) $translation[self::PARAM_COLUMN_LANG_ID])
                  ->execute();
 
         return true;

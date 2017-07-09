@@ -53,7 +53,10 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
         foreach (array_keys($target) as $table) {
             $db->leftJoin($table)
                ->on()
-               ->equals(sprintf('%s.web_page_id', $table), new RawSqlFragment(self::getFullColumnName('id')));
+               ->equals(
+                    sprintf('%s.web_page_id', $table), 
+                    new RawSqlFragment(self::getFullColumnName('id'))
+                );
         }
 
         // Filter by language ID
