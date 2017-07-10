@@ -58,10 +58,13 @@ abstract class AbstractMapper extends BaseMapper
                      ->execute();
         }
 
+        // Last entity ID
+        $id = (int) $this->getLastId();
+
         // Now handle translations
         foreach ($translations as $translation) {
             // Safe type casting
-            $translation[self::PARAM_COLUMN_ID] = (int) $this->getLastId();
+            $translation[self::PARAM_COLUMN_ID] = $id;
             $translation[self::PARAM_COLUMN_LANG_ID] = (int) $translation[self::PARAM_COLUMN_LANG_ID];
 
             if ($this->translationExists($translation[self::PARAM_COLUMN_ID], $translation[self::PARAM_COLUMN_LANG_ID])) {
