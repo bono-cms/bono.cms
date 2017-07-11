@@ -46,6 +46,8 @@ abstract class AbstractMapper extends BaseMapper
     final public function saveEntity(array $options, array $translations)
     {
         if (!empty($options[self::PARAM_COLUMN_ID])) {
+            $id = (int) $options[self::PARAM_COLUMN_ID];
+
             // Update entity
             $this->db->update(static::getTableName(), $options)
                      ->whereEquals(self::PARAM_COLUMN_ID, $options[self::PARAM_COLUMN_ID])
@@ -53,13 +55,14 @@ abstract class AbstractMapper extends BaseMapper
         } else {
             // ID is incremented automatically, so no need to insert it
             unset($options[self::PARAM_COLUMN_ID]);
+
             // Add entity configuration
             $this->db->insert(static::getTableName(), $options)
                      ->execute();
-        }
 
-        // Last entity ID
-        $id = (int) $this->getLastId();
+            // Last entity ID
+            $id = (int) $this->getLastId();
+        }
 
         // Now handle translations
         foreach ($translations as $translation) {
