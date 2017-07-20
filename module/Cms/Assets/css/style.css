@@ -13,6 +13,10 @@ select[data-button='per-page-changer'] {
  color: #929292;
 }
 
+.modal-backdrop {
+ z-index: -1;
+}
+
 body {
  overflow-x: hidden;
 }
@@ -168,6 +172,7 @@ a > i:hover, a > i:focus {
 ul.breadcrumb {
  margin-bottom: 19px;
  background-color: transparent;
+ border: none;
 }
 
 textarea {

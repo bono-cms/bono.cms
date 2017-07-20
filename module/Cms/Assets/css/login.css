@@ -12,6 +12,10 @@ body {
   background-color: #eee;
 }
 
+.modal-backdrop {
+ z-index: -1;
+}
+
 div.captcha-container {
  background-color: white;
  width: 305px;
