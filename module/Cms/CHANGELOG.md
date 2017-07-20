@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Updated administration theme to Yeti
  * Added support for bookmarks
  * In `Users` and `Languages` grids added a counter
  * `WebPageManager::surround()` is now aware of base domain name

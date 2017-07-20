@@ -123,7 +123,7 @@ return array(
 		
 		'bootstrap.cosmo' => array(
 			'stylesheets' => array(
-				'@Site/plugins/bootstrap/css/cosmo.min.css',
+                '@Site/plugins/bootstrap/css/yeti.min.css',
 			)
 		),
 		
