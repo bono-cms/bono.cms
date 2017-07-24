@@ -37,6 +37,61 @@ abstract class AbstractMapper extends BaseMapper
     const PARAM_COLUMN_MODULE = 'module';
 
     /**
+     * Fetches web page's slug by its associated id
+     * 
+     * @param string $webPageId
+     * @return string
+     */
+    private function fetchSlugByWebPageId($webPageId)
+    {
+        return $this->db->select(self::PARAM_COLUMN_SLUG)
+                        ->from(WebPageMapper::getTableName())
+                        ->whereEquals(self::PARAM_COLUMN_ID, $webPageId)
+                        ->queryScalar();
+    }
+
+    /**
+     * Checks whether slug already exists
+     * 
+     * @param string $slug
+     * @return boolean
+     */
+    private function slugExists($slug)
+    {
+        $result = $this->db->select()
+                           ->count(self::PARAM_COLUMN_SLUG)
+                           ->from(WebPageMapper::getTableName())
+                           ->whereEquals(self::PARAM_COLUMN_SLUG, $slug)
+                           ->queryScalar();
+
+        return intval($result) > 0;
+    }
+
+    /**
+     * Returns unique slug
+     * 
+     * @param string $slug
+     * @return string
+     */
+    private function getUniqueSlug($slug)
+    {
+        if ($this->slugExists($slug)) {
+            $count = 0;
+
+            while (true) {
+                $count++;
+                $target = sprintf('%s-%s', $slug, $count);
+
+                if (!$this->slugExists($target)) {
+                    return $target;
+                }
+            }
+        }
+
+        return $slug;
+    }
+
+    /**
      * Saves the entity
      * 
      * @param array $options
@@ -339,6 +394,9 @@ abstract class AbstractMapper extends BaseMapper
      */
     private function insertTranslation($module, $controller, array $translation)
     {
+        // Ensure the slug is unique
+        $translation[self::PARAM_COLUMN_SLUG] = $this->getUniqueSlug($translation[self::PARAM_COLUMN_SLUG]);
+
         // Web page data
         $webPage = array(
             self::PARAM_COLUMN_LANG_ID => (int) $translation[self::PARAM_COLUMN_LANG_ID],
@@ -373,6 +431,11 @@ abstract class AbstractMapper extends BaseMapper
      */
     private function updateTranslation(array $translation)
     {
+        // Before adding a new slug, make sure it has been changed
+        if ($this->fetchSlugByWebPageId($translation[self::PARAM_COLUMN_WEB_PAGE_ID]) !== $translation[self::PARAM_COLUMN_SLUG]) {
+            $translation[self::PARAM_COLUMN_SLUG] = $this->getUniqueSlug($translation[self::PARAM_COLUMN_SLUG]);
+        }
+
         // Update web page
         $this->db->update(WebPageMapper::getTableName(), array(self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG]))
                  ->whereEquals(self::PARAM_COLUMN_ID, $translation[self::PARAM_COLUMN_WEB_PAGE_ID])
