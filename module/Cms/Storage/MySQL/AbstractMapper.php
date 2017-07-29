@@ -13,6 +13,7 @@ namespace Cms\Storage\MySQL;
 
 use Krystal\Db\Sql\AbstractMapper as BaseMapper;
 use Krystal\Db\Sql\RawSqlFragment;
+use Krystal\Text\SlugGenerator;
 use Krystal\Text\TextUtils;
 use Krystal\Stdlib\VirtualEntity;
 
@@ -56,7 +57,7 @@ abstract class AbstractMapper extends BaseMapper
      * @param string $slug
      * @return boolean
      */
-    private function slugExists($slug)
+    public function slugExists($slug)
     {
         $result = $this->db->select()
                            ->count(self::PARAM_COLUMN_SLUG)
@@ -75,20 +76,8 @@ abstract class AbstractMapper extends BaseMapper
      */
     private function getUniqueSlug($slug)
     {
-        if ($this->slugExists($slug)) {
-            $count = 0;
-
-            while (true) {
-                $count++;
-                $target = sprintf('%s-%s', $slug, $count);
-
-                if (!$this->slugExists($target)) {
-                    return $target;
-                }
-            }
-        }
-
-        return $slug;
+        $generator = new SlugGenerator;
+        return $generator->getUniqueSlug(array($this, 'slugExists'), $slug);
     }
 
     /**

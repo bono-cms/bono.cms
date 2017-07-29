@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Improved the way of handling uniqueness of slugs
  * Updated administration theme to Yeti
  * Added support for bookmarks
  * In `Users` and `Languages` grids added a counter
