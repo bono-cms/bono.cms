@@ -1,4 +1,41 @@
 
+// Select-group plugin implementation
+$(function(){
+    // Default configuration
+    var config = {
+        hiddenClass: 'hidden',
+        containerSelector: "[data-plugin='group']",
+        attachedEntity: 'data-attached-entity',
+        entityGroup: 'data-entity-group'
+    };
+
+
+    // Payment handler for ready and change
+    $(config.containerSelector).change(function(){
+        // Find the selected type
+        var entity = $(config.containerSelector).find(':selected').attr(config.attachedEntity);
+
+        // Now process hiding
+        $("[data-entity-group]").addClass(config.hiddenClass).each(function(){
+            // Find attached groups
+            var group = $(this).attr(config.entityGroup);
+            var groups = group.split(', ');
+
+            for (var key in groups) {
+                // A single group without spaces
+                var singleGroup = groups[key].trim();
+
+                if (entity == singleGroup) {
+                    $(this).removeClass(config.hiddenClass);
+                }
+            }
+        });
+
+        // And trigger immediately
+    }).change();
+});
+
+// Application
 $(function(){
 
     // Global settings for the whole panel
