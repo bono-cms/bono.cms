@@ -71,6 +71,16 @@ return array(
 				'@Cms/plugins/preview/jquery.preview.css'
 			)
 		),
+
+		'datetimepicker' => array(
+			'scripts' => array(
+				'@Cms/plugins/datetimepicker/js/moment.min.js',
+				'@Cms/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js'
+			),
+			'stylesheets' => array(
+				'@Cms/plugins/datetimepicker/css/bootstrap-datetimepicker.min.css'
+			)
+		),
 		
 		'datepicker' => array(
 			'scripts' => array(
