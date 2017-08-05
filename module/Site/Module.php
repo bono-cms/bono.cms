@@ -12,6 +12,7 @@
 namespace Site;
 
 use Cms\AbstractCmsModule;
+use Site\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -22,5 +23,15 @@ final class Module extends AbstractCmsModule
     {
         // Override parent method by this one returning nothing, since the module doesn't require any configuration data
         return array();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getServiceProviders()
+    {
+        return array(
+            'siteService' => new SiteService($this->getWebPageManager())
+        );
     }
 }
