@@ -65,6 +65,24 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     }
 
     /**
+     * Creates URL by target ID and module name
+     * 
+     * @param string $targetId
+     * @param string $module
+     * @return string
+     */
+    public function createUrl($targetId, $module)
+    {
+        $row = $this->webPageMapper->findSlug($targetId, $module);
+
+        if (!empty($row)) {
+            return $this->surround($row['slug'], $row['lang_id']);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Extract links from registered namespaces
      * 
      * @param array $namespaces

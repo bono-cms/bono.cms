@@ -16,6 +16,15 @@ use Krystal\Application\Module\ModuleManagerInterface;
 interface WebPageManagerInterface
 {
     /**
+     * Creates URL by target ID and module name
+     * 
+     * @param string $targetId
+     * @param string $module
+     * @return string
+     */
+    public function createUrl($targetId, $module);
+
+    /**
      * Extract links from registered namespaces
      * 
      * @param array $namespaces
