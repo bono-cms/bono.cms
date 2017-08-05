@@ -14,6 +14,15 @@ namespace Cms\Storage;
 interface WebPageMapperInterface
 {
     /**
+     * Finds slug and language ID by target ID and module name
+     * 
+     * @param string $targetId
+     * @param string $module
+     * @return string
+     */
+    public function findSlug($targetId, $module);
+
+    /**
      * Find links with their corresponding names
      * 
      * @param array $target A collection of tableName => aliasName

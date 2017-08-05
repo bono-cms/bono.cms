@@ -26,6 +26,23 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
     }
 
     /**
+     * Finds slug and language ID by target ID and module name
+     * 
+     * @param string $targetId
+     * @param string $module
+     * @return string
+     */
+    public function findSlug($targetId, $module)
+    {
+        return $this->db->select(array('slug', 'lang_id'))
+                        ->from(self::getTableName())
+                        ->whereEquals('target_id', $targetId)
+                        ->andWhereEquals('module', $module)
+                        ->andWhereEquals('lang_id', $this->getLangId())
+                        ->query();
+    }
+
+    /**
      * Find links with their corresponding names
      * 
      * @param array $target A collection of tableName => aliasName
