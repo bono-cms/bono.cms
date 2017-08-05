@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `$cms` site service
  * Improved the way of handling uniqueness of slugs
  * Updated administration theme to Yeti
  * Added support for bookmarks
