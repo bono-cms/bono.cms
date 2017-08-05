@@ -38,6 +38,13 @@ $(function(){
 // Application
 $(function(){
 
+    if (jQuery().datetimepicker) {
+        $('[data-plugin="datetimepicker"]').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD-MM-YYYY hh:mm:ss',
+        });
+    }
+
     // Global settings for the whole panel
     $.ajaxSetup({
         cache : false,
