@@ -28,7 +28,6 @@ body {
 
 /* Dropdowns */
 .dropdown-menu {
- background: #222222;
  box-shadow: #222222 13px 11px 35px 9px;
 }
 
@@ -108,12 +107,7 @@ label {
  color: #757373;
 }
 
-.table tr.info > td > a,
-.table tr.success > td > a {
- color: #fff !important;
-}
 /* Shared table decorations */
-
 ::-moz-selection { /* for Firefox */
  background: black;
  color: white;
