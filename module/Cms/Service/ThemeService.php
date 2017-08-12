@@ -11,7 +11,7 @@
 
 namespace Cms\Service;
 
-use Krystal\FileSystem\FileManager;
+use Krystal\Filesystem\FileManager;
 use Krystal\Application\AppConfigInterface;
 
 final class ThemeService implements ThemeServiceInterface
