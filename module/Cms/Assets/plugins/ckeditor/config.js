@@ -4,7 +4,6 @@
  */
  
 CKEDITOR.editorConfig = function(config){
-	
 	config.language = 'en';
 	// config.uiColor = '#AADC6E';
 	config.skin = 'bootstrapck';
@@ -12,4 +11,5 @@ CKEDITOR.editorConfig = function(config){
 	config.height = 400;
 	config.allowedContent = true;
     config.extraPlugins = 'youtube';
+	config.entities_processNumerical = 'force';
 };
