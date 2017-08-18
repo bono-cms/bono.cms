@@ -323,6 +323,7 @@ abstract class AbstractMapper extends BaseMapper
                         ->andWhereEquals(self::PARAM_COLUMN_MODULE, $module)
                         ->andWhereEquals(self::PARAM_COLUMN_CONTROLLER, $controller)
                         ->andWhereEquals(LanguageMapper::getFullColumnName('published'), new RawSqlFragment('1'))
+						->orderBy(new RawSqlFragment(sprintf('`order`, CASE WHEN `order` = 0 THEN %s END DESC', LanguageMapper::getFullColumnName('id'))))
                         ->queryAll();
     }
 
