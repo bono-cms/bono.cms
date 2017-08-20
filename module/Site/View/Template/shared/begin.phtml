@@ -27,7 +27,11 @@ defined('KRYSTAL') or die;
  
  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
  
- <link rel="alternate" href="<?php echo $currentUrl; ?>" hreflang="<?php echo $locale; ?>" />
+ <?php foreach ($languages as $language): ?>
+ <link rel="alternate" href="<?php echo $baseUrl, $language->getSwitchUrl(); ?>" hreflang="<?php echo $language->getCode(); ?>" />
+ <?php endforeach; ?>
+ 
+ <link rel="alternate" href="<?php echo $baseUrl; ?>/" hreflang="x-default" />
  
  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
  <link rel="stylesheet" href="<?php echo $stylesheet; ?>" media="all" />

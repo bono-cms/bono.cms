@@ -134,6 +134,7 @@ abstract class AbstractController extends BaseController
         $this->view->addVariables(array(
             'locale' => $this->appConfig->getLanguage(),
             'currentUrl' => $this->request->getCurrentUrl(),
+            'baseUrl' => $this->request->getBaseUrl(),
             // Inject parameter bag service
             'paramBag' => $this->paramBag
         ));
