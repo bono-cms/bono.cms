@@ -69,7 +69,7 @@ abstract class AbstractController extends BaseController
         if (is_null($cache)) {
             // Build a path to the configuration file
             $file = $this->view->getWithThemePath('theme.config.php');
-            
+
             // Initial state
             $config = array();
 
@@ -77,6 +77,7 @@ abstract class AbstractController extends BaseController
             if (is_file($file)) {
                 $config = include($file);
             }
+
             $cache = $config;
         }
 
@@ -91,7 +92,7 @@ abstract class AbstractController extends BaseController
     final protected function loadSitePlugins()
     {
         $this->loadSiteTheme();
-        
+
         $config = $this->getThemeConfig();
 
         // Plugins must have higher priority
@@ -131,7 +132,6 @@ abstract class AbstractController extends BaseController
         }
 
         $this->view->addVariables(array(
-            'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
             'locale' => $this->appConfig->getLanguage(),
             'currentUrl' => $this->request->getCurrentUrl(),
             // Inject parameter bag service
