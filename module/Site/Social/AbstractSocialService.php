@@ -32,6 +32,25 @@ abstract class AbstractSocialService
     }
 
     /**
+     * Returns unique URL signature
+     * 
+     * @return string
+     */
+    public function getSignature()
+    {
+        // Short and unique hash
+        $hash = md5($this->url);
+        return sprintf('%s_%s', strtolower($this->getName()), $hash);
+    }
+
+    /**
+     * Returns social service name
+     * 
+     * @return string
+     */
+    abstract public function getName();
+
+    /**
      * Returns share link for social service of the URL
      * 
      * @return array|boolean
