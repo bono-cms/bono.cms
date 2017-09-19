@@ -36,7 +36,7 @@ final class FacebookService extends AbstractSocialService
         $data = json_decode($response, true);
 
         if (is_array($data)) {
-            return $data['share'];
+            return $data['share']['share_count'];
         } else {
             return false;
         }
