@@ -18,6 +18,14 @@ final class GoogleService extends AbstractSocialService
     /**
      * {@inheritDoc}
      */
+    public function getName()
+    {
+        return 'Google';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getShareLink()
     {
         return sprintf('https://plus.google.com/share?url=%s', urlencode($this->url));

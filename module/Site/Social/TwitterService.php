@@ -18,6 +18,14 @@ final class TwitterService extends AbstractSocialService
     /**
      * {@inheritDoc}
      */
+    public function getName()
+    {
+        return 'Twitter';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getShareLink()
     {
         return sprintf('http://twitter.com/share?url=%s', urlencode($this->url));

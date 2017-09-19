@@ -18,6 +18,14 @@ final class FacebookService extends AbstractSocialService
     /**
      * {@inheritDoc}
      */
+    public function getName()
+    {
+        return 'Facebook';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getShareLink()
     {
         return sprintf('http://www.facebook.com/sharer.php?u=%s', urlencode($this->url));

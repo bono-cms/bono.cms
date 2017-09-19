@@ -18,6 +18,14 @@ final class LinkedinService extends AbstractSocialService
     /**
      * {@inheritDoc}
      */
+    public function getName()
+    {
+        return 'Linkedin';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getShareLink()
     {
         return sprintf('https://www.linkedin.com/cws/share?url=%s', urlencode($this->url));

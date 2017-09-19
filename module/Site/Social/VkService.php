@@ -18,6 +18,14 @@ final class VkService extends AbstractSocialService
     /**
      * {@inheritDoc}
      */
+    public function getName()
+    {
+        return 'Vk';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getShareLink()
     {
         return sprintf('http://vk.com/share.php?url=%s', urlencode($this->url));
