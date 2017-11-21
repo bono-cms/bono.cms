@@ -13,6 +13,7 @@ namespace Cms\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Cms\Storage\LanguageMapperInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class LanguageMapper extends AbstractMapper implements LanguageMapperInterface
 {
@@ -134,7 +135,8 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
                        ->from(static::getTableName());
 
         if ($published === true) {
-            $db->whereEquals('published', '1');
+            $db->whereEquals('published', '1')
+               ->orderBy(new RawSqlFragment(sprintf('`order`, CASE WHEN `order` = 0 THEN %s END DESC', LanguageMapper::getFullColumnName('id'))));
         } else {
             $db->orderBy('id')
                ->desc();
