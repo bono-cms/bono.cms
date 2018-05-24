@@ -18,12 +18,12 @@
 </aside>
 
 <aside class="clearfix">
-  <h5><i class="fa fa-plug fa-2x"></i> <?php $this->show('Installed modules'); ?> <small>(<?php echo count($modules); ?>)</small></h5>
+  <h5><i class="fa fa-plug fa-2x"></i> <?php $this->show('Installed modules'); ?> <small>(<?php echo count($modulesConfiguration); ?>)</small></h5>
   <ul>
-	<?php foreach ($modules as $module): ?>
+	<?php foreach ($modulesConfiguration as $module): ?>
 	<li>
-	 <a href="<?php echo $this->url($module['route']); ?>" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo htmlentities($this->translate($module['description'])); ?>">
-     <i class="<?php echo $module['icon']; ?>"></i> <label><?php isset($module['caption']) and $this->show($module['caption']); ?></label>
+	 <a href="<?php echo call_user_func_array(array($this, 'url'), (array) $module['route']); ?>" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo htmlentities($this->translate($module['description'])); ?>">
+     <img src="<?php echo sprintf('/module/%s/Assets/%s.png', $module['name'], strtolower($module['name'])); ?>" /> <label><?php isset($module['caption']) and $this->show($module['caption']); ?></label>
 	 </a>
 	</li>
 	 <?php endforeach; ?>
