@@ -248,7 +248,8 @@ abstract class AbstractController extends AbstractAuthAwareController
             'ppc' => $this->getPerPageCountGadget(),
             'queryLogger' => $this->db['mysql']->getQueryLogger(),
             'bookmarks' => $this->createBookmarks($modulesConfiguration),
-            'modulesConfiguration' => $modulesConfiguration
+            'modulesConfiguration' => $modulesConfiguration,
+            'loadedModules' => $this->moduleManager->getLoadedModuleNames()
         ));
 
         $this->view->getPluginBag()->load(array(
