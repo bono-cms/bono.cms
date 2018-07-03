@@ -52,8 +52,8 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
     {
         // Default columns to be selected
         $defaults = array(
-            self::getFullColumnName('id'),
-            self::getFullColumnName('module')
+            self::column('id'),
+            self::column('module')
         );
 
         $columns = array();
@@ -72,13 +72,13 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
                ->on()
                ->equals(
                     sprintf('%s.web_page_id', $table), 
-                    new RawSqlFragment(self::getFullColumnName('id'))
+                    new RawSqlFragment(self::column('id'))
                 );
         }
 
         // Filter by language ID
-        $db->whereEquals(self::getFullColumnName('lang_id'), $this->getLangId())
-           ->andWhereIn(self::getFullColumnName('module'), array_values($target));
+        $db->whereEquals(self::column('lang_id'), $this->getLangId())
+           ->andWhereIn(self::column('module'), array_values($target));
 
         return $db->queryAll();
     }

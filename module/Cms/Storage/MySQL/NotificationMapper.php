@@ -31,7 +31,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
      */
     public function clearAll()
     {
-        return $this->db->truncate(static::getTableName())
+        return $this->db->truncate(self::getTableName())
                         ->execute();
     }
 
@@ -45,7 +45,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
     public function fetchAllByPage($page, $itemsPerPage)
     {
         return $this->db->select('*')
-                        ->from(static::getTableName())
+                        ->from(self::getTableName())
                         ->orderBy('id')
                         ->desc()
                         ->paginate($page, $itemsPerPage)
@@ -59,7 +59,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
      */
     public function nullify()
     {
-        return $this->db->update(static::getTableName(), array('viewed' => '1'))
+        return $this->db->update(self::getTableName(), array('viewed' => '1'))
                         ->execute();
     }
 
@@ -72,7 +72,7 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
     {
         return $this->db->select()
                         ->count('id', 'count')
-                        ->from(static::getTableName())
+                        ->from(self::getTableName())
                         ->whereEquals('viewed', '0')
                         ->query('count');
     }
@@ -87,12 +87,10 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
      */
     public function insert($timestamp, $viewed, $message)
     {
-        return $this->db->insert(static::getTableName(), array(
-
+        return $this->db->insert(self::getTableName(), array(
             'timestamp' => $timestamp,
             'viewed'    => $viewed,
             'message'   => $message
-            
         ))->execute();
     }
 

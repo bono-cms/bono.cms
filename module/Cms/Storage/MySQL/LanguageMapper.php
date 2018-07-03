@@ -119,7 +119,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
         if ($published === true) {
             $db->whereEquals('published', '1');
         }
-        
+
         return $db->query('count');
     }
 
@@ -132,7 +132,7 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
     public function fetchAll($published)
     {
         $db = $this->db->select('*')
-                       ->from(static::getTableName());
+                       ->from(self::getTableName());
 
         if ($published === true) {
             $db->whereEquals('published', '1')

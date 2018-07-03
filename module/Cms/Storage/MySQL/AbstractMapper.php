@@ -142,7 +142,7 @@ abstract class AbstractMapper extends BaseMapper
         if ($table === null) {
             $table = static::getTableName();
         }
-        
+
         return $this->db->select($columns)
                        ->from($table)
                        // Translation relation

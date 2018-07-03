@@ -89,7 +89,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     public function fetchByCredentials($login, $passwordHash)
     {
         return $this->db->select('*')
-                        ->from(static::getTableName())
+                        ->from(self::getTableName())
                         ->whereEquals('login', $login)
                         ->andWhereEquals('password_hash', $passwordHash)
                         ->query();
@@ -103,7 +103,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     public function fetchAll()
     {
         return $this->db->select('*')
-                        ->from(static::getTableName())
+                        ->from(self::getTableName())
                         ->orderBy('id')
                         ->desc()
                         ->queryAll();

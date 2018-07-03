@@ -32,7 +32,7 @@ final class HistoryMapper extends AbstractMapper implements HistoryMapperInterfa
     public function clear()
     {
         return $this->db->delete()
-                        ->from(static::getTableName())
+                        ->from(self::getTableName())
                         ->whereEquals('lang_id', $this->getLangId())
                         ->execute();
     }
@@ -58,7 +58,7 @@ final class HistoryMapper extends AbstractMapper implements HistoryMapperInterfa
     public function fetchAllByPage($page, $itemsPerPage)
     {
         return $this->db->select('*')
-                        ->from(static::getTableName())
+                        ->from(self::getTableName())
                         ->whereEquals('lang_id', $this->getLangId())
                         ->orderBy('id')
                         ->desc()
