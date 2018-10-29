@@ -19,6 +19,13 @@ use RuntimeException;
 abstract class AbstractController extends BaseController
 {
     /**
+     * Let CSRF validation to be enabled by default
+     * 
+     * @var boolean
+     */
+    protected $enableCsrf = true;
+
+    /**
      * Bootstrap site services
      * 
      * @return array
@@ -280,7 +287,7 @@ abstract class AbstractController extends BaseController
             // This is general for all forms
             $valid = $this->csrfProtector->isValid($this->request->getMetaCsrfToken());
 
-            if (!$valid) {
+            if (!$valid && $this->enableCsrf === true) {
                 $this->response->setStatusCode(400);
                 die('Invalid CSRF token');
             }
