@@ -201,7 +201,7 @@ abstract class AbstractController extends BaseController
     /**
      * {@inheritDoc}
      */
-    protected function bootstrap()
+    protected function bootstrap($action)
     {
         $this->loadSiteTheme();
         $this->validateRequest();
