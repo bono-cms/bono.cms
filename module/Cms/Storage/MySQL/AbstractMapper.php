@@ -149,8 +149,8 @@ abstract class AbstractMapper extends BaseMapper
                        ->leftJoin(static::getTranslationTable())
                        ->on()
                        ->equals(
-                            static::getFullColumnName(self::PARAM_COLUMN_ID), 
-                            new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+                            static::column(self::PARAM_COLUMN_ID), 
+                            new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
                         );
     }
 
@@ -165,12 +165,12 @@ abstract class AbstractMapper extends BaseMapper
     final protected function findEntity(array $columns, $id, $withTranslations)
     {
         $db = $this->createEntitySelect($columns)
-                   ->whereEquals(self::getFullColumnName(self::PARAM_COLUMN_ID), $id);
+                   ->whereEquals(self::column(self::PARAM_COLUMN_ID), $id);
 
         if ($withTranslations === true) {
             return $db->queryAll();
         } else {
-            return $db->andWhereEquals(self::getFullColumnName(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $this->getLangId())
+            return $db->andWhereEquals(self::column(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $this->getLangId())
                       ->query();
         }
     }
@@ -199,11 +199,11 @@ abstract class AbstractMapper extends BaseMapper
                      ->innerJoin(static::getTranslationTable())
                      ->on()
                      ->equals(
-                        static::getFullColumnName(self::PARAM_COLUMN_ID), 
-                        new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+                        static::column(self::PARAM_COLUMN_ID), 
+                        new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
                      )
                      // Current ID
-                     ->whereIn(static::getFullColumnName(self::PARAM_COLUMN_ID), $id)
+                     ->whereIn(static::column(self::PARAM_COLUMN_ID), $id)
                      ->execute();
     }
 
@@ -218,12 +218,12 @@ abstract class AbstractMapper extends BaseMapper
     final protected function findWebPage(array $columns, $id, $withTranslations)
     {
         $db = $this->createWebPageSelect($columns)
-                   ->whereEquals(self::getFullColumnName(self::PARAM_COLUMN_ID), $id);
+                   ->whereEquals(self::column(self::PARAM_COLUMN_ID), $id);
 
         if ($withTranslations === true) {
             return $db->queryAll();
         } else {
-            return $db->andWhereEquals(self::getFullColumnName(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $this->getLangId())
+            return $db->andWhereEquals(self::column(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $this->getLangId())
                       ->query();
         }
     }
@@ -246,13 +246,13 @@ abstract class AbstractMapper extends BaseMapper
                     ->leftJoin(WebPageMapper::getTableName())
                     ->on()
                     ->equals(
-                        WebPageMapper::getFullColumnName(self::PARAM_COLUMN_ID),
-                        new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable()))
+                        WebPageMapper::column(self::PARAM_COLUMN_ID),
+                        new RawSqlFragment(static::column(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable()))
                     )
                     ->rawAnd()
                     ->equals(
-                        WebPageMapper::getFullColumnName(self::PARAM_COLUMN_LANG_ID),
-                        new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()))
+                        WebPageMapper::column(self::PARAM_COLUMN_LANG_ID),
+                        new RawSqlFragment(static::column(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()))
                     );
     }
 
@@ -303,11 +303,11 @@ abstract class AbstractMapper extends BaseMapper
     {
         // Columns to be selected
         $columns = array(
-            LanguageMapper::getFullColumnName(self::PARAM_COLUMN_ID),
-            LanguageMapper::getFullColumnName(self::PARAM_COLUMN_NAME),
-            LanguageMapper::getFullColumnName('code'),
-            LanguageMapper::getFullColumnName('flag'),
-            WebPageMapper::getFullColumnName(self::PARAM_COLUMN_SLUG)
+            LanguageMapper::column(self::PARAM_COLUMN_ID),
+            LanguageMapper::column(self::PARAM_COLUMN_NAME),
+            LanguageMapper::column('code'),
+            LanguageMapper::column('flag'),
+            WebPageMapper::column(self::PARAM_COLUMN_SLUG)
         );
 
         return $this->db->select($columns)
@@ -315,15 +315,15 @@ abstract class AbstractMapper extends BaseMapper
                         ->innerJoin(LanguageMapper::getTableName())
                         ->on()
                         ->equals(
-                            LanguageMapper::getFullColumnName(self::PARAM_COLUMN_ID), 
-                            new RawSqlFragment(WebPageMapper::getFullColumnName(self::PARAM_COLUMN_LANG_ID))
+                            LanguageMapper::column(self::PARAM_COLUMN_ID), 
+                            new RawSqlFragment(WebPageMapper::column(self::PARAM_COLUMN_LANG_ID))
                         )
                         // Filter by these constraints
                         ->whereEquals(self::PARAM_COLUMN_TARGET_ID, $id)
                         ->andWhereEquals(self::PARAM_COLUMN_MODULE, $module)
                         ->andWhereEquals(self::PARAM_COLUMN_CONTROLLER, $controller)
-                        ->andWhereEquals(LanguageMapper::getFullColumnName('published'), new RawSqlFragment('1'))
-						->orderBy(new RawSqlFragment(sprintf('`order`, CASE WHEN `order` = 0 THEN %s END DESC', LanguageMapper::getFullColumnName('id'))))
+                        ->andWhereEquals(LanguageMapper::column('published'), new RawSqlFragment('1'))
+						->orderBy(new RawSqlFragment(sprintf('`order`, CASE WHEN `order` = 0 THEN %s END DESC', LanguageMapper::column('id'))))
                         ->queryAll();
     }
 
@@ -468,18 +468,18 @@ abstract class AbstractMapper extends BaseMapper
                      ->innerJoin(static::getTranslationTable())
                      ->on()
                      ->equals(
-                        static::getFullColumnName(self::PARAM_COLUMN_ID), 
-                        new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+                        static::column(self::PARAM_COLUMN_ID), 
+                        new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
                      )
                      // Web page relation
                      ->innerJoin(WebPageMapper::getTableName())
                      ->on()
                      ->equals(
-                        WebPageMapper::getFullColumnName(self::PARAM_COLUMN_ID), 
-                        new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable()))
+                        WebPageMapper::column(self::PARAM_COLUMN_ID), 
+                        new RawSqlFragment(static::column(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable()))
                      )
                      // Current ID
-                     ->whereIn(static::getFullColumnName(self::PARAM_COLUMN_ID), $id)
+                     ->whereIn(static::column(self::PARAM_COLUMN_ID), $id)
                      ->execute();
     }
 
