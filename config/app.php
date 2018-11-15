@@ -66,7 +66,7 @@ return array(
 		'paramBag' => array(
 			'version' => '1.3', // Current CMS version
 			'wysiwyg' => 'ckeditor',
-			'site' => 'http://bono-cms.ml', // Vendor website
+			'site' => 'http://bono-cms.com', // Vendor website
             'admin_language' => $_ENV['admin_language'], // Administration language
             'admin_segment' => 'admin', // The identification segment to be used to enter administration area
             'home_controller' => null // Can be overridden, for example to "Blog:Home@indexAction"
