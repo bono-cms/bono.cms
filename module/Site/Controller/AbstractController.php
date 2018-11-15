@@ -282,12 +282,12 @@ abstract class AbstractController extends BaseController
         }
 
         // Do validate only for POST requests for now
-        if ($this->request->isPost()) {
+        if ($this->enableCsrf === true && $this->request->isPost()) {
+            // Current token
+            $token = $this->request->isAjax() ? $this->request->getMetaCsrfToken() : $this->request->getPost('csrf-token');
 
             // This is general for all forms
-            $valid = $this->csrfProtector->isValid($this->request->getMetaCsrfToken());
-
-            if (!$valid && $this->enableCsrf === true) {
+            if (!$this->csrfProtector->isValid($token)) {
                 $this->response->setStatusCode(400);
                 die('Invalid CSRF token');
             }
