@@ -45,6 +45,12 @@ $(function(){
         });
     }
 
+    if (jQuery().datepicker) {
+        $('[data-plugin="datepicker"]').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    }
+
     // Global settings for the whole panel
     $.ajaxSetup({
         cache : false,
