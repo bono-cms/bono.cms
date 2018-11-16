@@ -11,6 +11,7 @@
 
 namespace Cms\Storage\MySQL;
 
+use RuntimeException;
 use Krystal\Db\Sql\AbstractMapper as BaseMapper;
 use Krystal\Db\Sql\RawSqlFragment;
 use Krystal\Text\SlugGenerator;
@@ -582,10 +583,15 @@ abstract class AbstractMapper extends BaseMapper
     /**
      * Returns last id
      * 
+     * @throws \RuntimeException If no language key provided
      * @return string
      */
     final public function getLangId()
     {
+        if (!$this->language) {
+            throw new RuntimeException('Language key was not defined');
+        }
+
         return $this->language;
     }
 
