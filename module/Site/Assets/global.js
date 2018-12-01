@@ -78,6 +78,40 @@ $(function(){
         },
 
         /**
+         * Checks whether element represents a collection of values
+         * 
+         * @param string name Element name
+         * @return boolean
+         */
+        isArrayElement: function(name){
+            // Notation to be looked up
+            var arrayNotation = '[]';
+
+            // Try to build an element appending array notation first
+            var $element = $(this.buildElementSelector(name + arrayNotation));
+
+            if ($element.length) {
+                return $element.attr('name').indexOf(arrayNotation) !== -1;
+            } else {
+                // Not array element
+                return false;
+            }
+        },
+
+        /**
+         * Checks whether element is radio by its type
+         * 
+         * @param string name Element name
+         * @return boolean
+         */
+        isRadioElement: function(name){
+            var $element = $(this.buildElementSelector(name));
+            var type = $element.attr('type');
+
+            return type === 'radio';
+        },
+        
+        /**
          * Shows an error which belongs to a field
          * 
          * @param string name Element's name
@@ -85,6 +119,14 @@ $(function(){
          * @return void
          */
         showErrorOn : function(name, message){
+            var isArrayElement = this.isArrayElement(name);
+            var isRadioElement = this.isRadioElement(name);
+
+            // If this one looks as a collection input, then append array notation to its name
+            if (isArrayElement) {
+                name += '[]';
+            }
+
             $container = this.getContainerElementByClosestName(name);
 
             if ($container.hasClass('has-success')) {
@@ -93,10 +135,13 @@ $(function(){
 
             $container.addClass('has-error');
 
-            $span = this.createMessageElement(message);
+            // Don't show errors on radio and array elements
+            if (!isRadioElement && !isArrayElement) {
+                $span = this.createMessageElement(message);
 
-            $parent = this.getParentContainer(name);
-            $parent.append($span);
+                $parent = this.getParentContainer(name);
+                $parent.append($span);
+            }
         },
 
         /**
@@ -164,7 +209,7 @@ $(function(){
             }
         }
     };
-    
+
     /**
      * Global factory for form validator
      * 
