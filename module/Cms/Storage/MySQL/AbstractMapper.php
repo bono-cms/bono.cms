@@ -429,7 +429,7 @@ abstract class AbstractMapper extends BaseMapper
     }
 
     /**
-     * Delete a page completely
+     * Delete a page or entity completely
      * 
      * @param string|array $id
      * @return bolean
@@ -453,8 +453,8 @@ abstract class AbstractMapper extends BaseMapper
                      ->innerJoin(static::getTranslationTable(), array(
                         static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
                      ))
-                     // Web page relation
-                     ->innerJoin(WebPageMapper::getTableName(), array(
+                     // Web page relation (optional)
+                     ->leftJoin(WebPageMapper::getTableName(), array(
                         WebPageMapper::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable()))
                      ))
                      // Current ID
