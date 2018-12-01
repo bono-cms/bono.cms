@@ -1,4 +1,44 @@
 
+// Clipboard module
+$(function(){
+    /**
+     * Copy string to clipboard
+     * Credits: https://techoverflow.net/2018/03/30/copying-strings-to-the-clipboard-using-pure-javascript/
+     * 
+     * @param string str Target string
+     * @return void
+     */
+    function copyStringToClipboard(str){
+        // Create new element
+        var el = document.createElement('textarea');
+        // Set value (string to be copied)
+        el.value = str;
+        // Set non-editable to avoid focus and move outside of view
+        el.setAttribute('readonly', '');
+        el.style = {position: 'absolute', left: '-9999px'};
+        
+        document.body.appendChild(el);
+        // Select text inside element
+        el.select();
+
+        // Copy text to clipboard
+        document.execCommand('copy');
+
+        // Remove temporary element
+        document.body.removeChild(el);
+    }
+
+    $("[data-button='clipboard']").click(function(event){
+        event.preventDefault();
+
+        var value = $(this).data('value');
+
+        if (value) {
+            copyStringToClipboard(value)
+        }
+    });
+});
+
 // Select-group plugin implementation
 $(function(){
     // Default configuration
@@ -284,7 +324,21 @@ $(function(){
         // And trigger clicking
         $(selector).click();
     });
-    
+
+    $("[data-button='generate']").click(function(event){
+        event.preventDefault();
+
+        var url = $(this).data('url');
+        var output = $(this).data('output'); // Output selector
+
+        $.ajax({
+            url: url,
+            success: function(response){
+                $(output).text(response);
+            }
+        });
+    });
+
     $('[data-button="module-install"]').click(function(event){
         event.preventDefault();
         $('[name="module"]').click().change(function(){
