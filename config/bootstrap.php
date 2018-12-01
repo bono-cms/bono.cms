@@ -15,6 +15,7 @@ gc_disable();
 chdir(dirname(__DIR__));
 
 require('vendor/autoload.php');
+require(__DIR__ . '/functions.php');
 require(__DIR__ . '/environment.php');
 
 return \Krystal\Application\KernelFactory::build(require(__DIR__.'/app.php'));
