@@ -24,12 +24,14 @@ defined('KRYSTAL') or die;
  
  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
  
+ <?php if (count($languages) > 1): ?>
  <?php foreach ($languages as $language): ?>
  <link rel="alternate" href="<?php echo $baseUrl, $language->getSwitchUrl(); ?>" hreflang="<?php echo $language->getCode(); ?>" />
  <?php endforeach; ?>
  
  <link rel="alternate" href="<?php echo $baseUrl; ?>/" hreflang="x-default" />
- 
+ <?php endif; ?>
+
  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
  <link rel="stylesheet" href="<?php echo $stylesheet; ?>" media="all" />
  <?php endforeach; ?>
