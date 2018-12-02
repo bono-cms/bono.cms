@@ -12,7 +12,7 @@ defined('KRYSTAL') or die;
  <meta name="csrf-token" content="<?php echo $csrfToken; ?>" />
  <title><?php echo Filter::escape($page->getTitle()); ?></title>
  
- <?php if ($page->getSeo()): ?>
+ <?php if ($page->isDefault() || $page->getSeo()): ?>
  <meta name="description" content="<?php echo Filter::escape($page->getMetaDescription()); ?>" />
  <meta name="keywords" content="<?php echo Filter::escape($page->getKeywords()); ?>" />
  <?php else: ?>
