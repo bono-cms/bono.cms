@@ -12,6 +12,7 @@
 namespace Cms\Service;
 
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Http\FileTransfer\FileEntityInterface;
 
 final class Mailer implements MailerInterface
 {
@@ -48,9 +49,10 @@ final class Mailer implements MailerInterface
      * @param string|array $to
      * @param string $subject
      * @param string $body
-     * @return \Swift_Message
+     * @param array $files Files to be sent if present
+     * @return boolean
      */
-    private function sendMessage($to, $subject, $body)
+    private function sendMessage($to, $subject, $body, array $files = array())
     {
         // If we have SMTP transport turned on, then we'd use appropriate Swift's transport
         if ($this->config->getUseSmtpDriver() != true) {
@@ -73,6 +75,24 @@ final class Mailer implements MailerInterface
                               ->setContentType('text/html')
                               ->setTo($to)
                               ->setBody($body);
+
+        // if files provided, then attach them
+        if (!empty($files)) {
+            foreach ($files as $name => $file) {
+                if ($file instanceof FileEntityInterface) {
+                    $path = \Swift_Attachment::fromPath($file->getTmpName())->setFilename($file->getName());
+                } else {
+                    $path = \Swift_Attachment::fromPath($file);
+
+                    if (!is_numeric($name)) {
+                        $path->setFilename($name);
+                    }
+                }
+
+                $message->attach($path);
+            }
+        }
+
         // Re-define the id
         //$msgId = $message->getHeaders()->get('Message-ID');
         //$msgId->setId(time().'.'.uniqid('token').'@'.$this->config->getDomain());
@@ -86,11 +106,12 @@ final class Mailer implements MailerInterface
      * @param string $email Target email
      * @param string $subject Email subject
      * @param string $body
+     * @param array $files Files to be sent if present
      * @return boolean
      */
-    public function sendTo($email, $subject, $body)
+    public function sendTo($email, $subject, $body, array $files = array())
     {
-        return $this->sendMessage(array($email), $subject, $body);
+        return $this->sendMessage(array($email), $subject, $body, $files);
     }
 
     /**
@@ -99,11 +120,16 @@ final class Mailer implements MailerInterface
      * @param string Message's subject
      * @param string $body Body to be sent
      * @param string $notification Default notification message to be pop in administration panel
+     * @param array $files Files to be sent if present
      * @return boolean Depending on success
      */
-    public function send($subject, $body, $notification = 'You have received a new message')
+    public function send($subject, $body, $notification = null, array $files = array())
     {
-        if ($this->sendMessage(array($this->config->getNotificationEmail()), $subject, $body)) {
+        if ($notification === null) {
+            $notification = 'You have received a new message';
+        }
+
+        if ($this->sendMessage(array($this->config->getNotificationEmail()), $subject, $body, $files)) {
             $this->notificationManager->notify($notification);
             return true;
 

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In mailer service added optional ability to send file attachments
  * Added `$cms` site service
  * Improved the way of handling uniqueness of slugs
  * Updated administration theme to Yeti
