@@ -611,6 +611,20 @@ $(function(){
         });
     });
 
+    $("[data-button='ajax-view']").click(function(event){
+        event.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('href'),
+            success: function(response){
+                var $modal = $("#errors-modal");
+
+                $modal.find(".modal-body").empty().html(response);
+                $modal.modal("show");
+            }
+        });
+    });
+
     // Highlight a row on selecting
     $("table > tbody > tr > td > input[type='checkbox']").change(function(){
         // Bootstap class
