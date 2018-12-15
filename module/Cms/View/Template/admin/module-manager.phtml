@@ -1,4 +1,10 @@
-<?php defined('KRYSTAL') or die; ?>
+<?php
+
+use Cms\Service\ThemeService;
+
+defined('KRYSTAL') or die;
+
+?>
 
 <div class="btn-toolbar">
 	<div class="btn-group">
@@ -42,7 +48,9 @@
                         <input type="checkbox" name="toDelete[<?php echo $module['name']; ?>]" />
                         <?php endif; ?>
                     </td>
-                    <td class="text-center col-lg-2"><a href="<?php echo $this->url($module['route']); ?>"><i class="<?php echo $module['icon']; ?>"></i></a></td>
+                    <td class="text-center col-lg-2">
+                        <a href="<?php echo $this->url($module['route']); ?>"><img class="module-icon" src="<?= ThemeService::createIconPath($module['name']); ?>"></a>
+                    </td>
                     <td class="text-center"><?php $this->show($module['caption']); ?></td>
                     <td class="text-center"><?php $this->show($module['description']); ?></td>
                     <td class="text-center">

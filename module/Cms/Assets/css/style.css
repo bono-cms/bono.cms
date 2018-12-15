@@ -2,6 +2,11 @@
  * Copyright (c) No Global State Lab
  */
 
+.module-icon {
+    width: 64px;
+    height: 64px;
+}
+
 a[data-button='slug'] > i {
  color: wheat;
 }
@@ -144,9 +149,15 @@ header {
 main {
  margin: 20px;
  background-color: #fff;
- padding: 8px;
- border-radius : 8px;
+ padding: 16px 12px 16px 12px;
 }
+
+@media(min-width: 768px){
+    main {
+        min-height: 480px;
+    }
+}
+
 
 a > i {
  transition: opacity .7s;
