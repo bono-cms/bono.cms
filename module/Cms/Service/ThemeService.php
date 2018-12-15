@@ -40,6 +40,17 @@ final class ThemeService implements ThemeServiceInterface
     }
 
     /**
+     * Create icon path by module name
+     * 
+     * @param string $module Module name
+     * @return string
+     */
+    public static function createIconPath($module)
+    {
+        return sprintf('/module/%s/Assets/%s.svg', $module, strtolower($module));
+    }
+
+    /**
      * Drop multiple themes at once
      * 
      * @param array $themes
