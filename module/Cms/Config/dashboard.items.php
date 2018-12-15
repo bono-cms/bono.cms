@@ -12,19 +12,19 @@
 return array(
     array(
         'route' => 'Cms:Admin:History@indexAction',
-        'icon' => 'icons/history.png',
+        'icon' => 'icons/history.svg',
         'name' => 'History',
         'description' => 'History of latest actions'
     ),
     array(
         'route' => 'Cms:Admin:Notepad@indexAction',
-        'icon' => 'icons/notepad.png',
+        'icon' => 'icons/notepad.svg',
         'name' => 'Notepad',
         'description' => 'Keep your notes using notepad'
     ),
     array(
         'route' => 'Cms:Admin:Notifications@indexAction',
-        'icon' => 'icons/notifications.png',
+        'icon' => 'icons/notifications.svg',
         'name' => 'Notifications',
         'description' => 'All system notifications'
     )
