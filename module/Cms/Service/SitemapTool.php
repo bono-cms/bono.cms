@@ -27,7 +27,7 @@ final class SitemapTool
     );
 
     /**
-     * Returns a collection of all possible and valid change frequences
+     * Returns a collection of all possible and valid change frequencies
      * 
      * @return array
      */
