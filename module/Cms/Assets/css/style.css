@@ -7,6 +7,12 @@
     height: 64px;
 }
 
+.module-icon:hover {
+    width: 70px;
+    height: 70px;
+    transition: 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
 a[data-button='slug'] > i {
  color: wheat;
 }
