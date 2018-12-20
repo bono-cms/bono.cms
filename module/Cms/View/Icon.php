@@ -114,9 +114,10 @@ final class Icon
      * @param string $url
      * @param string $hint
      * @param string $message Optional message to be overriden
+     * @param string $backUrl Optional URL to be redirected on success
      * @return string
      */
-    public static function remove($url, $hint, $message = null)
+    public static function remove($url, $hint, $message = null, $backUrl = null)
     {
         $attrs = array(
             'data-toggle' => 'tooltip',
@@ -128,6 +129,10 @@ final class Icon
 
         if ($message !== null) {
             $attrs['data-message'] = $message;
+        }
+
+        if ($backUrl !== null) {
+            $attrs['data-back-url'] = $backUrl;
         }
 
         return Element::icon('glyphicon glyphicon-remove', '#', $attrs);
