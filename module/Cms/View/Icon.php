@@ -16,6 +16,29 @@ use Krystal\Form\Element;
 final class Icon
 {
     /**
+     * Generates regular button
+     * 
+     * @param string $icon
+     * @param string $url
+     * @param string $hint
+     * @param array $extras Extra attributes
+     * @return string
+     */
+    public static function button($icon, $url, $hint, $extras = array())
+    {
+        $attributes = array(
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'left',
+            'data-original-title' => $hint,
+        );
+
+        // Append extras, if any
+        $attributes = array_replace($attributes, $extras);
+
+        return Element::icon($icon, $url, $attributes);
+    }
+
+    /**
      * Renders approve action button
      * 
      * @param string $url
@@ -24,10 +47,7 @@ final class Icon
      */
     public static function approve($url, $hint)
     {
-        return Element::icon('glyphicon glyphicon-ok', $url, array(
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'left',
-            'data-original-title' => $hint,
+        return self::button('glyphicon glyphicon-ok', $url, $hint, array(
             'data-button' => 'approve'
         ));
     }
@@ -41,10 +61,7 @@ final class Icon
      */
     public static function details($url, $hint)
     {
-        return Element::icon('glyphicon glyphicon-fullscreen', $url, array(
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'left',
-            'data-original-title' => $hint,
+        return self::button('glyphicon glyphicon-fullscreen', $url, $hint, array(
             'data-button' => 'details'
         ));
     }
@@ -58,11 +75,7 @@ final class Icon
      */
     public static function polls($url, $hint)
     {
-        return Element::icon('glyphicon glyphicon-star', $url, array(
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'left',
-            'data-original-title' => $hint
-        ));
+        return self::button('glyphicon glyphicon-star', $url, $hint);
     }
 
     /**
@@ -74,10 +87,7 @@ final class Icon
      */
     public static function edit($url, $hint)
     {
-        return Element::icon('glyphicon glyphicon-pencil', $url, array(
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'left',
-            'data-original-title' => $hint,
+        return self::button('glyphicon glyphicon-pencil', $url, $hint, array(
             'data-button' => 'edit'
         ));
     }
@@ -91,10 +101,7 @@ final class Icon
      */
     public static function view($url, $hint)
     {
-        return Element::icon('glyphicon glyphicon-search', $url, array(
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'left',
-            'data-original-title' => $hint,
+        return self::button('glyphicon glyphicon-search', $url, $hint, array(
             'data-button' => 'view',
             'target' => '_blank'
         ));
@@ -111,9 +118,6 @@ final class Icon
     public static function reset($url, $hint, $message = null)
     {
         $attrs = array(
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'left',
-            'data-original-title' => $hint,
             'data-button' => 'delete',
             'data-url' => $url
         );
@@ -122,7 +126,7 @@ final class Icon
             $attrs['data-message'] = $message;
         }
 
-        return Element::icon('glyphicon glyphicon-fire', '#', $attrs);
+        return self::button('glyphicon glyphicon-fire', $url, $hint, $attrs);
     }
 
     /**
@@ -137,9 +141,6 @@ final class Icon
     public static function remove($url, $hint, $message = null, $backUrl = null)
     {
         $attrs = array(
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'left',
-            'data-original-title' => $hint,
             'data-button' => 'delete',
             'data-url' => $url
         );
@@ -152,6 +153,6 @@ final class Icon
             $attrs['data-back-url'] = $backUrl;
         }
 
-        return Element::icon('glyphicon glyphicon-remove', '#', $attrs);
+        return self::button('glyphicon glyphicon-remove', $url, $hint, $attrs);
     }
 }
