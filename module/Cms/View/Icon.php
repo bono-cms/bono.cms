@@ -16,6 +16,23 @@ use Krystal\Form\Element;
 final class Icon
 {
     /**
+     * Renders approve action button
+     * 
+     * @param string $url
+     * @param string $hint
+     * @return string
+     */
+    public static function approve($url, $hint)
+    {
+        return Element::icon('glyphicon glyphicon-ok', $url, array(
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'left',
+            'data-original-title' => $hint,
+            'data-button' => 'approve'
+        ));
+    }
+
+    /**
      * Generates details action button
      * 
      * @param string $url
