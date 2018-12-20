@@ -16,6 +16,23 @@ use Krystal\Form\Element;
 final class Icon
 {
     /**
+     * Generates details action button
+     * 
+     * @param string $url
+     * @param string $hint
+     * @return string
+     */
+    public static function details($url, $hint)
+    {
+        return Element::icon('glyphicon glyphicon-fullscreen', $url, array(
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'left',
+            'data-original-title' => $hint,
+            'data-button' => 'details'
+        ));
+    }
+
+    /**
      * Generates polls action button
      * 
      * @param string $url
