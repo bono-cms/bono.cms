@@ -1,7 +1,10 @@
-<?php defined('KRYSTAL') or die; ?>
 <?php
 
+use Krystal\Grid\Grid;
 use Krystal\Form\Element;
+use Cms\View\Icon;
+
+defined('KRYSTAL') or die;
 
 ?>
 
@@ -29,45 +32,70 @@ use Krystal\Form\Element;
 
 <form>
 	<div class="table-responsive">
-		<table class="table table-hover table-bordered table-striped table-condensed">
-			<thead>
-				<tr>
-					<th class="text-center"><?php $this->show('#'); ?></th>
-					<th class="text-center"><?php $this->show('Name'); ?></th>
-					<th class="text-center"><?php $this->show('Code'); ?></th>
-					<th class="text-center"><?php $this->show('Order'); ?></th>
-					<th class="text-center"><?php $this->show('Published'); ?></th>
-					<th class="text-center"><?php $this->show('Default'); ?></th>
-					<th class="text-center"><?php $this->show('Actions'); ?></th>
-				</tr>
-			</thead>
-			
-			<?php if (!empty($langs)): ?>
-			<tbody>
-				<?php foreach ($langs as $language): ?>
-				<tr>
-					<td class="text-center text-muted"><?php echo $language->getId(); ?></td>
-					<td class="text-center"><i class="<?php printf('famfamfam-flag-%s', $language->getFlag()); ?>"></i> <?php echo $language->getName(); ?></td>
-					<td class="text-center"><?php echo $language->getCode(); ?></td>
-					<td class="text-center col-md-1">
-                        <?php echo Element::number(sprintf('order[%s]', $language->getId()), $language->getOrder(), array('class' => 'form-control center-block', 'min' => '0')); ?>
-					</td>
-					<td class="text-center">
-                        <?php echo Element::checkbox(sprintf('published[%s]', $language->getId()), $language->getPublished()); ?>
-					</td>
-					<td class="text-center">
-                        <?php echo Element::radio('default', $language->getId(), $language->getDefault()); ?>
-					</td>
-					<td class="text-center">
-						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this language'); ?>" data-button="edit" href="<?php echo $this->url('Cms:Admin:Languages@editAction', $language->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this language'); ?>" data-button="delete" data-url="<?php echo $this->url('Cms:Admin:Languages@deleteAction', $language->getId()); ?>" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-					</td>
-				</tr>
-				<?php endforeach; ?>
-			</tbody>
-			<?php endif; ?>
-		</table>
+        <?= Grid::render($langs, array(
+            'batch' => true,
+            'pk' => 'id',
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => array(
+                array(
+                    'column' => 'id',
+                    'label' => '#'
+                ),
 
+                array(
+                    'column' => 'flag',
+                    'value' => function($language){
+                        return sprintf('<i class="famfamfam-flag-%s"></i>', $language->getFlag());
+                    }
+                ),
+
+                array(
+                    'column' => 'code'
+                ),
+
+                array(
+                    'column' => 'name'
+                ),
+
+                array(
+                    'column' => 'order',
+                    'value' => function($language){
+                        return Element::number(sprintf('order[%s]', $language->getId()), $language->getOrder(), array('class' => 'form-control center-block', 'min' => '0'));
+                    }
+                ),
+
+                array(
+                    'column' => 'published',
+                    'value' => function($language){
+                        return Element::checkbox(sprintf('published[%s]', $language->getId()), $language->getPublished());
+                    }
+                ),
+
+                array(
+                    'column' => 'default',
+                    'value' => function($language){
+                        return Element::radio('default', $language->getId(), $language->getDefault());
+                    }
+                )
+            ),
+
+            'actions' => array(
+                'edit' => function($language){
+                    return Icon::edit(
+                        $this->url('Cms:Admin:Languages@editAction', $language->getId()),
+                        $this->translate('Edit this language')
+                    );
+                },
+
+                'remove' => function($language){
+                    return Icon::remove(
+                        $this->url('Cms:Admin:Languages@deleteAction', $language->getId()),
+                        $this->translate('Remove this language')
+                    );
+                }
+            )
+
+        ), $this->translator); ?>        
 		<?php if (empty($langs)): ?>
 		<div class="center-block">
 			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No languages'); ?></h2>
