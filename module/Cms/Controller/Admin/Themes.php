@@ -81,9 +81,9 @@ final class Themes extends AbstractController
      */
     public function deleteManyAction()
     {
-        if ($this->request->hasPost('toDelete')) {
+        if ($this->request->hasPost('batch')) {
             // Grab theme names to be removed
-            $themes = array_keys($this->request->getPost('toDelete'));
+            $themes = array_keys($this->request->getPost('batch'));
 
             if ($this->createThemeService()->dropThemes($themes)) {
                 $this->flashBag->set('success', 'Selected themes have been removed successfully');

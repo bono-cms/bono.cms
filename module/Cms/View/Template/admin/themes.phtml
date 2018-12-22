@@ -1,7 +1,10 @@
-<?php defined('KRYSTAL') or die; ?>
 <?php
 
+use Krystal\Grid\Grid;
 use Krystal\Form\Element;
+use Cms\View\Icon;
+
+defined('KRYSTAL') or die;
 
 ?>
 
@@ -28,78 +31,62 @@ use Krystal\Form\Element;
 
 <form>
     <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th class="text-center text-muted">#</th>
-                    <th class="text-center"><?php $this->show('Cover'); ?></th>
-                    <th class="text-center"><?php $this->show('Current'); ?></th>
-                    <th class="text-center"><?php $this->show('Name'); ?></th>
-                    <th class="text-center"><?php $this->show('Version'); ?></th>
-                    <th class="text-center"><?php $this->show('Description'); ?></th>
-                    <th class="text-center"><?php $this->show('Author'); ?></th>
-                    <th class="text-center"><?php $this->show('Actions'); ?></th>
-                </tr>
-            </thead>
-            
-            <?php if (!empty($themes)): ?>
-            <tbody>
-                <?php foreach ($themes as $data): ?>
-                <tr>
-                    <td class="text-center text-muted">
-                        <?php echo Element::checkbox(sprintf('toDelete[%s]', $data['theme']), null, array(), false); ?>
-                    </td>
-                    <td class="text-center">
-                        <img class="img-responsive" src="<?php echo $data['cover']; ?>" />
-                    </td>
-                    <td class="text-center">
-                        <?php echo Element::radio('current', $data['theme'], $current == $data['theme']); ?>
-                    </td>
-                    <td class="text-center">
-                        <?php if (isset($data['name'])): ?>
-                        <?php echo $data['name']; ?>
-                        <?php else: ?>
-                        <em class="text-danger"><?php $this->show('No value'); ?></em>
-                        <?php endif; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php if (isset($data['version'])): ?>
-                        <?php echo $data['version']; ?>
-                        <?php else: ?>
-                        <em class="text-danger"><?php $this->show('No value'); ?></em>
-                        <?php endif; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php if (isset($data['description'])): ?>
-                        <?php $this->show($data['description']); ?>
-                        <?php else: ?>
-                        <em class="text-danger"><?php $this->show('No value'); ?></em>
-                        <?php endif; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php if (isset($data['author'])): ?>
-                        <?php echo $data['author']; ?>
-                        <?php else: ?>
-                        <em class="text-danger"><?php $this->show('No value'); ?></em>
-                        <?php endif; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php if ($current !== $data['theme']): ?>
-						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this theme'); ?>" data-button="delete" data-url="<?php echo $this->url('Cms:Admin:Themes@deleteAction', $data['theme']); ?>" href="#" ><i class="glyphicon glyphicon-remove"></i></a>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-            <?php endif; ?>
-            
-        </table>
+        <?= Grid::render($themes, array(
+            'batch' => true,
+            'pk' => 'theme',
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => array(
+                array(
+                    'column' => 'cover',
+                    'value' => function($theme){
+                        return Element::image($theme['cover'], array('class' => 'img-responsive'));
+                    }
+                ),
+
+                array(
+                    'column' => 'current',
+                    'value' => function($theme) use ($current){
+                        return Element::radio('current', $theme['theme'], $current == $theme['theme']);
+                    }
+                ),
+
+                array(
+                    'column' => 'name'
+                ),
+
+                array(
+                    'column' => 'version'
+                ),
+
+                array(
+                    'column' => 'description'
+                ),
+
+                array(
+                    'column' => 'author'
+                )
+            ),
+
+            'actions' => array(
+                'remove' => function($theme) use ($current){
+                    // Don't let to remove current theme
+                    if ($theme['theme'] !== $current) {
+                        return Icon::remove(
+                            $this->url('Cms:Admin:Themes@deleteAction', $theme['theme']),
+                            $this->translate('Remove this theme')
+                        );
+                    } else {
+                        return null;
+                    }
+                }
+            )
+
+        ), $this->translator); ?>
 
         <?php if (empty($themes)): ?>
         <div class="center-block">
             <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No themes'); ?></h2>
         </div>
         <?php endif; ?>
-        
     </div>
 </form>
