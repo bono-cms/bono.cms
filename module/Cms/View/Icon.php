@@ -62,7 +62,8 @@ final class Icon
     public static function details($url, $hint)
     {
         return self::button('glyphicon glyphicon-fullscreen', $url, $hint, array(
-            'data-button' => 'details'
+            'data-button' => 'details',
+            'data-url' => $url
         ));
     }
 
