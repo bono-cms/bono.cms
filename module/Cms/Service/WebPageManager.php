@@ -215,7 +215,9 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         $result = array();
 
         // Append home URL first
-        $result[] = $this->createHomeUrl($base, $language);
+        $result[] = array(
+            'location' => $this->createHomeUrl($base, $language)
+        );
 
         foreach ($rows as $row) {
             $module = $this->cleanModuleName($row['module']);
@@ -227,7 +229,10 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
                 // Now make sure all special characters are escaped
                 $url = htmlspecialchars($url, \ENT_QUOTES, 'UTF-8');
 
-                $result[] = $url;
+                $result[] = array(
+                    'location' => $url,
+                    'lastmod' => $row['lastmod']
+                );
             }
         }
 
