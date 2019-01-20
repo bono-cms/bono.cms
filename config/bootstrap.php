@@ -16,6 +16,7 @@ chdir(dirname(__DIR__));
 
 require('vendor/autoload.php');
 require(__DIR__ . '/functions.php');
-require(__DIR__ . '/environment.php');
+
+$_ENV = array_replace_recursive($_ENV, require(__DIR__ . '/environment.php'));
 
 return \Krystal\Application\KernelFactory::build(require(__DIR__.'/app.php'));
