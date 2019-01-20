@@ -17,6 +17,7 @@ use Krystal\Db\Sql\RawSqlFragment;
 use Krystal\Text\SlugGenerator;
 use Krystal\Text\TextUtils;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Date\TimeHelper;
 
 abstract class AbstractMapper extends BaseMapper
 {
@@ -37,6 +38,7 @@ abstract class AbstractMapper extends BaseMapper
     const PARAM_COLUMN_SLUG = 'slug';
     const PARAM_COLUMN_CONTROLLER = 'controller';
     const PARAM_COLUMN_MODULE = 'module';
+    const PARAM_COLUMN_LASTMOD = 'lastmod';
 
     /**
      * Fetches web page's slug by its associated id
@@ -378,7 +380,8 @@ abstract class AbstractMapper extends BaseMapper
             self::PARAM_COLUMN_TARGET_ID => (int) $translation[self::PARAM_COLUMN_ID],
             self::PARAM_COLUMN_MODULE => $module,
             self::PARAM_COLUMN_CONTROLLER => $controller,
-            self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG]
+            self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG],
+            self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow()
         );
 
         // Add web page entry
@@ -411,8 +414,14 @@ abstract class AbstractMapper extends BaseMapper
             $translation[self::PARAM_COLUMN_SLUG] = $this->getUniqueSlug($translation[self::PARAM_COLUMN_SLUG]);
         }
 
+        // Web page data to be updated
+        $webPage = array(
+            self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG],
+            self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow()
+        );
+
         // Update web page
-        $this->db->update(WebPageMapper::getTableName(), array(self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG]))
+        $this->db->update(WebPageMapper::getTableName(), $webPage)
                  ->whereEquals(self::PARAM_COLUMN_ID, $translation[self::PARAM_COLUMN_WEB_PAGE_ID])
                  ->execute();
 

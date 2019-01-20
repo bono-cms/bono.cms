@@ -7,8 +7,9 @@ CREATE TABLE `bono_module_cms_webpages` (
  `target_id` INT NOT NULL COMMENT 'Id to be passed to a controller`',
  `slug` varchar(254) NOT NULL COMMENT 'URL path itself',
  `module` varchar(50) NOT NULL COMMENT '',
- `controller` varchar(254) NOT NULL COMMENT 'Framework-compliant controller'
-	
+ `controller` varchar(254) NOT NULL COMMENT 'Framework-compliant controller',
+ `lastmod` DATETIME NOT NULL COMMENT 'Last modification time'
+
 ) DEFAULT CHARSET=UTF8;
 
 CREATE INDEX `webpage` ON `bono_module_cms_webpages`(slug) using HASH;
