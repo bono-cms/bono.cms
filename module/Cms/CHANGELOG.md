@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In administration panel added tab state saver
  * In sitemap added last modification time
  * In mailer service added optional ability to send file attachments
  * Added `$cms` site service
