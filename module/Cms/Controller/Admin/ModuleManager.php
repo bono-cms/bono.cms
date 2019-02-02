@@ -134,7 +134,7 @@ final class ModuleManager extends AbstractController
      */
     public function deleteManyAction()
     {
-        $modules = array_keys($this->request->getPost('toDelete', array()));
+        $modules = array_keys($this->request->getPost('batch', array()));
 
         if (!empty($modules)) {
             foreach ($modules as $module) {

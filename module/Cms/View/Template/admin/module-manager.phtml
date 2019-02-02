@@ -1,5 +1,8 @@
 <?php
 
+use Krystal\Grid\Grid;
+use Krystal\Form\Element;
+use Cms\View\Icon;
 use Cms\Service\ThemeService;
 
 defined('KRYSTAL') or die;
@@ -22,53 +25,56 @@ defined('KRYSTAL') or die;
 
 <h2 class="page-header"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Modules'); ?> <span class="text-muted">(<?php echo count($modules); ?>)</span></h2>
 
-<div class="table-responsive">
-    <form>
-        <table class="table table-hover table-bordered table-striped table-condensed">
-            <thead>
-                <tr>
-                    <th class="text-center">
-                        <?php if (!empty($modules)): ?>
-                        <input type="checkbox" />
-                        <?php endif; ?>
-                    </th>
-                    <th class="text-center"><?php $this->show('Icon'); ?></th>
-                    <th class="text-center"><?php $this->show('Name'); ?></th>
-                    <th class="text-center"><?php $this->show('Description'); ?></th>
-                    <th></th>
-                </tr>
-            </thead>
-            
-            <?php if (!empty($modules)): ?>
-            <tbody>
-                <?php foreach ($modules as $module): ?>
-                <tr>
-                    <td class="text-center">
-                        <?php if (!$moduleManager->isCoreModule($module['name'])): ?>
-                        <input type="checkbox" name="toDelete[<?php echo $module['name']; ?>]" />
-                        <?php endif; ?>
-                    </td>
-                    <td class="text-center col-lg-2">
-                        <a href="<?php echo $this->url($module['route']); ?>"><img class="module-icon" src="<?= ThemeService::createIconPath($module['name']); ?>"></a>
-                    </td>
-                    <td class="text-center"><?php $this->show($module['caption']); ?></td>
-                    <td class="text-center"><?php $this->show($module['description']); ?></td>
-                    <td class="text-center">
-                        <?php if (!$moduleManager->isCoreModule($module['name'])): ?>
-                        <a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this module'); ?>" data-button="delete" href="#" data-url="<?php echo $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                
-                <?php endforeach; ?>
-            </tbody>
-            <?php endif; ?>
-        </table>
-        
+<form>
+    <div class="table-responsive">
+        <?= Grid::render($modules, array(
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'pk' => 'name',
+            'batch' => true,
+            'batchCallback' => function($module) use ($moduleManager){
+                return !$moduleManager->isCoreModule($module['name']);
+            },
+            'columns' => array(
+                array(
+                    'column' => 'route',
+                    'value' => function($module){
+                        $image = Element::image(ThemeService::createIconPath($module['name']), array('class' => 'module-icon'));
+                        $url = is_array($module['route']) ? call_user_func_array(array($this, 'url'), $module['route']) : $this->url($module['route']);
+
+                        return Element::link($image, $url);
+                    }
+                ),
+
+                array(
+                    'column' => 'caption',
+                    'translateable' => true
+                ),
+
+                array(
+                    'column' => 'description',
+                    'translateable' => true
+                )
+            ),
+
+            'actions' => array(
+                'remove' => function($module) use ($moduleManager){
+                    if (!$moduleManager->isCoreModule($module['name'])) {
+                        return Icon::remove(
+                            $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']),
+                            $this->translate('Remove this module')
+                        );
+                    } else {
+                        return null;
+                    }
+                }
+            )
+
+        ), $this->translator); ?>
+
         <?php if (empty($modules)): ?>
         <div class="center-block">
             <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No modules'); ?></h2>
         </div>
         <?php endif; ?>
-    </form>
-</div>
+    </div>
+</form>
