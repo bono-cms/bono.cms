@@ -42,8 +42,9 @@ return array(
 		/**
 		 * Router configuration
 		 */
-		'router' => array(
+        'router' => array(
 			'default' => 'Site:Main@notFoundAction',
+            'ssl' => false
 		),
 
         /**
