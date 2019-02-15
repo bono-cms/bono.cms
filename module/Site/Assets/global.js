@@ -257,6 +257,7 @@ if (!(window.jQuery)){
         $("[data-button='submit']").click(function(){
             // Find its parent form
             var $form = $(this).closest('form');
+            var $button = $(this);
 
             $form.off('submit').submit(function(event){
                 event.preventDefault();
@@ -271,6 +272,14 @@ if (!(window.jQuery)){
                     processData: false,
                     data: new FormData($(this)[0]),
                     type: method,
+                    beforeSend: function(){
+                        // Disable while sending request
+                        $button.addClass('disabled').prop('disabled', true);
+                    },
+                    complete: function(){
+                        // Enable as soon as AJAX-request is finished
+                        $button.removeClass('disabled').prop('disabled', false);
+                    },
                     success: function(response){
                         $.getValidator($form).handleAll(response, $self.data('back-url'));
                     }
