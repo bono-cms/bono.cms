@@ -1,43 +1,16 @@
-<?php defined('KRYSTAL') or die; ?>
-	
-	<?php if (isset($paginator) && $paginator->hasPages()): ?>
-	
-	<nav class="pull-right">
-	  <ul class="pagination">
-		<?php if ($paginator->hasPreviousPage()): ?>
-		<li>
-		  <a href="<?php echo $paginator->getPreviousPageUrl(); ?>" aria-label="Previous">
-			<span aria-hidden="true"> &laquo; <?php $this->show('Previous'); ?></span>
-		  </a>
-		</li>
-		<?php endif; ?>
-		
-		<?php foreach ($paginator->getPageNumbers() as $page): ?>
-		<?php if (is_numeric($page)): ?>
-		<?php if ($paginator->isCurrentPage($page)): ?>
-		
-		<li class="active"><a href="<?php echo $paginator->getUrl($page); ?>"><?php echo $page; ?></a></li>
-		<?php else: ?>
-		
-		<li><a href="<?php echo $paginator->getUrl($page); ?>"><?php echo $page; ?></a></li>
-		<?php endif; ?>
-		
-		<?php else: ?>
-		<li><a href="#"><?php echo $page; ?></a></li>
-		<?php endif; ?>
-		<?php endforeach; ?>
-		
-		<?php if ($paginator->hasNextPage()): ?>
-		<li class="next" aria-label="Next">
-		 <a href="<?php echo $paginator->getNextPageUrl(); ?>">
-		  <span aria-hidden="true"><?php $this->show('Next'); ?> &raquo;</span>
-		 </a>
-		</li>
-		<?php endif; ?>
-		
-	  </ul>
-	</nav>
-	
-	<div class="clearfix"></div>
-	
-	<?php endif; ?>
+<?php
+
+use Krystal\Widget\Pagination\PaginationWidget;
+
+defined('KRYSTAL') or die;
+
+?>
+
+<?php if (isset($paginator)): ?>
+<nav class="pull-right">
+    <?= $this->widget(new PaginationWidget($paginator, array(
+        'previousCaption' => $this->translate('Previous'),
+        'nextCaption' => $this->translate('Next')
+    ))); ?>
+</nav>
+<?php endif; ?>
