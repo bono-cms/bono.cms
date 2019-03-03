@@ -1,6 +1,6 @@
 <?php
 
-use Krystal\Grid\Grid;
+use Krystal\Widget\GridView\GridViewWidget;
 use Krystal\Form\Element;
 use Cms\View\Icon;
 use Cms\Service\ThemeService;
@@ -27,7 +27,7 @@ defined('KRYSTAL') or die;
 
 <form>
     <div class="table-responsive">
-        <?= Grid::render($modules, array(
+        <?= $this->widget(new GridViewWidget($modules, array(
             'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
             'pk' => 'name',
             'batch' => true,
@@ -68,13 +68,13 @@ defined('KRYSTAL') or die;
                     }
                 }
             )
-
-        ), $this->translator); ?>
+        ))); ?>
 
         <?php if (empty($modules)): ?>
         <div class="center-block">
             <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No modules'); ?></h2>
         </div>
         <?php endif; ?>
+
     </div>
 </form>

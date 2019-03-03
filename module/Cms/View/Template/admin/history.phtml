@@ -1,6 +1,6 @@
 <?php
 
-use Krystal\Grid\Grid;
+use Krystal\Widget\GridView\GridViewWidget;
 use Krystal\Form\Element;
 use Cms\View\Icon;
 
@@ -11,7 +11,7 @@ defined('KRYSTAL') or die;
 <?php $this->loadPartial('items-per-page', array('caption' => 'History')); ?>
 
 <div class="table-responsive">
-    <?= Grid::render($records, array(
+    <?= $this->widget(new GridViewWidget($records, array(
         'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
         'columns' => array(
             array(
@@ -54,8 +54,7 @@ defined('KRYSTAL') or die;
                 }
             )
         )
-
-    ), $this->translator); ?>
+    ))); ?>
 
     <?php if (empty($records)): ?>
     <div class="center-block">

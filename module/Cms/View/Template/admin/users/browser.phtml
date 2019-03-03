@@ -1,6 +1,6 @@
 <?php
 
-use Krystal\Grid\Grid;
+use Krystal\Widget\GridView\GridViewWidget;
 use Krystal\Form\Element;
 use Cms\View\Icon;
 
@@ -16,7 +16,7 @@ defined('KRYSTAL') or die;
 
 <form>
 	<div class="table-responsive">
-        <?= Grid::render($users, array(
+        <?= $this->widget(new GridViewWidget($users, array(
             'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
             'columns' => array(
                 array(
@@ -52,13 +52,13 @@ defined('KRYSTAL') or die;
                     );
                 }
             )
-
-        ), $this->translator); ?>
+        ))); ?>
 
 		<?php if (empty($users)): ?>
 		<div class="center-block">
             <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No users'); ?></h2>
 		</div>
 		<?php endif; ?>
+
 	</div>
 </form>

@@ -1,6 +1,6 @@
 <?php
 
-use Krystal\Grid\Grid;
+use Krystal\Widget\GridView\GridViewWidget;
 use Krystal\Form\Element;
 use Cms\View\Icon;
 
@@ -32,7 +32,7 @@ defined('KRYSTAL') or die;
 
 <form>
 	<div class="table-responsive">
-        <?= Grid::render($langs, array(
+        <?= $this->widget(new GridViewWidget($langs, array(
             'batch' => true,
             'pk' => 'id',
             'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
@@ -94,13 +94,13 @@ defined('KRYSTAL') or die;
                     );
                 }
             )
-
-        ), $this->translator); ?>        
+        ))); ?>
+        
 		<?php if (empty($langs)): ?>
 		<div class="center-block">
 			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No languages'); ?></h2>
 		</div>
 		<?php endif; ?>
-		
+
 	</div>
 </form>
