@@ -468,23 +468,39 @@ $(function(){
     $("[data-toggle='tooltip']").tooltip({
         placement: $(this).data('placement')
     });
-    
-    $("[data-button='slug']").click(function(event){
+
+    // Run slug update on click
+    $("[data-slug-selector]").click(function(event){
         event.preventDefault();
+
+        // Value container
+        var $input = $(this).parentsUntil(".form-group").find("input"); // Assume, there must be only one input per unique selector
+
+        // Make sure input with provided selector really exist, first
+        if ($input.length == 0) {
+            throw new Error('Could not find closest input element that contains slug');
+        }
+
+        var selector = $(this).attr('data-slug-selector');  // Target selector
+        var raw = $(selector).val(); // Raw value from selector
+        var url = $("[name='slug-refresh-url']").val(); // This input is available in layout globally
+
         $.ajax({
-            url : $("[name='slug-refresh-url']").val(),
+            method: "GET",
+            url : url, 
             data : {
-                title : $("[data-input='title']").val()
+                raw : raw
             },
             beforeSend : function(){
                 // Cancel global beforeSend() with this empty function
             },
             success : function(response){
-                $("[data-input='slug']").val(response);
+                // Update selector's value
+                $input.val(response);
             }
         });
     });
-    
+
     $("[data-button='per-page-changer']").change(function(event){
         var value = $(this).val();
         $.ajax({

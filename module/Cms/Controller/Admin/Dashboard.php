@@ -140,7 +140,7 @@ final class Dashboard extends AbstractController
      */
     public function slugAction()
     {
-        $title = $this->request->getPost('title');
-        return $this->getService('Cms', 'webPageManager')->sluggify($title);
+        $raw = $this->request->getQuery('raw');
+        return $this->getService('Cms', 'webPageManager')->sluggify($raw);
     }
 }

@@ -62,6 +62,21 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Generates selector for arrbitary input
+     * 
+     * @param int $languageId
+     * @param string $key Input name
+     * @return string
+     */
+    public static function generateSelector($languageId, $key = 'name')
+    {
+        $selector = sprintf('[name="translation[%s][%s]"]', $languageId, $key);
+        $selector = Filter::specialChars($selector);
+
+        return $selector;
+    }
+
+    /**
      * Finds entity in collection by associated language ID
      * 
      * @param string $languageId
