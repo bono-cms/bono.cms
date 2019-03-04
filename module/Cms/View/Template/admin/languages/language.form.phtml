@@ -7,11 +7,10 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<form data-group="language">
+<form data-group="language" autocomplete="off">
 	<div class="well">
-		
         <?php echo Element::hidden('language[id]', $language->getId()); ?>
-        
+
 		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
@@ -37,11 +36,9 @@ defined('KRYSTAL') or die;
 			<div class="col-lg-10">
 				<div class="input-group">
 					<select name="language[flag]" class="form-control">
-						
 						<?php foreach ($countries as $code => $name): ?>
 						<option data-flag="<?php printf('famfamfam-flag-%s', $code); ?>" <?php HtmlHelper::selectOnDemand($code == $language->getFlag()); ?> value="<?php echo $code; ?>"><?php echo $name; ?></option>
 						<?php endforeach; ?>
-						
 					</select>
 					
 					<span class="input-group-addon"><i data-container="flag" class="glyphicon glyphicon-pencil"></i></span>

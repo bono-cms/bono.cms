@@ -1,7 +1,7 @@
 <?php if (count($languages) > 1): ?>
-<ul class="nav nav-tabs" role="tablist">
+<ul class="nav nav-tabs">
     <?php foreach ($languages as $index => $language): ?>
-    <li role="presentation" class="<?php echo $index == 0 ? 'active' : null; ?>"><a href="<?php printf('#language-%s', $language->getId()); ?>" role="tab" data-toggle="tab"><i class="<?php printf('famfamfam-flag-%s', $language->getFlag()); ?>"></i> <?php echo $language->getName(); ?></a></li>
+    <li class="nav-item <?php echo $index == 0 ? 'active' : null; ?>"><a class="nav-link" href="<?php printf('#language-%s', $language->getId()); ?>" role="tab" data-toggle="tab"><i class="<?php printf('famfamfam-flag-%s', $language->getFlag()); ?>"></i> <?php echo $language->getName(); ?></a></li>
     <?php endforeach; ?>
 </ul>
 

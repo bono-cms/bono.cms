@@ -9,22 +9,22 @@ defined('KRYSTAL') or die;
 ?>
 
 <div class="btn-toolbar">
-	<div class="btn-group">
+	<div class="dropdown">
 	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
 	  </button>
-	  <ul class="dropdown-menu">
-		 <li><a href="<?php echo $this->url('Cms:Admin:Languages@addAction'); ?>"><i class="glyphicon glyphicon-globe"></i> <?php $this->show('Add a language'); ?></a></li>
-		 <li class="divider"></li>
-		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
-		
+
+	  <div class="dropdown-menu">
+		 <a class="dropdown-item" href="<?php echo $this->url('Cms:Admin:Languages@addAction'); ?>"><i class="glyphicon glyphicon-globe"></i> <?php $this->show('Add a language'); ?></a>
+		 <div class="dropdown-divider"></div>
+		 <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
+
 		 <?php if (!empty($langs)): ?>
-		 <li><a href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Languages@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
+		 <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Languages@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
 		 <?php else: ?>
-		 <li class="disabled"><a><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
+		 <a class="dropdown-item disabled"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
 		 <?php endif; ?>
-		 
-	  </ul>
+	  </div>
 	</div>
 </div>
 
@@ -35,7 +35,7 @@ defined('KRYSTAL') or die;
         <?= $this->widget(new GridViewWidget($langs, array(
             'batch' => true,
             'pk' => 'id',
-            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'tableClass' => 'table table-hover table-bordered table-striped table-sm',
             'columns' => array(
                 array(
                     'column' => 'id',

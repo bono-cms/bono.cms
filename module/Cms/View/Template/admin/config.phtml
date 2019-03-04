@@ -1,18 +1,17 @@
-<?php defined('KRYSTAL') or die; ?>
 <?php
 
 use Krystal\Form\Element;
+defined('KRYSTAL') or die;
 
 ?>
 
-<form data-group="config">
-
+<form data-group="config" autocomplete="off">
 	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
-		<li role="presentation"><a href="#maintenance" role="tab" data-toggle="tab"><i class="fa fa-life-ring"></i> <?php $this->show('Maintenance'); ?></a></li>
-		<li role="presentation"><a href="#mail" role="tab" data-toggle="tab"><i class="fa fa-envelope"></i> <?php $this->show('Mail'); ?></a></li>
+		<li role="presentation" class="nav-item active"><a class="nav-link" href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
+		<li role="presentation" class="nav-item"><a class="nav-link" href="#maintenance" role="tab" data-toggle="tab"><i class="fa fa-life-ring"></i> <?php $this->show('Maintenance'); ?></a></li>
+		<li role="presentation" class="nav-item"><a class="nav-link" href="#mail" role="tab" data-toggle="tab"><i class="fa fa-envelope"></i> <?php $this->show('Mail'); ?></a></li>
 	</ul>
-	
+
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="common" role="tabpanel">
 			<div class="well">

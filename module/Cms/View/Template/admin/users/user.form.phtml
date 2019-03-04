@@ -1,13 +1,12 @@
-<?php defined('KRYSTAL') or die; ?>
 <?php
 
 use Krystal\Form\Element;
+defined('KRYSTAL') or die;
 
 ?>
 
 <form data-group="user">
 	<div class="well">
-		
         <?php echo Element::hidden('user[id]', $user->getId()); ?>
         <?php echo Element::hidden('user[password_hash]', $user->getPasswordHash()); ?>
 		
@@ -77,18 +76,13 @@ use Krystal\Form\Element;
 	
 	<?php if (!$user->getId()): ?>
 	<button data-button="add" data-back-url="<?php echo $this->url('Cms:Admin:Users@editAction', null); ?>" data-url="<?php echo $this->url('Cms:Admin:Users@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
-	
 	<?php else: ?>
 	<button data-button="save" data-url="<?php echo $this->url('Cms:Admin:Users@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
-	
 	<?php endif; ?>
 	
 	<?php if ($role->isDeveloper()): ?>
 	<button data-button="cancel" data-url="<?php echo $this->url('Cms:Admin:Users@gridAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
-	
 	<?php else: ?>
 	<button data-button="dashboard" data-url="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
-	
 	<?php endif; ?>
-	
 </form>
