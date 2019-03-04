@@ -464,10 +464,8 @@ $(function(){
             }
         });
     });
-    
-    $("[data-toggle='tooltip']").tooltip({
-        placement: $(this).data('placement')
-    });
+
+    $("[data-toggle='tooltip']").tooltip();
 
     // Run slug update on click
     $("[data-slug-selector]").click(function(event){

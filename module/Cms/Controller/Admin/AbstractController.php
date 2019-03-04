@@ -254,8 +254,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 
         $this->view->getPluginBag()->load(array(
             'jquery',
-            'bootstrap.core',
-            'bootstrap.cosmo',
+            'bootstrap',
             'famfam-flag',
             'font-awesome',
             'admin',

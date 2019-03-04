@@ -3,8 +3,6 @@
  */
 
 .actions {
-    position: absolute;
-    bottom: 17px;
 }
 
 .module-icon {
@@ -158,10 +156,10 @@ header {
 }
 
 main {
- margin: 20px;
  background-color: #fff;
  padding: 16px 12px 16px 12px;
  position: relative;
+ top: 35px;
 }
 
 @media(min-width: 768px){
