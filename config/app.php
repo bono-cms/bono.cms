@@ -182,30 +182,14 @@ return array(
                     )
                 ),
 
-                'bootstrap.cosmo' => array(
+                'bootstrap' => array(
                     'stylesheets' => array(
-                        '@Site/plugins/bootstrap/css/yeti.min.css'
-                    )
-                ),
-
-                'bootstrap.blue' => array(
-                    'stylesheets' => array(
-                        '@Site/plugins/bootstrap/css/bootstrap.min.css',
-                        '@Site/plugins/bootstrap/css/bootstrap-theme.min.css'
-                    )
-                ),
-
-                'bootstrap.default' => array(
-                    'stylesheets' => array(
-                        '@Site/plugins/bootstrap/css/bootstrap.min.css'
-                    )
-                ),
-                
-                'bootstrap.core' => array(
+                        '@Cms/plugins/bootstrap-4/css/pulse.min.css'
+                    ),
                     'scripts' => array(
-                        '@Site/plugins/bootstrap/js/bootstrap.min.js',
+                        '@Cms/plugins/bootstrap-4/js/bootstrap.bundle.min.js',
                     )
-                )
+                ),
             )
         ),
 
