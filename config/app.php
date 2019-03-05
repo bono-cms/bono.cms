@@ -186,10 +186,27 @@ return array(
                     'stylesheets' => array(
                         '@Cms/plugins/bootstrap-4/css/pulse.min.css'
                     ),
+
                     'scripts' => array(
-                        '@Cms/plugins/bootstrap-4/js/bootstrap.bundle.min.js',
+                        '@Cms/plugins/bootstrap-4/js/bootstrap.bundle.min.js'
                     )
                 ),
+
+                'font-awesome-5' => array(
+                    'stylesheets' => array(
+                        '@Cms/plugins/font-awesome-5/css/all.min.css'
+                    )
+                ),
+
+                'jquery.mCustomScrollbar' => array(
+                    'stylesheets' => array(
+                        '@Cms/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.min.css'
+                    ),
+
+                    'scripts' => array(
+                        '@Cms/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js'
+                    )
+                )
             )
         ),
 
