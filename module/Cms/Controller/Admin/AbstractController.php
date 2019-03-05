@@ -75,13 +75,13 @@ abstract class AbstractController extends AbstractAuthAwareController
      * @param array $modulesConfiguration
      * @return array
      */
-    private function createBookmarks(array $modulesConfiguration)
+    private function createSidebarMenu(array $modulesConfiguration)
     {
         $output = array();
 
         foreach ($modulesConfiguration as $module) {
-            if (isset($module['bookmarks'])) {
-                $output[$module['name']] = $module['bookmarks'];
+            if (isset($module['menu'])) {
+                $output[] = $module['menu'];
             }
         }
 
@@ -247,7 +247,7 @@ abstract class AbstractController extends AbstractAuthAwareController
             'currentLanguage' => $languageManager->fetchByCurrentId(),
             'ppc' => $this->getPerPageCountGadget(),
             'queryLogger' => $this->db['mysql']->getQueryLogger(),
-            'bookmarks' => $this->createBookmarks($modulesConfiguration),
+            'sidebar' => $this->createSidebarMenu($modulesConfiguration),
             'modulesConfiguration' => $modulesConfiguration,
             'loadedModules' => $this->moduleManager->getLoadedModuleNames()
         ));
@@ -256,7 +256,8 @@ abstract class AbstractController extends AbstractAuthAwareController
             'jquery',
             'bootstrap',
             'famfam-flag',
-            'font-awesome',
+            'font-awesome-5',
+            'jquery.mCustomScrollbar',
             'admin',
             'to-top'
         ));
