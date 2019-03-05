@@ -176,12 +176,6 @@ return array(
                     ),
                 ),
 
-                'font-awesome' => array(
-                    'stylesheets' => array(
-                        '@Cms/plugins/font-awesome/css/font-awesome.min.css',
-                    )
-                ),
-
                 'bootstrap' => array(
                     'stylesheets' => array(
                         '@Cms/plugins/bootstrap-4/css/pulse.min.css'
