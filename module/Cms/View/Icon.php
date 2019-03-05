@@ -47,7 +47,7 @@ final class Icon
      */
     public static function approve($url, $hint)
     {
-        return self::button('glyphicon glyphicon-ok', $url, $hint, array(
+        return self::button('far fa-check-square', $url, $hint, array(
             'data-button' => 'approve'
         ));
     }
@@ -61,7 +61,7 @@ final class Icon
      */
     public static function details($url, $hint)
     {
-        return self::button('glyphicon glyphicon-fullscreen', $url, $hint, array(
+        return self::button('fas fa-receipt', $url, $hint, array(
             'data-button' => 'details',
             'data-url' => $url
         ));
@@ -76,7 +76,7 @@ final class Icon
      */
     public static function polls($url, $hint)
     {
-        return self::button('glyphicon glyphicon-star', $url, $hint);
+        return self::button('far fa-chart-bar', $url, $hint);
     }
 
     /**
@@ -88,7 +88,7 @@ final class Icon
      */
     public static function edit($url, $hint)
     {
-        return self::button('glyphicon glyphicon-pencil', $url, $hint, array(
+        return self::button('fas fa-edit', $url, $hint, array(
             'data-button' => 'edit'
         ));
     }
@@ -102,7 +102,7 @@ final class Icon
      */
     public static function view($url, $hint)
     {
-        return self::button('glyphicon glyphicon-search', $url, $hint, array(
+        return self::button('fas fa-search', $url, $hint, array(
             'data-button' => 'view',
             'target' => '_blank'
         ));
@@ -127,7 +127,7 @@ final class Icon
             $attrs['data-message'] = $message;
         }
 
-        return self::button('glyphicon glyphicon-fire', $url, $hint, $attrs);
+        return self::button('fas fa-fire', $url, $hint, $attrs);
     }
 
     /**
@@ -154,6 +154,6 @@ final class Icon
             $attrs['data-back-url'] = $backUrl;
         }
 
-        return self::button('glyphicon glyphicon-remove', $url, $hint, $attrs);
+        return self::button('fas fa-ban', $url, $hint, $attrs);
     }
 }
