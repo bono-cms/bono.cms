@@ -31,10 +31,8 @@ final class Auth extends AbstractController
         // If user is logged in already, then he should be redirected to a dashboard
         if ($this->getAuthService()->isLoggedIn()) {
             $this->redirectToRoute('Cms:Admin:Dashboard@indexAction');
-
         } else {
-            $this->view->getPluginBag()->appendStylesheet('@Cms/css/login.css')
-                                       ->appendScript('@Cms/admin/login.js');
+            $this->view->getPluginBag()->appendScript('@Cms/admin/login.js');
 
             $vars = array(
                 'captcha' => $this->authAttemptLimit->isReachedLimit(),
