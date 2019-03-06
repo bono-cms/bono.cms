@@ -37,31 +37,9 @@ final class Dashboard extends AbstractController
                    ->clear();
 
         return $this->view->render('dashboard', array(
-            'utilites' => $this->getItems(),
             'title' => 'Control panel',
             'notifications' => $this->getService('Cms', 'notificationManager')->getUnviewedCount(),
         ));
-    }
-
-    /**
-     * Returns items for the dashboard
-     * 
-     * @return array
-     */
-    private function getItems()
-    {
-        $utilites = array();
-        $path = dirname(dirname(__DIR__));
-        $basicItems = include($path . '/Config/dashboard.items.php');
-
-        if ($this->extendedMode) {
-            $extendeditems = include($path . '/Config/dashboard.items.rest.php');
-            $utilites = array_merge($basicItems, $extendeditems);
-        } else {
-            $utilites = $basicItems;
-        }
-
-        return $utilites;
     }
 
     /**
