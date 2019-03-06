@@ -1,16 +1,34 @@
 
-// Keep tabs state on refresh, taken from here: https://stackoverflow.com/a/10524697
+// Tab state persist for Bootstrap 4
 (function(){
-    // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        // save the latest tab; use cookies if you like 'em better:
-        localStorage.setItem('lastTab', $(this).attr('href'));
+    var storageKey = 'currentTab';
+
+    $('a[data-toggle="tab"]').on('click', function (e) {
+        var currentTab = $(this).attr('href');
+        var activeTabs = (window.localStorage.getItem(storageKey) ? window.localStorage.getItem(storageKey).split(',') : []);
+        var $children = $(e.target).parents('.nav-tabs').find('[data-toggle="tab"]');
+
+        $.each($children, function(index, element){
+            var tabId = $(element).attr('href');
+            if(currentTab != tabId && activeTabs.indexOf(tabId) !== -1) {
+                activeTabs.splice(activeTabs.indexOf(tabId), 1);
+            }
+        });
+
+        if (activeTabs.indexOf($(e.target).attr('href')) === -1) {
+            activeTabs.push($(e.target).attr('href'));
+        }
+
+        window.localStorage.setItem(storageKey, activeTabs.join(','));
     });
 
-    // go to the latest tab, if it exists:
-    var lastTab = localStorage.getItem('lastTab');
-    if (lastTab) {
-        $('[href="' + lastTab + '"]').tab('show');
+    var activeTabs = window.localStorage.getItem(storageKey);
+
+    if (activeTabs) {
+        var activeTabs = (window.localStorage.getItem(storageKey) ? window.localStorage.getItem(storageKey).split(',') : []);
+        $.each(activeTabs, function (index, element) {
+            $('[data-toggle="tab"][href="' + element + '"]').tab('show');
+        });
     }
 })();
 
@@ -92,6 +110,9 @@ $(function(){
 
 // Application
 $(function(){
+    $("#sidebar").mCustomScrollbar({
+        theme: "minimal"
+    });
 
     if (jQuery().datetimepicker) {
         $('[data-plugin="datetimepicker"]').datetimepicker({
@@ -112,13 +133,15 @@ $(function(){
         charset : "UTF-8",
         type : "POST",
         beforeSend  : function() {
-            $("#loader").modal();
+            $("#loader").modal("show");
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         complete : function() {
-            $("#loader").modal("hide");
+            $('#loader').on('shown.bs.modal', function(e){
+                $(this).modal("hide");
+            });
         },
         error : function(res) {
             console.log(res);
