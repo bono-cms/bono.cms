@@ -169,7 +169,6 @@
                 <?php endif; ?>
 
                 <?= $fragment; ?>
-
             </section>
         </div>
     </div>
@@ -178,8 +177,8 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php $this->show('Close'); ?></span></button>
             <h4 class="modal-title"><?php $this->show('Are you sure?'); ?></h4>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php $this->show('Close'); ?></span></button>
           </div>
           <div class="modal-body">
             <p><?php $this->show('Do you really want to delete this permanently?'); ?></p>
