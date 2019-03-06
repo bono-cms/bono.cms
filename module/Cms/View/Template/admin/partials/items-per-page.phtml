@@ -1,26 +1,29 @@
-<?php defined('KRYSTAL') or die; ?>
 <?php
 
 use Krystal\Form\Element;
+defined('KRYSTAL') or die;
 
 ?>
 
 <?php if (isset($paginator)): ?>
 
 <div class="per-page-container">
-	<h4 class="inline"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show($caption); ?> 
-	<?php if ($paginator->getSummary() != 0): ?>
-	<small> (<?php $this->show('Displayed'); ?> <?php echo $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?php echo $paginator->getTotalAmount(); ?>) </small>
-	<?php endif; ?>
-	</h4>
-	
-	<div class="pull-right">
-		<span class="help-block inline"><?php $this->show('Items per page'); ?>: </span>
-        <?php echo Element::select(null, $ppc->getPerPageCountValues(), $ppc->getPerPageCount(), array('data-button' => 'per-page-changer', 'data-url' => $this->url('Cms:Admin:Dashboard@itemsPerPageChangeAction'))); ?>
-	</div>
-	
-	<div class="clearfix"></div>
-    
+    <div class="row">
+        <div class="col-lg-6">
+            <span class="inline"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show($caption); ?> 
+                <?php if ($paginator->getSummary() != 0): ?>
+                <small> (<?php $this->show('Displayed'); ?> <?php echo $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?php echo $paginator->getTotalAmount(); ?>) </small>
+                <?php endif; ?>
+            </span>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="float-right">
+                <span class="help-block inline"><?php $this->show('Items per page'); ?>: </span>
+                <?php echo Element::select(null, $ppc->getPerPageCountValues(), $ppc->getPerPageCount(), array('data-button' => 'per-page-changer', 'data-url' => $this->url('Cms:Admin:Dashboard@itemsPerPageChangeAction'))); ?>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php else: ?>
