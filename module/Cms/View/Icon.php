@@ -57,14 +57,17 @@ final class Icon
      * 
      * @param string $url
      * @param string $hint
+     * @param array $attributes Extra attributes
      * @return string
      */
-    public static function details($url, $hint)
+    public static function details($url, $hint, array $attributes = array())
     {
-        return self::button('fas fa-receipt', $url, $hint, array(
+        $attributes = array_merge(array(
             'data-button' => 'details',
             'data-url' => $url
-        ));
+        ), $attributes);
+
+        return self::button('fas fa-receipt', $url, $hint, $attributes);
     }
 
     /**
