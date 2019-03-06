@@ -143,7 +143,7 @@ return array(
 
                 'jquery' =>	array(
                     'scripts' => array(
-                        '@Cms/plugins/jquery/1.11.2/jquery.min.js'
+                        '@Cms/plugins/jquery/3.3.1/jquery.min.js'
                     )
                 ),
 
