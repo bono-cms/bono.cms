@@ -15,6 +15,7 @@ defined('KRYSTAL') or die;
  <?php endforeach; ?>
 </head>
 <body>
+
 <section class="login">
     <div class="login-overlay">
         <div class="login-form">
@@ -58,7 +59,7 @@ defined('KRYSTAL') or die;
                 <?php endif; ?>
 
                 <div class="form-group">
-                    <button class="btn btn-primary btn-lg"><?php $this->show('Sign In'); ?></button>
+                    <button disabled type="submit" class="btn btn-primary btn-lg"><?php $this->show('Sign In'); ?></button>
                 </div>
             </form>
         </div>

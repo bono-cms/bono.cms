@@ -1,6 +1,6 @@
 
-$(window).load(function(){
-    $("button[type='submit']").removeClass('disabled');
+$(window).on('load', function(){
+    $("button[type='submit']").prop('disabled', false);
 });
 
 $(function(){
