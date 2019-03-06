@@ -6,7 +6,7 @@
  <meta name="viewport" content="width=device-width, initial-scale=1" />
  <meta name="csrf-token" content="<?php echo $csrfToken; ?>" />
  <title><?php $this->show(isset($title) ? $title : $this->getBreadcrumbBag()->getLastName()); ?></title>
- 
+
  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
  <link rel="stylesheet" media="screen" href="<?php echo $stylesheet; ?>"  />
  <?php endforeach; ?>
@@ -19,174 +19,187 @@
  <![endif]-->
 </head>
 <body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Bono CMS</h3>
+                <p>For those who love coding and Rock-n-Roll</p>
+            </div>
 
-<header>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-      <a class="navbar-brand" href="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><img src="<?php echo $this->moduleAsset('/bono-logo.png', 'Cms'); ?>" /></a>
-      <ul class="navbar-nav">
-        <?php if ($extendedMode): ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-            <?php $this->show('Debug'); ?>
-          </a>
-          <div class="dropdown-menu">
-             <span class="dropdown-item"><i class="fa fa-rocket" aria-hidden="true"></i> <?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?></span>
-             <span class="dropdown-item"><i class="fa fa-hourglass-o" aria-hidden="true"></i> <?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></span>
-             <span class="dropdown-item"><i class="fa fa-database" aria-hidden="true"></i> <?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></span>
-             <div class="dropdown-header"><?php $this->show('Web-server'); ?></div>
-             <span class="dropdown-item dropdown-item-text"><?php $this->show('PHP Version'); ?>: <?php echo PHP_VERSION; ?></span>
-             <span class="dropdown-item dropdown-item-text"><?php $this->show('OS'); ?>: <?php echo PHP_OS; ?></span>
-          </div>
-        </li>
-        <?php endif; ?>
+            <ul class="list-unstyled components">
+                <?php foreach ($sidebar as $parent): ?>
+                <?php $uniq = md5($parent['name']); ?>
+                <li>
+                    <a href="#<?= $uniq; ?>" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="<?= $parent['icon']; ?>"></i> <?= $this->translate($parent['name']); ?></a>
+                    <ul class="collapse list-unstyled" id="<?= $uniq; ?>">
+                        <?php foreach ($parent['items'] as $child): ?>
+                        <li><a href="<?= $this->url($child['route']); ?>"><?= $this->translate($child['name']); ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </nav>
 
-        <?php if (!empty($bookmarks)): ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-            <?php $this->show('Bookmarks'); ?>
-          </a>
-
-          <div class="dropdown-menu">
-            <?php foreach ($bookmarks as $name => $bookmark): ?>
-            <div class="dropdown-header"><?php $this->show($name); ?></div>
-            <?php foreach ($bookmark as $item): ?>
-            <a class="dropdown-item" href="<?php echo $this->url($item['controller']); ?>"><i class="<?php echo $item['icon']; ?>"></i>  <?php $this->show($item['name']); ?></a>
-            <?php endforeach; ?>
-            <?php endforeach; ?>
-          </div>
-        </li>
-        <?php endif; ?>
-
-        <?php if (count($languages) > 1): ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-            <i class="<?php printf('famfamfam-flag-%s',$currentLanguage->getFlag()); ?>"></i> <?php $this->show('Content'); ?>
-          </a>
-
-          <div class="dropdown-menu">
-            <?php foreach ($languages as $language): ?>
-            <a class="dropdown-item" data-url="<?php echo $this->url('Cms:Admin:Languages@changeAction'); ?>" data-button="change-content-language" data-language-id="<?php echo $language->getId(); ?>" href="#">
-                <i class="<?php printf('famfamfam-flag-%s', $language->getFlag()); ?>"></i> 
-                <?php if ($language->getId() == $currentLanguage->getId()): ?>
-                <strong> <?php echo $language->getName(); ?></strong>
-                <?php else: ?>
-                <span> <?php echo $language->getName(); ?></span>
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+              <ul class="navbar-nav ml-auto">
+                <?php if ($extendedMode): ?>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                    <?php $this->show('Debug'); ?>
+                  </a>
+                  <div class="dropdown-menu">
+                     <span class="dropdown-item"><i class="fa fa-rocket" aria-hidden="true"></i> <?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?></span>
+                     <span class="dropdown-item"><i class="fa fa-hourglass-o" aria-hidden="true"></i> <?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></span>
+                     <span class="dropdown-item"><i class="fa fa-database" aria-hidden="true"></i> <?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></span>
+                     <div class="dropdown-header"><?php $this->show('Web-server'); ?></div>
+                     <span class="dropdown-item dropdown-item-text"><?php $this->show('PHP Version'); ?>: <?php echo PHP_VERSION; ?></span>
+                     <span class="dropdown-item dropdown-item-text"><?php $this->show('OS'); ?>: <?php echo PHP_OS; ?></span>
+                  </div>
+                </li>
                 <?php endif; ?>
-            </a>
-            <?php endforeach; ?>
+
+                <?php if (!empty($bookmarks)): ?>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                    <?php $this->show('Bookmarks'); ?>
+                  </a>
+
+                  <div class="dropdown-menu">
+                    <?php foreach ($bookmarks as $name => $bookmark): ?>
+                    <div class="dropdown-header"><?php $this->show($name); ?></div>
+                    <?php foreach ($bookmark as $item): ?>
+                    <a class="dropdown-item" href="<?php echo $this->url($item['controller']); ?>"><i class="<?php echo $item['icon']; ?>"></i>  <?php $this->show($item['name']); ?></a>
+                    <?php endforeach; ?>
+                    <?php endforeach; ?>
+                  </div>
+                </li>
+                <?php endif; ?>
+
+                <?php if (count($languages) > 1): ?>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                    <i class="<?php printf('famfamfam-flag-%s',$currentLanguage->getFlag()); ?>"></i> <?php $this->show('Content'); ?>
+                  </a>
+
+                  <div class="dropdown-menu">
+                    <?php foreach ($languages as $language): ?>
+                    <a class="dropdown-item" data-url="<?php echo $this->url('Cms:Admin:Languages@changeAction'); ?>" data-button="change-content-language" data-language-id="<?php echo $language->getId(); ?>" href="#">
+                        <i class="<?php printf('famfamfam-flag-%s', $language->getFlag()); ?>"></i> 
+                        <?php if ($language->getId() == $currentLanguage->getId()): ?>
+                        <strong> <?php echo $language->getName(); ?></strong>
+                        <?php else: ?>
+                        <span> <?php echo $language->getName(); ?></span>
+                        <?php endif; ?>
+                    </a>
+                    <?php endforeach; ?>
+                  </div>
+                </li>
+                <?php endif; ?>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                    <?php $this->show('System'); ?>
+                  </a>
+
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/" target="_blank"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Open a site'); ?></a>
+                    <a class="dropdown-item" href="#" data-button="refresh"><i class="glyphicon glyphicon-refresh"></i> <?php $this->show('Refresh'); ?></a>
+                    <?php if (!$role->isGuest()): ?>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?php echo $this->url('Cms:Admin:Users@editAction', $role->getId()); ?>"><?php $this->show('Change the password'); ?></a>
+                    <?php endif; ?>
+
+                    <?php if ($role->isDeveloper()): ?>
+
+                    <div class="dropdown-header"><?php $this->show('Mode'); ?></div>
+                    <?php foreach ($mode->getModes() as $id => $name): ?>
+                    <?php if ($mode->isCurrent($id)): ?>
+                    <a class="dropdown-item" data-button="mode" data-mode-id="<?php echo $id; ?>" data-url="<?php echo $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"><i class="glyphicon glyphicon-ok"></i> <?php $this->show($name); ?></a>
+                    <?php else: ?>
+                    <a class="dropdown-item" data-button="mode" data-mode-id="<?php echo $id; ?>" data-url="<?php echo $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"> <?php $this->show($name); ?></a>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
+
+                    <?php endif; ?>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-button="logout" href="<?php echo $this->url('Cms:Admin:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-remove-circle"></i> <?php $this->show('Logout'); ?></a>
+                </li>
+              </ul>
+            </nav>
+
+            <section class="page">
+                <?php if ($this->getBreadcrumbBag()->has()): ?>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fa fa-home"></i> <?php $this->show('Dashboard'); ?></a></li>
+                  <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $breadcrumb): ?>
+                  <?php if ($breadcrumb->isActive()): ?>
+                  <li class="breadcrumb-item active"><?php $this->show($breadcrumb->getName()); ?></li>
+                  <?php else: ?>
+                  <li class="breadcrumb-item"><a href="<?php echo strpos($breadcrumb->getLink(), ':') !== false ? $this->url($breadcrumb->getLink()) : $breadcrumb->getLink(); ?>"><?php $this->show($breadcrumb->getName()); ?></a></li>
+                  <?php endif; ?>
+                  <?php endforeach; ?>
+                </ol>
+                <?php endif; ?>
+                
+                <?php if ($flashBag->has('success')):?>
+                <div class="alert alert-dismissable alert-success">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <span class="glyphicon glyphicon-ok"></span> <?php $this->show($flashBag->get('success')); ?>
+                </div>
+                <?php endif; ?>
+
+                <?php if ($flashBag->has('warning')): ?>
+                <div class="alert alert-dismissable alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <h4><?php $this->show('Warning!'); ?></h4>
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> <?php $this->show($flashBag->get('warning')); ?>
+                </div>
+                <?php endif; ?>
+
+                <?php if ($flashBag->has('info')): ?>
+                <div class="alert alert-dismissable alert-info">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <span class="glyphicon glyphicon-comment"></span> <?php $this->show($flashBag->get('info')); ?>
+                </div>
+                <?php endif; ?>
+
+                <?= $fragment; ?>
+
+            </section>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmation-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php $this->show('Close'); ?></span></button>
+            <h4 class="modal-title"><?php $this->show('Are you sure?'); ?></h4>
           </div>
-        </li>
-        <?php endif; ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-            <?php $this->show('System'); ?>
-          </a>
-
-          <div class="dropdown-menu">
-            <?php if (!$role->isGuest()): ?>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?php echo $this->url('Cms:Admin:Users@editAction', $role->getId()); ?>"><?php $this->show('Change the password'); ?></a>
-            <?php endif; ?>
-
-            <?php if ($role->isDeveloper()): ?>
-
-            <div class="dropdown-header"><?php $this->show('Mode'); ?></div>
-            <?php foreach ($mode->getModes() as $id => $name): ?>
-            <?php if ($mode->isCurrent($id)): ?>
-            <a class="dropdown-item" data-button="mode" data-mode-id="<?php echo $id; ?>" data-url="<?php echo $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"><i class="glyphicon glyphicon-ok"></i> <?php $this->show($name); ?></a>
-            <?php else: ?>
-            <a class="dropdown-item" data-button="mode" data-mode-id="<?php echo $id; ?>" data-url="<?php echo $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"> <?php $this->show($name); ?></a>
-            <?php endif; ?>
-            <?php endforeach; ?>
-
-            <?php endif; ?>
+          <div class="modal-body">
+            <p><?php $this->show('Do you really want to delete this permanently?'); ?></p>
           </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" data-button="refresh"><i class="glyphicon glyphicon-refresh"></i> <?php $this->show('Refresh'); ?></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/" target="_blank"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Open a site'); ?></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-button="logout" href="<?php echo $this->url('Cms:Admin:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-remove-circle"></i> <?php $this->show('Logout'); ?></a>
-        </li>
-      </ul>
-    </nav>
-</header>
+          <div class="modal-footer">
+            <button type="button" data-button="confirm-removal" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> <?php $this->show('Yes'); ?></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> <?php $this->show('No'); ?></button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<main>
-	<?php if ($this->getBreadcrumbBag()->has()): ?>
-	<ol class="breadcrumb">
-	  <li class="breadcrumb-item"><a href="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fa fa-home"></i> <?php $this->show('Dashboard'); ?></a></li>
-	  <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $breadcrumb): ?>
-	  <?php if ($breadcrumb->isActive()): ?>
-	  <li class="breadcrumb-item active"><?php $this->show($breadcrumb->getName()); ?></li>
-	  <?php else: ?>
-	  <li class="breadcrumb-item"><a href="<?php echo strpos($breadcrumb->getLink(), ':') !== false ? $this->url($breadcrumb->getLink()) : $breadcrumb->getLink(); ?>"><?php $this->show($breadcrumb->getName()); ?></a></li>
-	  <?php endif; ?>
-	  <?php endforeach; ?>
-	</ol>
-	<?php endif; ?>
-	
-	<?php if ($flashBag->has('success')):?>
-	<div class="alert alert-dismissable alert-success">
-		<button type="button" class="close" data-dismiss="alert">x</button>
-		<strong><span class="glyphicon glyphicon-ok"></span> <?php $this->show($flashBag->get('success')); ?></strong>
-	</div>
-	<?php endif; ?>
+    <?php $this->loadPartial('ajax'); ?>
 
-	<?php if ($flashBag->has('warning')): ?>
-	<div class="alert alert-dismissable alert-warning">
-		<button type="button" class="close" data-dismiss="alert">x</button>
-		<h4><?php $this->show('Warning!'); ?></h4>
-		<strong><span class="glyphicon glyphicon-exclamation-sign"></span> <?php $this->show($flashBag->get('warning')); ?></strong>
-	</div>
-	<?php endif; ?>
+    <!-- This value represents application language, which comes from application's configuration array -->
+    <input type="hidden" name="language" value="<?php echo $appConfig->getLanguage(); ?>" />
+    <input type="hidden" name="slug-refresh-url" value="<?php echo $this->url('Cms:Admin:Dashboard@slugAction'); ?>" />
 
-	<?php if ($flashBag->has('info')): ?>
-	<div class="alert alert-dismissable alert-info">
-		<button type="button" class="close" data-dismiss="alert">x</button>
-		<strong><span class="glyphicon glyphicon-comment"></span> <?php $this->show($flashBag->get('info')); ?></strong>
-	</div>
-	<?php endif; ?>
-
-	<?php echo $fragment; ?>
-</main>
-
-<footer>
- <?php /* No, you may not remove this copyright notice! */ ?>
- <p><?php $this->show('Powered by'); ?> <a href="<?php echo $paramBag->get('site'); ?>" target="_blank">Bono CMS v <?php echo $paramBag->get('version'); ?></a></p>
-</footer>
-	
-<div class="modal fade" id="confirmation-modal">
-  <div class="modal-dialog">
-	<div class="modal-content">
-	  <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php $this->show('Close'); ?></span></button>
-		<h4 class="modal-title"><?php $this->show('Are you sure?'); ?></h4>
-	  </div>
-	  <div class="modal-body">
-		<p><?php $this->show('Do you really want to delete this permanently?'); ?></p>
-	  </div>
-	  <div class="modal-footer">
-		<button type="button" data-button="confirm-removal" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> <?php $this->show('Yes'); ?></button>
-		<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> <?php $this->show('No'); ?></button>
-	  </div>
-	</div>
-  </div>
-</div>
-
-<!-- This value represents application language, which comes from application's configuration array -->
-<input type="hidden" name="language" value="<?php echo $appConfig->getLanguage(); ?>" />
-<input type="hidden" name="slug-refresh-url" value="<?php echo $this->url('Cms:Admin:Dashboard@slugAction'); ?>" />
-
-<?php $this->loadPartial('ajax'); ?>
-
-<?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
-<script src="<?php echo $script; ?>"></script>
-<?php endforeach; ?>
-
+    <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
+    <script src="<?php echo $script; ?>"></script>
+    <?php endforeach; ?>
 </body>
 </html>
-	
