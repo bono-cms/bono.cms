@@ -7,71 +7,69 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<form data-group="language" autocomplete="off">
-	<div class="well">
-        <?php echo Element::hidden('language[id]', $language->getId()); ?>
+<form class="card" data-group="language" autocomplete="off">
+    <?php echo Element::hidden('language[id]', $language->getId()); ?>
 
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-                    <?php echo Element::text('language[name]', $language->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('The name of the language to be created'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Code'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-                    <?php echo Element::text('language[code]', $language->getCode(), array('class' => 'form-control', 'placeholder' => $this->translate('Unique language identifier'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Country'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-					<select name="language[flag]" class="form-control">
-						<?php foreach ($countries as $code => $name): ?>
-						<option data-flag="<?php printf('famfamfam-flag-%s', $code); ?>" <?php HtmlHelper::selectOnDemand($code == $language->getFlag()); ?> value="<?php echo $code; ?>"><?php echo $name; ?></option>
-						<?php endforeach; ?>
-					</select>
-					
-					<span class="input-group-addon"><i data-container="flag" class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-                    <?php echo Element::number('language[order]', $language->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Language sort order in a list'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
-			<div class="col-lg-10">
-				<?php echo Element::checkbox('language[published]', $language->getPublished(), array('class' => 'form-control')); ?>
-			</div>
-		</div>
-		
-		<?php if (!$language->getId()): ?>
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
-			<div class="col-lg-10">
-				<?php echo Element::checkbox('language[default]', $language->getDefault(), array('class' => 'form-control')); ?>
-			</div>
-		</div>
-		<?php endif; ?>
-	</div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <?php echo Element::text('language[name]', $language->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('The name of the language to be created'))); ?>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Code'); ?></label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <?php echo Element::text('language[code]', $language->getCode(), array('class' => 'form-control', 'placeholder' => $this->translate('Unique language identifier'))); ?>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Country'); ?></label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <select name="language[flag]" class="form-control">
+                    <?php foreach ($countries as $code => $name): ?>
+                    <option data-flag="<?php printf('famfamfam-flag-%s', $code); ?>" <?php HtmlHelper::selectOnDemand($code == $language->getFlag()); ?> value="<?php echo $code; ?>"><?php echo $name; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                
+                <span class="input-group-addon"><i data-container="flag" class="glyphicon glyphicon-pencil"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <?php echo Element::number('language[order]', $language->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Language sort order in a list'))); ?>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+        <div class="col-lg-10">
+            <?php echo Element::checkbox('language[published]', $language->getPublished(), array('class' => 'form-control')); ?>
+        </div>
+    </div>
+    
+    <?php if (!$language->getId()): ?>
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
+        <div class="col-lg-10">
+            <?php echo Element::checkbox('language[default]', $language->getDefault(), array('class' => 'form-control')); ?>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <?php $this->loadPartial('actions', array(
         'new' => !$language->getId(),

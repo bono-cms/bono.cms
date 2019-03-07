@@ -8,64 +8,67 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<?php $this->loadPartial('items-per-page', array('caption' => 'History')); ?>
+<div class="card">
+    <?php $this->loadPartial('items-per-page', array('caption' => 'History')); ?>
 
-<div class="table-responsive">
-    <?= $this->widget(new GridViewWidget($records, array(
-        'tableClass' => 'table table-hover table-bordered table-striped table-sm',
-        'columns' => array(
-            array(
-                'column' => 'name',
-                'label' => '#'
-            ),
+    <div class="table-responsive">
+        <?= $this->widget(new GridViewWidget($records, array(
+            'tableClass' => 'table table-hover table-bordered table-striped',
+            'columns' => array(
+                array(
+                    'column' => 'name',
+                    'label' => '#'
+                ),
 
-            array(
-                'column' => 'timestamp',
-                'label' => 'Date and time',
-                'value' => function($record){
-                    return date('d.m.y H:i:s', $record->getTimestamp());
-                }
-            ),
-
-            array(
-                'column' => 'comment',
-                'value' => function($record){
-                    return $this->translate($record->getComment(), $record->getPlaceholder());
-                }
-            ),
-
-            array(
-                'column' => 'module',
-                'translateable' => true
-            ),
-
-            array(
-                'column' => 'user_id',
-                'label' => 'User',
-                'translateable' => true,
-                'value' => function($record) use ($userManager){
-                    $user = $userManager->fetchNameById($record->getUserId());
-
-                    if ($user){
-                        return $user;
-                    } else {
-                        return 'User no longer exists';
+                array(
+                    'column' => 'timestamp',
+                    'label' => 'Date and time',
+                    'value' => function($record){
+                        return date('d.m.y H:i:s', $record->getTimestamp());
                     }
-                }
-            )
-        )
-    ))); ?>
+                ),
 
-    <?php if (empty($records)): ?>
-    <div class="center-block">
-        <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No records'); ?></h2>
+                array(
+                    'column' => 'comment',
+                    'value' => function($record){
+                        return $this->translate($record->getComment(), $record->getPlaceholder());
+                    }
+                ),
+
+                array(
+                    'column' => 'module',
+                    'translateable' => true
+                ),
+
+                array(
+                    'column' => 'user_id',
+                    'label' => 'User',
+                    'translateable' => true,
+                    'value' => function($record) use ($userManager){
+                        $user = $userManager->fetchNameById($record->getUserId());
+
+                        if ($user){
+                            return $user;
+                        } else {
+                            return 'User no longer exists';
+                        }
+                    }
+                )
+            )
+        ))); ?>
+
+        <?php if (empty($records)): ?>
+        <div class="center-block">
+            <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No records'); ?></h2>
+        </div>
+        <?php endif; ?>
+
     </div>
+
+    <?php if (!empty($records) && $extendedMode): ?>
+    <button data-message="<?php $this->show('Do you really want to clear the history?'); ?>" data-button="remove" data-url="<?php echo $this->url('Cms:Admin:History@clearAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
     <?php endif; ?>
 
+    <?php $this->loadPartial('paginator'); ?>
+
 </div>
-
-<?php if (!empty($records) && $extendedMode): ?>
-<button data-message="<?php $this->show('Do you really want to clear the history?'); ?>" data-button="remove" data-url="<?php echo $this->url('Cms:Admin:History@clearAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
-<?php endif; ?>
-
-<?php $this->loadPartial('paginator'); ?>

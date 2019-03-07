@@ -8,57 +8,59 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Users'); ?> <small>(<?php echo count($users); ?>)</small></h4>
+<div class="card">
+    <h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Users'); ?> <small>(<?php echo count($users); ?>)</small></h4>
 
-<p>
-    <a class="btn btn-primary btn-sm" href="<?php echo $this->url('Cms:Admin:Users@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add new user'); ?></a>
-</p>
+    <p>
+        <a class="btn btn-primary btn-sm" href="<?php echo $this->url('Cms:Admin:Users@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add new user'); ?></a>
+    </p>
 
-<form>
-	<div class="table-responsive">
-        <?= $this->widget(new GridViewWidget($users, array(
-            'tableClass' => 'table table-hover table-bordered table-striped table-sm',
-            'columns' => array(
-                array(
-                    'column' => 'id',
-                    'label' => '#'
+    <form>
+        <div class="table-responsive">
+            <?= $this->widget(new GridViewWidget($users, array(
+                'tableClass' => 'table table-hover table-bordered table-striped',
+                'columns' => array(
+                    array(
+                        'column' => 'id',
+                        'label' => '#'
+                    ),
+
+                    array(
+                        'column' => 'name'
+                    ),
+
+                    array(
+                        'column' => 'login'
+                    ),
+
+                    array(
+                        'column' => 'email'
+                    )
                 ),
 
-                array(
-                    'column' => 'name'
-                ),
+                'actions' => array(
+                    'edit' => function($user){
+                        return Icon::edit(
+                            $this->url('Cms:Admin:Users@editAction', $user->getId()),
+                            $this->translate('Edit this user')
+                        );
+                    },
 
-                array(
-                    'column' => 'login'
-                ),
-
-                array(
-                    'column' => 'email'
+                    'remove' => function($user){
+                        return Icon::remove(
+                            $this->url('Cms:Admin:Users@deleteAction', $user->getId()),
+                            $this->translate('Remove this user')
+                        );
+                    }
                 )
-            ),
+            ))); ?>
 
-            'actions' => array(
-                'edit' => function($user){
-                    return Icon::edit(
-                        $this->url('Cms:Admin:Users@editAction', $user->getId()),
-                        $this->translate('Edit this user')
-                    );
-                },
+            <?php if (empty($users)): ?>
+            <div class="center-block">
+                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No users'); ?></h2>
+            </div>
+            <?php endif; ?>
+        </div>
+    </form>
 
-                'remove' => function($user){
-                    return Icon::remove(
-                        $this->url('Cms:Admin:Users@deleteAction', $user->getId()),
-                        $this->translate('Remove this user')
-                    );
-                }
-            )
-        ))); ?>
-
-		<?php if (empty($users)): ?>
-		<div class="center-block">
-            <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No users'); ?></h2>
-		</div>
-		<?php endif; ?>
-
-	</div>
-</form>
+</div>

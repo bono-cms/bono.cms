@@ -8,99 +8,102 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<div class="btn-toolbar">
-	<div class="dropdown">
-	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
-	  </button>
+<div class="card">
+    <div class="btn-toolbar">
+        <div class="dropdown">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
+          </button>
 
-	  <div class="dropdown-menu">
-		 <a class="dropdown-item" href="<?php echo $this->url('Cms:Admin:Languages@addAction'); ?>"><i class="glyphicon glyphicon-globe"></i> <?php $this->show('Add a language'); ?></a>
-		 <div class="dropdown-divider"></div>
-		 <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
+          <div class="dropdown-menu">
+             <a class="dropdown-item" href="<?php echo $this->url('Cms:Admin:Languages@addAction'); ?>"><i class="glyphicon glyphicon-globe"></i> <?php $this->show('Add a language'); ?></a>
+             <div class="dropdown-divider"></div>
+             <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
 
-		 <?php if (!empty($langs)): ?>
-		 <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Languages@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
-		 <?php else: ?>
-		 <a class="dropdown-item disabled"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
-		 <?php endif; ?>
-	  </div>
-	</div>
-</div>
+             <?php if (!empty($langs)): ?>
+             <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Languages@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
+             <?php else: ?>
+             <a class="dropdown-item disabled"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
+             <?php endif; ?>
+          </div>
+        </div>
+    </div>
 
-<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Languages'); ?> <small>(<?php echo count($langs); ?>)</small></h4>
+    <h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Languages'); ?> <small>(<?php echo count($langs); ?>)</small></h4>
 
-<form>
-	<div class="table-responsive">
-        <?= $this->widget(new GridViewWidget($langs, array(
-            'batch' => true,
-            'pk' => 'id',
-            'tableClass' => 'table table-hover table-bordered table-striped table-sm',
-            'columns' => array(
-                array(
-                    'column' => 'id',
-                    'label' => '#'
+    <form>
+        <div class="table-responsive">
+            <?= $this->widget(new GridViewWidget($langs, array(
+                'batch' => true,
+                'pk' => 'id',
+                'tableClass' => 'table table-hover table-bordered table-striped table-sm',
+                'columns' => array(
+                    array(
+                        'column' => 'id',
+                        'label' => '#'
+                    ),
+
+                    array(
+                        'column' => 'flag',
+                        'value' => function($language){
+                            return sprintf('<i class="famfamfam-flag-%s"></i>', $language->getFlag());
+                        }
+                    ),
+
+                    array(
+                        'column' => 'code'
+                    ),
+
+                    array(
+                        'column' => 'name'
+                    ),
+
+                    array(
+                        'column' => 'order',
+                        'value' => function($language){
+                            return Element::number(sprintf('order[%s]', $language->getId()), $language->getOrder(), array('class' => 'form-control center-block', 'min' => '0'));
+                        }
+                    ),
+
+                    array(
+                        'column' => 'published',
+                        'value' => function($language){
+                            return Element::checkbox(sprintf('published[%s]', $language->getId()), $language->getPublished());
+                        }
+                    ),
+
+                    array(
+                        'column' => 'default',
+                        'value' => function($language){
+                            return Element::radio('default', $language->getId(), $language->getDefault());
+                        }
+                    )
                 ),
 
-                array(
-                    'column' => 'flag',
-                    'value' => function($language){
-                        return sprintf('<i class="famfamfam-flag-%s"></i>', $language->getFlag());
-                    }
-                ),
+                'actions' => array(
+                    'edit' => function($language){
+                        return Icon::edit(
+                            $this->url('Cms:Admin:Languages@editAction', $language->getId()),
+                            $this->translate('Edit this language')
+                        );
+                    },
 
-                array(
-                    'column' => 'code'
-                ),
-
-                array(
-                    'column' => 'name'
-                ),
-
-                array(
-                    'column' => 'order',
-                    'value' => function($language){
-                        return Element::number(sprintf('order[%s]', $language->getId()), $language->getOrder(), array('class' => 'form-control center-block', 'min' => '0'));
-                    }
-                ),
-
-                array(
-                    'column' => 'published',
-                    'value' => function($language){
-                        return Element::checkbox(sprintf('published[%s]', $language->getId()), $language->getPublished());
-                    }
-                ),
-
-                array(
-                    'column' => 'default',
-                    'value' => function($language){
-                        return Element::radio('default', $language->getId(), $language->getDefault());
+                    'remove' => function($language){
+                        return Icon::remove(
+                            $this->url('Cms:Admin:Languages@deleteAction', $language->getId()),
+                            $this->translate('Remove this language')
+                        );
                     }
                 )
-            ),
+            ))); ?>
+            
+            <?php if (empty($langs)): ?>
+            <div class="center-block">
+                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No languages'); ?></h2>
+            </div>
+            <?php endif; ?>
 
-            'actions' => array(
-                'edit' => function($language){
-                    return Icon::edit(
-                        $this->url('Cms:Admin:Languages@editAction', $language->getId()),
-                        $this->translate('Edit this language')
-                    );
-                },
+        </div>
+    </form>
 
-                'remove' => function($language){
-                    return Icon::remove(
-                        $this->url('Cms:Admin:Languages@deleteAction', $language->getId()),
-                        $this->translate('Remove this language')
-                    );
-                }
-            )
-        ))); ?>
-        
-		<?php if (empty($langs)): ?>
-		<div class="center-block">
-			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No languages'); ?></h2>
-		</div>
-		<?php endif; ?>
-
-	</div>
-</form>
+</div>

@@ -8,83 +8,86 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<div class="btn-toolbar">
-	<div class="dropdown">
-	  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
-	  </button>
+<div class="card">
+    <div class="btn-toolbar">
+        <div class="dropdown">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
+          </button>
 
-	  <ul class="dropdown-menu">
-		 <?php if (!empty($themes)): ?>
-         <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Themes@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes');?></a>
-		 <a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url('Cms:Admin:Themes@deleteManyAction'); ?>"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>
-		 <?php else: ?>
-		 <a class="dropdown-item disabled"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes');?></a>
-		 <a class="dropdown-item disabled"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>
-		 <?php endif; ?>
-	  </ul>
-	</div>
-</div>
-
-<h2 class="page-header"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Themes'); ?> <span class="text-muted">(<?php echo count($themes); ?>)</span></h2>
-
-<form>
-    <div class="table-responsive">
-        <?= $this->widget(new GridViewWidget($themes, array(
-            'batch' => true,
-            'pk' => 'theme',
-            'tableClass' => 'table table-hover table-bordered table-striped table-sm',
-            'columns' => array(
-                array(
-                    'column' => 'cover',
-                    'value' => function($theme){
-                        return Element::image($theme['cover'], array('class' => 'img-responsive'));
-                    }
-                ),
-
-                array(
-                    'column' => 'current',
-                    'value' => function($theme) use ($current){
-                        return Element::radio('current', $theme['theme'], $current == $theme['theme']);
-                    }
-                ),
-
-                array(
-                    'column' => 'name'
-                ),
-
-                array(
-                    'column' => 'version'
-                ),
-
-                array(
-                    'column' => 'description'
-                ),
-
-                array(
-                    'column' => 'author'
-                )
-            ),
-
-            'actions' => array(
-                'remove' => function($theme) use ($current){
-                    // Don't let to remove current theme
-                    if ($theme['theme'] !== $current) {
-                        return Icon::remove(
-                            $this->url('Cms:Admin:Themes@deleteAction', $theme['theme']),
-                            $this->translate('Remove this theme')
-                        );
-                    } else {
-                        return null;
-                    }
-                }
-            )
-        ))); ?>
-
-        <?php if (empty($themes)): ?>
-        <div class="center-block">
-            <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No themes'); ?></h2>
+          <ul class="dropdown-menu">
+             <?php if (!empty($themes)): ?>
+             <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Themes@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes');?></a>
+             <a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url('Cms:Admin:Themes@deleteManyAction'); ?>"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>
+             <?php else: ?>
+             <a class="dropdown-item disabled"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes');?></a>
+             <a class="dropdown-item disabled"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>
+             <?php endif; ?>
+          </ul>
         </div>
-        <?php endif; ?>
     </div>
-</form>
+
+    <h2 class="page-header"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Themes'); ?> <span class="text-muted">(<?php echo count($themes); ?>)</span></h2>
+
+    <form>
+        <div class="table-responsive">
+            <?= $this->widget(new GridViewWidget($themes, array(
+                'batch' => true,
+                'pk' => 'theme',
+                'tableClass' => 'table table-hover table-bordered table-striped table-sm',
+                'columns' => array(
+                    array(
+                        'column' => 'cover',
+                        'value' => function($theme){
+                            return Element::image($theme['cover'], array('class' => 'img-fluid'));
+                        }
+                    ),
+
+                    array(
+                        'column' => 'current',
+                        'value' => function($theme) use ($current){
+                            return Element::radio('current', $theme['theme'], $current == $theme['theme']);
+                        }
+                    ),
+
+                    array(
+                        'column' => 'name'
+                    ),
+
+                    array(
+                        'column' => 'version'
+                    ),
+
+                    array(
+                        'column' => 'description'
+                    ),
+
+                    array(
+                        'column' => 'author'
+                    )
+                ),
+
+                'actions' => array(
+                    'remove' => function($theme) use ($current){
+                        // Don't let to remove current theme
+                        if ($theme['theme'] !== $current) {
+                            return Icon::remove(
+                                $this->url('Cms:Admin:Themes@deleteAction', $theme['theme']),
+                                $this->translate('Remove this theme')
+                            );
+                        } else {
+                            return null;
+                        }
+                    }
+                )
+            ))); ?>
+
+            <?php if (empty($themes)): ?>
+            <div class="center-block">
+                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No themes'); ?></h2>
+            </div>
+            <?php endif; ?>
+        </div>
+    </form>
+
+</div>
