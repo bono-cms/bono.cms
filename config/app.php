@@ -156,7 +156,6 @@ return array(
                 'admin' => array(
                     'scripts' => array(
                         '@Cms/plugins/jquery.form.js',
-                        '@Cms/admin/app.js'
                     ),
 
                     'stylesheets' => array(

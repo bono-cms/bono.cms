@@ -262,6 +262,9 @@ abstract class AbstractController extends AbstractAuthAwareController
             'to-top'
         ));
 
+        // Make sure application handler is always last
+        $this->view->getPluginBag()->appendLastScript('@Cms/admin/app.js');
+
         $this->tweakInternalServices();
     }
 
