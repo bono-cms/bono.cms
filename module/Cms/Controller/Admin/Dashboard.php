@@ -26,6 +26,23 @@ final class Dashboard extends AbstractController
     }
 
     /**
+     * Returns system information data
+     * 
+     * @return array
+     */
+    private function getSystemInfo()
+    {
+        // The keys will be translated in template
+        return array(
+            'Bono version' => '1.3',
+            'Krystal Framework version' => '1.3',
+            'PHP version' => PHP_VERSION,
+            'Web-server OS' => PHP_OS,
+            'Web-server' => $this->request->getServerSoftware()
+        );
+    }
+
+    /**
      * Displays a dashboard
      * 
      * @return string
@@ -38,7 +55,9 @@ final class Dashboard extends AbstractController
 
         return $this->view->render('dashboard', array(
             'title' => 'Control panel',
-            'notifications' => $this->getService('Cms', 'notificationManager')->getUnviewedCount(),
+            'activity' => $this->getService('Cms', 'historyManager')->fetchLatest(),
+            'bookmarks' => $this->createBookmarks(),
+            'systemInfo' => $this->getSystemInfo()
         ));
     }
 

@@ -6,4 +6,53 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<span>Welcome, home</span>
+<div class="jumbotron">
+    <h2><?php $this->show('Dashboard'); ?></h2>
+    <p class="lead"><?php $this->show('Welcome to Bono. The best choice for managing your web-site!'); ?></p>
+    <p><?php $this->show('The management of your site gets done via installed modules.'); ?></p>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <p><?php $this->show('Quick links'); ?></p>
+
+            <ul class="dashboard-quick-links">
+                <?php foreach($bookmarks as $bookmark): ?>
+                <li><a href="<?= $this->url($bookmark['controller']); ?>"><i class="<?= $bookmark['icon']; ?>"></i> <?php $this->show($bookmark['name']); ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+        <div class="card">
+            <p><?php $this->show('System information'); ?></p>
+
+            <table class="table">
+                <?php foreach ($systemInfo as $name => $value): ?>
+                <tr>
+                    <td><?php $this->show($name); ?></td>
+                    <td><?= $value; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card">
+            <p><?php $this->show('Recent activity'); ?></p>
+
+            <table class="table">
+                <?php foreach ($activity as $item): ?>
+                <tr>
+                    <td><?= $this->translate($item->getComment(), $item->getPlaceholder()); ?> <span class="text-muted">(<?= $this->translate($item->getModule()); ?>)</span></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="<?= $this->url('Cms:Admin:History@indexAction'); ?>" role="button"><?php $this->show('View all'); ?></a>
+            </p>
+        </div>
+    </div>
+</div>
