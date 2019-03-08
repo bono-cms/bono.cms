@@ -103,6 +103,16 @@ final class NotificationManager extends AbstractManager implements NotificationM
     }
 
     /**
+     * Fetch latest notifications
+     * 
+     * @return array
+     */
+    public function fetchLatest()
+    {
+        return $this->fetchAllByPage(1, 5);
+    }
+
+    /**
      * Fetch all notification entities filtered by pagination
      * 
      * @param integer $page

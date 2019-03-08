@@ -51,6 +51,13 @@ interface NotificationManagerInterface
     public function getPaginator();
 
     /**
+     * Fetch latest notifications
+     * 
+     * @return array
+     */
+    public function fetchLatest();
+
+    /**
      * Fetch all notification entities filtered by pagination
      * 
      * @param integer $page
