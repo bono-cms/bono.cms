@@ -132,6 +132,17 @@ final class HistoryManager extends AbstractManager implements HistoryManagerInte
     }
 
     /**
+     * Fetch latest history items
+     * 
+     * @param int $limit
+     * @return array
+     */
+    public function fetchLatest($limit = 5)
+    {
+        return $this->fetchAllByPage(1, $limit);
+    }
+
+    /**
      * Fetches all record entities filtered by pagination
      * 
      * @param integer $page Current page
