@@ -24,58 +24,55 @@ defined('KRYSTAL') or die;
 	</div>
 </div>
 
-<h2 class="page-header"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Modules'); ?> <span class="text-muted">(<?php echo count($modules); ?>)</span></h2>
+<div class="card">
+    <h2 class="page-header"><?php $this->show('Modules'); ?> <span class="text-muted">(<?php echo count($modules); ?>)</span></h2>
 
-<form>
-    <div class="table-responsive">
-        <?= $this->widget(new GridViewWidget($modules, array(
-            'tableClass' => 'table table-hover table-bordered table-striped table-sm',
-            'pk' => 'name',
-            'batch' => true,
-            'batchCallback' => function($module) use ($moduleManager){
-                return !$moduleManager->isCoreModule($module['name']);
-            },
-            'columns' => array(
-                array(
-                    'column' => 'route',
-                    'value' => function($module){
-                        $image = Element::image(ThemeService::createIconPath($module['name']), array('class' => 'module-icon'));
-                        $url = is_array($module['route']) ? call_user_func_array(array($this, 'url'), $module['route']) : $this->url($module['route']);
+    <form>
+        <div class="table-responsive">
+            <?= $this->widget(new GridViewWidget($modules, array(
+                'tableClass' => 'table table-hover table-bordered table-striped',
+                'pk' => 'name',
+                'batch' => true,
+                'batchCallback' => function($module) use ($moduleManager){
+                    return isset($module['name']) ? !$moduleManager->isCoreModule($module['name']) : false;
+                },
+                'columns' => array(
+                    array(
+                        'column' => 'name',
+                        'translateable' => true,
+                        'attributes' => array(
+                            'class' => null
+                        )
+                    ),
 
-                        return Element::link($image, $url);
+                    array(
+                        'column' => 'description',
+                        'translateable' => true,
+                        'attributes' => array(
+                            'class' => null
+                        )
+                    )
+                ),
+
+                'actions' => array(
+                    'remove' => function($module) use ($moduleManager){
+                        if (!$moduleManager->isCoreModule($module['name'])) {
+                            return Icon::remove(
+                                $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']),
+                                $this->translate('Remove this module')
+                            );
+                        } else {
+                            return null;
+                        }
                     }
-                ),
-
-                array(
-                    'column' => 'caption',
-                    'translateable' => true
-                ),
-
-                array(
-                    'column' => 'description',
-                    'translateable' => true
                 )
-            ),
+            ))); ?>
 
-            'actions' => array(
-                'remove' => function($module) use ($moduleManager){
-                    if (!$moduleManager->isCoreModule($module['name'])) {
-                        return Icon::remove(
-                            $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']),
-                            $this->translate('Remove this module')
-                        );
-                    } else {
-                        return null;
-                    }
-                }
-            )
-        ))); ?>
-
-        <?php if (empty($modules)): ?>
-        <div class="center-block">
-            <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No modules'); ?></h2>
+            <?php if (empty($modules)): ?>
+            <div class="center-block">
+                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No modules'); ?></h2>
+            </div>
+            <?php endif; ?>
         </div>
-        <?php endif; ?>
-
-    </div>
-</form>
+    </form>
+</div>

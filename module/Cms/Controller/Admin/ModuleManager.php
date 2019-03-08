@@ -38,7 +38,6 @@ final class ModuleManager extends AbstractController
     {
         $modules = array();
         $current = $this->moduleManager->getLoadedModules();
-
         $ignored = array('Cms');
 
         foreach ($current as $name => $module) {
@@ -46,7 +45,7 @@ final class ModuleManager extends AbstractController
             if (in_array($name, $ignored)) {
                 continue;
             }
-            
+
             if ($module->hasConfig()) {
                 $config = $module->getConfig();
                 $config['name'] = $name;
