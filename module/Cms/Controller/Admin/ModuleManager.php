@@ -39,9 +39,18 @@ final class ModuleManager extends AbstractController
         $modules = array();
         $current = $this->moduleManager->getLoadedModules();
 
-        foreach ($current as $module) {
+        $ignored = array('Cms');
+
+        foreach ($current as $name => $module) {
+            // Don't take into account ignored modules
+            if (in_array($name, $ignored)) {
+                continue;
+            }
+            
             if ($module->hasConfig()) {
-                $modules[] = $module->getConfig();
+                $config = $module->getConfig();
+                $config['name'] = $name;
+                $modules[] = $config;
             }
         }
 
