@@ -70,18 +70,49 @@ abstract class AbstractController extends AbstractAuthAwareController
     }
 
     /**
-     * Extra bookmarks from modules configuration
+     * Extract bookmarks from modules configuration
      * 
-     * @param array $modulesConfiguration
      * @return array
      */
-    private function createSidebarMenu(array $modulesConfiguration)
+    protected function createBookmarks()
+    {
+        // Prepared output to be returned
+        $output = array();
+
+        $bookmarks = $this->getParamFromModules('bookmarks');
+
+        foreach ($bookmarks as $index => $container) {
+            foreach ($container as $item) {
+                $output[] = $item;
+            }
+        }
+
+        return $output;
+    }
+
+    /**
+     * Extract menus configuration from loaded modules
+     * 
+     * @return array
+     */
+    private function createSidebarMenu()
+    {
+        return $this->getParamFromModules('menu');
+    }
+
+    /**
+     * Returns a parameter from all loaded modules
+     * 
+     * @param string $key Shared configuration key
+     * @return mixed
+     */
+    private function getParamFromModules($key)
     {
         $output = array();
 
-        foreach ($modulesConfiguration as $module) {
-            if (isset($module['menu'])) {
-                $output[] = $module['menu'];
+        foreach ($this->getModulesConfiguration() as $module) {
+            if (isset($module[$key])) {
+                $output[] = $module[$key];
             }
         }
 
@@ -95,17 +126,24 @@ abstract class AbstractController extends AbstractAuthAwareController
      */
     private function getModulesConfiguration()
     {
-        $modules = array();
-        $current = $this->moduleManager->getLoadedModules();
+        static $configurations = null;
 
-        foreach ($current as $module) {
-            if ($module->hasConfig()) {
-                $modules[] = $module->getConfig();
+        // Cache method calls
+        if (is_null($configurations)) {
+            $modules = array();
+            $current = $this->moduleManager->getLoadedModules();
+
+            foreach ($current as $module) {
+                if ($module->hasConfig()) {
+                    $modules[] = $module->getConfig();
+                }
             }
+
+            array_multisort($modules, \SORT_NUMERIC);
+            $configurations = $modules;
         }
 
-        array_multisort($modules, \SORT_NUMERIC);
-        return $modules;
+        return $configurations;
     }
 
     /**
@@ -235,8 +273,6 @@ abstract class AbstractController extends AbstractAuthAwareController
             die($this->translator->translate("Error: You must have at least one published system's language for a content"));
         }
 
-        $modulesConfiguration = $this->getModulesConfiguration();
-
         // Shared variables for all templates
         $this->view->addVariables(array(
             'appConfig' => $this->appConfig,
@@ -247,8 +283,7 @@ abstract class AbstractController extends AbstractAuthAwareController
             'currentLanguage' => $languageManager->fetchByCurrentId(),
             'ppc' => $this->getPerPageCountGadget(),
             'queryLogger' => $this->db['mysql']->getQueryLogger(),
-            'sidebar' => $this->createSidebarMenu($modulesConfiguration),
-            'modulesConfiguration' => $modulesConfiguration,
+            'sidebar' => $this->createSidebarMenu(),
             'loadedModules' => $this->moduleManager->getLoadedModuleNames()
         ));
 
