@@ -28,6 +28,7 @@
             </div>
 
             <ul class="list-unstyled components">
+                <li><a href="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fas fa-chess-board"></i> <?php $this->show('Dashboard'); ?></a></li>
                 <?php foreach ($sidebar as $parent): ?>
                 <?php $uniq = md5($parent['name']); ?>
                 <li>
@@ -58,23 +59,6 @@
                      <div class="dropdown-header"><?php $this->show('Web-server'); ?></div>
                      <span class="dropdown-item dropdown-item-text"><?php $this->show('PHP Version'); ?>: <?php echo PHP_VERSION; ?></span>
                      <span class="dropdown-item dropdown-item-text"><?php $this->show('OS'); ?>: <?php echo PHP_OS; ?></span>
-                  </div>
-                </li>
-                <?php endif; ?>
-
-                <?php if (!empty($bookmarks)): ?>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                    <?php $this->show('Bookmarks'); ?>
-                  </a>
-
-                  <div class="dropdown-menu">
-                    <?php foreach ($bookmarks as $name => $bookmark): ?>
-                    <div class="dropdown-header"><?php $this->show($name); ?></div>
-                    <?php foreach ($bookmark as $item): ?>
-                    <a class="dropdown-item" href="<?php echo $this->url($item['controller']); ?>"><i class="<?php echo $item['icon']; ?>"></i>  <?php $this->show($item['name']); ?></a>
-                    <?php endforeach; ?>
-                    <?php endforeach; ?>
                   </div>
                 </li>
                 <?php endif; ?>
