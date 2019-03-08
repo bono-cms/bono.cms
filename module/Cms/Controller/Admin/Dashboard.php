@@ -38,7 +38,8 @@ final class Dashboard extends AbstractController
             'Krystal Framework version' => '1.3',
             'PHP version' => PHP_VERSION,
             'Web-server OS' => PHP_OS,
-            'Web-server' => $this->request->getServerSoftware()
+            'Web-server' => $this->request->getServerSoftware(),
+            'MySQL version' => $this->db['mysql']->getVersion()
         );
     }
 
