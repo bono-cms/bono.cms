@@ -263,7 +263,7 @@ if (!(window.jQuery)){
                 event.preventDefault();
 
                 var $self = $(this);
-                var url = $self.attr('action') ? $self.attr('action') : '/';
+                var url = $self.attr('action') ? $self.attr('action') : '';
                 var method = $self.attr('method') ? $self.attr('method') : 'POST';
 
                 $.ajax({
