@@ -121,9 +121,20 @@ $(function(){
         });
     }
 
+    // Run datepicker if loaded
     if (jQuery().datepicker) {
-        $('[data-plugin="datepicker"]').datepicker({
-            format: 'yyyy-mm-dd'
+        $('[data-plugin="datepicker"]').each(function(){
+            // Default date format
+            var format = 'yyyy-mm-dd';
+
+            // Override if present
+            if ($(this).data('format')) {
+                format = $(this).data('format');
+            }
+
+            $(this).datepicker({
+                format: format
+            });
         });
     }
 
