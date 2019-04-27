@@ -129,11 +129,11 @@
                   <?php endforeach; ?>
                 </ol>
                 <?php endif; ?>
-                
+
                 <?php if ($flashBag->has('success')):?>
                 <div class="alert alert-dismissable alert-success">
                     <button type="button" class="close" data-dismiss="alert">x</button>
-                    <span class="glyphicon glyphicon-ok"></span> <?php $this->show($flashBag->get('success')); ?>
+                    <i class="fas fa-check-double"></i> <?php $this->show($flashBag->get('success')); ?>
                 </div>
                 <?php endif; ?>
 
@@ -141,14 +141,14 @@
                 <div class="alert alert-dismissable alert-warning">
                     <button type="button" class="close" data-dismiss="alert">x</button>
                     <h4><?php $this->show('Warning!'); ?></h4>
-                    <span class="glyphicon glyphicon-exclamation-sign"></span> <?php $this->show($flashBag->get('warning')); ?>
+                    <i class="fas fa-exclamation-triangle"></i> <?php $this->show($flashBag->get('warning')); ?>
                 </div>
                 <?php endif; ?>
 
                 <?php if ($flashBag->has('info')): ?>
                 <div class="alert alert-dismissable alert-info">
                     <button type="button" class="close" data-dismiss="alert">x</button>
-                    <span class="glyphicon glyphicon-comment"></span> <?php $this->show($flashBag->get('info')); ?>
+                    <i class="fas fa-info"></i> <?php $this->show($flashBag->get('info')); ?>
                 </div>
                 <?php endif; ?>
 
