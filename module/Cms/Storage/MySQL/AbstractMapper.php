@@ -405,9 +405,10 @@ abstract class AbstractMapper extends BaseMapper
      * Update translation data
      * 
      * @param array $translation
+     * @param string $controller Optional controller to be overridden
      * @return boolean
      */
-    private function updateTranslation(array $translation)
+    private function updateTranslation(array $translation, $controller = null)
     {
         // Before adding a new slug, make sure it has been changed
         if ($this->fetchSlugByWebPageId($translation[self::PARAM_COLUMN_WEB_PAGE_ID]) !== $translation[self::PARAM_COLUMN_SLUG]) {
@@ -419,6 +420,11 @@ abstract class AbstractMapper extends BaseMapper
             self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG],
             self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow()
         );
+
+        // Update controller if explicit provided
+        if ($controller !== null) {
+            $webPage[self::PARAM_COLUMN_CONTROLLER] = $controller;
+        }
 
         // Update web page
         $this->db->update(WebPageMapper::getTableName(), $webPage)
@@ -514,7 +520,7 @@ abstract class AbstractMapper extends BaseMapper
             // Is there a translation for current entity ID and its attached language ID?
             if ($this->translationExists($translation[self::PARAM_COLUMN_ID], $translation[self::PARAM_COLUMN_LANG_ID])) {
                 // If exists, then update it
-                $this->updateTranslation($translation);
+                $this->updateTranslation($translation, $controller);
             } else {
                 // Otherwise just insert a new row
                 $this->insertTranslation($module, $controller, $translation);
