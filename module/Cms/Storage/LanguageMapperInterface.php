@@ -80,6 +80,13 @@ interface LanguageMapperInterface
     public function countAll($published);
 
     /**
+     * Fetch active language Ids
+     * 
+     * @return array
+     */
+    public function fetchActiveIds();
+
+    /**
      * Fetches all language entities
      * 
      * @param boolean $published Whether to filter by published attribute

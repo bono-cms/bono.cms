@@ -124,6 +124,20 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
     }
 
     /**
+     * Fetch active language Ids
+     * 
+     * @return array
+     */
+    public function fetchActiveIds()
+    {
+        $db = $this->db->select($this->getPk())
+                       ->from(self::getTableName())
+                       ->whereEquals('published', '1');
+
+        return $db->queryAll($this->getPk());
+    }
+
+    /**
      * Fetches all languages
      * 
      * @param boolean $published Whether to filter by published attribute

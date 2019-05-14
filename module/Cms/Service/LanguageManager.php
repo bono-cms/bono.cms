@@ -411,6 +411,16 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Fetch active language Ids
+     * 
+     * @return array
+     */
+    public function fetchActiveIds()
+    {
+        return $this->languageMapper->fetchActiveIds();
+    }
+
+    /**
      * Fetches all language entities
      * 
      * @param boolean $published Whether to filter by published attribute

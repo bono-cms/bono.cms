@@ -166,6 +166,13 @@ interface LanguageManagerInterface
     public function update(array $input);
 
     /**
+     * Fetch active language Ids
+     * 
+     * @return array
+     */
+    public function fetchActiveIds();
+
+    /**
      * Fetches language's entity by its associated id
      * 
      * @param string $id
