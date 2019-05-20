@@ -292,10 +292,12 @@ if (!(window.jQuery)){
             });
         });
 
-        // Work flawlessly with <BASE> tag
-        $("a[href^='\#']").each(function(){ 
-            this.href = location.href.split("#")[0] + '#' + this.href.substr(this.href.indexOf('#') + 1);
-        });
+        // Work flawlessly with <BASE> tag, if one exists
+        if ($("base").length) {
+            $("a[href^='\#']").each(function(){ 
+                this.href = location.href.split("#")[0] + '#' + this.href.substr(this.href.indexOf('#') + 1);
+            });
+        }
     });
 
 })(jQuery);
