@@ -183,6 +183,11 @@ if (!(window.jQuery)){
                 // Clear all previous messages and added classes
                 this.resetAll();
 
+                // Response back URL
+                if (response.backUrl) {
+                    window.location = response.backUrl;
+                }
+
                 // if its not JSON, but "1" then we'd assume success
                 if (response == "1") {
                     // If its provided, then do redirect to that URL
