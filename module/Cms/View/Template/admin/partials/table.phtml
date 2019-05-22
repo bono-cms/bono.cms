@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * Shared table generator
+ */
+
+use Krystal\Widget\GridView\GridViewWidget;
+defined('KRYSTAL') or die;
+
+$responsive = true; // By default assume responsive
+
+?>
+
+<?php $this->loadPartial('items-per-page', array('caption' => $caption)); ?>
+
+<?php if (isset($batch)): ?>
+<form>
+<?php endif; ?>
+
+    <?php if ($responsive): ?>
+    <div class="table-responsive">
+    <?php endif; ?>
+        <?= $this->widget(new GridViewWidget($rows, array(
+            'batch' => isset($batch),
+            'pk' => 'id',
+            'tableClass' => 'table table-hover table-bordered',
+            'columns' => $columns,
+            'actions' => $actions
+        ))); ?>
+
+        <?php if (empty($rows)): ?>
+        <div class="center-block">
+            <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No data'); ?></h2>
+        </div>
+        <?php endif; ?>
+
+    <?php if (isset($responsive)): ?>
+    </div>
+    <?php endif; ?>
+    
+<?php if (isset($batch)): ?>
+</form>
+<?php endif; ?>
+
+<?php if (!(isset($pagination) && $pagination === false)): ?>
+<?php $this->loadPartial('paginator'); ?>
+<?php endif; ?>
