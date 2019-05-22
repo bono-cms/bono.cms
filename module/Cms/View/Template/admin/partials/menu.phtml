@@ -27,27 +27,27 @@
              <?php endforeach; ?>
          <?php endif; ?>
      <?php endforeach; ?>
-     
+
      <?php if (isset($actions['data'])): ?>
      <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
          <?php if (!empty($actions['data'])): ?>
 
              <?php if (isset($actions['save'])): ?>
-             <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url($actions['save']); ?>"> <?php $this->show('Save changes'); ?></a>
+             <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url($actions['save']); ?>"><i class="fas fa-save"></i> <?php $this->show('Save changes'); ?></a>
              <?php endif; ?>
 
              <?php if (isset($actions['delete'])): ?>
-             <a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url($actions['delete'], null); ?>"> <?php $this->show('Remove selected'); ?></a>
+             <a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url($actions['delete'], null); ?>"><i class="fas fa-trash"></i> <?php $this->show('Remove selected'); ?></a>
              <?php endif; ?>
 
           <?php else: ?>
 
              <?php if (isset($actions['save'])): ?>
-             <a class="dropdown-item disabled"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
+             <a class="dropdown-item disabled"><i class="fas fa-save"></i> <?php $this->show('Save changes'); ?></a>
              <?php endif; ?>
 
              <?php if (isset($actions['delete'])): ?>
-             <a class="dropdown-item disabled"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>
+             <a class="dropdown-item disabled"><i class="fas fa-trash"></i> <?php $this->show('Remove selected'); ?></a>
              <?php endif; ?>
 
          <?php endif; ?>
