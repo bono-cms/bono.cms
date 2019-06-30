@@ -116,7 +116,7 @@ final class Icon
      * 
      * @param string $url
      * @param string $hint
-     * @param string $message Optional message to be overriden
+     * @param string $message Optional message to be overridden
      * @return string
      */
     public static function reset($url, $hint, $message = null)
