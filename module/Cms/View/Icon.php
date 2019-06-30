@@ -117,14 +117,20 @@ final class Icon
      * @param string $url
      * @param string $hint
      * @param string $message Optional message to be overridden
+     * @param string $backUrl Optional back URL
      * @return string
      */
-    public static function reset($url, $hint, $message = null)
+    public static function reset($url, $hint, $message = null, $backUrl = null)
     {
         $attrs = array(
             'data-button' => 'delete',
             'data-url' => $url
         );
+
+        // Append back URl if present
+        if ($backUrl !== null){
+            $attrs['data-back-url'] = $backUrl;
+        }
 
         if ($message !== null) {
             $attrs['data-message'] = $message;
