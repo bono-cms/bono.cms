@@ -40,10 +40,10 @@ defined('KRYSTAL') or die;
          <a class="dropdown-item" href="<?php echo $this->url($key); ?>"> <?php $this->show($value); ?></a>
 
          <?php endif; ?>
-         
-         <?php if (is_numeric($key) && is_array($value)): ?>
-         <div class="dropdown-header"><?php $this->show($key); ?></div>
-             <?php foreach ($value as $subKey => $subValue): ?>
+
+         <?php if (isset($value['title'], $value['items']) && is_array($value['items'])): ?>
+         <div class="dropdown-header"><?php $this->show($value['title']); ?></div>
+             <?php foreach ($value['items'] as $subKey => $subValue): ?>
              <a class="dropdown-item" href="<?php echo $this->url($subKey); ?>"> <?php $this->show($subValue); ?></a>
              <?php endforeach; ?>
          <?php endif; ?>
