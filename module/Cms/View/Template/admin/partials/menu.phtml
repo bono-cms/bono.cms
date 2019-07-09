@@ -12,6 +12,9 @@ defined('KRYSTAL') or die;
 <div class="dropdown">
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
     <?php $this->show('Menu'); ?> <span class="caret"></span>
+    <?php if (isset($notifications) && $notifications > 0): ?>
+    (<?= $notifications; ?>)
+    <?php endif; ?>
   </button>
 
   <div class="dropdown-menu">
