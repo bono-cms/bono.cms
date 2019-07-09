@@ -16,6 +16,10 @@ defined('KRYSTAL') or die;
 
   <div class="dropdown-menu">
      <?php foreach ($items as $key => $value): ?>
+         <?php if ($value == null): ?>
+         <?php continue; ?>
+         <?php endif; ?>
+
          <a class="dropdown-item" href="<?php echo $this->url($key); ?>"> <?php $this->show($value); ?></a>
 
          <?php if ($key === null): ?>
