@@ -23,13 +23,25 @@ defined('KRYSTAL') or die;
          <?php continue; ?>
          <?php endif; ?>
 
-         <a class="dropdown-item" href="<?php echo $this->url($key); ?>"> <?php $this->show($value); ?></a>
-
          <?php if ($key === null): ?>
          <div class="dropdown-divider"></div>
          <?php endif; ?>
 
-         <?php if (is_array($value)): ?>
+         <?php if (!is_numeric($key) & is_array($value)): ?>
+         <a class="dropdown-item" href="<?php echo $this->url($key); ?>">
+             <?php isset($value['caption']) ? $this->show($value['caption']) : ''; ?>
+
+             <?php if (isset($value['notifications']) && $value['notifications'] > 0): ?>
+             <small class="text-danger"> (<?= $value['notifications']; ?>)</small>
+             <?php endif; ?>
+         </a>
+         
+         <?php else: ?>
+         <a class="dropdown-item" href="<?php echo $this->url($key); ?>"> <?php $this->show($value); ?></a>
+
+         <?php endif; ?>
+         
+         <?php if (is_numeric($key) && is_array($value)): ?>
          <div class="dropdown-header"><?php $this->show($key); ?></div>
              <?php foreach ($value as $subKey => $subValue): ?>
              <a class="dropdown-item" href="<?php echo $this->url($subKey); ?>"> <?php $this->show($subValue); ?></a>
