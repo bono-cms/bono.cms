@@ -8,6 +8,14 @@ defined('KRYSTAL') or die;
 
 ?>
 
+<?php if (!empty($records) && $extendedMode): ?>
+<div class="btn-toolbar">
+    <div class="btn-group mr-2">
+        <button data-message="<?php $this->show('Do you really want to clear the history?'); ?>" data-button="remove" data-url="<?php echo $this->url('Cms:Admin:History@clearAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
+    </div>
+</div>
+<?php endif; ?>
+
 <div class="card">
     <?php $this->loadPartial('items-per-page', array('caption' => 'History')); ?>
 
@@ -62,13 +70,7 @@ defined('KRYSTAL') or die;
             <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No records'); ?></h2>
         </div>
         <?php endif; ?>
-
     </div>
 
-    <?php if (!empty($records) && $extendedMode): ?>
-    <button data-message="<?php $this->show('Do you really want to clear the history?'); ?>" data-button="remove" data-url="<?php echo $this->url('Cms:Admin:History@clearAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
-    <?php endif; ?>
-
     <?php $this->loadPartial('paginator'); ?>
-
 </div>
