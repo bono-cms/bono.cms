@@ -53,12 +53,12 @@
                     <?php $this->show('Debug'); ?>
                   </a>
                   <div class="dropdown-menu">
-                     <span class="dropdown-item"><i class="fa fa-rocket" aria-hidden="true"></i> <?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?></span>
-                     <span class="dropdown-item"><i class="fa fa-hourglass-o" aria-hidden="true"></i> <?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></span>
+                     <span class="dropdown-item"><i class="fas fa-microchip"></i> <?php $this->show('Memory usage'); ?> / RAM: <?php echo $profiler->getMemoryUsage(); ?></span>
+                     <span class="dropdown-item"><i class="fas fa-hourglass-half"></i> <?php $this->show('Taken time'); ?>: <?php echo $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></span>
                      <span class="dropdown-item"><i class="fa fa-database" aria-hidden="true"></i> <?php $this->show('Database queries'); ?>: <?php echo $queryLogger->getCount(); ?></span>
                      <div class="dropdown-header"><?php $this->show('Web-server'); ?></div>
-                     <span class="dropdown-item dropdown-item-text"><?php $this->show('PHP Version'); ?>: <?php echo PHP_VERSION; ?></span>
-                     <span class="dropdown-item dropdown-item-text"><?php $this->show('OS'); ?>: <?php echo PHP_OS; ?></span>
+                     <span class="dropdown-item dropdown-item-text"><i class="fab fa-php"></i> <?php $this->show('PHP Version'); ?>: <?php echo PHP_VERSION; ?></span>
+                     <span class="dropdown-item dropdown-item-text"><i class="fab fa-linux"></i> <?php $this->show('OS'); ?>: <?php echo PHP_OS; ?></span>
                   </div>
                 </li>
                 <?php endif; ?>
@@ -93,7 +93,7 @@
                     <a class="dropdown-item" href="#" data-button="refresh"><i class="glyphicon glyphicon-refresh"></i> <?php $this->show('Refresh'); ?></a>
                     <?php if (!$role->isGuest()): ?>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<?php echo $this->url('Cms:Admin:Users@editAction', $role->getId()); ?>"><?php $this->show('Change the password'); ?></a>
+                    <a class="dropdown-item" href="<?php echo $this->url('Cms:Admin:Users@editAction', $role->getId()); ?>"><i class="fas fa-user-check"></i> <?php $this->show('Change the password'); ?></a>
                     <?php endif; ?>
 
                     <?php if ($role->isDeveloper()): ?>
@@ -101,7 +101,7 @@
                     <div class="dropdown-header"><?php $this->show('Mode'); ?></div>
                     <?php foreach ($mode->getModes() as $id => $name): ?>
                     <?php if ($mode->isCurrent($id)): ?>
-                    <a class="dropdown-item" data-button="mode" data-mode-id="<?php echo $id; ?>" data-url="<?php echo $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"><i class="glyphicon glyphicon-ok"></i> <?php $this->show($name); ?></a>
+                    <a class="dropdown-item" data-button="mode" data-mode-id="<?php echo $id; ?>" data-url="<?php echo $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"><i class="fas fa-check"></i> <?php $this->show($name); ?></a>
                     <?php else: ?>
                     <a class="dropdown-item" data-button="mode" data-mode-id="<?php echo $id; ?>" data-url="<?php echo $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"> <?php $this->show($name); ?></a>
                     <?php endif; ?>
@@ -111,7 +111,7 @@
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-button="logout" href="<?php echo $this->url('Cms:Admin:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-remove-circle"></i> <?php $this->show('Logout'); ?></a>
+                  <a class="nav-link" data-button="logout" href="<?php echo $this->url('Cms:Admin:Auth@logoutAction'); ?>"><i class="fas fa-door-open"></i> <?php $this->show('Logout'); ?></a>
                 </li>
               </ul>
             </nav>
