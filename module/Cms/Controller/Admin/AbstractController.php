@@ -160,10 +160,10 @@ abstract class AbstractController extends AbstractAuthAwareController
      * Calls filter() method in provided service
      * 
      * @param \Krystal\Db\Filter\FilterableServiceInterface $service
-     * @param string $route
+     * @param string $route Optional route override
      * @return array
      */
-    final protected function getFilter(FilterableServiceInterface $service, $route)
+    final protected function getFilter(FilterableServiceInterface $service, $route = '')
     {
         return $this->getQueryFilter($service, $this->getSharedPerPageCount(), $route);
     }
