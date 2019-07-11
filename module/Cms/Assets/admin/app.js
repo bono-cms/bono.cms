@@ -688,28 +688,59 @@ $(function(){
         });
     });
 
-    // Highlight a row on selecting
-    $("table > tbody > tr > td > input[type='checkbox']").change(function(){
-        // Bootstap class
-        var hg = 'warning';
-        var $row = $(this).parent().parent();
+    // Table rows
+    (function(){
+        // Counter of checked items
+        var counter = 0;
+        var outputSelector = ".selected-counter";
+        var headCheckboxSelector = "table > thead > tr > td > input[type='checkbox']";
 
-        if ($(this).prop('checked') == true) {
-            $row.addClass(hg);
-        } else {
-            $row.removeClass(hg);
-        }
-    });
+        // Highlight a row on selecting
+        $("table > tbody > tr > td > input[type='checkbox']").change(function(){
+            // Bootstap class
+            var hg = 'table-danger';
+            var $row = $(this).parent().parent();
 
-    $("table > thead > tr > th > input[type='checkbox']").change(function(){
-        var $self = $(this);
-        var $children = $(this).parent().parent().parent().parent().find("tbody > tr > td:first-child > input[type='checkbox']");
-        var state = $self.prop('checked');
+            if ($(this).prop('checked') == true) {
+                $row.addClass(hg);
+            } else {
+                $row.removeClass(hg);
+            }
 
-        $children.prop('checked', state);
-        $self.prop('checked', state);
-    });
-    
+            // Depending on state, increment or decrement the counter
+            if ($(this).is(':checked')) {
+                counter++;
+            } else {
+                counter--;
+            }
+
+            if (counter < 0) {
+                counter = 0;
+            }
+
+            // Format output
+            if (counter > 0) {
+                var text = '(' + counter + ')';
+            } else {
+                var text = null;
+            }
+
+            // Update value
+            $(outputSelector).text(text);
+        });
+
+        $(headCheckboxSelector).change(function(){
+            var $self = $(this);
+            var $children = $(this).parent().parent().parent().parent().find("tbody > tr > td:first-child > input[type='checkbox']");
+            var state = $self.prop('checked');
+
+            $children.prop('checked', state);
+            $self.prop('checked', state);
+
+            // Update state
+            $("table > tbody > tr > td > input[type='checkbox']").change();
+        });
+    })();
     
     $("td > a.view").click(function(event) {
         event.preventDefault();

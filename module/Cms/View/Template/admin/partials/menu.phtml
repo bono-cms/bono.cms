@@ -27,7 +27,7 @@ defined('KRYSTAL') or die;
          <div class="dropdown-divider"></div>
          <?php endif; ?>
 
-         <?php if (!is_numeric($key) & is_array($value)): ?>
+         <?php if (!is_numeric($key) && is_array($value)): ?>
          <a class="dropdown-item" href="<?php echo $this->url($key); ?>">
              <?php isset($value['caption']) ? $this->show($value['caption']) : ''; ?>
 
@@ -58,7 +58,7 @@ defined('KRYSTAL') or die;
              <?php endif; ?>
 
              <?php if (isset($actions['delete'])): ?>
-             <a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url($actions['delete'], null); ?>"><i class="fas fa-trash"></i> <?php $this->show('Remove selected'); ?></a>
+             <a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url($actions['delete'], null); ?>"><i class="fas fa-trash"></i> <?php $this->show('Remove selected'); ?> <span class="selected-counter"></span></a>
              <?php endif; ?>
 
           <?php else: ?>
