@@ -9,23 +9,15 @@ defined('KRYSTAL') or die;
 ?>
 
 <div class="btn-toolbar">
-    <div class="dropdown">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        <i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
-      </button>
-
-      <div class="dropdown-menu">
-         <a class="dropdown-item" href="<?php echo $this->url('Cms:Admin:Languages@addAction'); ?>"><i class="glyphicon glyphicon-globe"></i> <?php $this->show('Add a language'); ?></a>
-         <div class="dropdown-divider"></div>
-         <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
-
-         <?php if (!empty($langs)): ?>
-         <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Cms:Admin:Languages@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
-         <?php else: ?>
-         <a class="dropdown-item disabled"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
-         <?php endif; ?>
-      </div>
-    </div>
+    <?php $this->loadPartial('menu', array(
+        'items' => array(
+            'Cms:Admin:Languages@addAction' => 'Add a language'
+        ),
+        'actions' => array(
+            'data' => $langs,
+            'save' => 'Cms:Admin:Languages@tweakAction',
+        )
+    )); ?>
 </div>
 
 <div class="card">
