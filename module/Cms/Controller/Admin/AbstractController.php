@@ -202,6 +202,31 @@ abstract class AbstractController extends AbstractAuthAwareController
     }
 
     /**
+     * Save dynamic field values
+     * 
+     * @param string $group Group name
+     * @return void
+     */
+    final protected function saveFields($group)
+    {
+        if ($this->moduleManager->isLoaded('Block')) {
+            // All POST data
+            $request = $this->request->getPost();
+
+            $fieldService = $this->getModuleService('fieldService');
+
+            if (isset($request['field'])) {
+                $fieldService->saveFields($request[$group]['id'], $request['field']);
+            }
+
+            // Save relation
+            if (!empty($request['page']['id'])) {
+                $fieldService->saveRelation($request[$group]['id'], isset($request['block']) ? $request['block'] : []);
+            }
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function bootstrap()
