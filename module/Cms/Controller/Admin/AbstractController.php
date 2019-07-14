@@ -215,8 +215,12 @@ abstract class AbstractController extends AbstractAuthAwareController
 
             $fieldService = $this->getModuleService('fieldService');
 
-            if (isset($request['field'])) {
-                $fieldService->saveFields($request[$group]['id'], $request['field']);
+            // Persist fields
+            if (isset($request['field']['regular'])) {
+                $fieldService->saveFields(
+                    $request[$group]['id'], $request['field']['regular'], 
+                    isset($request['field']['translatable']) ? $request['field']['translatable'] : array()
+                );
             }
 
             // Save relation
