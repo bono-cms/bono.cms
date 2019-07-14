@@ -70,6 +70,27 @@ abstract class AbstractController extends AbstractAuthAwareController
     }
 
     /**
+     * Returns current language-dependent property
+     * 
+     * @param array $entities
+     * @param string $property
+     * @return mixed
+     */
+    final protected function getCurrentProperty(array $entities, $property)
+    {
+        // Get current language id
+        $langId = $this->getService('Cms', 'languageManager')->getCurrentId();
+
+        foreach ($entities as $entity) {
+            if ($entity->getLangId() == $langId){
+                return $entity[$property];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Extract bookmarks from modules configuration
      * 
      * @return array
