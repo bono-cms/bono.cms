@@ -223,6 +223,27 @@ abstract class AbstractController extends AbstractAuthAwareController
     }
 
     /**
+     * Load fields in view template
+     * 
+     * @param int $id Entity id
+     * @return void
+     */
+    final protected function loadFields($id)
+    {
+        if ($this->moduleManager->isLoaded('Block')) {
+            // Existing id is numeric, while new one isn't
+            $new = !is_numeric($id);
+
+            $this->view->addVariables(array(
+                // Extra fields
+                'blockCategories' => $this->getService('Block', 'categoryService')->fetchList(),
+                'activeBlockCategoryIds' => !$new ? $this->getModuleService('fieldService')->getAttachedCategories($id) : array(),
+                'fields' => !$new ? $this->getModuleService('fieldService')->getFields($id) : array()
+            ));
+        }
+    }
+    
+    /**
      * Save dynamic field values
      * 
      * @param string $group Group name
