@@ -216,6 +216,10 @@ abstract class AbstractController extends BaseController
 
         $this->validatorFactory->setRenderer(new Renderer\StandardJson());
 
+        // Load translations
+        $language = $this->getService('Cms', 'languageManager')->getInterfaceLangCode();
+        $this->loadTranslations($language);
+
         // Configure view
         $this->view->setLayout('__layout__')
                    ->setModule('Site');
@@ -235,10 +239,6 @@ abstract class AbstractController extends BaseController
                         'name' => $this->translator->translate('Home page')
                     ))
         );
-
-        // Get default language code
-        $language = $this->getService('Cms', 'languageManager')->getInterfaceLangCode();
-        $this->loadTranslations($language);
 
         // Get core configuration entity of the system itself
         $config = $this->getService('Cms', 'configManager')->getEntity();
