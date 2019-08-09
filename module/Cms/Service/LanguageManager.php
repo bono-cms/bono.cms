@@ -118,7 +118,8 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
             ->setDefault($this->isDefault($language['id']), VirtualEntity::FILTER_BOOL)
             ->setCode($code)
             ->setFlag($language['flag'], VirtualEntity::FILTER_HTML)
-            ->setSwitchUrl(sprintf('/lang/%s', $code));
+            ->setSwitchUrl(sprintf('/lang/%s', $code))
+            ->setActive($this->getCurrentCode() == $code);
 
         return $entity;
     }
