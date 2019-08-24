@@ -85,7 +85,7 @@ final class Users extends AbstractController
                 'login' => $user->getLogin()
             ));
 
-            return $this->createForm($user, 'Edit the user');
+            return $this->createForm($user, $this->translator->translate('Edit the user "%s"', $user->getLogin()));
         } else {
             return false;
         }

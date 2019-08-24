@@ -73,7 +73,7 @@ final class Languages extends AbstractController
         $language = $this->getModuleService('languageManager')->fetchById($id);
 
         if ($language !== false) {
-            return $this->createForm($language, 'Edit the language');
+            return $this->createForm($language, $this->translator->translate('Edit the language "%s"', $language->getName()));
         } else {
             return false;
         }
