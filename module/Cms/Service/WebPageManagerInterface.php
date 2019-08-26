@@ -20,9 +20,10 @@ interface WebPageManagerInterface
      * 
      * @param string $targetId
      * @param string $module
+     * @param array $vars Optional query string variables
      * @return string
      */
-    public function createUrl($targetId, $module);
+    public function createUrl($targetId, $module, array $vars = array());
 
     /**
      * Extract links from registered namespaces

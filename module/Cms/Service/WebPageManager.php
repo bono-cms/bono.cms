@@ -69,14 +69,21 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
      * 
      * @param string $targetId
      * @param string $module
+     * @param array $vars Optional query string variables
      * @return string
      */
-    public function createUrl($targetId, $module)
+    public function createUrl($targetId, $module, array $vars = array())
     {
         $row = $this->webPageMapper->findSlug($targetId, $module);
 
         if (!empty($row)) {
-            return $this->surround($row['slug'], $row['lang_id']);
+            $url = $this->surround($row['slug'], $row['lang_id']);
+
+            if (!empty($vars)) {
+                $url .= '?' . http_build_query($vars);
+            }
+
+            return $url;
         } else {
             return null;
         }

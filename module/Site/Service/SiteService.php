@@ -38,10 +38,11 @@ final class SiteService implements SiteServiceInterface
      * 
      * @param string $targetId
      * @param string $module
+     * @param array $vars Optional query string variables
      * @return string
      */
-    public function createUrl($targetId, $module)
+    public function createUrl($targetId, $module, array $vars = array())
     {
-        return $this->webPageManager->createUrl($targetId, $module);
+        return $this->webPageManager->createUrl($targetId, $module, $vars);
     }
 }
