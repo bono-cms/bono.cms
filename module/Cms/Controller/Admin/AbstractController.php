@@ -234,6 +234,9 @@ abstract class AbstractController extends AbstractAuthAwareController
             // Existing id is numeric, while new one isn't
             $new = !is_numeric($id);
 
+            // Inform view about module partials
+            $this->view->getPartialBag()->addPartialDir($this->view->createThemePath('Block', 'partials'));
+
             $this->view->addVariables(array(
                 // Extra fields
                 'blockCategories' => $this->getService('Block', 'categoryService')->fetchList(),
