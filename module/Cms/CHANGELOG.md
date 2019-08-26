@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Force CKEditor not to eat `<i>` tags
  * In language service added `fetchActiveIds()` method
  * Migrated from Bootstrap 3 to 4. Updated design.
  * In administration panel added tab state saver

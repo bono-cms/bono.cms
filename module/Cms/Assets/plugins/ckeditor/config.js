@@ -13,3 +13,6 @@ CKEDITOR.editorConfig = function(config){
     config.extraPlugins = 'youtube';
 	config.entities_processNumerical = 'force';
 };
+
+// Allow font icons
+CKEDITOR.dtd.$removeEmpty['i'] = false;
