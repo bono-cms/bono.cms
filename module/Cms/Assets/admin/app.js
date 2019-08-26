@@ -630,7 +630,7 @@ $(function(){
     $('[data-button="delete"], [data-button="remove"]').click(function(event){
         event.preventDefault();
 
-        var url = $(this).data('url');
+        var url = $(this).data('url') || $(this).attr('href');
         var $self = $(this);
         var $modal = $('#confirmation-modal');
         var message = $(this).data('message');
