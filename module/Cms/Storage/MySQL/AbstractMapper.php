@@ -179,7 +179,7 @@ abstract class AbstractMapper extends BaseMapper
      * Delete an entity completely
      * 
      * @param string|array $id
-     * @return bolean
+     * @return boolean
      */
     final public function deleteEntity($id)
     {
@@ -447,7 +447,7 @@ abstract class AbstractMapper extends BaseMapper
      * Delete a page or entity completely
      * 
      * @param string|array $id
-     * @return bolean
+     * @return boolean
      */
     final public function deletePage($id)
     {
