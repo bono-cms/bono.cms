@@ -101,13 +101,14 @@ final class Icon
      * 
      * @param string $url
      * @param string $hint
+     * @param boolean $new Whether to open in new window
      * @return string
      */
-    public static function view($url, $hint)
+    public static function view($url, $hint, $new = true)
     {
         return self::button('fas fa-search', $url, $hint, array(
             'data-button' => 'view',
-            'target' => '_blank'
+            'target' => $new ? '_blank' : '_self'
         ));
     }
 
