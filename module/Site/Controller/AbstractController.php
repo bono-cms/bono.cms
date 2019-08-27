@@ -26,6 +26,19 @@ abstract class AbstractController extends BaseController
     protected $enableCsrf = true;
 
     /**
+     * Append fields on demand
+     * 
+     * @param object $entity
+     * @return void
+     */
+    final protected function appendFieldsIfPossible($entity)
+    {
+        if ($this->moduleManager->isLoaded('Block')) {
+            $this->getModuleService('fieldService')->appendFields($entity);
+        }
+    }
+
+    /**
      * Bootstrap site services
      * 
      * @return array
