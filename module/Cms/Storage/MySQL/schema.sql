@@ -8,7 +8,9 @@ CREATE TABLE `bono_module_cms_webpages` (
  `slug` varchar(254) NOT NULL COMMENT 'URL path itself',
  `module` varchar(50) NOT NULL COMMENT '',
  `controller` varchar(254) NOT NULL COMMENT 'Framework-compliant controller',
- `lastmod` DATETIME NOT NULL COMMENT 'Last modification time'
+ `lastmod` DATETIME NOT NULL COMMENT 'Last modification time',
+ `changefreq` varchar(1) DEFAULT 'w' COMMENT 'Change frequency',
+ `priority` FLOAT DEFAULT '0.5' COMMENT 'Priority'
 
 ) DEFAULT CHARSET=UTF8;
 
