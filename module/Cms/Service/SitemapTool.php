@@ -12,6 +12,7 @@
 namespace Cms\Service;
 
 use Krystal\Stdlib\ArrayUtils;
+use Cms\Collection\ChangeFreqCollection;
 
 final class SitemapTool
 {
@@ -27,21 +28,26 @@ final class SitemapTool
     );
 
     /**
+     * Creates change frequency value from a constant
+     * 
+     * @param string $const
+     * @return string
+     */
+    public static function createChangeFreq($const)
+    {
+        $col = new ChangeFreqCollection();
+        return strtolower($col->findByKey($const));
+    }
+
+    /**
      * Returns a collection of all possible and valid change frequencies
      * 
      * @return array
      */
     public static function getChangefreqs()
     {
-        return ArrayUtils::valuefy(array(
-            'always',
-            'hourly',
-            'daily',
-            'weekly',
-            'monthly',
-            'yearly',
-            'never'
-        ));
+        $col = new ChangeFreqCollection();
+        return $col->getAll();
     }
 
     /**
