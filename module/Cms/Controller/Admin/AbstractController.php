@@ -15,6 +15,8 @@ use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Form\Gadget\PerPageCount;
 use Cms\View\RoleHelper;
+use Cms\Collection\ChangeFreqCollection;
+use Cms\Collection\PriorityCollection;
 
 abstract class AbstractController extends AbstractAuthAwareController
 {
@@ -347,8 +349,13 @@ abstract class AbstractController extends AbstractAuthAwareController
             die($this->translator->translate("Error: You must have at least one published system's language for a content"));
         }
 
+        $changeFreqCol = new ChangeFreqCollection();
+        $priorCol = new PriorityCollection();
+
         // Shared variables for all templates
         $this->view->addVariables(array(
+            'changeFreqs' => $changeFreqCol->getAll(),
+            'priorities' => $priorCol->getAll(),
             'appConfig' => $this->appConfig,
             'extendedMode' => !$mode->isSimple(),
             'mode' => $mode,
