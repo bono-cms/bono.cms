@@ -11,6 +11,8 @@
 
 namespace Site\Controller;
 
+use Cms\Service\SitemapTool;
+
 final class Main extends AbstractController
 {
     /**
@@ -40,7 +42,7 @@ final class Main extends AbstractController
             return $this->view->renderRaw('Cms', 'admin', 'sitemap', array(
                 'urls' => $urls,
                 'priority' => $config->getSitemapPriority(),
-                'changefreq' => $config->getSitemapFrequency()
+                'changefreq' => SitemapTool::createChangeFreq($config->getSitemapFrequency())
             ));
 
         } else {

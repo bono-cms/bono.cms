@@ -238,7 +238,9 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 
                 $result[] = array(
                     'location' => $url,
-                    'lastmod' => $row['lastmod']
+                    'lastmod' => $row['lastmod'],
+                    'changefreq' => SitemapTool::createChangeFreq($row['changefreq']),
+                    'priority' => $row['priority']
                 );
             }
         }
