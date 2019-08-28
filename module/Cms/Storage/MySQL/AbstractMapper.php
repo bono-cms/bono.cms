@@ -39,6 +39,8 @@ abstract class AbstractMapper extends BaseMapper
     const PARAM_COLUMN_CONTROLLER = 'controller';
     const PARAM_COLUMN_MODULE = 'module';
     const PARAM_COLUMN_LASTMOD = 'lastmod';
+    const PARAM_COLUMN_CHANGEFREQ = 'changefreq';
+    const PARAM_COLUMN_PRIORITY = 'priority';
 
     /**
      * Fetches web page's slug by its associated id
@@ -381,7 +383,9 @@ abstract class AbstractMapper extends BaseMapper
             self::PARAM_COLUMN_MODULE => $module,
             self::PARAM_COLUMN_CONTROLLER => $controller,
             self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG],
-            self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow()
+            self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow(),
+            self::PARAM_COLUMN_CHANGEFREQ => $translation[self::PARAM_COLUMN_CHANGEFREQ],
+            self::PARAM_COLUMN_PRIORITY => $translation[self::PARAM_COLUMN_PRIORITY]
         );
 
         // Add web page entry
@@ -391,8 +395,8 @@ abstract class AbstractMapper extends BaseMapper
         // Append a web page
         $translation[self::PARAM_COLUMN_WEB_PAGE_ID] = (int) $this->getLastPk(WebPageMapper::getTableName());
 
-        // Slug is not stored in translations
-        unset($translation[self::PARAM_COLUMN_SLUG]);
+        // Sitemap attributes are not stored in translation table
+        $translation = $this->removeSitemapParams($translation);
 
         // Add entity translation
         $this->db->insert(static::getTranslationTable(), $translation)
@@ -418,7 +422,9 @@ abstract class AbstractMapper extends BaseMapper
         // Web page data to be updated
         $webPage = array(
             self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG],
-            self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow()
+            self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow(),
+            self::PARAM_COLUMN_CHANGEFREQ => $translation[self::PARAM_COLUMN_CHANGEFREQ],
+            self::PARAM_COLUMN_PRIORITY => $translation[self::PARAM_COLUMN_PRIORITY]
         );
 
         // Update controller if explicit provided
@@ -431,8 +437,8 @@ abstract class AbstractMapper extends BaseMapper
                  ->whereEquals(self::PARAM_COLUMN_ID, $translation[self::PARAM_COLUMN_WEB_PAGE_ID])
                  ->execute();
 
-        // Slug is not stored in translation table
-        unset($translation[self::PARAM_COLUMN_SLUG]);
+        // Sitemap attributes are not stored in translation table
+        $translation = $this->removeSitemapParams($translation);
 
         // Update translations
         $this->db->update(static::getTranslationTable(), $translation)
@@ -441,6 +447,23 @@ abstract class AbstractMapper extends BaseMapper
                  ->execute();
 
         return true;
+    }
+
+    /**
+     * Remove sitemap parameters from translation data
+     * 
+     * @param array $translation
+     * @return array
+     */
+    private function removeSitemapParams(array $translation)
+    {
+        unset(
+            $translation[self::PARAM_COLUMN_SLUG],
+            $translation[self::PARAM_COLUMN_CHANGEFREQ],
+            $translation[self::PARAM_COLUMN_PRIORITY]
+        );
+
+        return $translation;
     }
 
     /**
