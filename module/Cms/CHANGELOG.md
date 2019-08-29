@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added global `changefreq` and `priority` sitemap attributes
  * Force CKEditor not to eat `<i>` tags
  * In language service added `fetchActiveIds()` method
  * Migrated from Bootstrap 3 to 4. Updated design.
