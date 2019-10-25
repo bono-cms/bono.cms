@@ -257,33 +257,7 @@ abstract class AbstractController extends AbstractAuthAwareController
     final protected function saveFields($group)
     {
         if ($this->moduleManager->isLoaded('Block')) {
-            // Get POST data with files
-            $request = $this->request->getAll();
-
-            // Fields with their values
-            $data = $request['data'];
-
-            // Prepare variables
-            $field =& $data['field'];
-            $group = $data[$group];
-            $block = isset($data['block']) ? $data['block'] : array();
-            $new = !empty($data['page']['id']); // Whether its a new page
-
-            $fieldService = $this->getModuleService('fieldService');
-
-            // Persist fields
-            if (isset($field['regular'])) {
-                $fieldService->saveFields(
-                    $group['id'],
-                    $field['regular'], 
-                    isset($field['translatable']) ? $field['translatable'] : array()
-                );
-            }
-
-            // Save relation
-            if ($new) {
-                $fieldService->saveRelation($group['id'], $block);
-            }
+            $this->getModuleService('fieldService')->persist($group, $this->request->getAll());
         }
     }
 
