@@ -24,8 +24,11 @@ defined('KRYSTAL') or die;
             'tableClass' => 'table table-hover table-bordered table-striped',
             'columns' => array(
                 array(
-                    'column' => 'name',
-                    'label' => '#'
+                    'column' => 'id',
+                    'label' => '#',
+                    'attributes' => array(
+                        'class' => 'text-muted text-center'
+                    )
                 ),
 
                 array(
@@ -38,6 +41,9 @@ defined('KRYSTAL') or die;
 
                 array(
                     'column' => 'comment',
+                    'attributes' => array(
+                        'class' => null
+                    ),
                     'value' => function($record){
                         return $this->translate($record->getComment(), $record->getPlaceholder());
                     }
