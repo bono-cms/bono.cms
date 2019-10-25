@@ -62,6 +62,19 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Extract options from translations
+     * 
+     * @param mixed $translations
+     * @return mixed
+     */
+    public static function extractOptions($translations)
+    {
+        $entity = isset($translations[0]) ? $translations[0] : new VirtualEntity();
+
+        return $entity;
+    }
+
+    /**
      * Generates selector for arrbitary input
      * 
      * @param int $languageId
