@@ -245,7 +245,7 @@ $(function(){
          * @return void
          */
         resetAll : function(){
-            $("div.form-group").removeClass('has-error').addClass('has-success');
+            $("div.form-group").removeClass('has-danger').addClass('has-success');
         },
 
         /**
@@ -312,7 +312,7 @@ $(function(){
                             $(this).removeClass('has-success');
                         }
 
-                        $(this).addClass('has-error');
+                        $(this).addClass('has-danger');
                     }
                 });
             }

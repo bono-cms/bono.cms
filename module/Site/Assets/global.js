@@ -62,7 +62,7 @@ if (!(window.jQuery)){
                 var element = document.createElement('span');
 
                 // Configure element for bootstrap
-                $span = $(element).attr('class', 'help-block')
+                $span = $(element).attr('class', 'form-text')
                                   .text(text);
 
                 return $span;
@@ -134,7 +134,7 @@ if (!(window.jQuery)){
                     $container.removeClass('has-success');
                 }
 
-                $container.addClass('has-error');
+                $container.addClass('has-danger');
 
                 // Don't show errors on radio and array elements
                 if (!isRadioElement && !isArrayElement) {
@@ -152,7 +152,7 @@ if (!(window.jQuery)){
              */
             resetAll : function(){
                 // Classes we'd like to remove when resetting all
-                var classes = ['has-error', 'has-warning', 'has-success'];
+                var classes = ['has-danger', 'has-warning', 'has-success'];
 
                 this.$form.find('div.form-group').each(function(){
                     for (var key in classes) {
@@ -169,7 +169,7 @@ if (!(window.jQuery)){
                 this.$form.find('div.form-group').addClass('has-success');
 
                 // Remove all helper spans
-                this.$form.find("span.help-block").remove();
+                this.$form.find("span.form-text").remove();
             },
 
             /**
