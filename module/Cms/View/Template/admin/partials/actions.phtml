@@ -2,6 +2,12 @@
 
 $add = is_array($add) ? call_user_func_array(array($this, 'url'), $add) : $this->url($add);
 
+if (isset($edit)) {
+    $edit = is_array($edit) ? call_user_func_array(array($this, 'url'), $edit) : $this->url($edit);
+} else {
+    $edit = $cancel;
+}
+
 if (isset($cancel)) {
     $cancel = is_array($cancel) ? call_user_func_array(array($this, 'url'), $cancel) : $this->url($cancel);
 }
@@ -12,7 +18,7 @@ $wrapperClass = isset($wrapperClass) ? $wrapperClass : 'actions';
 
 <div class="<?= $wrapperClass; ?>">
     <?php if ($new): ?>
-    <button data-button="add" data-back-url="<?php echo isset($edit) ? $this->url($edit, null) : $cancel; ?>" data-url="<?php echo $this->url($save); ?>" class="btn btn-primary"><?php $this->show('Add'); ?></button>
+    <button data-button="add" data-back-url="<?php echo $edit; ?>" data-url="<?php echo $this->url($save); ?>" class="btn btn-primary"><?php $this->show('Add'); ?></button>
     <button data-button="add-create" data-url="<?php echo $this->url($save); ?>" class="btn btn-primary"><?php $this->show('Add & Create new'); ?></button>
 
     <?php else: ?>
