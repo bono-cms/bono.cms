@@ -84,7 +84,7 @@ abstract class AbstractController extends AbstractAuthAwareController
         $langId = $this->getService('Cms', 'languageManager')->getCurrentId();
 
         foreach ($entities as $entity) {
-            if ($entity->getLangId() == $langId){
+            if ($entity['lang_id'] == $langId) {
                 return $entity[$property];
             }
         }
@@ -247,7 +247,7 @@ abstract class AbstractController extends AbstractAuthAwareController
             ));
         }
     }
-    
+
     /**
      * Save dynamic field values
      * 
@@ -257,22 +257,32 @@ abstract class AbstractController extends AbstractAuthAwareController
     final protected function saveFields($group)
     {
         if ($this->moduleManager->isLoaded('Block')) {
-            // All POST data
-            $request = $this->request->getPost();
+            // Get POST data with files
+            $request = $this->request->getAll();
+
+            // Fields with their values
+            $data = $request['data'];
+
+            // Prepare variables
+            $field =& $data['field'];
+            $group = $data[$group];
+            $block = isset($data['block']) ? $data['block'] : array();
+            $new = !empty($data['page']['id']); // Whether its a new page
 
             $fieldService = $this->getModuleService('fieldService');
 
             // Persist fields
-            if (isset($request['field']['regular'])) {
+            if (isset($field['regular'])) {
                 $fieldService->saveFields(
-                    $request[$group]['id'], $request['field']['regular'], 
-                    isset($request['field']['translatable']) ? $request['field']['translatable'] : array()
+                    $group['id'],
+                    $field['regular'], 
+                    isset($field['translatable']) ? $field['translatable'] : array()
                 );
             }
 
             // Save relation
-            if (!empty($request['page']['id'])) {
-                $fieldService->saveRelation($request[$group]['id'], isset($request['block']) ? $request['block'] : []);
+            if ($new) {
+                $fieldService->saveRelation($group['id'], $block);
             }
         }
     }
