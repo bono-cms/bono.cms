@@ -34,6 +34,9 @@ abstract class AbstractController extends AbstractAuthAwareController
      */
     protected $languageCheck = true;
 
+    /** Defaults **/
+    const FIELD_SERVICE_NAME = 'blockFieldService';
+
     /**
      * {@inheritDoc}
      */
@@ -242,8 +245,8 @@ abstract class AbstractController extends AbstractAuthAwareController
             $this->view->addVariables(array(
                 // Extra fields
                 'blockCategories' => $this->getService('Block', 'categoryService')->fetchList(),
-                'activeBlockCategoryIds' => !$new ? $this->getModuleService('fieldService')->getAttachedCategories($id) : array(),
-                'fields' => !$new ? $this->getModuleService('fieldService')->getFields($id) : array()
+                'activeBlockCategoryIds' => !$new ? $this->getModuleService(self::FIELD_SERVICE_NAME)->getAttachedCategories($id) : array(),
+                'fields' => !$new ? $this->getModuleService(self::FIELD_SERVICE_NAME)->getFields($id) : array()
             ));
         }
     }
@@ -257,7 +260,7 @@ abstract class AbstractController extends AbstractAuthAwareController
     final protected function saveFields($group)
     {
         if ($this->moduleManager->isLoaded('Block')) {
-            $this->getModuleService('fieldService')->persist($group, $this->request->getAll());
+            $this->getModuleService(self::FIELD_SERVICE_NAME)->persist($group, $this->request->getAll());
         }
     }
 

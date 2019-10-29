@@ -34,7 +34,7 @@ abstract class AbstractController extends BaseController
     final protected function appendFieldsIfPossible($entity)
     {
         if ($this->moduleManager->isLoaded('Block')) {
-            $this->getModuleService('fieldService')->appendFields($entity);
+            $this->getModuleService('blockFieldService')->appendFields($entity);
         }
     }
 
