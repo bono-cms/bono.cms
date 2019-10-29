@@ -12,6 +12,7 @@
 namespace Cms;
 
 use Krystal\Application\Module\AbstractModule;
+use Block\Service\FieldService;
 
 /**
  * One module with shortcut methods for all CMS modules
@@ -21,6 +22,21 @@ use Krystal\Application\Module\AbstractModule;
  */
 abstract class AbstractCmsModule extends AbstractModule
 {
+    /**
+     * Creates an instance
+     * 
+     * @param string $mapper
+     * @return mixed
+     */
+    final protected function createFieldService($mapper)
+    {
+        if ($this->moduleManager->isLoaded('Block')) {
+            return new FieldService($this->getMapper($mapper), $this->appConfig->getRootDir());
+        }
+
+        return null;
+    }
+
     /**
      * Creates configuration entity object
      * 
