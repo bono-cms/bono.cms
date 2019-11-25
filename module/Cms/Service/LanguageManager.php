@@ -62,6 +62,25 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Converts an array of language entities into a hash map
+     * 
+     * @param array $languages A list of language entities
+     * @return array
+     */
+    public static function toHashList(array $languages)
+    {
+        $output = array();
+
+        foreach ($languages as $language) {
+            if ($language instanceof VirtualEntity) {
+                $output[$language->getId()] = $language->getName();
+            }
+        }
+
+        return $output;
+    }
+
+    /**
      * Extract options from translations
      * 
      * @param mixed $translations
