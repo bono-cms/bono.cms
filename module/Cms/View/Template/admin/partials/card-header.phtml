@@ -1,6 +1,10 @@
 
 <div class="card-header">
     <h4 class="card-title">
+        <?php if (isset($icon)): ?>
+        <i class="<?= $icon; ?> mr-2"></i> 
+        <?php endif; ?>
+        
         <?php $this->show($title); ?>
         <?php if (isset($rows)): ?>
         <small> (<?= count($rows); ?>) </small>
