@@ -79,7 +79,7 @@ final class HistoryManager extends AbstractManager implements HistoryManagerInte
      * @param string $placeholder
      * @return boolean
      */
-    public function write($module, $comment, $placeholder)
+    public function write($module, $comment, $placeholder = '')
     {
         // Do write in case enabled, otherwise ignore
         if ($this->isEnabled()) {
