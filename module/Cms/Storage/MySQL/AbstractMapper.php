@@ -140,20 +140,27 @@ abstract class AbstractMapper extends BaseMapper
      * 
      * @param array $columns Columns to be selected
      * @param string $table Table name in case needs to be overridden
+     * @param array $extra Extra condition when joining translation table
      * @return \Krystal\Db\Db
      */
-    final protected function createEntitySelect(array $columns, $table = null)
+    final protected function createEntitySelect(array $columns, $table = null, array $extraCondition = array())
     {
+        // By default, handle current table
         if ($table === null) {
             $table = static::getTableName();
         }
 
-        return $this->db->select($columns)
-                        ->from($table)
-                        // Translation relation
-                        ->leftJoin(static::getTranslationTable(), array(
-                            static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
-                        ));
+        // Merge main condition with extra one
+        $condition = array_merge(array(
+            static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+        ), $extraCondition);
+
+        $db = $this->db->select($columns)
+                       ->from($table)
+                       // Translation relation
+                       ->leftJoin(static::getTranslationTable(), $condition);
+
+        return $db;
     }
 
     /**
@@ -204,6 +211,22 @@ abstract class AbstractMapper extends BaseMapper
                      // Current ID
                      ->whereIn(static::column(self::PARAM_COLUMN_ID), $id)
                      ->execute();
+    }
+
+    /**
+     * Find many web pages at once (by entity ids)
+     * 
+     * @param array $columns Columns to be selected
+     * @param string $id Entity IDs
+     * @return array
+     */
+    final protected function findWebPages(array $columns, $ids)
+    {
+        $db = $this->createWebPageSelect($columns)
+                   ->whereIn(self::column(self::PARAM_COLUMN_ID, static::getTableName()), $ids)
+                   ->andWhereEquals(self::column(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $this->getLangId());
+
+        return $db->queryAll();
     }
 
     /**
