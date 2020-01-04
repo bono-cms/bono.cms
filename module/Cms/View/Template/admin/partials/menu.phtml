@@ -29,13 +29,17 @@ defined('KRYSTAL') or die;
 
          <?php if (!is_numeric($key) && is_array($value)): ?>
          <a class="dropdown-item" href="<?php echo $this->url($key); ?>">
+             <?php if (isset($value['icon'])): ?>
+             <i class="<?= $value['icon']; ?>"></i> &nbsp;
+             <?php endif; ?>
+
              <?php isset($value['caption']) ? $this->show($value['caption']) : ''; ?>
 
              <?php if (isset($value['notifications']) && $value['notifications'] > 0): ?>
              <small class="text-danger"> (<?= $value['notifications']; ?>)</small>
              <?php endif; ?>
          </a>
-         
+
          <?php else: ?>
          <a class="dropdown-item" href="<?php echo $this->url($key); ?>"> <?php $this->show($value); ?></a>
 
