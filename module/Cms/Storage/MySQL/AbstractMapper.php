@@ -202,15 +202,16 @@ abstract class AbstractMapper extends BaseMapper
         );
 
         // Delete entity with all its relational data
-        return $this->db->delete($tables)
-                     ->from(static::getTableName())
-                     // Translation relation
-                     ->innerJoin(static::getTranslationTable(), array(
-                        static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
-                     ))
-                     // Current ID
-                     ->whereIn(static::column(self::PARAM_COLUMN_ID), $id)
-                     ->execute();
+        $db = $this->db->delete($tables)
+                       ->from(static::getTableName())
+                       // Translation relation
+                       ->leftJoin(static::getTranslationTable(), array(
+                           static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+                       ))
+                       // Current ID
+                      ->whereIn(static::column(self::PARAM_COLUMN_ID), $id);
+
+        return $db->execute();
     }
 
     /**
