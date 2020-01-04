@@ -87,7 +87,7 @@ abstract class AbstractController extends AbstractAuthAwareController
         $langId = $this->getService('Cms', 'languageManager')->getCurrentId();
 
         foreach ($entities as $entity) {
-            if ($entity['lang_id'] == $langId) {
+            if ($entity['lang_id'] == $langId || $entity['lang_id'] == 0) {
                 return $entity[$property];
             }
         }
