@@ -12,6 +12,7 @@
 namespace Cms\Service;
 
 use Krystal\Application\Model\AbstractService;
+use Krystal\Http\FileTransfer\FileUploadTrait;
 use Menu\Service\MenuWidgetInterface;
 
 /**
@@ -19,6 +20,8 @@ use Menu\Service\MenuWidgetInterface;
  */
 abstract class AbstractManager extends AbstractService
 {
+    use FileUploadTrait;
+
     /**
      * Menu widget manager
      * 
@@ -35,6 +38,26 @@ abstract class AbstractManager extends AbstractService
     final public function setMenuWidget(MenuWidgetInterface $menuWidget)
     {
         $this->menuWidget = $menuWidget;
+    }
+
+    /**
+     * Uploads from the file data input
+     * 
+     * @param array $input Raw input data
+     * @param string $group Primary group
+     * @param string $attribute Target attribute
+     * @param string $destination
+     * @return void
+     */
+    final protected function appendFileData(array &$input, $group, $attribute, $destination)
+    {
+        if (isset($input['data'][$group], $input['files'][$group])) {
+            // References
+            $files =& $input['files'][$group];
+            $data =& $input['data'][$group];
+
+            $data[$attribute] = $this->uploadFileData($destination, $files[$attribute], $data[$attribute]);
+        }
     }
 
     /**
