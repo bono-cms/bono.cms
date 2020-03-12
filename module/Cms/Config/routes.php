@@ -91,7 +91,7 @@ return array(
     
     // Languages
     '/%s/languages' => array(
-        'controller' => 'Admin:Languages@gridAction',
+        'controller' => 'Admin:Languages@indexAction',
         'disallow' => array('guest', 'user')
     ),
     

@@ -26,6 +26,22 @@ final class Languages extends AbstractController
     }
 
     /**
+     * Renders the grid
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Languages');
+
+        return $this->view->render('languages/index', array(
+            // We can't define an array which is called "languages", because that name is already in template's global scope
+            'langs' => $this->getService('Cms', 'languageManager')->fetchAll(false)
+        ));
+    }
+
+    /**
      * Creates a form
      * 
      * @param \Krystal\Stdlib\VirtualEntity $language
@@ -39,7 +55,7 @@ final class Languages extends AbstractController
                    ->appendScript('@Cms/admin/language.form.js');
 
         // Append breadcrumbs
-        $this->view->getBreadcrumbBag()->addOne('Languages', 'Cms:Admin:Languages@gridAction')
+        $this->view->getBreadcrumbBag()->addOne('Languages', 'Cms:Admin:Languages@indexAction')
                                        ->addOne($title);
 
         return $this->view->render('languages/language.form', array(
@@ -139,22 +155,6 @@ final class Languages extends AbstractController
             $this->flashBag->set('success', 'Settings have been updated successfully');
             return '1';
         }
-    }
-
-    /**
-     * Renders the grid
-     * 
-     * @return string
-     */
-    public function gridAction()
-    {
-        $this->view->getBreadcrumbBag()
-                   ->addOne('Languages');
-
-        return $this->view->render('languages/browser', array(
-            // We can't define an array which is called "languages", because that name is already in template's global scope
-            'langs' => $this->getService('Cms', 'languageManager')->fetchAll(false)
-        ));
     }
 
     /**
