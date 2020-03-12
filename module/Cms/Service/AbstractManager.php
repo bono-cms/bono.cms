@@ -51,6 +51,12 @@ abstract class AbstractManager extends AbstractService
      */
     final protected function appendFileData(array &$input, $group, $attribute, $destination)
     {
+        // If explicit remove defined
+        if (isset($input['data']['remove'][$attribute])) {
+            $this->removeFileData($input['data']['remove'][$attribute]);
+            $input['data'][$group][$attribute] = '';
+        }
+
         if (isset($input['data'][$group], $input['files'][$group])) {
             // References
             $files =& $input['files'][$group];
