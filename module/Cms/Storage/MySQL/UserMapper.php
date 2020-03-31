@@ -121,6 +121,21 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     }
 
     /**
+     * Remove all but provided
+     * 
+     * @param int $id User's id to be kept
+     * @return boolean
+     */
+    public function wipe($id)
+    {
+        $db = $this->db->delete()
+                       ->from(self::getTableName())
+                       ->whereNotEquals('id', $id);
+
+        return (bool) $db->execute(false);
+    }
+
+    /**
      * Deletes a user by associated id
      * 
      * @param string $id User's id

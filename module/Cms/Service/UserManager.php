@@ -223,6 +223,17 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
     }
 
     /**
+     * Remove all but provided
+     * 
+     * @param int $id User's id to be kept
+     * @return boolean
+     */
+    public function wipe($id)
+    {
+        return $this->userMapper->wipe($id);
+    }
+
+    /**
      * Deletes a user by associated id
      * 
      * @param string $id
