@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Prevent removing currently logged in user in users section
  * Added global `changefreq` and `priority` sitemap attributes
  * Force CKEditor not to eat `<i>` tags
  * In language service added `fetchActiveIds()` method

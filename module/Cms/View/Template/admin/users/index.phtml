@@ -51,7 +51,12 @@ defined('KRYSTAL') or die;
                         );
                     },
 
-                    'remove' => function($user){
+                    'remove' => function($user) use ($currentUserId) {
+                        // Prevent removing oneself
+                        if ($currentUserId == $user->getId()) {
+                            return null;
+                        }
+
                         return Icon::remove(
                             $this->url('Cms:Admin:Users@deleteAction', $user->getId()),
                             $this->translate('Remove this user')

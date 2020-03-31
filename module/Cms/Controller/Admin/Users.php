@@ -102,7 +102,8 @@ final class Users extends AbstractController
                    ->addOne('Users');
 
         return $this->view->render('users/index', array(
-            'users' => $this->getUserManager()->fetchAll()
+            'users' => $this->getUserManager()->fetchAll(),
+            'currentUserId' => $this->getAuthService()->getId() // Current ID of logged in user
         ));
     }
 
