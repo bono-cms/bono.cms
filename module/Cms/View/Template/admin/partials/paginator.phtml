@@ -1,16 +1,13 @@
 <?php
 
 use Krystal\Widget\Pagination\PaginationWidget;
-
 defined('KRYSTAL') or die;
 
 ?>
 
 <?php if (isset($paginator)): ?>
-<nav class="pull-right">
-    <?= $this->widget(new PaginationWidget($paginator, array(
-        'previousCaption' => $this->translate('Previous'),
-        'nextCaption' => $this->translate('Next')
-    ))); ?>
-</nav>
+<?= $this->widget(new PaginationWidget($paginator, array(
+    'previousCaption' => $this->translate('Previous'),
+    'nextCaption' => $this->translate('Next')
+))); ?>
 <?php endif; ?>
