@@ -115,11 +115,14 @@ final class Users extends AbstractController
      */
     public function deleteAction($id)
     {
-        $service = $this->getModuleService('userManager');
-        $service->deleteById($id);
+        // Prevent removing oneself
+        if ($this->getAuthService()->getId() != $id) {
+            $service = $this->getModuleService('userManager');
+            $service->deleteById($id);
 
-        $this->flashBag->set('success', 'Selected element has been removed successfully');
-        return '1';
+            $this->flashBag->set('success', 'Selected element has been removed successfully');
+            return '1';
+        }
     }
 
     /**
