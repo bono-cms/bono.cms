@@ -126,6 +126,23 @@ final class Users extends AbstractController
     }
 
     /**
+     * Delete all users but current logged in one
+     * 
+     * @return mixed
+     */
+    public function wipeAction()
+    {
+        // ID of current logged in user
+        $id = $this->getAuthService()->getId();
+
+        // Try removing...
+        if ($this->getModuleService('userManager')->wipe($id)) {
+            $this->flashBag->set('success', 'All users except yourself have been removed permanently');
+            return '1';
+        }
+    }
+
+    /**
      * Persists a user
      * 
      * @return string

@@ -88,7 +88,11 @@ return array(
         'ajax' => true,
         'method' => 'POST'
     ),
-    
+
+    '/%s/users/wipe' => array(
+        'controller' => 'Admin:Users@wipeAction',
+    ),
+
     // Languages
     '/%s/languages' => array(
         'controller' => 'Admin:Languages@indexAction',
