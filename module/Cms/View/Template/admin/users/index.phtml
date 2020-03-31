@@ -8,37 +8,42 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<div class="card">
-    <h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Users'); ?> <small>(<?php echo count($users); ?>)</small></h4>
+<div class="btn-toolbar">
+    <div class="btn-group">
+        <a class="btn btn-primary btn-sm" href="<?= $this->url('Cms:Admin:Users@addAction'); ?>"><i class="fas fa-user-plus"></i> <?php $this->show('Add new user'); ?></a>
+    </div>
+</div>
 
-    <p>
-        <a class="btn btn-primary btn-sm" href="<?php echo $this->url('Cms:Admin:Users@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add new user'); ?></a>
-    </p>
+<div class="card">
+    <h4 class="mb-4"><i class="fas fa-users-cog"></i> <?php $this->show('Users'); ?> <small class="text-muted">(<?= count($users); ?>)</small></h4>
 
     <form>
         <div class="table-responsive">
-            <?= $this->widget(new GridViewWidget($users, array(
+            <?= $this->widget(new GridViewWidget($users, [
                 'tableClass' => 'table table-hover table-bordered table-striped',
-                'columns' => array(
-                    array(
+                'columns' => [
+                    [
                         'column' => 'id',
-                        'label' => '#'
-                    ),
+                        'label' => '#',
+                        'attributes' => [
+                            'class' => 'text-center text-muted'
+                        ]
+                    ],
 
-                    array(
+                    [
                         'column' => 'name'
-                    ),
+                    ],
 
-                    array(
+                    [
                         'column' => 'login'
-                    ),
+                    ],
 
-                    array(
+                    [
                         'column' => 'email'
-                    )
-                ),
+                    ]
+                ],
 
-                'actions' => array(
+                'actions' => [
                     'edit' => function($user){
                         return Icon::edit(
                             $this->url('Cms:Admin:Users@editAction', $user->getId()),
@@ -52,14 +57,8 @@ defined('KRYSTAL') or die;
                             $this->translate('Remove this user')
                         );
                     }
-                )
-            ))); ?>
-
-            <?php if (empty($users)): ?>
-            <div class="center-block">
-                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No users'); ?></h2>
-            </div>
-            <?php endif; ?>
+                ]
+            ])); ?>
         </div>
     </form>
 
