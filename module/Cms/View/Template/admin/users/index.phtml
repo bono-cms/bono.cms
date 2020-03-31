@@ -9,9 +9,15 @@ defined('KRYSTAL') or die;
 ?>
 
 <div class="btn-toolbar">
-    <div class="btn-group">
+    <div class="btn-group mr-2">
         <a class="btn btn-primary btn-sm" href="<?= $this->url('Cms:Admin:Users@addAction'); ?>"><i class="fas fa-user-plus"></i> <?php $this->show('Add new user'); ?></a>
     </div>
+
+    <?php if (count($users) > 1): ?>
+    <div class="btn-group mr-2">
+        <a data-button="delete" data-message="<?php $this->show('All listed users will be removed and no longer able to enter the system except you. Continue?'); ?>" class="btn btn-primary btn-sm" href="<?= $this->url('Cms:Admin:Users@wipeAction'); ?>"><i class="fas fa-user-shield"></i> <?php $this->show('Remove all, but current'); ?></a>
+    </div>
+    <?php endif; ?>
 </div>
 
 <div class="card">
