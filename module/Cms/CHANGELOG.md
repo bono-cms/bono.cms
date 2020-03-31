@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added Wipe button in users section
  * Prevent removing currently logged in user in users section
  * Added global `changefreq` and `priority` sitemap attributes
  * Force CKEditor not to eat `<i>` tags
