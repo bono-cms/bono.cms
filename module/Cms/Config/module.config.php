@@ -40,7 +40,7 @@ return array(
                 'description' => 'Install or drop system modules'
             ),
             array(
-                'route' => 'Cms:Admin:Languages@gridAction',
+                'route' => 'Cms:Admin:Languages@indexAction',
                 'name' => 'Languages',
                 'description' => 'Tweak system languages'
             ),
