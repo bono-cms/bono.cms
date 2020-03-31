@@ -177,7 +177,7 @@ return array(
 
                 'bootstrap' => array(
                     'stylesheets' => array(
-                        '@Cms/plugins/bootstrap-4/css/pulse.min.css'
+                        '@Cms/plugins/bootstrap-4/css/yeti.min.css'
                     ),
 
                     'scripts' => array(
