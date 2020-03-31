@@ -64,7 +64,7 @@ return array(
     
     // Users
     '/%s/users' => array(
-        'controller' => 'Admin:Users@gridAction',
+        'controller' => 'Admin:Users@indexAction',
         'disallow' => array('guest', 'user')
     ),
     

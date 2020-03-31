@@ -42,7 +42,7 @@ final class Users extends AbstractController
         // Only developers can see the link to the grid
         if ($this->getAuthService()->getRole() == 'dev') {
             $this->view->getBreadcrumbBag()
-                       ->addOne('Users', 'Cms:Admin:Users@gridAction');
+                       ->addOne('Users', 'Cms:Admin:Users@indexAction');
         }
 
         $this->view->getBreadcrumbBag()
@@ -96,12 +96,12 @@ final class Users extends AbstractController
      * 
      * @return string
      */
-    public function gridAction()
+    public function indexAction()
     {
         $this->view->getBreadcrumbBag()
                    ->addOne('Users');
 
-        return $this->view->render('users/browser', array(
+        return $this->view->render('users/index', array(
             'users' => $this->getUserManager()->fetchAll()
         ));
     }

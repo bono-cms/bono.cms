@@ -25,7 +25,7 @@ return array(
                 'description' => 'All system notifications'
             ),
             array(
-                'route' => 'Cms:Admin:Users@gridAction',
+                'route' => 'Cms:Admin:Users@indexAction',
                 'name' => 'Users',
                 'description' => 'Edit users and their privileges'
             ),
