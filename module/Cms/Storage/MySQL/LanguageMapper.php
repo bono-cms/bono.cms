@@ -160,6 +160,26 @@ final class LanguageMapper extends AbstractMapper implements LanguageMapperInter
     }
 
     /**
+     * Fetch language codes only
+     * 
+     * @param boolean $published Whether to fetch only published ones
+     * @return array
+     */
+    public function fetchCodes($published)
+    {
+        $column = 'code';
+        
+        $db = $this->db->select($column)
+                       ->from(self::getTableName());
+
+        if ($published == true) {
+            $db->whereEquals('published', '1');
+        }
+
+        return $db->queryAll($column);
+    }
+
+    /**
      * Adds a language
      * 
      * @param array $input Raw input data

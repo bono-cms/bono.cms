@@ -465,6 +465,17 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Fetch language codes only
+     * 
+     * @param boolean $published Whether to fetch only published ones
+     * @return array
+     */
+    public function fetchCodes($published)
+    {
+        return $this->languageMapper->fetchCodes($published);
+    }
+
+    /**
      * Deletes a language by its associated id
      * 
      * @param string $id

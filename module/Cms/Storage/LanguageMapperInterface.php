@@ -95,6 +95,14 @@ interface LanguageMapperInterface
     public function fetchAll($published);
 
     /**
+     * Fetch language codes only
+     * 
+     * @param boolean $published Whether to fetch only published ones
+     * @return array
+     */
+    public function fetchCodes($published);
+
+    /**
      * Inserts language data
      * 
      * @param array $data Language data
