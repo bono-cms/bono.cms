@@ -16,12 +16,46 @@ use Cms\Service\SitemapTool;
 final class Sitemap extends AbstractController
 {
     /**
-     * Renders site map
+     * Create links for all SiteMaps
+     * 
+     * @param array $codes Language codes
+     * @return array
+     */
+    private function createGroupLinks(array $codes)
+    {
+        // To be returned
+        $output = array();
+
+        foreach ($codes as $code) {
+            $output[] = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@sitemapAction', array($code), 1);
+        }
+
+        return $output;
+    }
+
+    /**
+     * Renders SiteMap sending proper XML header
+     * 
+     * @param string $template Template name
+     * @param array $vars Template variables
+     * @return string
+     */
+    private function renderSitemap($template, array $vars)
+    {
+        // Force response to be XML 
+        $this->response->respondAsXml();
+
+        // Render sitemap.pthml located under Cms module inside administration template
+        return $this->view->renderRaw('Cms', 'sitemap', $template, $vars);
+    }
+
+    /**
+     * Renders single SiteMap
      * 
      * @param string $language Optional language code
      * @return string
      */
-    public function sitemapAction($language = null)
+    private function renderSingle($language)
     {
         if (is_null($language)) {
             $language = $this->getService('Cms', 'languageManager')->getDefaultCode();
@@ -35,11 +69,7 @@ final class Sitemap extends AbstractController
             // Grab configration entity
             $config = $this->getService('Cms', 'configManager')->getEntity();
 
-            // Define response as XML 
-            $this->response->respondAsXml();
-
-            // Render sitemap.pthml located under Cms module inside administration template
-            return $this->view->renderRaw('Cms', 'sitemap', 'sitemap-single', array(
+            return $this->renderSitemap('sitemap-single', array(
                 'urls' => $urls,
                 'priority' => $config->getSitemapPriority(),
                 'changefreq' => SitemapTool::createChangeFreq($config->getSitemapFrequency())
@@ -48,6 +78,42 @@ final class Sitemap extends AbstractController
         } else {
             // Invalid language code supplied, so simply trigger 404
             return false;
+        }
+    }
+
+    /**
+     * Renders a group of SiteMaps
+     * 
+     * @param array $codes Language codes
+     * @return string
+     */
+    private function renderGroup(array $codes)
+    {
+        // SiteMap URLs
+        $urls = $this->createGroupLinks($codes);
+
+        return $this->renderSitemap('sitemap-group', array(
+            'urls' => $urls
+        ));
+    }
+
+    /**
+     * Renders SiteMap
+     * 
+     * @param string $language Optional language code
+     * @return string
+     */
+    public function sitemapAction($language = null)
+    {
+        // Active language codes
+        $codes = $this->getService('Cms', 'languageManager')->fetchCodes(true);
+
+        // Gotta render group of SiteMaps?
+        if (count($codes) > 1 && $language == null) {
+            return $this->renderGroup($codes);
+        } else {
+            // Render just a single SiteMap
+            return $this->renderSingle($language);
         }
     }
 }
