@@ -16,37 +16,23 @@ use Cms\Service\SitemapTool;
 final class Sitemap extends AbstractController
 {
     /**
-     * Create links for all SiteMaps
+     * Renders SiteMap
      * 
-     * @param array $codes Language codes
-     * @return array
-     */
-    private function createGroupLinks(array $codes)
-    {
-        // To be returned
-        $output = array();
-
-        foreach ($codes as $code) {
-            $output[] = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@sitemapAction', array($code), 1);
-        }
-
-        return $output;
-    }
-
-    /**
-     * Renders SiteMap sending proper XML header
-     * 
-     * @param string $template Template name
-     * @param array $vars Template variables
+     * @param string $language Optional language code
      * @return string
      */
-    private function renderSitemap($template, array $vars)
+    public function indexAction($language = null)
     {
-        // Force response to be XML 
-        $this->response->respondAsXml();
+        // Active language codes
+        $codes = $this->getService('Cms', 'languageManager')->fetchCodes(true);
 
-        // Render sitemap.pthml located under Cms module inside administration template
-        return $this->view->renderRaw('Cms', 'sitemap', $template, $vars);
+        // Gotta render group of SiteMaps?
+        if (count($codes) > 1 && $language == null) {
+            return $this->renderGroup($codes);
+        } else {
+            // Render just a single SiteMap
+            return $this->renderSingle($language);
+        }
     }
 
     /**
@@ -98,22 +84,36 @@ final class Sitemap extends AbstractController
     }
 
     /**
-     * Renders SiteMap
+     * Create links for all SiteMaps
      * 
-     * @param string $language Optional language code
+     * @param array $codes Language codes
+     * @return array
+     */
+    private function createGroupLinks(array $codes)
+    {
+        // To be returned
+        $output = array();
+
+        foreach ($codes as $code) {
+            $output[] = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@sitemapAction', array($code), 1);
+        }
+
+        return $output;
+    }
+
+    /**
+     * Renders SiteMap sending proper XML header
+     * 
+     * @param string $template Template name
+     * @param array $vars Template variables
      * @return string
      */
-    public function sitemapAction($language = null)
+    private function renderSitemap($template, array $vars)
     {
-        // Active language codes
-        $codes = $this->getService('Cms', 'languageManager')->fetchCodes(true);
+        // Force response to be XML 
+        $this->response->respondAsXml();
 
-        // Gotta render group of SiteMaps?
-        if (count($codes) > 1 && $language == null) {
-            return $this->renderGroup($codes);
-        } else {
-            // Render just a single SiteMap
-            return $this->renderSingle($language);
-        }
-    }
+        // Render sitemap.pthml located under Cms module inside administration template
+        return $this->view->renderRaw('Cms', 'sitemap', $template, $vars);
+    }    
 }

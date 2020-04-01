@@ -41,11 +41,11 @@ return array(
 
     // Sitemap
     '/sitemap' => array(
-        'controller' => 'Sitemap@sitemapAction'
+        'controller' => 'Sitemap@indexAction'
     ),
     
     '/sitemap/lang/(:var)' => array(
-        'controller' => 'Sitemap@sitemapAction'
+        'controller' => 'Sitemap@indexAction'
     ),
 
     '/test' => array(
