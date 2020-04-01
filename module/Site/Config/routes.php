@@ -38,15 +38,16 @@ return array(
     '/(:var)/(:var)/page/(:var)' => array(
         'controller' => 'Main@slugLanguageAwareAction'
     ),
-    
+
+    // Sitemap
     '/sitemap' => array(
-        'controller' => 'Main@sitemapAction'
+        'controller' => 'Sitemap@sitemapAction'
     ),
     
     '/sitemap/lang/(:var)' => array(
-        'controller' => 'Main@sitemapAction'
+        'controller' => 'Sitemap@sitemapAction'
     ),
-    
+
     '/test' => array(
         'controller' => 'Main@testAction'
     )
