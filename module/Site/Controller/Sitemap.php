@@ -39,7 +39,7 @@ final class Sitemap extends AbstractController
             $this->response->respondAsXml();
 
             // Render sitemap.pthml located under Cms module inside administration template
-            return $this->view->renderRaw('Cms', 'admin', 'sitemap', array(
+            return $this->view->renderRaw('Cms', 'sitemap', 'sitemap-single', array(
                 'urls' => $urls,
                 'priority' => $config->getSitemapPriority(),
                 'changefreq' => SitemapTool::createChangeFreq($config->getSitemapFrequency())
