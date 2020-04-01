@@ -73,20 +73,18 @@ final class SitemapTool
     }
 
     /**
-     * Ping sitemaps
+     * Inform search engines about SiteMap location
      * 
-     * @param array $urls
+     * @param string $url Front SiteMap URL
      * @return boolean
      */
-    public static function ping(array $urls)
+    public static function ping($url)
     {
         foreach (self::$engines as $engine) {
-            foreach ($urls as $url) {
-                $target = sprintf($engine, urlencode($url));
+            $target = sprintf($engine, urlencode($url));
 
-                // Issue a GET request
-                $hasError = @file_get_contents($target) !== false;
-            }
+            // Issue a GET request
+            $hasError = @file_get_contents($target) !== false;
         }
 
         // Assume success
