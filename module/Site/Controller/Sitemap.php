@@ -23,11 +23,16 @@ final class Sitemap extends AbstractController
      */
     public function indexAction($language = null)
     {
+        // Does this request come for a single one?
+        if ($language !== null) {
+            return $this->renderSingle($language);
+        }
+
         // Active language codes
         $codes = $this->getService('Cms', 'languageManager')->fetchCodes(true);
 
         // Gotta render group of SiteMaps?
-        if (count($codes) > 1 && $language == null) {
+        if (count($codes) > 1) {
             return $this->renderGroup($codes);
         } else {
             // Render just a single SiteMap
@@ -95,7 +100,7 @@ final class Sitemap extends AbstractController
         $output = array();
 
         foreach ($codes as $code) {
-            $output[] = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@sitemapAction', array($code), 1);
+            $output[] = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', array($code), 1);
         }
 
         return $output;
