@@ -185,6 +185,22 @@ abstract class AbstractMapper extends BaseMapper
     }
 
     /**
+     * Find many entities
+     * 
+     * @param array $columns Columns to be selected
+     * @param array $ids Entity IDs
+     * @return array
+     */
+    final protected function findEntities(array $columns, array $ids)
+    {
+        $db = $this->createEntitySelect($columns)
+                   ->whereIn(self::column(self::PARAM_COLUMN_ID), $ids)
+                   ->andWhereEquals(self::column(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $this->getLangId());
+
+        return $db->queryAll();
+    }
+
+    /**
      * Delete an entity completely
      * 
      * @param string|array $id
