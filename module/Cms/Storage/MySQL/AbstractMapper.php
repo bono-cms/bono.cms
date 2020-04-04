@@ -212,6 +212,11 @@ abstract class AbstractMapper extends BaseMapper
             $id = array($id);
         }
 
+        // Prevent removing all, if no keys specified
+        if (empty($id)) {
+            return false;
+        }
+
         $tables = array(
             static::getTableName(),
             static::getTranslationTable()
