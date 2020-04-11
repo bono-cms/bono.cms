@@ -125,10 +125,10 @@ return array(
                 'datetimepicker' => array(
                     'scripts' => array(
                         '@Cms/plugins/datetimepicker/js/moment.min.js',
-                        '@Cms/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js'
+                        '@Cms/plugins/datetimepicker/js/jquery.datetimepicker.full.min.js'
                     ),
                     'stylesheets' => array(
-                        '@Cms/plugins/datetimepicker/css/bootstrap-datetimepicker.min.css'
+                        '@Cms/plugins/datetimepicker/css/jquery.datetimepicker.min.css'
                     )
                 ),
 
