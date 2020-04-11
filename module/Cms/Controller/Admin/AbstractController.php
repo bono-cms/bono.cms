@@ -360,6 +360,7 @@ abstract class AbstractController extends AbstractAuthAwareController
             'bootstrap',
             'famfam-flag',
             'font-awesome-5',
+            'datetimepicker',
             'jquery.mCustomScrollbar',
             'admin',
             'to-top'
