@@ -115,9 +115,28 @@ $(function(){
     });
 
     if (jQuery().datetimepicker) {
-        $('[data-plugin="datetimepicker"]').datetimepicker({
-            defaultDate: new Date(),
-            format: 'DD-MM-YYYY hh:mm:ss',
+        // Use moment as formatter
+        var language = $("[name='language']").val();
+        // Default format
+        var format = 'YYYY-MM-DD HH:mm:ss';
+
+        if (language) {
+            $.datetimepicker.setLocale(language);
+        }
+
+        $.datetimepicker.setDateFormatter('moment');
+
+        $('[data-plugin="datetimepicker"]').each(function(){
+
+            // Override if present
+            if ($(this).data('format')) {
+                format = $(this).data('format');
+            }
+
+            $(this).datetimepicker({
+                defaultDate: new Date(),
+                format: format
+            });
         });
     }
 
