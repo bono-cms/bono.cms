@@ -12,6 +12,8 @@
 namespace Site\Controller;
 
 use Cms\Service\SitemapTool;
+use Krystal\Seo\Sitemap\SitemapGenerator;
+use Krystal\Seo\Sitemap\SitemapIndexGenerator;
 
 final class Sitemap extends AbstractController
 {
@@ -59,12 +61,15 @@ final class Sitemap extends AbstractController
         if ($urls !== false) {
             // Grab configration entity
             $config = $this->getService('Cms', 'configManager')->getEntity();
+            $urls = $this->normalizeUrls($urls, $config->getSitemapPriority(), SitemapTool::createChangeFreq($config->getSitemapFrequency()));
 
-            return $this->renderSitemap('sitemap-single', array(
-                'urls' => $urls,
-                'priority' => $config->getSitemapPriority(),
-                'changefreq' => SitemapTool::createChangeFreq($config->getSitemapFrequency())
-            ));
+            $generator = new SitemapGenerator(false);
+            $generator->addUrls($urls);
+
+            // Force response to be XML 
+            $this->response->respondAsXml();
+
+            return $generator->render();
 
         } else {
             // Invalid language code supplied, so simply trigger 404
@@ -80,12 +85,36 @@ final class Sitemap extends AbstractController
      */
     private function renderGroup(array $codes)
     {
-        // SiteMap URLs
-        $urls = $this->createGroupLinks($codes);
+        $generator = new SitemapIndexGenerator();
+        $generator->addSitemaps($this->createGroupLinks($codes));
 
-        return $this->renderSitemap('sitemap-group', array(
-            'urls' => $urls
-        ));
+        // Force response to be XML 
+        $this->response->respondAsXml();
+
+        return $generator->render();
+    }
+
+    /**
+     * Normalize URLs
+     * 
+     * @param string $priority Default priority
+     * @param string $changefreq Default changefreq
+     * @return array Normalized array
+     */
+    private function normalizeUrls(array $urls, $priority, $changefreq)
+    {
+        foreach ($urls as &$url) {
+            // Append defaults on absence
+            if (!isset($url['priority'])) {
+                $url['priority'] = $priority;
+            }
+
+            if (!isset($url['changefreq'])) {
+                $url['changefreq'] = $changefreq;
+            }
+        }
+
+        return $urls;
     }
 
     /**
@@ -100,25 +129,11 @@ final class Sitemap extends AbstractController
         $output = array();
 
         foreach ($codes as $code) {
-            $output[] = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', array($code), 1);
+            $output[] = array(
+                'loc' => $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', array($code), 1)
+            );
         }
 
         return $output;
     }
-
-    /**
-     * Renders SiteMap sending proper XML header
-     * 
-     * @param string $template Template name
-     * @param array $vars Template variables
-     * @return string
-     */
-    private function renderSitemap($template, array $vars)
-    {
-        // Force response to be XML 
-        $this->response->respondAsXml();
-
-        // Render sitemap.pthml located under Cms module inside administration template
-        return $this->view->renderRaw('Cms', 'sitemap', $template, $vars);
-    }    
 }

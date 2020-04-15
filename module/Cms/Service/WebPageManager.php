@@ -223,7 +223,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 
         // Append home URL first
         $result[] = array(
-            'location' => $this->createHomeUrl($base, $language)
+            'loc' => $this->createHomeUrl($base, $language)
         );
 
         foreach ($rows as $row) {
@@ -231,13 +231,8 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
 
             // Append only from active (loaded) modules
             if ($moduleManager->isLoaded($module)) {
-                // Build the URL first
-                $url = $this->surround($row['slug'], $row['lang_id']);
-                // Now make sure all special characters are escaped
-                $url = htmlspecialchars($url, \ENT_QUOTES, 'UTF-8');
-
                 $result[] = array(
-                    'location' => $url,
+                    'loc' => $this->surround($row['slug'], $row['lang_id']),
                     'lastmod' => $row['lastmod'],
                     'changefreq' => SitemapTool::createChangeFreq($row['changefreq']),
                     'priority' => $row['priority']
