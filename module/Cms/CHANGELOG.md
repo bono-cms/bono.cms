@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Force CKEditor not to encode content by default
  * Added Wipe button in users section
  * Prevent removing currently logged in user in users section
  * Added global `changefreq` and `priority` sitemap attributes

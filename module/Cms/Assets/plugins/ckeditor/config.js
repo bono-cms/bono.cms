@@ -12,6 +12,9 @@ CKEDITOR.editorConfig = function(config){
 	config.allowedContent = true;
     config.extraPlugins = 'youtube';
 	config.entities_processNumerical = 'force';
+    config.htmlEncodeOutput = false;
+    config.entities = false;
+    config.basicEntities = false;
 };
 
 // Allow font icons
