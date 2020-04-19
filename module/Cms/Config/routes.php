@@ -161,6 +161,11 @@ return array(
         'disallow' => array('guest')
     ),
     
+    '/%s/sitemap-links/robots' => array(
+        'controller' => 'Admin:SitemapLinks@robotsAction',
+        'disallow' => array('guest')
+    ),
+    
     // Info
     '/%s/info' => array(
         'controller' => 'Admin:Info@indexAction',

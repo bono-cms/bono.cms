@@ -12,6 +12,7 @@
 namespace Cms\Controller\Admin;
 
 use Cms\Service\SitemapTool;
+use Cms\Service\RobotsService;
 
 final class SitemapLinks extends AbstractController
 {
@@ -46,6 +47,24 @@ final class SitemapLinks extends AbstractController
         $this->getModuleService('configManager')->storeMany($this->request->getPost());
 
         return '1';
+    }
+
+    /**
+     * Generates robots file
+     * 
+     * @return int
+     */
+    public function robotsAction()
+    {
+        $url = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', array(), 0);
+
+        if (RobotsService::syncRobots($url)) {
+            $this->flashBag->set('success', 'Robots file has been synchronized successfully');
+        } else {
+            $this->flashBag->set('warning', 'An error occurred during synchronization');
+        }
+
+        return 1;
     }
 
     /**
