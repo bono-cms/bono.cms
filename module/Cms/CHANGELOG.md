@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * Added generator for robots.txt
+ * No more separated sitemaps. Since now a global one is used as an index for another ones
  * Force CKEditor not to encode content by default
  * Added Wipe button in users section
  * Prevent removing currently logged in user in users section
