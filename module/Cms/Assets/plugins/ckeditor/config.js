@@ -14,7 +14,7 @@ CKEDITOR.editorConfig = function(config){
 	config.entities_processNumerical = 'force';
     config.htmlEncodeOutput = false;
     config.entities = false;
-    config.basicEntities = false;
+    config.basicEntities = true;
 };
 
 // Allow font icons
