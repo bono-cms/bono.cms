@@ -176,41 +176,48 @@ if (!(window.jQuery)){
              * Shows error messages
              * 
              * @param string response Server's response
-             * @param undefined|string backUrl
+             * @param object $form
              * @return void
              */
-            handleAll : function(response, backUrl){
+            handleAll : function(response, $form){
+                var backUrl = $form.data('back-url');
+                var processForm = $form.data('submit') == '1'
+                
                 // Clear all previous messages and added classes
                 this.resetAll();
 
-                // Response back URL
-                if (response.backUrl) {
-                    window.location = response.backUrl;
-                }
+                try {
+                    var data = $.parseJSON(response);
 
-                // if its not JSON, but "1" then we'd assume success
-                if (response == "1") {
-                    // If its provided, then do redirect to that URL
-                    if (backUrl){
-                        window.location = backUrl;
-                    } else {
-                        // Otherwise, just reload the page
-                        window.location.reload();
+                    // Response back URL
+                    if (data.backUrl) {
+                        window.location = response.backUrl;
+                    }
+                    
+                    for (var name in data) {
+                        var message = data[name];
+                        this.showErrorOn(name, message);
                     }
 
-                } else {
-                    // Otherwise, try to handle JSON data
-                    try {
-                        var data = $.parseJSON(response);
+                } catch(e) {
+                    // Otherwise we'd assume that something went wrong
+                    console.log(response);
 
-                        for (var name in data){
-                            var message = data[name];
-                            this.showErrorOn(name, message);
+                    // Submit form natively
+                    if (processForm) {
+                        $form.off('submit').submit();
+                        return false;
+                    }
+
+                    // if its not JSON, but "1" then we'd assume success
+                    if (response == "1") {
+                        // If its provided, then do redirect to that URL
+                        if (backUrl){
+                            window.location = backUrl;
+                        } else {
+                            // Otherwise, just reload the page
+                            window.location.reload();
                         }
-
-                    } catch(e) {
-                        // Otherwise we'd assume that something went wrong
-                        console.log(response);
                     }
                 }
             }
@@ -286,7 +293,7 @@ if (!(window.jQuery)){
                         $button.removeClass('disabled').prop('disabled', false);
                     },
                     success: function(response){
-                        $.getValidator($form).handleAll(response, $self.data('back-url'));
+                        $.getValidator($form).handleAll(response, $self);
                     }
                 });
             });
