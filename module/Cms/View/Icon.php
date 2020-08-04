@@ -47,8 +47,9 @@ final class Icon
      */
     public static function approve($url, $hint)
     {
-        return self::button('far fa-check-square', $url, $hint, array(
-            'data-button' => 'approve'
+        return self::button('far fa-check-square', '#', $hint, array(
+            'data-button' => 'save-changes',
+            'data-url' => $url
         ));
     }
 
