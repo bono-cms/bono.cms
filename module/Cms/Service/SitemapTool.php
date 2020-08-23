@@ -28,6 +28,28 @@ final class SitemapTool
     );
 
     /**
+     * Synchronizes robots file
+     * 
+     * @param string $sitemap Link to Sitemap
+     * @return boolean
+     */
+    public static function syncRobots($sitemap)
+    {
+        $robots = new Robots();
+        $robots->addUserAgent('*')
+               ->addDisallow([
+                    '/config/',
+                    '/data/',
+                    '/module/',
+                    '/vendor/'
+               ])
+               ->addBreak()
+               ->addSitemap($sitemap);
+
+        return $robots->save(getcwd());
+    }
+
+    /**
      * Creates change frequency value from a constant
      * 
      * @param string $const

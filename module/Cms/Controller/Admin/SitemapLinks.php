@@ -58,7 +58,7 @@ final class SitemapLinks extends AbstractController
     {
         $url = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', array(), 0);
 
-        if (RobotsService::syncRobots($url)) {
+        if (SitemapTool::syncRobots($url)) {
             $this->flashBag->set('success', 'Robots file has been synchronized successfully');
         } else {
             $this->flashBag->set('warning', 'An error occurred during synchronization');
