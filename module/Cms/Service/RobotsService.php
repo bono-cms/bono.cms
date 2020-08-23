@@ -24,7 +24,7 @@ final class RobotsService
     public static function syncRobots($sitemap)
     {
         // Path to the root
-        $path = getcwd() . '\\robots.txt';
+        $path = getcwd() . '/' . Robots::FILENAME;
         return file_put_contents($path, self::renderRobots($sitemap));
     }
 
