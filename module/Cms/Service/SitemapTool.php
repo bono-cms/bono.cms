@@ -12,20 +12,22 @@
 namespace Cms\Service;
 
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Seo\Sitemap\Query;
 use Cms\Collection\ChangeFreqCollection;
 
 final class SitemapTool
 {
     /**
-     * Search engines Ping URLs
+     * Inform search engines about SiteMap location
      * 
-     * @var array
+     * @param string $url Front SiteMap URL
+     * @return boolean
      */
-    private static $engines = array(
-        'http://www.google.com/webmasters/sitemaps/ping?sitemap=%s',
-        'http://www.bing.com/ping?sitemap=%s',
-        'http://blogs.yandex.ru/pings/?status=success&url=%s'
-    );
+    public static function ping($url)
+    {
+        $query = new Query($url);
+        return $query->ping();
+    }
 
     /**
      * Synchronizes robots file
@@ -92,24 +94,5 @@ final class SitemapTool
             '0.9',
             '1.0'
         ));
-    }
-
-    /**
-     * Inform search engines about SiteMap location
-     * 
-     * @param string $url Front SiteMap URL
-     * @return boolean
-     */
-    public static function ping($url)
-    {
-        foreach (self::$engines as $engine) {
-            $target = sprintf($engine, urlencode($url));
-
-            // Issue a GET request
-            $hasError = @file_get_contents($target) !== false;
-        }
-
-        // Assume success
-        return $hasError;
     }
 }
