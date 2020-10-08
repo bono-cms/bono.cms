@@ -155,7 +155,7 @@ abstract class AbstractMapper extends BaseMapper
             static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
         ), $extraCondition);
 
-        $db = $this->db->select($columns)
+        $db = $this->db->select($columns, true)
                        ->from($table)
                        // Translation relation
                        ->leftJoin(static::getTranslationTable(), $condition);
