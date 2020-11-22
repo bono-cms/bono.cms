@@ -13,6 +13,7 @@ namespace Cms\Service;
 
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Seo\Sitemap\Query;
+use Krystal\Seo\Robots;
 use Cms\Collection\ChangeFreqCollection;
 
 final class SitemapTool
