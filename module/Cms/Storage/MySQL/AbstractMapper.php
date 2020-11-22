@@ -377,6 +377,12 @@ abstract class AbstractMapper extends BaseMapper
         // Empty slug is taken from name
         if (empty($translation[self::PARAM_COLUMN_SLUG])) {
             $translation[self::PARAM_COLUMN_SLUG] = $translation[self::PARAM_COLUMN_NAME];
+
+            // Another chance to generate a slug is to take from a title
+            if (empty($translation[self::PARAM_COLUMN_NAME])) {
+                $translation[self::PARAM_COLUMN_NAME] = $translation[self::PARAM_COLUMN_TITLE];
+                $translation[self::PARAM_COLUMN_SLUG] = $translation[self::PARAM_COLUMN_TITLE];
+            }
         }
 
         $translation[self::PARAM_COLUMN_SLUG] = TextUtils::sluggify($translation[self::PARAM_COLUMN_SLUG]);
