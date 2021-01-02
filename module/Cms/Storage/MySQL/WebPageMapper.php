@@ -68,12 +68,10 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 
         // Append relations from dynamic tables
         foreach (array_keys($target) as $table) {
-            $db->leftJoin($table)
-               ->on()
-               ->equals(
-                    sprintf('%s.web_page_id', $table), 
-                    new RawSqlFragment(self::column('id'))
-                );
+            $db->leftJoin($table, array(
+                sprintf('%s.web_page_id', $table) => new RawSqlFragment(self::column('id')),
+                sprintf('%s.lang_id', $table) => new RawSqlFragment(self::column('lang_id')),
+            ));
         }
 
         // Filter by language ID
