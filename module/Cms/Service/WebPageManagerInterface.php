@@ -69,12 +69,11 @@ interface WebPageManagerInterface
     /**
      * Fetches all URLs
      * 
-     * @param string $base
-     * @param string $language Optional language code
+     * @param string $language Current language code
      * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManager
      * @return array
      */
-    public function fetchURLs($base, $language, ModuleManagerInterface $moduleManager);
+    public function fetchURLs($locale, ModuleManagerInterface $moduleManager);
 
     /**
      * Surrounds a slug using provided language id to generate a language code if needed
@@ -84,7 +83,7 @@ interface WebPageManagerInterface
      * @return string
      */
     public function surround($slug, $langId);
-    
+
     /**
      * Sluggifies a string
      * 

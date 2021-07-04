@@ -203,35 +203,31 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     /**
      * Fetches all URLs
      * 
-     * @param string $base
-     * @param string $language Optional language code
+     * @param string $language Current language code
      * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManager
      * @return array
      */
-    public function fetchURLs($base, $language, ModuleManagerInterface $moduleManager)
+    public function fetchURLs($locale, ModuleManagerInterface $moduleManager)
     {
-        // Grab language id by its associated code first
-        $langId = $this->languageMapper->fetchIdByCode($language);
+        // Grab locale id by its associated code first
+        $langId = $this->languageMapper->fetchIdByCode($locale);
 
-        // Stop if invalid language id supplied
+        // Stop if invalid locale id supplied
         if (empty($langId)) {
             return false;
         }
 
         $rows = $this->webPageMapper->fetchAll(array(), $langId);
-        $result = array();
-
-        // Append home URL first
-        $result[] = array(
-            'loc' => $this->createHomeUrl($base, $language)
-        );
+        $output = array();
 
         foreach ($rows as $row) {
             $module = $this->cleanModuleName($row['module']);
 
             // Append only from active (loaded) modules
             if ($moduleManager->isLoaded($module)) {
-                $result[] = array(
+                $output[] = array(
+                    'id' => $row['target_id'],
+                    'module' => $row['module'],
                     'loc' => $this->surround($row['slug'], $row['lang_id']),
                     'lastmod' => $row['lastmod'],
                     'changefreq' => SitemapTool::createChangeFreq($row['changefreq']),
@@ -240,7 +236,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
             }
         }
 
-        return $result;
+        return $output;
     }
 
     /**
@@ -436,24 +432,6 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         $module = trim($module);
 
         return $module;
-    }
-
-    /**
-     * Creates home URL
-     * 
-     * @param string $base Base URL to be prepended
-     * @param string $language
-     * @return string
-     */
-    private function createHomeUrl($base, $language)
-    {
-        $languages = $this->getLanguages();
-
-        if (count($languages) > 1) {
-            return sprintf('%s/lang/%s', $base, $language);
-        } else {
-            return sprintf('%s/', $base);
-        }
     }
 
     /**
