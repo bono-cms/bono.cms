@@ -45,24 +45,28 @@ final class Sitemap extends AbstractController
     /**
      * Renders single SiteMap
      * 
-     * @param string $language Optional language code
+     * @param string $locale Optional language code
      * @return string
      */
-    private function renderSingle($language)
+    private function renderSingle($locale)
     {
-        if (is_null($language)) {
-            $language = $this->getService('Cms', 'languageManager')->getDefaultCode();
+        if (is_null($locale)) {
+            $locale = $this->getService('Cms', 'languageManager')->getDefaultCode();
         }
 
         // Grab all URLs
         $urls = $this->getService('Cms', 'webPageManager')
-                     ->fetchURLs($this->request->getBaseUrl(), $language, $this->moduleManager);
+                     ->fetchURLs($locale, $this->moduleManager);
 
         if ($urls !== false) {
-            // Grab configration entity
+            // Grab configuration entity
             $config = $this->getService('Cms', 'configManager')->getEntity();
             $urls = $this->normalizeUrls($urls, $config->getSitemapPriority(), SitemapTool::createChangeFreq($config->getSitemapFrequency()));
 
+            // Push dedicated home URL first
+            array_unshift($urls, $this->createHomeUrl($this->request->getBaseUrl(), $locale));
+
+            // Done with URLs. Now, it's time to render them in XML-format
             $generator = new SitemapGenerator(false);
             $generator->addUrls($urls);
 
@@ -95,22 +99,67 @@ final class Sitemap extends AbstractController
     }
 
     /**
+     * Create home URL
+     * 
+     * @param string $baseUrl
+     * @param string $locale Current locale
+     * @return array
+     */
+    private function createHomeUrl($baseUrl, $locale)
+    {
+        // Language service
+        $languageManager = $this->getService('Cms', 'languageManager');
+
+        // Total count of published languages
+        $languageCount = $languageManager->getCount(true);
+
+        // Is this URL for default page being generated?
+        if ($languageManager->getDefaultCode() == $locale || $languageCount == 1) {
+            // If so, we don't need to direct it to switch URL
+            return array(
+                'loc' => sprintf('%s/', $baseUrl)
+            );
+        }
+
+        // For another cases
+        if ($languageCount > 1) {
+            return array(
+                'loc' => $baseUrl . $this->createUrl('Site:Main@changeLanguageAction', array($locale))
+            );
+        }
+    }
+
+    /**
      * Normalize URLs
      * 
+     * @param array $urls
      * @param string $priority Default priority
      * @param string $changefreq Default changefreq
      * @return array Normalized array
      */
     private function normalizeUrls(array $urls, $priority, $changefreq)
     {
-        foreach ($urls as &$url) {
+        $page = $this->getService('Pages', 'pageManager')->fetchDefault();
+
+        // Stop, if home page is not defined
+        if ($page == false) {
+            return array();
+        }
+
+        // Process URLs
+        foreach ($urls as $index => $url) {
+            // Remove home page URL from indexing
+            if ($url['module'] == 'Pages' && $url['id'] == $page->getId()) {
+                unset($urls[$index]);
+            }
+
             // Append defaults on absence
             if (!isset($url['priority'])) {
-                $url['priority'] = $priority;
+                $urls[$index]['priority'] = $priority;
             }
 
             if (!isset($url['changefreq'])) {
-                $url['changefreq'] = $changefreq;
+                $urls[$index]['changefreq'] = $changefreq;
             }
         }
 
