@@ -12,7 +12,9 @@
 namespace Cms\Service;
 
 use Krystal\Stdlib\VirtualEntity;
-use Krystal\Http\FileTransfer\FileEntityInterface;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 final class Mailer implements MailerInterface
 {
@@ -49,55 +51,54 @@ final class Mailer implements MailerInterface
      * @param string|array $to
      * @param string $subject
      * @param string $body
-     * @param array $files Files to be sent if present
+     * @param array $files Optional files
      * @return boolean
      */
     private function sendMessage($to, $subject, $body, array $files = array())
     {
+        $mail = new PHPMailer(true);
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'base64';
+
         // If we have SMTP transport turned on, then we'd use appropriate Swift's transport
         if ($this->config->getUseSmtpDriver() != true) {
-            $from = $this->config->getSmtpUsername();
-            // SMTP transport
-            $transport = \Swift_SmtpTransport::newInstance($this->config->getSmtpHost(), $this->config->getSmtpPort(), $this->config->getSmtpSecureLayer())
-                                          ->setUsername($from)
-                                          ->setPassword($this->config->getSmtpPassword());
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = $this->config->getSmtpHost();           //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = $this->config->getSmtpUsername();       //SMTP username
+            $mail->Password   = $this->config->getSmtpPassword();       //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = $this->config->getSmtpPort();           //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
         } else {
-            $from = array('no-reply@'.$this->config->getDomain());
-            $transport = \Swift_MailTransport::newInstance(null);
+            $mail->setFrom('no-reply@'.$this->config->getDomain());
         }
-
-        // Create the Mailer using your created Transport
-        $mailer = \Swift_Mailer::newInstance($transport);
-
-        // Build Swift's message
-        $message = \Swift_Message::newInstance($subject)
-                              ->setFrom($from)
-                              ->setContentType('text/html')
-                              ->setTo($to)
-                              ->setBody($body);
 
         // if files provided, then attach them
         if (!empty($files)) {
             foreach ($files as $name => $file) {
                 if ($file instanceof FileEntityInterface) {
-                    $path = \Swift_Attachment::fromPath($file->getTmpName())->setFilename($file->getName());
+                    $mail->addAttachment($file->getTmpName(), $file->getName());
                 } else {
-                    $path = \Swift_Attachment::fromPath($file);
-
-                    if (!is_numeric($name)) {
-                        $path->setFilename($name);
-                    }
+                    $mail->addAttachment($file);
                 }
-
-                $message->attach($path);
             }
         }
 
-        // Re-define the id
-        //$msgId = $message->getHeaders()->get('Message-ID');
-        //$msgId->setId(time().'.'.uniqid('token').'@'.$this->config->getDomain());
+        $mail->isHTML(true);
 
-        return $mailer->send($message, $failed) != 0;
+        if (is_array($to)) {
+            foreach ($to as $receiver) {
+                $mail->addAddress($receiver);
+            }
+        } else {
+            $mail->addAddress($to);
+        }
+
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+
+        return $mail->send();
     }
 
     /**
@@ -123,16 +124,11 @@ final class Mailer implements MailerInterface
      * @param array $files Files to be sent if present
      * @return boolean Depending on success
      */
-    public function send($subject, $body, $notification = null, array $files = array())
+    public function send($subject, $body, $notification = 'You have received a new message', array $files = array())
     {
-        if ($notification === null) {
-            $notification = 'You have received a new message';
-        }
-
         if ($this->sendMessage(array($this->config->getNotificationEmail()), $subject, $body, $files)) {
             $this->notificationManager->notify($notification);
             return true;
-
         } else {
             return false;
         }
