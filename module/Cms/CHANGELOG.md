@@ -4,6 +4,9 @@ CHANGELOG
 1.3
 ---
 
+ * Switch to PHPMailer as a main e-mail sending library
+ * As of now, sitemap doesn't have a language switcher for default home page
+ * Removed home URL generation from SiteMap (i.e corresponding page)
  * Added generator for robots.txt
  * No more separated sitemaps. Since now a global one is used as an index for another ones
  * Force CKEditor not to encode content by default
