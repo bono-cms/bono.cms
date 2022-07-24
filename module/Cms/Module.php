@@ -15,7 +15,6 @@ use Krystal\Text\SlugGenerator;
 use Cms\Service\LanguageManager;
 use Cms\Service\UserManager;
 use Cms\Service\HistoryManager;
-use Cms\Service\NotepadManager;
 use Cms\Service\Mode;
 use Cms\Service\NotificationManager;
 use Cms\Service\WebPageManager;
@@ -74,7 +73,6 @@ final class Module extends AbstractCmsModule
 
         $notificationMapper = $mapperFactory->build('/Cms/Storage/MySQL/NotificationMapper');
         $notificationMapper->setLangId($languageManager->getCurrentId());
-        $notepadMapper = $mapperFactory->build('/Cms/Storage/MySQL/NotepadMapper');
 
         $webPageMapper = $mapperFactory->build('/Cms/Storage/MySQL/WebPageMapper');
         $webPageMapper->setLangId($languageManager->getCurrentId());
@@ -89,7 +87,6 @@ final class Module extends AbstractCmsModule
             'mailer' => new Mailer($notificationManager, $config->getEntity()),
             'configManager' => $config,
             'webPageManager' => $webPageManager,
-            'notepadManager' => new NotepadManager($notepadMapper),
             'mode' => $this->getModeService(),
             'userManager'    => $userManager,
             'historyManager' => new HistoryManager($historyMapper),

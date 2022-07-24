@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Removed notepad in administration panel
  * Switch to PHPMailer as a main e-mail sending library
  * As of now, sitemap doesn't have a language switcher for default home page
  * Removed home URL generation from SiteMap (i.e corresponding page)

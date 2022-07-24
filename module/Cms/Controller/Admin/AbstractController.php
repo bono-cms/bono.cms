@@ -415,8 +415,6 @@ abstract class AbstractController extends AbstractAuthAwareController
             $historyManager = $this->getService('Cms', 'historyManager');
             $historyManager->setUserId($userId);
             $historyManager->setEnabled((bool) $config->getKeepTrack());
-
-            $this->getService('Cms', 'notepadManager')->setUserId($userId);
         }
     }
 }

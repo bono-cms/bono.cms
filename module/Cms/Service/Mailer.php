@@ -12,9 +12,7 @@
 namespace Cms\Service;
 
 use Krystal\Stdlib\VirtualEntity;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+use Krystal\Mail\Mailer as FrameworkMailer;
 
 final class Mailer implements MailerInterface
 {
@@ -56,49 +54,19 @@ final class Mailer implements MailerInterface
      */
     private function sendMessage($to, $subject, $body, array $files = array())
     {
-        $mail = new PHPMailer(true);
-        $mail->CharSet = 'UTF-8';
-        $mail->Encoding = 'base64';
+        $mailer = new FrameworkMailer([
+            'from' => 'no-reply@' . $this->config->getDomain(),
+            'smtp' => [
+                'enabled' => $this->config->getUseSmtpDriver() != true,
+                'host' => $this->config->getSmtpHost(),
+                'username' => $this->config->getSmtpUsername(),
+                'password' => $this->config->getSmtpPassword(),
+                'port' => $this->config->getSmtpPort(),
+                'protocol' => 'tls'
+            ]
+        ]);
 
-        // If we have SMTP transport turned on, then we'd use appropriate Swift's transport
-        if ($this->config->getUseSmtpDriver() != true) {
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = $this->config->getSmtpHost();           //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = $this->config->getSmtpUsername();       //SMTP username
-            $mail->Password   = $this->config->getSmtpPassword();       //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port       = $this->config->getSmtpPort();           //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-        } else {
-            $mail->setFrom('no-reply@'.$this->config->getDomain());
-        }
-
-        // if files provided, then attach them
-        if (!empty($files)) {
-            foreach ($files as $name => $file) {
-                if ($file instanceof FileEntityInterface) {
-                    $mail->addAttachment($file->getTmpName(), $file->getName());
-                } else {
-                    $mail->addAttachment($file);
-                }
-            }
-        }
-
-        $mail->isHTML(true);
-
-        if (is_array($to)) {
-            foreach ($to as $receiver) {
-                $mail->addAddress($receiver);
-            }
-        } else {
-            $mail->addAddress($to);
-        }
-
-        $mail->Subject = $subject;
-        $mail->Body = $body;
-
-        return $mail->send();
+        return $mailer->send($to, $subject, $body, $files);
     }
 
     /**

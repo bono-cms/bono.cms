@@ -15,11 +15,6 @@ return array(
                 'description' => 'History of latest actions'
             ),
             array(
-                'route' => 'Cms:Admin:Notepad@indexAction',
-                'name' => 'Notepad',
-                'description' => 'Keep your notes using notepad'
-            ),
-            array(
                 'route' => 'Cms:Admin:Notifications@indexAction',
                 'name' => 'Notifications',
                 'description' => 'All system notifications'
