@@ -1,10 +1,8 @@
 <?php
 
 return array(
-
 	'production' => false,
 	'timezone' => 'UTC',
-
 	/**
 	 * Framework components configuration
 	 */
@@ -14,7 +12,6 @@ return array(
             'core_modules' => array(
                 'Cms', 
                 'Pages', 
-                'Menu'
             )
         ),
         

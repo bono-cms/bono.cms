@@ -202,6 +202,7 @@ abstract class AbstractController extends AbstractAuthAwareController
     final protected function loadMenuWidget()
     {
         if ($this->moduleManager->isLoaded('Menu')) {
+            $this->view->getPartialBag()->addStaticPartial($this->view->createThemePath('Menu', 'admin'), 'menu-widget');
             $this->view->getPluginBag()
                        ->appendScript('@Menu/admin/menu.widget.js');
         }
@@ -277,8 +278,7 @@ abstract class AbstractController extends AbstractAuthAwareController
         $this->validateRequest();
 
         $this->view->setTheme('admin');
-        $this->view->getPartialBag()->addPartialDir($this->view->createThemePath('Cms', 'admin') . '/partials/')
-                                    ->addStaticPartial($this->view->createThemePath('Menu', 'admin'), 'menu-widget');
+        $this->view->getPartialBag()->addPartialDir($this->view->createThemePath('Cms', 'admin') . '/partials/');
 
         $this->view->setLayout('__layout__', 'Cms');
         $this->loadAllShared();

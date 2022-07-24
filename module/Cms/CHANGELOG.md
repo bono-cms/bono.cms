@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Make Menu module optional. Its no longer Core module.
  * Removed styles and background image from maintenance theme
  * Removed notepad in administration panel
  * Switch to PHPMailer as a main e-mail sending library
