@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Removed styles and background image from maintenance theme
  * Removed notepad in administration panel
  * Switch to PHPMailer as a main e-mail sending library
  * As of now, sitemap doesn't have a language switcher for default home page

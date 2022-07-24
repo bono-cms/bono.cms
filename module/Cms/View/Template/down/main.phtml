@@ -4,11 +4,10 @@
 <head>
 	<meta charset="UTF-8" />
 	<title><?php $this->show('Site is temporary unavailable'); ?></title>
-	<link href="<?php echo $this->asset('styles.css'); ?>" rel="stylesheet" />
 </head>
 <body>
-	<div class="box">
-		<article><?php echo $reason; ?></article>
+	<div>
+		<?= $reason; ?>
 	</div>
 </body>
 </html>
