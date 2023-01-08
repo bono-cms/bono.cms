@@ -1,0 +1,23 @@
+<?php
+
+use Krystal\Widget\GridView\GridViewWidget;
+
+?>
+
+<?php if (isset($title)): ?>
+<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show($title); ?> (<?php echo count($rows); ?>)</h4>
+<?php endif; ?>
+
+<div class="table-responsive">
+    <?= $this->widget(new GridViewWidget($rows, $grid)); ?>
+</div>
+
+<?php if (empty($rows)): ?>
+<div class="center-block">
+    <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
+</div>
+<?php endif; ?>
+
+<?php if (isset($pagination)): ?>
+<?php $this->loadPartial('paginator'); ?>
+<?php endif; ?>
