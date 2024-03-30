@@ -129,11 +129,17 @@ return array(
                         '@Cms/css/style.css'
                     )
                 ),
+                'zoom' => array(
+                    'scripts' => array(
+                        '@Site/plugins/elevatezoom/jquery.elevateZoom-3.0.8.min.js'
+                    )
+                ),
                 'famfam-flag' => array(
                     'stylesheets' => array(
                         '@Site/plugins/famfam-flag/famfamfam-flags.min.css'
                     ),
                 ),
+
                 'bootstrap' => array(
                     'stylesheets' => array(
                         'https://bootswatch.com/4/cosmo/bootstrap.min.css'
