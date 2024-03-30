@@ -344,6 +344,7 @@ $(function(){
          * @return void
          */
         handleResponse : function(response){
+            console.log(response);
             this.resetAll();
 
             try {
@@ -619,10 +620,10 @@ $(function(){
             }
         });
     });
-    
+
     $("[data-button='save']").click(function(){
         var url = $(this).data('url');
-        
+
         update(url, function(response) {
             if (response == "1") {
                 window.location.reload();
@@ -631,11 +632,11 @@ $(function(){
             }
         });
     });
-    
+
     $("[data-button='save-create']").click(function(){
         var url = $(this).data('url');
         var backUrl = $(this).data('back-url');
-        
+
         update(url, function(response){
             if (response == "1"){
                 window.location = backUrl;
