@@ -162,7 +162,7 @@ return array(
 
                 'font-awesome-5' => array(
                     'stylesheets' => array(
-                        '@Cms/plugins/font-awesome-5/css/all.min.css'
+                        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'
                     )
                 ),
 
