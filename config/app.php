@@ -73,11 +73,10 @@ return array(
 
                 'lightbox' => array(
                     'stylesheets' => array(
-                        '@Cms/plugins/lightbox/css/lightbox.css',
+                        'https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css',
                     ),
-                    
                     'scripts' => array(
-                        '@Cms/plugins/lightbox/js/lightbox.min.js'
+                        'https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js'
                     )
                 ),
 
