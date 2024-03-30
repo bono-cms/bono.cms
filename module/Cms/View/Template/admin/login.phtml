@@ -16,54 +16,65 @@ defined('KRYSTAL') or die;
 </head>
 <body>
 
-<section class="login">
-    <div class="login-overlay">
-        <div class="login-form">
-            <span class="caption"><?php $this->show('Administration panel'); ?></span>
-            <form autocomplete="off" role="form" data-success-url="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" data-submit-url="<?php echo $this->url('Cms:Admin:Auth@loginAction'); ?>">
-                <div class="form-group">
-                    <label for="user"><?php $this->show('Login'); ?></label>
-                    <?= Element::text('login', null, array('id' => 'user')); ?>
-                </div>
+<section class="bg-light vh-100">
+    <div class="container h-100">
+        <div class="h-100 d-flex flex-column align-items-start justify-content-center">
+            <div class="row justify-content-center w-100">
+                <div class="col-lg-5">
+                    <!-- Box -->
+                    <div class="bg-white shadow-lg p-5">
+                        <span class="d-flex align-items-center justify-content-center mx-auto text-white rounded-circle bg-primary login-icon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        
+                        <h3 class="text-center mb-4 mt-3"><?= $this->translate('Administration panel'); ?></h3>
+                        
+                        <form autocomplete="off" role="form" data-success-url="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>" data-submit-url="<?= $this->url('Cms:Admin:Auth@loginAction'); ?>">
+                            <div class="form-group">
+                                <label><?php $this->show('Login'); ?></label>
+                                <?= Element::text('login', null, ['class' => 'form-control form-control-lg']); ?>
+                            </div>
 
-                <div class="form-group">
-                    <label for="pass"><?php $this->show('Password'); ?></label>
-                    <?= Element::password('password', null, array('id' => 'pass')); ?>
-                </div>
+                            <div class="form-group">
+                                <label><?php $this->show('Password'); ?></label>
+                                <?= Element::password('password', null, ['class' => 'form-control form-control-lg']); ?>
+                            </div>
 
-                <div class="form-group">
-                   <div class="custom-control custom-checkbox">
-                      <?= Element::checkbox('remember', true, array('class' => 'custom-control-input', 'id' => 'remember')); ?>
-                      <label class="custom-control-label" for="remember"><?php $this->show('Keep me signed in'); ?></label>
-                   </div>
-                </div>
+                            <div class="form-group">
+                               <div class="custom-control custom-checkbox">
+                                  <?= Element::checkbox('remember', true, ['class' => 'custom-control-input']); ?>
+                                  <label class="custom-control-label"><?= $this->translate('Keep me signed in'); ?></label>
+                               </div>
+                            </div>
 
-                <?php if ($captcha === true): ?>
-                <div class="captcha-container">
-                    <span class="label label-danger"><?php $this->show('Please confirm that you are not a bot'); ?></span>
+                            <?php if ($captcha === true): ?>
+                            <div class="captcha-container">
+                                <span class="label label-danger"><?= $this->translate('Please confirm that you are not a bot'); ?></span>
 
-                    <div class="form-group">
-                        <label for="inputCaptcha" class="control-label"></label>
-                        <div class="col-lg-12">
-                            <a href="#" title="<?php $this->show('Click to refresh'); ?>" data-captcha="button-refresh"><img data-captcha="image" src="<?php echo $this->url('Site:Main@captchaAction', null); ?>" /></a>
-                        </div>
+                                <div class="form-group">
+                                    <label for="inputCaptcha" class="control-label"></label>
+                                        <a href="#" title="<?= $this->translate('Click to refresh'); ?>" data-captcha="button-refresh">
+                                        <img data-captcha="image" src="<?= $this->url('Site:Main@captchaAction', null); ?>" />
+                                    </a>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputCaptcha" class="control-label"></label>
+                                    <input type="text" class="form-control" name="captcha" placeholder="<?= $this->translate('Type here'); ?>" />
+                                </div>
+                            </div>
+                            <?php endif; ?>
+
+                            <div class="form-group">
+                                <button disabled type="submit" class="btn btn-primary btn-lg w-100"><?= $this->translate('Sign In'); ?></button>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="form-group">
-                        <label for="inputCaptcha" class="control-label"></label>
-                        <div class="col-lg-12">
-                            <input type="text" class="form-control" name="captcha" placeholder="<?php $this->show('Type here'); ?>" />
-                        </div>
-                    </div>
+                    <!-- End of box -->
                 </div>
-                <?php endif; ?>
-
-                <div class="form-group">
-                    <button disabled type="submit" class="btn btn-primary btn-lg"><?php $this->show('Sign In'); ?></button>
-                </div>
-            </form>
+            </div>
         </div>
-	</div>
+    </div>
 </section>
 
 <?php $this->loadPartial('ajax'); ?>
