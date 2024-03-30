@@ -11,7 +11,9 @@ $responsive = true; // By default assume responsive
 
 ?>
 
+<?php if (isset($caption)): ?>
 <?php $this->loadPartial('items-per-page', array('caption' => $caption)); ?>
+<?php endif; ?>
 
 <?php if (isset($batch)): ?>
 <form>
@@ -21,11 +23,12 @@ $responsive = true; // By default assume responsive
     <div class="table-responsive">
     <?php endif; ?>
         <?= $this->widget(new GridViewWidget($rows, array(
-            'batch' => isset($batch),
+            'batch' => isset($batch) && $batch === true,
             'pk' => 'id',
             'tableClass' => 'table table-hover table-bordered',
             'columns' => $columns,
-            'actions' => $actions
+            'actions' => $actions,
+            'rowAttributes' => isset($rowAttributes) ? $rowAttributes : []
         ))); ?>
 
         <?php if (empty($rows)): ?>
