@@ -30,7 +30,7 @@
             <ul class="list-unstyled components">
                 <li><a href="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fas fa-chess-board"></i> <?php $this->show('Dashboard'); ?></a></li>
                 <?php foreach ($sidebar as $parent): ?>
-                <?php $uniq = md5($parent['name']); ?>
+                <?php $uniq = 'item-' . md5($parent['name']); ?>
                 <li>
                     <a href="#<?= $uniq; ?>" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="<?= $parent['icon']; ?>"></i> <?= $this->translate($parent['name']); ?></a>
                     <ul class="collapse list-unstyled" id="<?= $uniq; ?>">
