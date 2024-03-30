@@ -55,14 +55,14 @@ final class Mailer implements MailerInterface
     private function sendMessage($to, $subject, $body, array $files = array())
     {
         $mailer = new FrameworkMailer([
-            'from' => 'no-reply@' . $this->config->getDomain(),
+            'from' => $this->config->getSmtpUsername(),
             'smtp' => [
                 'enabled' => $this->config->getUseSmtpDriver() != true,
                 'host' => $this->config->getSmtpHost(),
                 'username' => $this->config->getSmtpUsername(),
                 'password' => $this->config->getSmtpPassword(),
                 'port' => $this->config->getSmtpPort(),
-                'protocol' => 'tls'
+                'protocol' => $this->config->getSmtpSecureLayer()
             ]
         ]);
 
