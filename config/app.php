@@ -63,11 +63,11 @@ return array(
                 // Improved plugin for dropdowns
                 'chosen' => array(
                     'stylesheets' => array(
-                        '@Cms/plugins/chosen/chosen.css',
-                        '@Cms/plugins/chosen/chosen-bootstrap.css'
+                        'https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.min.css',
+                       # '@Cms/plugins/chosen/chosen-bootstrap.css'
                     ),
                     'scripts' => array(
-                        '@Cms/plugins/chosen/chosen.jquery.min.js'
+                        'https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.jquery.min.js'
                     )
                 ),
 
