@@ -81,32 +81,12 @@ return array(
                     )
                 ),
 
-                'superfish' => array(
-                    'stylesheets' => array(
-                        '@Site/plugins/superfish/dist/css/superfish.css'
-                    ),
-
-                    'scripts' => array(
-                        '@Site/plugins/superfish/dist/js/hoverIntent.js',
-                        '@Site/plugins/superfish/dist/js/superfish.js'
-                    )
-                ),
-
                 'to-top' => array(
                     'stylesheets' => array(
                         '@Cms/plugins/to-top/to-top.min.css'
                     ),
                     'scripts' => array(
                         '@Cms/plugins/to-top/to-top.min.js'
-                    )
-                ),
-
-                'bx-slider' => array(
-                    'stylesheets' => array(
-                        '@Site/plugins/bxslider/jquery.bxslider.css'
-                    ),
-                    'scripts' => array(
-                        '@Site/plugins/bxslider/jquery.bxslider.min.js'
                     )
                 ),
 
