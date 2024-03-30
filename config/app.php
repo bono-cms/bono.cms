@@ -174,11 +174,10 @@ return array(
 
                 'bootstrap' => array(
                     'stylesheets' => array(
-                        '@Cms/plugins/bootstrap-4/css/yeti.min.css'
+                        'https://bootswatch.com/4/cosmo/bootstrap.min.css'
                     ),
-
                     'scripts' => array(
-                        '@Cms/plugins/bootstrap-4/js/bootstrap.bundle.min.js'
+                        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'
                     )
                 ),
 
