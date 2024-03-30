@@ -64,13 +64,11 @@ return array(
                 'chosen' => array(
                     'stylesheets' => array(
                         'https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.min.css',
-                       # '@Cms/plugins/chosen/chosen-bootstrap.css'
                     ),
                     'scripts' => array(
                         'https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.jquery.min.js'
                     )
                 ),
-
                 'lightbox' => array(
                     'stylesheets' => array(
                         'https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css',
@@ -79,7 +77,6 @@ return array(
                         'https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js'
                     )
                 ),
-
                 'to-top' => array(
                     'stylesheets' => array(
                         '@Cms/plugins/to-top/to-top.min.css'
@@ -88,7 +85,6 @@ return array(
                         '@Cms/plugins/to-top/to-top.min.js'
                     )
                 ),
-
                 'preview' => array(
                     'scripts' => array(
                         '@Cms/plugins/preview/jquery.preview.js'
@@ -97,7 +93,6 @@ return array(
                         '@Cms/plugins/preview/jquery.preview.css'
                     )
                 ),
-
                 'datetimepicker' => array(
                     'scripts' => array(
                         '@Cms/plugins/datetimepicker/js/moment.min.js',
@@ -107,7 +102,6 @@ return array(
                         '@Cms/plugins/datetimepicker/css/jquery.datetimepicker.min.css'
                     )
                 ),
-
                 'datepicker' => array(
                     'scripts' => array(
                         '@Cms/plugins/datepicker/js/bootstrap-datepicker.min.js'
@@ -116,19 +110,16 @@ return array(
                         '@Cms/plugins/datepicker/css/datepicker.min.css'
                     )
                 ),
-
                 'jquery' =>	array(
                     'scripts' => array(
                         '@Cms/plugins/jquery/3.3.1/jquery.min.js'
                     )
                 ),
-
                 'ckeditor' => array(
                     'scripts' => array(
                         '@Cms/plugins/ckeditor/ckeditor.js'
                     )
                 ),
-
                 'admin' => array(
                     'scripts' => array(
                         '@Cms/plugins/jquery.form.js',
@@ -138,19 +129,11 @@ return array(
                         '@Cms/css/style.css'
                     )
                 ),
-                
-                'zoom' => array(
-                    'scripts' => array(
-                        '@Site/plugins/elevatezoom/jquery.elevateZoom-3.0.8.min.js'
-                    )
-                ),
-
                 'famfam-flag' => array(
                     'stylesheets' => array(
                         '@Site/plugins/famfam-flag/famfamfam-flags.min.css'
                     ),
                 ),
-
                 'bootstrap' => array(
                     'stylesheets' => array(
                         'https://bootswatch.com/4/cosmo/bootstrap.min.css'
