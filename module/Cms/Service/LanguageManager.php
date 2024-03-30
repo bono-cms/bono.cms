@@ -62,6 +62,21 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
+     * Grab first entity from collection or return blank one
+     * 
+     * @param mixed $entities Collection of entities
+     * @return mixed
+     */
+    public static function fixEntity($entities)
+    {
+        if (is_array($entities)) {
+            return isset($entities[0]) ? $entities[0] : new VirtualEntity();
+        } else {
+            return $entities;
+        }
+    }
+
+    /**
      * Converts an array of language entities into a hash map
      * 
      * @param array $languages A list of language entities
@@ -123,7 +138,9 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
 
         // Find attached entity
         foreach ($entity as $translation) {
-            if ($translation->getLangId() == $languageId){
+            $target = is_object($translation) ? $translation->getLangId() : $translation['lang_id'];
+
+            if ($target == $languageId) {
                 return $translation;
             }
         }
