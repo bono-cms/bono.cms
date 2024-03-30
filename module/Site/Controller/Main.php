@@ -80,6 +80,7 @@ final class Main extends AbstractController
             return $this->translator->translate('Invalid parameter supplied');
         } else {
             $controller = 'Pages:Page@notFoundAction';
+            http_response_code(404);
 
             // Passing null will trigger 404's action
             return $this->forward($controller, array(null));
