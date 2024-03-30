@@ -348,7 +348,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
      */
     public function findPksByModule($module)
     {
-        $module - $this->cleanModuleName($module);
+        $module = $this->cleanModuleName($module);
         $result = array();
 
         foreach ($this->webPageMapper->fetchAll() as $record) {
