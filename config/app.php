@@ -49,7 +49,7 @@ return array(
 		 */
 		'view' => array(
             'theme' => 'welcome', // Default theme if non defined
-            'obfuscate' => true,
+            'obfuscate' => $_ENV['obfuscate'],
 
             // Global template plugins
             'plugins' => array(
