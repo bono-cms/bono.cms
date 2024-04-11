@@ -59,7 +59,6 @@ return array(
                         '@Site/global.js',
                     )
                 ),
-
                 // Improved plugin for dropdowns
                 'chosen' => array(
                     'stylesheets' => array(
@@ -112,7 +111,7 @@ return array(
                 ),
                 'jquery' =>	array(
                     'scripts' => array(
-                        '@Cms/plugins/jquery/3.3.1/jquery.min.js'
+                        'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js'
                     )
                 ),
                 'ckeditor' => array(
@@ -139,7 +138,6 @@ return array(
                         '@Site/plugins/famfam-flag/famfamfam-flags.min.css'
                     ),
                 ),
-
                 'bootstrap' => array(
                     'stylesheets' => array(
                         'https://bootswatch.com/4/cosmo/bootstrap.min.css'
@@ -148,13 +146,11 @@ return array(
                         'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'
                     )
                 ),
-
                 'font-awesome-5' => array(
                     'stylesheets' => array(
                         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'
                     )
                 ),
-
                 'jquery.mCustomScrollbar' => array(
                     'stylesheets' => array(
                         '@Cms/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.min.css'
