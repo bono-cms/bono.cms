@@ -1,5 +1,12 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+    --sidebar: 200px;
+}
+
 body {
+    font-family: 'Open Sans';
     background-color: #eef1f6;
     background: #fafafa;
 }
@@ -124,7 +131,7 @@ a.article:hover {
 
 #sidebar {
     position: fixed;
-    width: 250px;
+    width: var(--sidebar);
     top: 0;
     left: 0;
     height: 100vh;
@@ -210,7 +217,7 @@ a.article:hover {
 }
 
 #content {
-    width: calc(100% - 250px);
+    width: calc(100% - var(--sidebar));
     min-height: 100vh;
     transition: all 0.3s;
     position: absolute;
