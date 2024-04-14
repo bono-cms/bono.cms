@@ -5,6 +5,10 @@
     --sidebar: 200px;
 }
 
+.navbar-nav .dropdown-menu {
+    z-index: 9999;
+}
+
 body {
     font-family: 'Open Sans';
     background-color: #eef1f6;
