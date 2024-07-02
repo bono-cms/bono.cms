@@ -144,4 +144,55 @@ final class Main extends AbstractController
 
         return $this->slugAction($slug, $page, $code);
     }
+
+    /**
+     * Performs 301 redirect
+     * Purely for SEO purposes
+     * 
+     * @return void
+     */
+    private function performRedirect()
+    {
+        // Handle for every case, except home
+        if ($this->request->getURI() != '/') {
+            $url = $this->request->getCurrentUrl() . '/'; // Append slash
+
+            // Append and send headers
+            $this->response->getHeaderBag()->setMany([
+                'HTTP/1.1 301 Moved Permanently',
+                sprintf('Location: %s', $url)
+            ])->send();
+
+            // Prevent execution
+            exit();
+        } else {
+            return $this->homeAction();
+        }
+    }
+
+    /**
+     * 301 redirect for language slug
+     * 
+     * @param string $code Language code
+     * @param string $slug Web page slug
+     * @param integer $page Optional web page
+     * @return void
+     */
+    public function slashLanguageAction($code, $slug, $page = 1)
+    {
+        return $this->performRedirect();
+    }
+
+    /**
+     * 301 redirect for non-language slug
+     * 
+     * @param string $slug
+     * @param integer $pageNumber
+     * @param string $code Optional language code
+     * @return void
+     */
+    public function slashAction($slug, $pageNumber = 1, $code = null)
+    {
+        return $this->performRedirect();
+    }
 }

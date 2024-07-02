@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Forward no-slash URL pattern to slash one
  * Make Menu module optional. Its no longer Core module.
  * Removed styles and background image from maintenance theme
  * Removed notepad in administration panel
