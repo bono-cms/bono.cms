@@ -23,20 +23,12 @@ return array(
         'controller' => 'Main@slugAction'
     ),
 
-    '/(:var)' => array(
-        'controller' => 'Main@slashAction'
-    ),
-
     '/(:var)/page/(:var)' => array(
         'controller' => 'Main@slugAction'
     ),
     
     '/' => array(
         'controller' => 'Main@homeAction'
-    ),
-
-    '/(:var)/(:var)' => array(
-        'controller' => 'Main@slashLanguageAction'
     ),
 
     '/(:var)/(:var)/' => array(
