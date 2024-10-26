@@ -140,7 +140,8 @@ return array(
                 ),
                 'bootstrap' => array(
                     'stylesheets' => array(
-                        'https://bootswatch.com/4/cosmo/bootstrap.min.css'
+                        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css',
+                        'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css'
                     ),
                     'scripts' => array(
                         'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'
