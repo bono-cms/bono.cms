@@ -3,11 +3,11 @@
 
 Partials are reusable sections of a template that help you avoid duplicating code across your website. They are particularly useful for components such as sidebars, sliders, or any other HTML elements that appear on multiple pages.
 
-## Defining a partial
+### Defining a partial
 
 Partials are stored inside the theme's directory in the `partials` folder. Like theme files, they must have the `.phtml` extension.
 
-## Include defined partial
+### Include defined partial
 
 Once a partial file is created in the partials directory, you can include it using `$this->loadPartial($basename)`.
 
