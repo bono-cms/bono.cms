@@ -28,9 +28,9 @@ Let's create a partial file called `sidebar` and pass a title to it:
 
 Then somewhere in your theme call it like this:
 
-    $this->loadPartial('sidebar', [
+    <?php $this->loadPartial('sidebar', [
         'title' => 'My first partial sidebar'
-    ]);
+    ]); ?>
 
 **NOTE:** Variables are optional. If you don't have any variables to pass, you can omit passing an array of variables.
 
