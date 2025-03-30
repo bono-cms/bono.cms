@@ -13,6 +13,8 @@ namespace Cms;
 
 use Krystal\Application\Module\AbstractModule;
 use Block\Service\FieldService;
+use Krystal\Cache\FileEngine\FileEngineFactory;
+use Krystal\Cache\CacheNamespace;
 
 /**
  * One module with shortcut methods for all CMS modules
@@ -22,6 +24,20 @@ use Block\Service\FieldService;
  */
 abstract class AbstractCmsModule extends AbstractModule
 {
+    /**
+     * Creates cache engine
+     * 
+     * @param string $namespace
+     * @return \Krystal\Cache\CacheNamespace
+     */
+    final protected function createCacheEngine($namespace)
+    {
+        $dir = $this->getServiceLocator()->get('appConfig')->getCacheDir();
+        $engine = FileEngineFactory::build($dir . '/' . $namespace);
+
+        return new CacheNamespace($engine, $namespace);
+    }
+
     /**
      * Creates an instance
      * 
