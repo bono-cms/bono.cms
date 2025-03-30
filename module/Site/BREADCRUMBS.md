@@ -1,11 +1,11 @@
 
 # Breadcrumbs
 
-Breadcrumbs typically show visitors where they are on your website. If your template includes breadcrumbs, you can use them by accessing the breadcrumb bag instance in your templates.
+Breadcrumbs help visitors understand where they are on your website. If your template includes breadcrumb navigation, you can use it by accessing the breadcrumb bag instance in your templates.
 
-### Example 1: Usage with built-in Widget 
+### Example 1: Using the Built-in Widget
 
-This approach is recommended if you are using the Bootstrap 5 framework.
+This method is recommended if you're using the Bootstrap 5 framework.
 
     <?php
     
@@ -17,7 +17,7 @@ This approach is recommended if you are using the Bootstrap 5 framework.
         <?= $this->widget(new BreadcrumbWidget()); ?>
     </nav>
 
-If you want to override the default CSS classes, you can pass an array of options.
+Want to customize the default CSS classes? Just pass an array of options like this:
 
     <?php
     
@@ -28,28 +28,26 @@ If you want to override the default CSS classes, you can pass an array of option
     <nav>
         <?= $this->widget(new BreadcrumbWidget([
             // Passing array of optional overrides. Listed with ther default values:
-            
-            // 'ulClass => 'breadcrumb',
-            // 'itemClass' => 'breadcrumb-item',
-            // 'itemActiveClass' => 'breadcrumb-item active',
-            // 'linkClass' => ''
+            'ulClass => 'breadcrumb',
+            'itemClass' => 'breadcrumb-item',
+            'itemActiveClass' => 'breadcrumb-item active',
+            'linkClass' => 'text-decoration-none'
         ])); ?>
     </nav>
 
-**BEST PRACTICE:** Wrap breadcrumbs in their own partial file, `partials/breadcrumbs.phtml`, and use it across the entire website by calling `$this->loadPartial('breadcrumbs')`
+**BEST PRACTICE:** For consistency, place breadcrumbs in a separate partial file, like `partials/breadcrumbs.phtml`, and include it site-wide using `$this->loadPartial('breadcrumbs');` 
 
-## Example 2: Usage without widget
+## Example 2: Using Breadcrumbs Without the Widget
 
-Everything is prepared automatically for you — all you need to do is iterate over the breadcrumb array in your template.
+Bono automatically prepares everything for you. All you need to do is loop through the breadcrumb array in your template.
+First, check if breadcrumbs exist since some pages might not have them. The method `$this->getBreadcrumbBag()->has()` returns `true` or `false`.
+Once breadcrumbs are confirmed, loop through the array. Each breadcrumb object provides three methods:
 
-First, you need to ensure that at least one breadcrumb is available, since some pages might not have them. To do this, simply check the value returned by `$this->getBreadcrumbBag()->has()`. This method returns `true` or `false`.
-Once you’ve confirmed that breadcrumbs are available, the next step is to iterate over the array. Each key's value represents an instance of the current breadcrumb, with three available methods:
+    $breadcrumb->getName(); // Returns the breadcrumb name
+    $breadcrumb->getLink(); // Returns the breadcrumb URL
+    $breadcrumb->getName(); // Returns true if it's the current page
 
-    $breadcrumb->getName(); // Returns a name of current breadcrumb.
-    $breadcrumb->getLink(); // Returns a link of current breadcrumb
-    $breadcrumb->getName(); // Returns boolean value, which indicates if current breadcrumb is active.
-
-You can simple copy-paste this template fragment and insert it directly in your markup where it's appropriate.
+Here’s a simple code snippet to drop right into your markup:
 
     <?php if ($this->getBreadcrumbBag()->has()): ?>
     <ul class="breadcrumb">
@@ -64,3 +62,5 @@ You can simple copy-paste this template fragment and insert it directly in your 
        <?php endforeach; ?>
     </ul>
     <?php endif; ?>
+
+This is an easy way to make your website's navigation more intuitive for users!
