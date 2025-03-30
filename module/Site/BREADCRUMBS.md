@@ -28,7 +28,7 @@ Want to customize the default CSS classes? Just pass an array of options like th
     <nav>
         <?= $this->widget(new BreadcrumbWidget([
             // Passing array of optional overrides. Listed with ther default values:
-            'ulClass => 'breadcrumb',
+            'ulClass' => 'breadcrumb',
             'itemClass' => 'breadcrumb-item',
             'itemActiveClass' => 'breadcrumb-item active',
             'linkClass' => 'text-decoration-none'
@@ -37,7 +37,7 @@ Want to customize the default CSS classes? Just pass an array of options like th
 
 **BEST PRACTICE:** For consistency, place breadcrumbs in a separate partial file, like `partials/breadcrumbs.phtml`, and include it site-wide using `$this->loadPartial('breadcrumbs');` 
 
-## Example 2: Using Breadcrumbs Without the Widget
+### Example 2: Using Breadcrumbs Without the Widget
 
 Bono automatically prepares everything for you. All you need to do is loop through the breadcrumb array in your template.
 First, check if breadcrumbs exist since some pages might not have them. The method `$this->getBreadcrumbBag()->has()` returns `true` or `false`.
