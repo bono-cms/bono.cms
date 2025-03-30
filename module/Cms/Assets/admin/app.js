@@ -1,3 +1,32 @@
+// Global AJAX handler
+$(function() {
+    const $loader = $("#loader");
+
+    if (!$loader.length) {
+        console.warn("#loader does not exist in the DOM.");
+        return; // Exit if loader is missing
+    }
+
+    $.ajaxSetup({
+        cache: false,
+        charset: "UTF-8",
+        type: "POST",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        beforeSend: function () {
+            $loader.modal("show");
+        },
+        complete: function () {
+            setTimeout(() => $loader.modal("hide"), 500);
+        },
+        error: function (response) {
+            console.error("AJAX Error:", response);
+        }
+    });
+
+    $(document).ajaxStop(() => $loader.modal("hide"));
+});
 
 // Tab state persist for Bootstrap 4
 (function(){
@@ -82,7 +111,6 @@ $(function(){
         entityGroup: 'data-entity-group'
     };
 
-
     // Payment handler for ready and change
     $(config.containerSelector).change(function(){
         // Find the selected type
@@ -156,27 +184,6 @@ $(function(){
             });
         });
     }
-
-    // Global settings for the whole panel
-    $.ajaxSetup({
-        cache : false,
-        charset : "UTF-8",
-        type : "POST",
-        beforeSend  : function() {
-            $("#loader").modal("show");
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        complete : function() {
-            $('#loader').on('shown.bs.modal', function(e){
-                $(this).modal("hide");
-            });
-        },
-        error : function(res) {
-            console.log(res);
-        }
-    });
 
     // Simple WYSIWYG wrapper
     $.wysiwyg = {
