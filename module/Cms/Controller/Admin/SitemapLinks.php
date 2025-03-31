@@ -66,23 +66,4 @@ final class SitemapLinks extends AbstractController
 
         return 1;
     }
-
-    /**
-     * Ping sitemaps
-     * 
-     * @return void
-     */
-    public function pingAction()
-    {
-        // Front SiteMap URL
-        $url = $this->request->getBaseUrl().$this->createUrl('Site:Sitemap@indexAction');
-
-        if (SitemapTool::ping($url)) {
-            $this->flashBag->set('success', 'Search engines have been informed about new version of your sitemap!');
-        } else {
-            $this->flashBag->set('warning', 'There was a connection error while submitting the sitemap');
-        }
-
-        return '1';
-    }
 }

@@ -12,24 +12,11 @@
 namespace Cms\Service;
 
 use Krystal\Stdlib\ArrayUtils;
-use Krystal\Seo\Sitemap\Query;
 use Krystal\Seo\Robots;
 use Cms\Collection\ChangeFreqCollection;
 
 final class SitemapTool
 {
-    /**
-     * Inform search engines about SiteMap location
-     * 
-     * @param string $url Front SiteMap URL
-     * @return boolean
-     */
-    public static function ping($url)
-    {
-        $query = new Query($url);
-        return $query->ping();
-    }
-
     /**
      * Synchronizes robots file
      * 

@@ -151,11 +151,6 @@ return array(
         'disallow' => array('guest', 'user')
     ),
 
-    '/%s/sitemap-links/ping' => array(
-        'controller' => 'Admin:SitemapLinks@pingAction',
-        'disallow' => array('guest')
-    ),
-
     '/%s/sitemap-links/save' => array(
         'controller' => 'Admin:SitemapLinks@saveAction',
         'disallow' => array('guest')
