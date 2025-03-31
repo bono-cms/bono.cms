@@ -27,7 +27,6 @@ Want to customize the default CSS classes? Just pass an array of options like th
     
     <nav>
         <?= $this->widget(new BreadcrumbWidget([
-            // Passing array of optional overrides. Listed with ther default values:
             'ulClass' => 'breadcrumb',
             'itemClass' => 'breadcrumb-item',
             'itemActiveClass' => 'breadcrumb-item active',
