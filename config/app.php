@@ -2,7 +2,7 @@
 
 return array(
 	'production' => false,
-	'timezone' => 'UTC',
+	'timezone' => $_ENV['timezone'],
 	/**
 	 * Framework components configuration
 	 */
