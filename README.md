@@ -1,6 +1,8 @@
 Bono CMS
 ========
 
+Say goodbye to overpriced modules, tool overload, and endless tutorials. With Bono CMS, you'll be up and running in no time!
+
 Bono CMS is a modern, modular content management system built with PHP, designed specifically for digital agencies and freelancers who create websites for clients. It offers a clean, user-friendly administration panel and follows best practices to ensure ease of use and maintainability.
 
 ## Features
