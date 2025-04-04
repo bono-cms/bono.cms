@@ -1,56 +1,49 @@
+What is a layout?
+=====
 
-# What is a layout?
+A **layout** defines the shared HTML structure of your pages—such as headers, footers, navigation menus, and main content areas.
 
-A layout is a special file that contains all global HTML blocks, such as the footer, header, and sidebar. For example, if you have an e-commerce theme, you'll notice repetitive blocks on all its pages, which also appear on other pages. Most websites have only one section that changes when navigating between pages, if you look closely. Chances are, your theme is not much different in terms of repetitive blocks. What you need to do is identify which parts of your theme make up the global site layout. In most cases, it looks something like this:
+If you look closely, most websites only update a small section of the page when navigating between views. The rest—the layout—stays the same.
+
+Chances are, your theme follows a similar pattern, with repeated blocks across pages. The key is to identify which parts of your theme make up the **global site layout**. In most cases, it looks something like this:
 
     <!DOCTYPE html>
     <html>
     <head>
       <title>My new theme</title>
-      
-      <link href="..." rel="stylesheet" />
-      <link href="..." rel="stylesheet" />
-      <link href="..." rel="stylesheet" />
-      <link href="..." rel="stylesheet" />
+      ...
     </head>
     <body>
       <header>
         <!--Header content usually goes here-->
       </header>
       
-      <ul>
-        <!--Stuff like breadcrumbs or navigation-->
-      </ul>
-      
-      <div id="content">
+      <main>
          <!-- Dynamic page fragment goes here -->
-      </div>
+      </main>
       
       <footer>
-        <!-- Footer content goes here -->
+        <!-- Footer goes here -->
       </footer>
       
-      <script scr="..."></script>
-      <script scr="..."></script>
-      <script scr="..."></script>
       <script scr="..."></script>
     </body>
     </html>
 
-As you might have guessed, a dynamic page fragment is content that usually comes from other pages. To make it work, there is a predefined variable called `$fragment`. All you need to do is render it, like this:
+As you might expect, a **dynamic page fragment** refers to content that's typically pulled in from other pages.
 
+To handle this, there's a predefined variable called `$fragment` that contains the fragment content. Rendering it is simple—just output it like this:
 
-      <div id="content">
+      <main>
          <?= $fragment; ?>
-      </div>
+      </main>
 
   
-Once you finish building a layout, you must save it as a file inside the theme's directory, and it must be named `__layout__.phtml`.
-
+Once you've finished building your layout, save it as a file named `__layout__.phtml` inside your theme's directory.
 
 ## Real-World Usage
 
-Bono CMS comes with built-in shared partials for `head` and `script` tags. The aforementioned layout template can be simplified as follows:
+Bono CMS includes built-in shared partials for the `<head>` and `<script>` sections, allowing you to streamline your layout template. With these partials, the layout can be simplified as follows:
 
       <?php $this->loadPartial('begin'); ?>
 
@@ -58,13 +51,9 @@ Bono CMS comes with built-in shared partials for `head` and `script` tags. The a
         <!--Header content usually goes here-->
       </header>
       
-      <ul>
-        <!--Stuff like breadcrumbs or navigation-->
-      </ul>
-      
-      <div id="content">
+      <main>
          <?= $fragment; ?>
-      </div>
+      </main>
       
       <footer>
         <!-- Footer content goes here -->
@@ -72,4 +61,5 @@ Bono CMS comes with built-in shared partials for `head` and `script` tags. The a
       
       <?php $this->loadPartial('end'); ?>
       
-How does it know which stylesheets and scripts to load? These are defined in the configuration file.
+**How does it know which stylesheets and scripts to load?**  
+They’re specified in the configuration file.
