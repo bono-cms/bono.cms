@@ -1,20 +1,25 @@
 Bono CMS
 ========
 
-Brand new modular content management system written in PHP. It provides all very common feautures for managing typical web sites.
-It has a nice-looking and friendly administration panel and follows known best practises.
+Bono CMS is a modern, modular content management system built with PHP, designed specifically for digital agencies and freelancers who create websites for clients. It offers a clean, user-friendly administration panel and follows best practices to ensure ease of use and maintainability.
 
+## Features
 
-Requirements
-============
+ - Designed for shared and budget hosting environments
+ - Simplest API compared to other CMS solutions
+ - Zero configuration required; optimized for maximum speed out of the box
+ - Concise and easy-to-follow documentation
+ - Built-in SEO optimization by default
+ - Built-in support for localization and internationalization
+ - Clean, easy-to-read codebase that follows SOLID principles and an MVC-like pattern
 
- - PHP 5.3 with all common libraries (GD, PDO and like that)
- - MySQL 5.x
- - Apache 1.3 or higher
- - Around 20 MB for the system itself
- 
-Installation
-============
+## Requirements
 
-You should download an archive (from the official site) and simply extract all its contents into the root of your web-server. 
-VCS is used to keep a track of changes and issues and should not be considered as the source of installation.
+ - PHP 7.0 or higher (with common extensions)
+ - MySQL 8.x or MariaDB
+ - Apache, Nginx, or LiteSpeed
+ - Approximately 20 MB of storage for the system files
+
+## Installation
+
+Download the archive from the official website and extract all its contents to the root directory of your web server. Please note that the version control system (VCS) is used to track changes and issues but should not be used for installation.
