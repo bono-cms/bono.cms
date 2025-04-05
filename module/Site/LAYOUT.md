@@ -1,3 +1,4 @@
+
 What is a layout?
 =====
 
@@ -12,6 +13,11 @@ Chances are, your theme follows a similar pattern, with repeated blocks across p
     <head>
       <title>My new theme</title>
       ...
+      
+     <?php foreach ($this->getPluginBag()->getStylesheets() as $href): ?>
+     <link href="<?= $href; ?>" rel="stylsheet" />
+     <?php endforeach; ?>
+      
     </head>
     <body>
       <header>
@@ -25,8 +31,10 @@ Chances are, your theme follows a similar pattern, with repeated blocks across p
       <footer>
         <!-- Footer goes here -->
       </footer>
-      
-      <script scr="..."></script>
+
+      <?php foreach ($this->getPluginBag()->getScripts() as $src): ?>
+      <script src="<?= $src; ?>"></script>
+      <?php endforeach; ?>
     </body>
     </html>
 
@@ -38,7 +46,16 @@ To handle this, there's a predefined variable called `$fragment` that contains t
          <?= $fragment; ?>
       </main>
 
-  
+There’s a helper called **Plugin Bag** that helps manage your assets. It provides the following methods:
+
+    $this->getPluginBag()->getStylesheets();  // Returns an array of all registered stylesheets
+    $this->getPluginBag()->getScripts(); // Returns an array of all registered scripts
+
+Typically, you would call these two methods in your layout file to include the necessary styles and scripts.
+
+**How does it know which stylesheets and scripts to load?**  
+It's simple - they’re specified in the configuration file.
+
 Once you've finished building your layout, save it as a file named `__layout__.phtml` inside your theme's directory.
 
 ## Real-World Usage
@@ -61,5 +78,3 @@ Bono CMS includes built-in shared partials for the `<head>` and `<script>` secti
       
       <?php $this->loadPartial('end'); ?>
       
-**How does it know which stylesheets and scripts to load?**  
-They’re specified in the configuration file.
