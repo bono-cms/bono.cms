@@ -43,11 +43,17 @@ To set this up, create a file named `theme.config.php` inside your theme directo
     <?php
     
     return [
+        'meta' => [
+            'name' => 'My new custom theme',
+            'description' => 'Default blogging theme for Bono CMS',
+            'version' => '1.0',
+            'author' => 'John Doe'
+        ],
        'plugins' => [
           'jquery',
           // Another plugins global to load, if required
        ],
-       theme => [
+       'theme' => [
           'stylesheets' => [
              '/css/styles.css'
           ],
