@@ -9,7 +9,7 @@ While the CMS engine manages your content, the **theme decides how that content 
 
 All theme directories must be placed within the corresponding module, which is `Site`. To do this, navigate to:
 
-/module/Site/View/Template
+`/module/Site/View/Template`
 
 Create a new folder here using the desired name for your theme—for example, `my-new-theme`. Then, copy all your theme files into this newly created directory.
 
