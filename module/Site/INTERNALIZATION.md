@@ -3,6 +3,12 @@
 Internationalization is the process of making your website to easily support translation into multiple languages.
 In Bono CMS, internationalization is built-in and works seamlessly right out of the box. You can effortlessly add as many languages as needed for your website.
 
+## Getting current active locale
+
+`$locale` is a globally available variable in all your templates. It holds the locale code of the currently active language for the current session, and can be used to display the current locale or highlight the active language:
+
+    <li><?= $locale; ?></li>
+
 ## Rendering a Language switcher
 
 In your theme template, you can access a built-in array that holds language entities. The language switcher is typically included in the header section of your website.
@@ -28,6 +34,7 @@ Then  somewhere in `__layout__.phtml__  ` you can render it like this:
         <?php endforeach; ?>
     </ul>
     <?php endif; ?>
+
 
 ## Translating string
 
