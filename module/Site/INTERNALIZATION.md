@@ -18,6 +18,7 @@ In your theme template, you can access a built-in array that holds language enti
 Each language entity has the following methods:
 
     $language->getName(); // Returns language name
+    $language->getCode(); // Returns language (locale) code
     $language->getOrder(); // Returns sorting order
     $language->getSwitchUrl(); // Returns switch URL for current language
     $language->getDefault(); // Returns TRUE or FALSE, depending if a language has been markerd as default one in administration panel
@@ -28,7 +29,7 @@ Then  somewhere in `__layout__.phtml__  ` you can render it like this:
     <?php if ($languages): ?>
     <ul class="list-unstyled">
         <?php foreach ($languages as $language): ?>
-        <li>
+        <li class="<?= $language->getActive() ? 'active' : ''; ?>">
             <a href="<?= $language->getSwitchUrl(); ?>"><?= $language->getName(); ?></a>
         </li>
         <?php endforeach; ?>
