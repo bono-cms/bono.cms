@@ -1,9 +1,10 @@
 
-# Breadcrumbs
+Breadcrumbs
+=====
 
 Breadcrumbs help visitors understand where they are on your website. If your template includes breadcrumb navigation, you can use it by accessing the breadcrumb bag instance in your templates.
 
-### Example 1: Using the Built-in Widget
+## Example 1: Using the Built-in Widget
 
 This method is recommended if you're using the Bootstrap 5 framework.
 
@@ -36,7 +37,7 @@ Want to customize the default CSS classes? Just pass an array of options like th
 
 **BEST PRACTICE:** For consistency, place breadcrumbs in a separate partial file, like `partials/breadcrumbs.phtml`, and include it site-wide using `$this->loadPartial('breadcrumbs');` 
 
-### Example 2: Using Breadcrumbs Without the Widget
+## Example 2: Using Breadcrumbs Without the Widget
 
 Bono automatically prepares everything for you. All you need to do is loop through the breadcrumb array in your template.
 First, check if breadcrumbs exist since some pages might not have them. The method `$this->getBreadcrumbBag()->has()` returns `true` or `false`.
