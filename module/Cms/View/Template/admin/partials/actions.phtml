@@ -17,13 +17,17 @@ $wrapperClass = isset($wrapperClass) ? $wrapperClass : 'actions';
 ?>
 
 <div class="<?= $wrapperClass; ?>">
-    <?php if ($new): ?>
+    <?php if ($new && isset($add)): ?>
     <button data-button="add" data-back-url="<?php echo $edit; ?>" data-url="<?php echo $this->url($save); ?>" class="btn btn-primary"><?php $this->show('Add'); ?></button>
     <button data-button="add-create" data-url="<?php echo $this->url($save); ?>" class="btn btn-primary"><?php $this->show('Add & Create new'); ?></button>
 
     <?php else: ?>
     <button data-button="save" data-url="<?php echo $this->url($save); ?>" class="btn btn-primary"><?php $this->show('Save'); ?></button>
+    
+    <?php if (isset($add)): ?>
     <button data-button="save-create" data-back-url="<?php echo $add; ?>" data-url="<?php echo $this->url($save); ?>" class="btn btn-primary"><?php $this->show('Save & Create new'); ?></button>
+    <?php endif; ?>
+    
     <?php endif; ?>
 
     <?php if (isset($options) && $options == true): ?>
