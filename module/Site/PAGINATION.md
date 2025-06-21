@@ -1,5 +1,6 @@
 
-# Pagination
+Pagination
+======
 
 Pagination simplifies dividing large datasets into manageable chunks and provides a user-friendly interface to navigate through them.
 
@@ -9,7 +10,7 @@ We highly recommend creating a partial template file first, as pagination can be
 
 So, go ahead and create a template file in your theme's directory: `partials/pagination.phtml`
 
-### Example: Rendering with Widget
+## Usage with Widget
 
 Add the following snippet in your `partials/pagination.phtml` template file:
 
@@ -29,7 +30,7 @@ And then, use it like this in your template where appropriate:
         <?php $this->loadPartial('pagination'); ?>
     </nav>
 
-### Example Rendering without widget
+## Usage without Widget
 
 In some rare cases, you might want to output pagination manually. A manual render looks like this:
 
