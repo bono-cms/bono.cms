@@ -5,37 +5,42 @@ defined('KRYSTAL') or die;
 
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $locale; ?>">
+<html lang="<?= $locale; ?>">
 <head>
- <meta http-equiv="X-UA-Compatible" content="IE=edge" />
- <meta charset="UTF-8" />
- <meta name="csrf-token" content="<?php echo $csrfToken; ?>" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta charset="UTF-8">
+ <meta name="csrf-token" content="<?= $csrfToken; ?>">
  <title><?= $page->getTitle(); ?></title>
  
  <?php if ($page->isDefault() || $page->getSeo()): ?>
- <meta name="description" content="<?php echo Filter::escape($page->getMetaDescription()); ?>" />
- <meta name="keywords" content="<?php echo Filter::escape($page->getKeywords()); ?>" />
+ <meta name="description" content="<?= Filter::escape($page->getMetaDescription()); ?>">
+ <meta name="keywords" content="<?= Filter::escape($page->getKeywords()); ?>">
+
+ <!-- OG tags -->
+ <meta property="og:title" content="<?= Filter::escape($page->getTitle()); ?>">
+ <meta property="og:url" content="<?= $page->getUrl(); ?>">
+ <meta property="og:description" content="<?= Filter::escape($page->getMetaDescription()); ?>">
+ <meta property="og:type" content="website">
+ <meta property="og:locale" content="<?= $locale; ?>">
  <?php else: ?>
- 
- <meta name="robots" content="noindex, nofollow, noarchive" />
- <meta name="description" content="" />
- <meta name="keywords" content="" />
+ <meta name="robots" content="noindex, nofollow, noarchive">
+ <meta name="description" content="">
+ <meta name="keywords" content="">
  <?php endif; ?>
  
- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
  
  <?php if (count($languages) > 1): ?>
  <?php foreach ($languages as $language): ?>
- <link rel="alternate" href="<?php echo $baseUrl, $language->getSwitchUrl(); ?>" hreflang="<?php echo $language->getCode(); ?>" />
+ <link rel="alternate" href="<?= $baseUrl . $language->getSwitchUrl(); ?>" hreflang="<?= $language->getCode(); ?>">
  <?php endforeach; ?>
- 
- <link rel="alternate" href="<?php echo $baseUrl; ?>/" hreflang="x-default" />
+ <link rel="alternate" href="<?= $baseUrl; ?>/" hreflang="x-default">
  <?php endif; ?>
 
  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
- <link rel="stylesheet" href="<?php echo $stylesheet; ?>" media="all" />
+ <link rel="stylesheet" href="<?= $stylesheet; ?>" media="all">
  <?php endforeach; ?>
 
- <base href="<?php echo $this->asset(null); ?>" />
+ <base href="<?= $this->asset(null); ?>" />
 </head>
 <body>
