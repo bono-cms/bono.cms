@@ -16,16 +16,20 @@ First, include the `Element` class at the top of your PHP template:
 
 You can use following methods to render links to social media web-sites:
 
-    Element::linkFacebook($username);
-    Element::linkInstagram($username);
-    Element::linkTelegram($username);
-    Element::linkWhatsApp($username);
+    <a href="<?= Element::linkFacebook($username); ?>" target="_blank">View Facebook</a>
+    <a href="<?= Element::linkInstagram($username); ?>" target="_blank">View Instagram</a>
+    <a href="<?= Element::linkTelegram($username); ?>" target="_blank">Message to Telegram</a>
+    <a href="<?= Element::linkWhatsApp($username); ?>" target="_blank">Message to WhatsApp</a>
 
 ## Rendering Email Links
 
 You can generate a mailto link attribute:
 
     <a href="<?= Element::createMailTo('email@example.com'); ?>">Email me</a>
+
+Or you can render an email link like this:
+
+    <p><?= Element::linkEmail('me@example.com', 'text-decoration-none'); ?></p>
 
 ## Rendering Phone Numbers
 
@@ -35,7 +39,5 @@ To generate a `tel:` attribute only:
 
 Or render a complete clickable phone link:
 
-    <?= Element::linkPhone('+123456789'); ?>
-
-
+    <?= Element::linkPhone('+123456789', 'text-decoration-none'); ?>
 
