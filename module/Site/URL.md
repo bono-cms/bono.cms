@@ -10,3 +10,5 @@ The key advantage of using this method is **flexibility**: if the target page’
 Suppose you have a page with `ID = 1`, and you're linking to it through the `Pages` module:
 
     <a href="<?= $cms->createUrl(1, 'Pages'); ?>">View my page</a>
+
+Each module that handles custom pages includes a dedicated section in its documentation explaining URL generation.
