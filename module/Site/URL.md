@@ -6,6 +6,8 @@ You can generate dynamic URLs to other pages using the built-in global method `$
 
 The key advantage of using this method is **flexibility**: if the target page’s URL ever changes, all links generated with `$cms->createUrl()` will automatically reflect the update — no manual changes needed.
 
+This method is also language-aware and generates URLs based on the current visitor's language.
+
 ## Example
 Suppose you have a page with `ID = 1`, and you're linking to it through the `Pages` module:
 
