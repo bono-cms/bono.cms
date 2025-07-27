@@ -1,6 +1,8 @@
 <?php
 
+use Krystal\Paginate\Paginator;
 use Krystal\Security\Filter;
+
 defined('KRYSTAL') or die;
 
 ?>
@@ -22,6 +24,12 @@ defined('KRYSTAL') or die;
  <meta property="og:description" content="<?= Filter::escape($page->getMetaDescription()); ?>">
  <meta property="og:type" content="website">
  <meta property="og:locale" content="<?= $locale; ?>">
+
+ <meta name="twitter:card" content="summary">
+ <meta name="twitter:title" content="<?= $page->getTitle(); ?>">
+ <meta name="twitter:description" content="<?= Filter::escape($page->getMetaDescription()); ?>">
+ <meta name="twitter:url" content="<?= $page->getUrl(); ?>">
+ 
  <?php else: ?>
  <meta name="robots" content="noindex, nofollow, noarchive">
  <meta name="description" content="">
@@ -40,6 +48,17 @@ defined('KRYSTAL') or die;
  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
  <link rel="stylesheet" href="<?= $stylesheet; ?>" media="all">
  <?php endforeach; ?>
+ 
+ <?php if (isset($paginator) && ($paginator instanceof Paginator)): ?>
+ <?php if ($paginator->hasPreviousPage()): ?>
+ <link rel="prev" href="<?= $baseUrl, $paginator->getPreviousPageUrl(); ?>">
+ <?php endif; ?>
+ <?php if ($paginator->hasNextPage()): ?>
+ <link rel="next" href="<?= $baseUrl, $paginator->getNextPageUrl(); ?>">
+ <?php endif; ?>
+ <?php endif; ?>
+ 
+ <link rel="canonical" href="<?= $currentUrl; ?>">
 
  <base href="<?= $this->asset(null); ?>" />
 </head>
