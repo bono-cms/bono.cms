@@ -5,6 +5,8 @@ use Krystal\Security\Filter;
 
 defined('KRYSTAL') or die;
 
+$url = $page->getDefault() ? $baseUrl : $page->getUrl();
+
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale; ?>">
@@ -19,8 +21,8 @@ defined('KRYSTAL') or die;
  <meta name="keywords" content="<?= Filter::escape($page->getKeywords()); ?>">
 
  <!-- OG tags -->
- <meta property="og:title" content="<?= Filter::escape($page->getTitle()); ?>">
- <meta property="og:url" content="<?= $page->getUrl(); ?>">
+ <meta property="og:title" content="<?= $page->getTitle(); ?>">
+ <meta property="og:url" content="<?= $url; ?>">
  <meta property="og:description" content="<?= Filter::escape($page->getMetaDescription()); ?>">
  <meta property="og:type" content="website">
  <meta property="og:locale" content="<?= $locale; ?>">
@@ -28,7 +30,7 @@ defined('KRYSTAL') or die;
  <meta name="twitter:card" content="summary">
  <meta name="twitter:title" content="<?= $page->getTitle(); ?>">
  <meta name="twitter:description" content="<?= Filter::escape($page->getMetaDescription()); ?>">
- <meta name="twitter:url" content="<?= $page->getUrl(); ?>">
+ <meta name="twitter:url" content="<?= $url; ?>">
  
  <?php else: ?>
  <meta name="robots" content="noindex, nofollow, noarchive">
