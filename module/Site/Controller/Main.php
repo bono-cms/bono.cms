@@ -112,7 +112,7 @@ final class Main extends AbstractController
 
         // Grab a service
         $webPageManager = $this->getService('Cms', 'webPageManager');
-        $webPage = $webPageManager->fetchBySlug($slug);
+        $webPage = $webPageManager->fetchBySlug($slug, $code);
 
         // Not empty means that existing slug is supplied
         if (!empty($webPage)) {
