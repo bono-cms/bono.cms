@@ -34,11 +34,14 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
      */
     public function findSlug($targetId, $module)
     {
+        // @TODO: This is a temporary and dirty fix
+        $langId = isset($_COOKIE['lang_id']) ? $_COOKIE['lang_id'] : 1;
+
         return $this->db->select(array('slug', 'lang_id'))
                         ->from(self::getTableName())
                         ->whereEquals('target_id', $targetId)
                         ->andWhereEquals('module', $module)
-                        ->andWhereEquals('lang_id', $this->getLangId())
+                        ->andWhereEquals('lang_id', $langId)
                         ->query();
     }
 
@@ -181,11 +184,37 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
      * Fetches web page's data by associated slug
      * 
      * @param string $slug
+     * @param string $code Optional language code
      * @return array
      */
-    public function fetchBySlug($slug)
+    public function fetchBySlug($slug, $code = null)
     {
-        return $this->fetchByColumn('slug', $slug);
+        if ($locale == null) {
+            return $this->fetchByColumn('slug', $slug);
+        }
+
+        // Columns to selected
+        $columns = [
+            self::column('id'),
+            self::column('lang_id'),
+            self::column('target_id'),
+            self::column('slug'),
+            self::column('module'),
+            self::column('controller'),
+            self::column('lastmod'),
+            self::column('changefreq'),
+            self::column('priority')
+        ];
+
+        $db = $this->db->select($columns)
+                       ->from(self::getTableName())
+                       ->innerJoin(LanguageMapper::getTableName(), [
+                            LanguageMapper::column('id') => self::getRawColumn('lang_id')
+                       ])
+                       ->whereEquals(self::column('slug'), $slug)
+                       ->andWhereEquals(LanguageMapper::column('code'), $code);
+
+        return $db->query();
     }
 
     /**

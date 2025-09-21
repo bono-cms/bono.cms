@@ -100,12 +100,13 @@ interface WebPageManagerInterface
     public function getLastId();
 
     /**
-     * Fetches by URL slug
+     * Fetches web page's data by associated slug
      * 
      * @param string $slug
-     * @return string
+     * @param string $code Optional language code
+     * @return array
      */
-    public function fetchBySlug($slug);
+    public function fetchBySlug($slug, $code = null);
 
     /**
      * Fetches web page data its associated id

@@ -77,9 +77,10 @@ interface WebPageMapperInterface
      * Fetches web page's data by associated slug
      * 
      * @param string $slug
+     * @param string $code Optional language code
      * @return array
      */
-    public function fetchBySlug($slug);
+    public function fetchBySlug($slug, $code = null);
 
     /**
      * Fetches web page's data by target id
