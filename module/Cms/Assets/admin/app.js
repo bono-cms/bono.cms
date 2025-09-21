@@ -28,60 +28,38 @@ $(function() {
     $(document).ajaxStop(() => $loader.modal("hide"));
 });
 
+
+// Tab state persist for Bootstrap 4
 (function(){
-    var storageKey = 'currentTabs';
+    var storageKey = 'currentTab';
 
-    // Save tab state when a tab is clicked
-    $('a[data-toggle="tab"]').on('click', function(e) {
-        e.preventDefault();
-        var $target = $(this);
-        var tabId = $target.attr('href');
-        
-        // Get current active tabs from storage
-        var activeTabs = JSON.parse(localStorage.getItem(storageKey) || '[]');
-        
-        // Find all parent tab containers
-        var $tabContainers = $target.parents('.tab-pane').map(function() {
-            return $(this).attr('id');
-        }).get();
-        
-        // Filter out any tabs that are children of the current tab hierarchy
-        activeTabs = activeTabs.filter(function(savedTabId) {
-            // Keep if it's a parent or unrelated tab
-            return $tabContainers.indexOf(savedTabId.replace('#','')) === -1;
-        });
-        
-        // Add all parent tabs first
-        $tabContainers.reverse().forEach(function(containerId) {
-            if (activeTabs.indexOf('#' + containerId) === -1) {
-                activeTabs.push('#' + containerId);
+    $('a[data-toggle="tab"]').on('click', function (e) {
+        var currentTab = $(this).attr('href');
+        var activeTabs = (window.localStorage.getItem(storageKey) ? window.localStorage.getItem(storageKey).split(',') : []);
+        var $children = $(e.target).parents('.nav-tabs').find('[data-toggle="tab"]');
+
+        $.each($children, function(index, element){
+            var tabId = $(element).attr('href');
+            if(currentTab != tabId && activeTabs.indexOf(tabId) !== -1) {
+                activeTabs.splice(activeTabs.indexOf(tabId), 1);
             }
         });
-        
-        // Add current tab
-        if (activeTabs.indexOf(tabId) === -1) {
-            activeTabs.push(tabId);
+
+        if (activeTabs.indexOf($(e.target).attr('href')) === -1) {
+            activeTabs.push($(e.target).attr('href'));
         }
-        
-        localStorage.setItem(storageKey, JSON.stringify(activeTabs));
-        $target.tab('show');
+
+        window.localStorage.setItem(storageKey, activeTabs.join(','));
     });
 
-    // Restore tabs on page load
-    $(function() {
-        var activeTabs = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    var activeTabs = window.localStorage.getItem(storageKey);
 
-        // Show tabs in order (parents first)
-        activeTabs.forEach(function(tabId) {
-            var $tab = $('[data-toggle="tab"][href="' + tabId + '"]');
-            if ($tab.length) {
-                // Use a small delay to ensure proper order
-                setTimeout(function() {
-                    $tab.tab('show');
-                }, 10);
-            }
+    if (activeTabs) {
+        var activeTabs = (window.localStorage.getItem(storageKey) ? window.localStorage.getItem(storageKey).split(',') : []);
+        $.each(activeTabs, function (index, element) {
+            $('[data-toggle="tab"][href="' + element + '"]').tab('show');
         });
-    });
+    }
 })();
 
 // Clipboard module
