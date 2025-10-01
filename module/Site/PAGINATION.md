@@ -67,3 +67,4 @@ In some rare cases, you might want to output pagination manually. A manual rende
     	</li>
     	<?php endif; ?>
       </ul>
+    <?php endif; ?>
