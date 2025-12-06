@@ -189,7 +189,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
      */
     public function fetchBySlug($slug, $code = null)
     {
-        if ($locale == null) {
+        if ($code == null) {
             return $this->fetchByColumn('slug', $slug);
         }
 
