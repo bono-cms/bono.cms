@@ -253,15 +253,31 @@ abstract class AbstractController extends AbstractAuthAwareController
     }
 
     /**
-     * Save dynamic field values
+     * Update dynamic field values
      * 
      * @param string $group Group name
      * @return void
      */
-    final protected function saveFields($group)
+    final protected function updateFields($group)
     {
         if ($this->moduleManager->isLoaded('Block')) {
             $this->getModuleService(self::FIELD_SERVICE_NAME)->persist($group, $this->request->getAll());
+        }
+    }
+
+    /**
+     * Update dynamic field values
+     * 
+     * @param int $id Primary key
+     * @param string $group Group name
+     * @return void
+     */
+    final protected function insertFields($group, $id)
+    {
+        if ($this->moduleManager->isLoaded('Block')) {
+            $request = $this->request->getAll();
+            $request['data'][$group]['id'] = $id;
+            $this->getModuleService(self::FIELD_SERVICE_NAME)->persist($group, $request);
         }
     }
 
