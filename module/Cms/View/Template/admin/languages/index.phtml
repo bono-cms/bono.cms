@@ -8,94 +8,89 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<div class="btn-toolbar">
-    <?php $this->loadPartial('menu', array(
-        'items' => array(
+<div class="btn-toolbar mb-3">
+    <?php $this->loadPartial('menu', [
+        'items' => [
             'Cms:Admin:Languages@addAction' => 'Add a language'
-        ),
-        'actions' => array(
+        ],
+        'actions' => [
             'data' => $langs,
             'save' => 'Cms:Admin:Languages@tweakAction',
-        )
-    )); ?>
+        ]
+    ]); ?>
 </div>
 
 <div class="card">
-    <h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Languages'); ?> <small>(<?php echo count($langs); ?>)</small></h4>
+    <div class="card-header">
+        <h4 class="card-title mb-0">
+            <i class="bi bi-translate"></i> <?= $this->translate('Languages'); ?> 
+            <small class="text-muted">(<?= count($langs); ?>)</small>
+        </h4>
+    </div>
 
     <form>
         <div class="table-responsive">
-            <?= $this->widget(new GridViewWidget($langs, array(
-                'batch' => true,
+            <?= $this->widget(new GridViewWidget($langs, [
+                'batch' => false,
                 'pk' => 'id',
-                'tableClass' => 'table table-hover table-bordered table-striped',
-                'columns' => array(
-                    array(
+                'tableClass' => 'table table-hover table-striped mb-0',
+                'columns' => [
+                    [
                         'column' => 'id',
                         'label' => '#'
-                    ),
-
-                    array(
+                    ],
+                    [
                         'column' => 'flag',
                         'value' => function($language){
                             return sprintf('<i class="famfamfam-flag-%s"></i>', $language->getFlag());
                         }
-                    ),
-
-                    array(
+                    ],
+                    [
                         'column' => 'code'
-                    ),
-
-                    array(
+                    ],
+                    [
                         'column' => 'name'
-                    ),
-
-                    array(
+                    ],
+                    [
                         'column' => 'order',
                         'value' => function($language){
-                            return Element::number(sprintf('order[%s]', $language->getId()), $language->getOrder(), array('class' => 'form-control center-block', 'min' => '0'));
+                            return Element::number(sprintf('order[%s]', $language->getId()), $language->getOrder(), ['class' => 'form-control form-control-sm mx-auto', 'style' => 'max-width: 80px;', 'min' => '0']);
                         }
-                    ),
-
-                    array(
+                    ],
+                    [
                         'column' => 'published',
                         'value' => function($language){
-                            return Element::checkbox(sprintf('published[%s]', $language->getId()), $language->getPublished());
+                            return Element::checkbox(sprintf('published[%s]', $language->getId()), $language->getPublished(), ['class' => 'form-check-input']);
                         }
-                    ),
-
-                    array(
+                    ],
+                    [
                         'column' => 'default',
                         'value' => function($language){
-                            return Element::radio('default', $language->getId(), $language->getDefault());
+                            return Element::radio('default', $language->getId(), $language->getDefault(), ['class' => 'form-check-input']);
                         }
-                    )
-                ),
-
-                'actions' => array(
-                    'edit' => function($language){
+                    ]
+                ],
+                'actions' => [
+                    function($language){
                         return Icon::edit(
                             $this->url('Cms:Admin:Languages@editAction', $language->getId()),
                             $this->translate('Edit this language')
                         );
                     },
-
-                    'remove' => function($language){
+                    function($language){
                         return Icon::remove(
                             $this->url('Cms:Admin:Languages@deleteAction', $language->getId()),
                             $this->translate('Remove this language')
                         );
                     }
-                )
-            ))); ?>
+                ]
+            ])); ?>
             
             <?php if (empty($langs)): ?>
-            <div class="center-block">
-                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No languages'); ?></h2>
+            <div class="card-body text-center py-5">
+                <h2 class="text-muted"><i class="bi bi-exclamation-circle"></i> <?= $this->translate('No languages'); ?></h2>
             </div>
             <?php endif; ?>
-
         </div>
     </form>
-
 </div>

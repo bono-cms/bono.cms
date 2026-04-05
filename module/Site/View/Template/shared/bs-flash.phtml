@@ -1,18 +1,21 @@
 <?php defined('KRYSTAL') or die; ?>
+
 <?php if ($flashBag->has('success')): ?>
-
-<div class="alert alert-dismissible alert-success">
- <button type="button" class="close" data-dismiss="alert">x</button>
- <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('success')); ?>
+<div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-0 d-flex align-items-center" role="alert">
+    <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+    <div>
+        <?php $this->show($flashBag->get('success')); ?>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-
 <?php endif; ?>
 
 <?php if ($flashBag->has('warning')): ?>
-
-<div class="alert alert-dismissible alert-warning">
- <button type="button" class="close" data-dismiss="alert">x</button>
- <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('warning')); ?>
+<div class="alert alert-warning alert-dismissible fade show border-0 shadow-sm rounded-0 d-flex align-items-center" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+    <div>
+        <?php $this->show($flashBag->get('warning')); ?>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-
 <?php endif; ?>

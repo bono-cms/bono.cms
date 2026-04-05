@@ -1,14 +1,21 @@
 <?php defined('KRYSTAL') or die; ?>
-<div class="modal fade" id="ajax-modal" tabindex="-1" role="dialog" aria-labelledby="mdLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="mdLabel"><?php $this->show('Please wait'); ?></h4>
-      </div>
-      <div class="modal-body">
-        <img class="center-block" src="<?php echo $this->asset('/img/ajax.gif'); ?>" />
-      </div>
+
+<div class="modal fade" id="ajax-modal" tabindex="-1" aria-labelledby="ajaxModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h6 class="modal-title fw-bold text-muted text-uppercase small" id="ajaxModalLabel">
+                    <?php $this->show('Please wait'); ?>
+                </h6>
+
+                <button type="button" class="btn-close small" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body py-4 d-flex justify-content-center align-items-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

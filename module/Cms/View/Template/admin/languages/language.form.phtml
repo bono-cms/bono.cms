@@ -1,75 +1,66 @@
 <?php
 
 use Krystal\Form\Element;
-use Krystal\Form\HtmlHelper;
 
 defined('KRYSTAL') or die;
 
 ?>
 
 <form class="card" data-group="language" autocomplete="off">
-    <?php echo Element::hidden('language[id]', $language->getId()); ?>
+    <div class="card-body">
+        <?= Element::hidden('language[id]', $language->getId()); ?>
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
-        <div class="col-lg-10">
+        <div class="form-group">
+            <label><?= $this->translate('Name'); ?></label>
             <div class="input-group">
-                <?php echo Element::text('language[name]', $language->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('The name of the language to be created'))); ?>
-                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                <?= Element::text('language[name]', $language->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('The name of the language to be created'))); ?>
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-lg-2 control-label"><?php $this->show('Code'); ?></label>
-        <div class="col-lg-10">
-            <div class="input-group">
-                <?php echo Element::text('language[code]', $language->getCode(), array('class' => 'form-control', 'placeholder' => $this->translate('Unique language identifier'))); ?>
-                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label><?= $this->translate('Country'); ?> <i data-container="flag" class="fas fa-flag"></i></label>
+                    <?= Element::select('language[flag]', $countries, $language->getFlag(), ['class' => 'form-control'], null, function($code, $name){
+                        return [
+                            'data-flag' => sprintf('famfamfam-flag-%s', strtolower($code))
+                        ];
+                    }); ?>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label><?= $this->translate('Code'); ?></label>
+                    <?= Element::text('language[code]', $language->getCode(), array('class' => 'form-control', 'placeholder' => $this->translate('Unique language identifier'))); ?>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-lg-2 control-label"><?php $this->show('Country'); ?></label>
-        <div class="col-lg-10">
-            <div class="input-group">
-                <select name="language[flag]" class="form-control">
-                    <?php foreach ($countries as $code => $name): ?>
-                    <option data-flag="<?php printf('famfamfam-flag-%s', $code); ?>" <?php HtmlHelper::selectOnDemand($code == $language->getFlag()); ?> value="<?php echo $code; ?>"><?php echo $name; ?></option>
-                    <?php endforeach; ?>
-                </select>
-                
-                <span class="input-group-addon"><i data-container="flag" class="glyphicon glyphicon-pencil"></i></span>
-            </div>
+
+        <div class="form-group">
+            <label><?= $this->translate('Order'); ?></label>
+            <?= Element::number('language[order]', $language->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Language sort order in a list'))); ?>
         </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
-        <div class="col-lg-10">
-            <div class="input-group">
-                <?php echo Element::number('language[order]', $language->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Language sort order in a list'))); ?>
-                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-            </div>
+
+        <div class="form-check mb-3">
+            <?= Element::checkbox('language[published]', $language->getPublished(), ['class' => 'form-check-input', 'id' => 'published-check']); ?>
+            <label class="form-check-label" for="published-check">
+                <?= $this->translate('Published'); ?>
+            </label>
         </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
-        <div class="col-lg-10">
-            <?php echo Element::checkbox('language[published]', $language->getPublished(), array('class' => 'form-control')); ?>
+
+        <?php if (!$language->getId()): ?>
+        <div class="form-check mb-3">
+            <?= Element::checkbox('language[default]', $language->getDefault(), ['class' => 'form-check-input', 'id' => 'default-check']); ?>
+            <label class="form-check-label" for="default-check">
+                <?= $this->translate('Make default'); ?>
+            </label>
         </div>
+        <?php endif; ?>
     </div>
-    
-    <?php if (!$language->getId()): ?>
-    <div class="form-group">
-        <label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
-        <div class="col-lg-10">
-            <?php echo Element::checkbox('language[default]', $language->getDefault(), array('class' => 'form-control')); ?>
-        </div>
-    </div>
-    <?php endif; ?>
 
     <?php $this->loadPartial('actions', array(
         'new' => !$language->getId(),
@@ -78,5 +69,4 @@ defined('KRYSTAL') or die;
         'save' => 'Cms:Admin:Languages@saveAction',
         'cancel' => 'Cms:Admin:Languages@indexAction'
     )); ?>
-
 </form>

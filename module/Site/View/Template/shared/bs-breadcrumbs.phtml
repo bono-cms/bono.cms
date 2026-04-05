@@ -1,14 +1,21 @@
 <?php defined('KRYSTAL') or die; ?>
 
 <?php if ($this->getBreadcrumbBag()->has()): ?>
-<ul class="breadcrumb">
- <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $breadcrumb): ?>
- <?php if ($breadcrumb->isActive()): ?>
- <li class="active"><?php echo $breadcrumb->getName(); ?></li>
- <?php else: ?>
- <li><a href="<?php echo $breadcrumb->getLink(); ?>"><?php echo $breadcrumb->getName(); ?></a></li>
- <?php endif; ?>
- <?php endforeach; ?>
-</ul>
-
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb bg-transparent p-0 m-0">
+        <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $breadcrumb): ?>
+            <?php if ($breadcrumb->isActive()): ?>
+                <li class="breadcrumb-item active text-uppercase small fw-bold" aria-current="page">
+                    <?= $breadcrumb->getName(); ?>
+                </li>
+            <?php else: ?>
+                <li class="breadcrumb-item text-uppercase small">
+                    <a href="<?= $breadcrumb->getLink(); ?>" class="text-decoration-none text-muted transition-link">
+                        <?= $breadcrumb->getName(); ?>
+                    </a>
+                </li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </ol>
+</nav>
 <?php endif; ?>

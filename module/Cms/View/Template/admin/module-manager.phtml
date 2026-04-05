@@ -55,7 +55,7 @@ defined('KRYSTAL') or die;
                 ),
 
                 'actions' => array(
-                    'remove' => function($module) use ($moduleManager){
+                    function($module) use ($moduleManager){
                         if (!$moduleManager->isCoreModule($module['name'])) {
                             return Icon::remove(
                                 $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']),
