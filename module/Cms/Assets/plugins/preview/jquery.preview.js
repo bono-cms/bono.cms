@@ -13,13 +13,14 @@
 			throw new Error("Preview requires FileReader class available in HTML5 only");
 		}
 		
-		// Ensure its a file input
-		var type = $(this).attr('type').toLowerCase();
-		
-		if (type !== "file") {
-			throw new Error("You can attach a preview to file inputs only!");
-		}
-		
+        // Ensure the attribute exists before calling toLowerCase
+        var attr = $(this).attr('type');
+        var type = attr ? attr.toLowerCase() : null;
+
+        if (type !== "file") {
+            throw new Error("You can attach a preview to file inputs only! Found: " + this.tagName);
+        }
+
 		$(this).change(function() {
 			// We're safe to attach a listener now
 			for (var i = 0; i < this.files.length; i++ ) {
