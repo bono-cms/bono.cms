@@ -353,20 +353,102 @@ $(function(){
          */
         handleResponse : function(response){
             console.log(response);
-            this.resetAll();
+            this.resetAll(); // Clears previous highlights and error messages
 
             try {
-                var data = $.parseJSON(response);
-                var messages = data.messages;
+                var data = (typeof response === 'object') ? response : $.parseJSON(response);
 
-                this.render(data);
+                if (data && data.errors) {
+                    // 1. Flatten the nested error object into HTML name attributes
+                    var flatErrors = this.flattenErrors(data.errors, '');
+                    var modalMessages = [];
+
+                    // 2. Loop through the flat errors to highlight fields and collect messages
+                    for (var fieldName in flatErrors) {
+                        if (flatErrors.hasOwnProperty(fieldName)) {
+                            var errorMessage = flatErrors[fieldName];
+                            modalMessages.push(errorMessage);
+
+                            // 3. Highlight the Bootstrap 4 form fields
+                            this.highlightField(fieldName, errorMessage);
+                        }
+                    }
+
+                    // Display fallback modal with aggregated text lines if needed
+                    this.displayModal(modalMessages.join('<br>'));
+                    this.render(data);
+
+                } else if (data && data.messages) {
+                    this.displayModal(data.messages);
+                }
 
             } catch(e) {
-                var messages = response;
+                this.displayModal(response);
             }
+        },
 
-            this.displayModal(messages);
+        handleResponse : function(response){
+            console.log(response);
+            this.resetAll(); // Clears previous highlights and error messages
+
+            try {
+                var data = (typeof response === 'object') ? response : $.parseJSON(response);
+
+                // Check if we have an errors collection array from the backend
+                if (data && data.errors && Array.isArray(data.errors)) {
+                    var modalMessages = [];
+
+                    // Directly loop through the flat error list
+                    for (var i = 0; i < data.errors.length; i++) {
+                        var errorItem = data.errors[i];
+                        var fieldName = errorItem.input;     // Matches exactly: "nested[0][name]" or "email"
+                        var errorMessage = errorItem.message; // Matches exactly: "The Item Name must have..."
+
+                        modalMessages.push(errorMessage);
+
+                        // Pass the clean key directly to highlight the form control
+                        this.highlightField(fieldName, errorMessage);
+                    }
+
+                    // Display fallback modal with aggregated lines
+                    this.displayModal(modalMessages.join('<br>'));
+                    this.render(data);
+
+                } else if (data && data.messages) {
+                    this.displayModal(data.messages);
+                }
+
+            } catch(e) {
+                this.displayModal(response);
+            }
+        },
+
+        // Adds Bootstrap 4 error states directly to the matching element markup
+        highlightField : function(fieldName, message) {
+            // Escape brackets [ ] so jQuery can safely select name attributes containing array maps
+            var safeSelector = fieldName.replace(/(:|\.|\[|\]|,|=)/g, "\\$1");
+            var $input = $('[name="' + safeSelector + '"]');
+
+            if ($input.length) {
+                // Add Bootstrap 4 error style modifier
+                $input.addClass('is-invalid');
+
+                // Append the feedback element safely inside the .input-group wrapper layout block
+                var $inputGroup = $input.closest('.input-group');
+                if ($inputGroup.length) {
+                    $inputGroup.append('<div class="invalid-feedback">' + message + '</div>');
+                } else {
+                    $input.after('<div class="invalid-feedback">' + message + '</div>');
+                }
+            }
+        },
+
+        // Cleans up the form state completely before executing a new cycle
+        resetAll : function() {
+            $('.form-control').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
         }
+
     };
     
     $.setFormGroup = function(group){
