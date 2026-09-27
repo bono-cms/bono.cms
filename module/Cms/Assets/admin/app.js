@@ -234,74 +234,7 @@ $(function(){
         }
     };
     
-    // Error handler class written for Bootstrap 3.x
     var errorHandler = {
-        /**
-         * Builds element name
-         * 
-         * @param string Field name
-         * @param string
-         */
-        buildName : function(name){
-            // If group is specified, then gotta build a selector for that
-            if ($.group) {
-                return $.group + "[" + name + "]";
-            } else {
-                return name;
-            }
-        },
-
-        /**
-         * Builds appropriate element selector
-         * 
-         * @param string name
-         * @return string Prepared selector name
-         */
-        buildSelector : function(name){
-            // If group is specified, then gotta build a selector for that
-            if ($.group) {
-                return "[name='" + $.group + "[" + name + "]" + "']";
-            } else {
-                return "[name='" + name + "']";
-            }
-        },
-
-        /**
-         * Remove all previous error classes if present
-         * 
-         * @return void
-         */
-        resetAll : function(){
-            $("div.form-group").removeClass('has-danger').addClass('has-success');
-        },
-
-        /**
-         * Creates populated UL element
-         * 
-         * @param object messages JSON object with error messages
-         * @return HTMLElement
-         */
-        createUl : function(messages){
-            var ul = document.createElement('ul');
-
-            for (var key in messages) {
-                var li = document.createElement('li');
-                var text = messages[key];
-
-                $(li).text(text);
-                $(ul).append(li);
-            }
-
-            // Return populated UL element
-            return ul;
-        },
-
-        /**
-         * Displays modal dialog with error messages
-         * 
-         * @param mixed response
-         * @return void
-         */
         displayModal : function(messages){
             var $modal = $("#errors-modal");
 
@@ -315,42 +248,6 @@ $(function(){
             $modal.modal("show");
         },
 
-        /**
-         * Renders error messages highlighting fields
-         * 
-         * @param object data
-         * @return void
-         */
-        render : function(data){
-            // To access errorHandler instance inside functions
-            var self = this;
-
-            for (var key in data.names) {
-                // Name represents a name of an Element, that contains an error
-                var name = data.names[key];
-                // OK, we got an instance of current element which contain an error
-                var $targetElement = $(self.buildSelector(name));
-                // That's not fast, but reliable at least
-                var $row = $targetElement.closest('div.form-group');
-
-                $row.each(function(){
-                    if ($targetElement.attr('name') == self.buildName(name)){
-                        if ($(this).hasClass('has-success')) {
-                            $(this).removeClass('has-success');
-                        }
-
-                        $(this).addClass('has-danger');
-                    }
-                });
-            }
-        },
-        
-        /**
-         * Handles server response
-         * 
-         * @param string response
-         * @return void
-         */
         handleResponse : function(response){
             console.log(response);
             this.resetAll(); // Clears previous highlights and error messages
@@ -358,51 +255,22 @@ $(function(){
             try {
                 var data = (typeof response === 'object') ? response : $.parseJSON(response);
 
-                if (data && data.errors) {
-                    // 1. Flatten the nested error object into HTML name attributes
-                    var flatErrors = this.flattenErrors(data.errors, '');
-                    var modalMessages = [];
-
-                    // 2. Loop through the flat errors to highlight fields and collect messages
-                    for (var fieldName in flatErrors) {
-                        if (flatErrors.hasOwnProperty(fieldName)) {
-                            var errorMessage = flatErrors[fieldName];
-                            modalMessages.push(errorMessage);
-
-                            // 3. Highlight the Bootstrap 4 form fields
-                            this.highlightField(fieldName, errorMessage);
-                        }
-                    }
-
-                    // Display fallback modal with aggregated text lines if needed
-                    this.displayModal(modalMessages.join('<br>'));
-                    this.render(data);
-
-                } else if (data && data.messages) {
-                    this.displayModal(data.messages);
+                // Determine if data is a direct array of errors, or an object containing .errors
+                var errorList = null;
+                if (Array.isArray(data)) {
+                    errorList = data;
+                } else if (data && data.errors && Array.isArray(data.errors)) {
+                    errorList = data.errors;
                 }
 
-            } catch(e) {
-                this.displayModal(response);
-            }
-        },
-
-        handleResponse : function(response){
-            console.log(response);
-            this.resetAll(); // Clears previous highlights and error messages
-
-            try {
-                var data = (typeof response === 'object') ? response : $.parseJSON(response);
-
-                // Check if we have an errors collection array from the backend
-                if (data && data.errors && Array.isArray(data.errors)) {
+                if (errorList) {
                     var modalMessages = [];
 
                     // Directly loop through the flat error list
-                    for (var i = 0; i < data.errors.length; i++) {
-                        var errorItem = data.errors[i];
-                        var fieldName = errorItem.input;     // Matches exactly: "nested[0][name]" or "email"
-                        var errorMessage = errorItem.message; // Matches exactly: "The Item Name must have..."
+                    for (var i = 0; i < errorList.length; i++) {
+                        var errorItem = errorList[i];
+                        var fieldName = errorItem.input;     // Matches: "translation[1][name]"
+                        var errorMessage = errorItem.message; // Matches: "Поле..."
 
                         modalMessages.push(errorMessage);
 
@@ -411,8 +279,13 @@ $(function(){
                     }
 
                     // Display fallback modal with aggregated lines
-                    this.displayModal(modalMessages.join('<br>'));
-                    this.render(data);
+                    if (modalMessages.length > 0) {
+                        this.displayModal(modalMessages.join('<br>'));
+                    }
+                    
+                    if (!Array.isArray(data)) {
+                        this.render(data);
+                    }
 
                 } else if (data && data.messages) {
                     this.displayModal(data.messages);
@@ -448,7 +321,6 @@ $(function(){
             $('.form-control').removeClass('is-invalid');
             $('.invalid-feedback').remove();
         }
-
     };
     
     $.setFormGroup = function(group){
@@ -498,6 +370,37 @@ $(function(){
         });
     });
 
+    // Shared response handler
+    function handleResponse(response)
+    {
+        console.log(response);
+
+        // 1. Modern structured object responses
+        if (typeof response === 'object' && response !== null) {
+            if (response.errors) {
+                $.showErrors(response.errors);
+                return false;
+            }
+            if (response.redirect) {
+                window.location = response.redirect;
+                return false;
+            }
+            if (response.refresh) {
+                window.location.reload();
+                return false;
+            }
+        }
+        
+        // 2. Standard legacy check
+        if (response == "1") {
+            window.location.reload();
+            return false; // Handled
+        } else {
+            $.showErrors(response);
+            return false; // Handled
+        }
+    }
+    
     $('[data-button="module-install"]').click(function(event){
         event.preventDefault();
         $('[name="module"]').click().change(function(){
@@ -511,11 +414,7 @@ $(function(){
                 url : $(this).data('url'),
                 data : formData,
                 success : function(response){
-                    if (response == "1"){
-                        window.location.reload();
-                    } else {
-                        console.log(response);
-                    }
+                    handleResponse(response);
                 }
             });
         });
@@ -531,11 +430,7 @@ $(function(){
                 mode : mode
             },
             success : function(response) {
-                if (response == "1") {
-                    window.location.reload();
-                } else {
-                    console.log(response);
-                }
+                handleResponse(response);
             }
         });
     });
@@ -548,41 +443,6 @@ $(function(){
         window.location = url;
     });
     
-    
-    $("[data-button='remove-selected']").click(function(event){
-        event.preventDefault();
-        var data = $("form").serialize();
-        var url = $(this).data('url');
-        
-        $.ajax({
-            url : url,
-            data : data,
-            success : function(response) {
-                if (response == "1") {
-                    window.location.reload();
-                } else {
-                    $.showErrors(response);
-                }
-            }
-        });
-    });
-    
-    $("[data-button='save-changes']").click(function(event){
-        event.preventDefault();
-        var url = $(this).data('url');
-        
-        $.ajax({
-            url : url,
-            data : $("form").serialize(),
-            success : function(response) {
-                if (response == "1") {
-                    window.location.reload();
-                } else {
-                    $.showErrors(response);
-                }
-            }
-        });
-    });
     
     $("[data-button='refresh']").click(function(event){
         event.preventDefault();
@@ -600,11 +460,7 @@ $(function(){
                 id : id
             },
             success : function(response) {
-                if (response == "1") {
-                    window.location.reload();
-                } else {
-                    console.log(response);
-                }
+                handleResponse(response);
             }
         });
     });
@@ -643,6 +499,7 @@ $(function(){
         });
     });
 
+    // Refactored
     $("[data-button='per-page-changer']").change(function(event){
         var value = $(this).val();
         $.ajax({
@@ -651,11 +508,7 @@ $(function(){
                 count : value,
             },
             success : function(response) {
-                if (response == "1") {
-                    window.location.reload();
-                } else {
-                    console.log(response);
-                }
+                handleResponse(response);
             }
         });
     });
@@ -664,77 +517,94 @@ $(function(){
         event.preventDefault();
         $("div.options").slideToggle(1000);
     });
-    
-    
-    function add(url, callback) {
-        $("form").send({
-            url : url,
-            success : callback,
-            before : function(){
-                $.wysiwyg.update();
-            }
-        });
-    }
-    
-    function update(url, callback) {
-        $("form").send({
-            url : url,
-            success : callback,
-            before : function(){
-                $.wysiwyg.update();
-            }
-        });
-    }
-    
-    $("[data-button='add']").click(function(event){
-        var url = $(this).data('url');
-        var backUrl = $(this).data('back-url');
-        
-        add(url, function(response) {
-            if ($.isNumeric(response)) {
-                window.location = backUrl + response;
-            } else {
-                $.showErrors(response);
-            }
-        });
-    });
-    
-    $("[data-button='add-create']").click(function(){
+
+
+    // Refactored
+    $("[data-button='save-changes']").click(function(event){
+        event.preventDefault();
         var url = $(this).data('url');
         
-        add(url, function(response){
-            if ($.isNumeric(response)) {
-                window.location.reload();
-            } else {
-                $.showErrors(response);
+        $.ajax({
+            url : url,
+            data : $("form").serialize(),
+            success : function(response) {
+                handleResponse(response);
             }
         });
     });
-
-    $("[data-button='save']").click(function(){
+    
+    // Refactored.
+    $("[data-button='remove-selected']").click(function(event){
+        event.preventDefault();
+        var data = $("form").serialize();
         var url = $(this).data('url');
 
-        update(url, function(response) {
-            if (response == "1") {
-                window.location.reload();
-            } else {
-                $.showErrors(response);
+        $.ajax({
+            url : url,
+            data : data,
+            success : function(response) {
+                handleResponse(response);
+            }
+        });
+    });
+    
+    // Refactored.
+    $(document).on('click', "[data-button]", function(event) {
+        var $btn = $(this);
+        var action = $btn.data('button');
+        var url = $btn.data('url');
+        var backUrl = $btn.data('back-url');
+
+        $("form").send({
+            url: url,
+            before: function() {
+                $.wysiwyg.update();
+            },
+            success: function(response) {
+                // 1. Modern response handling (structured objects)
+                if (typeof response === 'object' && response !== null) {
+                    if (response.errors) {
+                        $.showErrors(response.errors);
+                        return;
+                    }
+                    if (response.redirect) {
+                        window.location = response.redirect;
+                        return;
+                    }
+                    if (response.refresh) {
+                        window.location.reload();
+                        return;
+                    }
+                    return;
+                }
+
+                // 2. Legacy response validation (inlined)
+                var isSuccess = (action === 'add' || action === 'add-create') ? $.isNumeric(response) : (response == "1");
+
+                if (!isSuccess) {
+                    $.showErrors(response);
+                    return;
+                }
+
+                // 3. Legacy routing switch
+                switch (action) {
+                    case 'add':
+                        window.location = backUrl + response;
+                        break;
+                    case 'add-create':
+                        window.location.reload();
+                        break;
+                    case 'save':
+                        window.location.reload();
+                        break;
+                    case 'save-create':
+                        window.location = backUrl;
+                        break;
+                }
             }
         });
     });
 
-    $("[data-button='save-create']").click(function(){
-        var url = $(this).data('url');
-        var backUrl = $(this).data('back-url');
-
-        update(url, function(response){
-            if (response == "1"){
-                window.location = backUrl;
-            } else {
-                $.showErrors(response);
-            }
-        });
-    });
     
     // Removal buttons
     $('[data-button="delete"], [data-button="remove"]').click(function(event){
@@ -757,11 +627,12 @@ $(function(){
         // Then show the modal box
         $modal.modal();
 
-        // Then every time attach the click listener
         $("[data-button='confirm-removal']").off('click').click(function(event){
             $.ajax({
                 url : url,
                 success : function(response) {
+                    handleResponse(response);
+                    
                     if (response == "1") {
                         if ($self.data('back-url')) {
                             window.location = $self.data('back-url');
