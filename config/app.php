@@ -7,6 +7,10 @@ return array(
 	 * Framework components configuration
 	 */
 	'components' => array(
+        'auth_manager' => [
+            'secret_key' => $_ENV['auth_secret']
+        ],
+        
         // Module Manager configuration
         'module_manager' => array(
             'core_modules' => array(
