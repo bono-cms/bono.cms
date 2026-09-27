@@ -1,8 +1,12 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
     --sidebar: 200px;
+}
+
+.object-fit-cover {
+    object-fit: cover;
 }
 
 .navbar-nav .dropdown-menu {
@@ -27,7 +31,7 @@ input[type=file]::file-selector-button:hover {
 }
 
 body {
-    font-family: 'Open Sans';
+    font-family: 'Inter';
     background-color: #eef1f6;
     background: #fafafa;
 }
