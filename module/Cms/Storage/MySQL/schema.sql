@@ -10,16 +10,9 @@ CREATE TABLE `bono_module_cms_webpages` (
  `lastmod` DATETIME NOT NULL COMMENT 'Last modification time',
  `changefreq` varchar(1) DEFAULT 'w' COMMENT 'Change frequency',
  `priority` FLOAT DEFAULT '0.5' COMMENT 'Priority'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE INDEX `webpage` ON `bono_module_cms_webpages`(slug) using HASH;
-
-DROP TABLE IF EXISTS `bono_module_cms_notepad`;
-CREATE TABLE `bono_module_cms_notepad` (
- `user_id` INT NOT NULL PRIMARY KEY COMMENT 'User id content belongs to',
- `content` TEXT NOT NULL COMMENT 'Notepad data itself'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4_unicode_ci;
-
 
 DROP TABLE IF EXISTS `bono_module_cms_notifications`;
 CREATE TABLE `bono_module_cms_notifications` (
@@ -27,7 +20,7 @@ CREATE TABLE `bono_module_cms_notifications` (
  `timestamp` INT(10) NOT NULL COMMENT 'UNIX Timestamp of creation',
  `viewed` varchar(1) NOT NULL COMMENT 'Either 1 or 0. Incidates whether used read it or not yet',
  `message` TEXT COMMENT 'Notification message'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `bono_module_cms_history`;
@@ -39,7 +32,7 @@ CREATE TABLE `bono_module_cms_history` (
  `module` varchar(255) NOT NULL,
  `comment` TEXT NOT NULL,
  `placeholder` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `bono_module_cms_languages`;
@@ -50,7 +43,7 @@ CREATE TABLE `bono_module_cms_languages` (
  `flag` varchar(5) NOT NULL,
  `order` INT NOT NULL,
  `published` varchar(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `bono_module_cms_users`;
@@ -61,4 +54,4 @@ CREATE TABLE `bono_module_cms_users` (
  `role` varchar(30) NOT NULL,
  `email` varchar(254) NOT NULL,
  `name` varchar(254) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
