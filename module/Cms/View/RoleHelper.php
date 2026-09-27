@@ -11,9 +11,7 @@
 
 namespace Cms\View;
 
-use Krystal\Authentication\RoleHelper as Facade;
-
-final class RoleHelper extends Facade
+final class RoleHelper
 {
 	/**
 	 * Target user id
@@ -21,6 +19,30 @@ final class RoleHelper extends Facade
 	 * @var string
 	 */
 	private $id;
+
+    /**
+	 * Current role
+	 * 
+	 * @var string
+	 */
+    private $current;
+
+    public function __construct($current)
+    {
+        $this->current = $current;
+    }
+    
+
+    /**
+     * Checks whether stored role equals to target one
+     * 
+     * @param string $role
+     * @return boolean
+     */
+    public function is($role)
+    {
+        return $this->current == $role;
+    }
 
 	/**
 	 * Defines user id

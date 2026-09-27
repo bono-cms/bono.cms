@@ -77,21 +77,17 @@ final class Module extends AbstractCmsModule
         $webPageMapper = $mapperFactory->build('/Cms/Storage/MySQL/WebPageMapper');
         $webPageMapper->setLangId($languageManager->getCurrentId());
 
-        $webPageManager = new WebPageManager($webPageMapper, $languageMapper, new SlugGenerator(), $baseUrl);
         $notificationManager = new NotificationManager($notificationMapper);
 
-        $userManager = new UserManager($userMapper, $authManager);
-        $authManager->setAuthService($userManager);
-
-        return array(
+        return [
             'mailer' => new Mailer($notificationManager, $config->getEntity()),
             'configManager' => $config,
-            'webPageManager' => $webPageManager,
+            'webPageManager' =>  new WebPageManager($webPageMapper, $languageMapper, new SlugGenerator(), $baseUrl),
             'mode' => $this->getModeService(),
-            'userManager'    => $userManager,
+            'userManager'    => new UserManager($userMapper, $authManager),
             'historyManager' => new HistoryManager($historyMapper),
             'notificationManager' => $notificationManager,
             'languageManager' => $languageManager
-        );
+        ];
     }
 }

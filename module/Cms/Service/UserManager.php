@@ -15,16 +15,14 @@ use Cms\Service\AbstractManager;
 use Cms\Storage\UserMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Authentication\AuthManagerInterface;
-use Krystal\Authentication\UserAuthServiceInterface;
-use Krystal\Security\Filter;
 use Krystal\Stdlib\ArrayUtils;
 
-final class UserManager extends AbstractManager implements UserManagerInterface, UserAuthServiceInterface
+final class UserManager extends AbstractManager implements UserManagerInterface
 {
     /**
      * Any compliant user mapper
      * 
-     * @var \Cms\Storage\UserMapperInteface
+     * @var \Cms\Storage\UserMapperInterface
      */
     private $userMapper;
 
@@ -38,7 +36,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
     /**
      * State initialization
      * 
-     * @param \Cms\Storage\UserMapperInteface $userMapper Any mapper which implements this interface
+     * @param \Cms\Storage\UserMapperInterface $userMapper
      * @param \Krystal\Authentication\AuthManagerInterface $authManager
      * @return void
      */
@@ -46,6 +44,39 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
     {
         $this->userMapper = $userMapper;
         $this->authManager = $authManager;
+
+        // Configure the auth manager to use this class as user provider
+        $this->authManager->setUserProvider([$this, 'provideUser']);
+    }
+
+    /**
+     * User provider used by AuthManager
+     * 
+     * Accepts either login (string) or user id
+     * 
+     * @param string|int $identifier
+     * @return array|null
+     */
+    public function provideUser($identifier)
+    {
+        // First try by ID
+        $user = $this->userMapper->fetchById($identifier);
+
+        // Fallback to login
+        if (empty($user)) {
+            $user = $this->userMapper->fetchByLogin($identifier);
+        }
+
+        if (empty($user)) {
+            return null;
+        }
+
+        // Ensure required keys exist
+        if (!isset($user['remember_token_version'])) {
+            $user['remember_token_version'] = 1;
+        }
+
+        return $user;
     }
 
     /**
@@ -74,27 +105,24 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
      * Fetches user's name by associated id
      * 
      * @param string $id
-     * @return array
+     * @return string
      */
     public function fetchNameById($id)
     {
-        // This method is called inside foreach, so we need a cache anyway
         static $cache = array();
 
         if (isset($cache[$id])) {
-            // $cache[$id] represent user name
             return $cache[$id];
-
-        } else {
-            $name = $this->userMapper->fetchNameById($id);
-            $cache[$id] = $name;
-
-            return $name;
         }
+
+        $name = $this->userMapper->fetchNameById($id);
+        $cache[$id] = $name;
+
+        return $name;
     }
 
     /**
-     * Returns last added user's` id
+     * Returns last added user's id
      * 
      * @return integer
      */
@@ -110,11 +138,15 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
     {
         $entity = new VirtualEntity();
         $entity->setId($user['id'], VirtualEntity::FILTER_INT)
-            ->setLogin($user['login'], VirtualEntity::FILTER_HTML)
-            ->setPasswordHash($user['password_hash'])
-            ->setRole($user['role'], VirtualEntity::FILTER_HTML)
-            ->setEmail($user['email'], VirtualEntity::FILTER_HTML)
-            ->setName($user['name'], VirtualEntity::FILTER_HTML);
+               ->setLogin($user['login'], VirtualEntity::FILTER_HTML)
+               ->setPasswordHash($user['password_hash'])
+               ->setRole($user['role'], VirtualEntity::FILTER_HTML)
+               ->setEmail($user['email'], VirtualEntity::FILTER_HTML)
+               ->setName($user['name'], VirtualEntity::FILTER_HTML);
+
+        if (isset($user['remember_token_version'])) {
+            $entity->setRememberTokenVersion($user['remember_token_version'], VirtualEntity::FILTER_INT);
+        }
 
         return $entity;
     }
@@ -139,29 +171,13 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
      * Attempts to authenticate a user
      * 
      * @param string $login
-     * @param string $password
-     * @param boolean $remember Whether to remember
-     * @param boolean $hash Whether to hash password
+     * @param string $password Plain password
+     * @param boolean $remember
      * @return boolean
      */
-    public function authenticate($login, $password, $remember, $hash = true)
+    public function authenticate($login, $password, $remember)
     {
-        if ($hash === true) {
-            $password = $this->getHash($password);
-        }
-
-        $user = $this->userMapper->fetchByCredentials($login, $password);
-
-        // If it's not empty. then login and password are both value
-        if (!empty($user)) {
-            
-            $this->authManager->storeId($user['id'])
-                              ->storeRole($user['role'])
-                              ->login($login, $password, $remember);
-            return true;
-        }
-
-        return false;
+        return $this->authManager->login($login, $password, $remember);
     }
 
     /**
@@ -185,14 +201,14 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
     }
 
     /**
-     * Provides a hash of a string
+     * Creates a secure password hash
      * 
-     * @param string $string
+     * @param string $password
      * @return string
      */
-    private function getHash($string)
+    private function createHash($password)
     {
-        return sha1($string);
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**
@@ -203,7 +219,9 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
      */
     public function add(array $input)
     {
-        $input['password_hash'] = $this->getHash($input['password']);
+        $input['password_hash'] = $this->createHash($input['password']);
+        $input['remember_token_version'] = 1;
+
         return $this->userMapper->insert(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
     }
 
@@ -215,17 +233,25 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
      */
     public function update(array $input)
     {
+        // Only update password if a new one was provided
         if (!empty($input['password'])) {
-            $input['password_hash'] = $this->getHash($input['password']);
+            $input['password_hash'] = $this->createHash($input['password']);
+
+            // Invalidate all existing remember-me cookies
+            if (isset($input['id'])) {
+                $current = $this->userMapper->fetchById($input['id']);
+                $version = isset($current['remember_token_version']) ? (int) $current['remember_token_version'] : 1;
+                $input['remember_token_version'] = $version + 1;
+            }
         }
 
         return $this->userMapper->update(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
     }
 
     /**
-     * Remove all but provided
+     * Removes all users except the provided one
      * 
-     * @param int $id User's id to be kept
+     * @param integer $id
      * @return boolean
      */
     public function wipe($id)
@@ -247,8 +273,8 @@ final class UserManager extends AbstractManager implements UserManagerInterface,
     /**
      * Fetches user's entity by associated id
      * 
-     * @param string $id User's id
-     * @return array
+     * @param string $id
+     * @return \Krystal\Stdlib\VirtualEntity|boolean
      */
     public function fetchById($id)
     {

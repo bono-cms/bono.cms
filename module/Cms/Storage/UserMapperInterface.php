@@ -57,10 +57,9 @@ interface UserMapperInterface
      * Fetches by credentials
      * 
      * @param string $login
-     * @param string $passwordHash
      * @return array
      */
-    public function fetchByCredentials($login, $passwordHash);
+    public function fetchByLogin($login);
 
     /**
      * Fetches all users
