@@ -33,7 +33,7 @@ final class Mailer implements MailerInterface
     /**
      * State initialization
      * 
-     * @param \Cms\Service\NotificationManagerInterface
+     * @param \Cms\Service\NotificationManagerInterface $notificationManager
      * @param \Krystal\Stdlib\VirtualEntity $config
      * @return void
      */
@@ -52,12 +52,12 @@ final class Mailer implements MailerInterface
      * @param array $files Optional files
      * @return boolean
      */
-    private function sendMessage($to, $subject, $body, array $files = array())
+    private function sendMessage($to, $subject, $body, array $files = [])
     {
         $mailer = new FrameworkMailer([
             'from' => $this->config->getSmtpUsername(),
             'smtp' => [
-                'enabled' => $this->config->getUseSmtpDriver() != true,
+                'enabled' => (bool) $this->config->getUseSmtpDriver(),
                 'host' => $this->config->getSmtpHost(),
                 'username' => $this->config->getSmtpUsername(),
                 'password' => $this->config->getSmtpPassword(),
@@ -78,23 +78,23 @@ final class Mailer implements MailerInterface
      * @param array $files Files to be sent if present
      * @return boolean
      */
-    public function sendTo($email, $subject, $body, array $files = array())
+    public function sendTo($email, $subject, $body, array $files = [])
     {
-        return $this->sendMessage(array($email), $subject, $body, $files);
+        return $this->sendMessage([$email], $subject, $body, $files);
     }
 
     /**
      * Sends a message to administrator
      * 
-     * @param string Message's subject
+     * @param string $subject Message's subject
      * @param string $body Body to be sent
      * @param string $notification Default notification message to be pop in administration panel
      * @param array $files Files to be sent if present
      * @return boolean Depending on success
      */
-    public function send($subject, $body, $notification = 'You have received a new message', array $files = array())
+    public function send($subject, $body, $notification = 'You have received a new message', array $files = [])
     {
-        if ($this->sendMessage(array($this->config->getNotificationEmail()), $subject, $body, $files)) {
+        if ($this->sendMessage([$this->config->getNotificationEmail()], $subject, $body, $files)) {
             $this->notificationManager->notify($notification);
             return true;
         } else {
