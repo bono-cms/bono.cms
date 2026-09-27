@@ -7,80 +7,94 @@ defined('KRYSTAL') or die;
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="utf-8" />
- <meta name="csrf-token" content="<?php echo $csrfToken; ?>" />
- <title><?php $this->show('Enter the system'); ?></title>
- <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
- <link rel="stylesheet" media="screen" href="<?php echo $stylesheet; ?>"  />
- <?php endforeach; ?>
+  <meta charset="utf-8">
+  <meta name="csrf-token" content="<?= $csrfToken; ?>">
+  <title><?php $this->show('Enter the system'); ?></title>
+  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
+  <link rel="stylesheet" href="<?= $stylesheet; ?>">
+  <?php endforeach; ?>
 </head>
-<body>
+<body class="bg-white">
 
-<section class="bg-light vh-100">
-    <div class="container h-100">
-        <div class="h-100 d-flex flex-column align-items-start justify-content-center">
-            <div class="row justify-content-center w-100">
-                <div class="col-lg-5">
-                    <!-- Box -->
-                    <div class="bg-white shadow-lg p-5">
-                        <span class="d-flex align-items-center justify-content-center mx-auto text-white rounded-circle bg-primary login-icon">
-                            <i class="fas fa-lock"></i>
-                        </span>
-                        
-                        <h3 class="text-center mb-4 mt-3"><?= $this->translate('Administration panel'); ?></h3>
-                        
-                        <form autocomplete="off" role="form" data-success-url="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>" data-submit-url="<?= $this->url('Cms:Admin:Auth@loginAction'); ?>">
-                            <div class="form-group">
-                                <label><?php $this->show('Login'); ?></label>
-                                <?= Element::text('login', null, ['class' => 'form-control form-control-lg']); ?>
-                            </div>
+<div class="container-fluid min-vh-100">
+  <div class="row min-vh-100">
+    <!-- Form Side -->
+    <div class="col-12 col-xl-6 order-2 order-xl-1 d-flex align-items-center py-5">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-10 col-lg-8">
+            <h3 class="fw-bold mb-3"><?= $this->translate('Bono CMS'); ?></h3>
+            <p class="text-black-50 fw-light mb-4"><?= $this->translate('Please log in to continue.'); ?></p>
 
-                            <div class="form-group">
-                                <label><?php $this->show('Password'); ?></label>
-                                <?= Element::password('password', null, ['class' => 'form-control form-control-lg']); ?>
-                            </div>
-
-                            <div class="form-group">
-                               <div class="custom-control custom-checkbox">
-                                  <?= Element::checkbox('remember', true, ['class' => 'custom-control-input']); ?>
-                                  <label class="custom-control-label"><?= $this->translate('Keep me signed in'); ?></label>
-                               </div>
-                            </div>
-
-                            <?php if ($captcha === true): ?>
-                            <div class="captcha-container">
-                                <span class="label label-danger"><?= $this->translate('Please confirm that you are not a bot'); ?></span>
-
-                                <div class="form-group">
-                                    <label for="inputCaptcha" class="control-label"></label>
-                                        <a href="#" title="<?= $this->translate('Click to refresh'); ?>" data-captcha="button-refresh">
-                                        <img data-captcha="image" src="<?= $this->url('Site:Main@captchaAction', null); ?>" />
-                                    </a>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputCaptcha" class="control-label"></label>
-                                    <input type="text" class="form-control" name="captcha" placeholder="<?= $this->translate('Type here'); ?>" />
-                                </div>
-                            </div>
-                            <?php endif; ?>
-
-                            <div class="form-group">
-                                <button disabled type="submit" class="btn btn-primary btn-lg w-100"><?= $this->translate('Sign In'); ?></button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- End of box -->
+            <form autocomplete="off" role="form" data-success-url="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>" data-submit-url="<?= $this->url('Cms:Admin:Auth@loginAction'); ?>">
+              <div class="border rounded-3 mb-4">
+                <!-- Login Input -->
+                <div class="p-3 border-bottom">
+                  <label for="login" class="form-label small text-uppercase text-secondary mb-0 fw-semibold" style="font-size: 12px;"><?php $this->show('Login'); ?></label>
+                  <?= Element::text('login', null, [
+                    'class' => 'form-control border-0 p-0 fs-5 shadow-none rounded-0 bg-white',
+                    'id' => 'login'
+                  ]); ?>
                 </div>
-            </div>
+
+                <!-- Password Input -->
+                <div class="p-3">
+                  <label for="password" class="form-label small text-uppercase text-secondary mb-0 fw-semibold" style="font-size: 12px;"><?php $this->show('Password'); ?></label>
+                  <?= Element::password('password', null, [
+                    'class' => 'form-control border-0 p-0 fs-5 shadow-none rounded-0 bg-white',
+                    'id' => 'password'
+                  ]); ?>
+                </div>
+              </div>
+
+              <!-- Remember Me -->
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                  <?= Element::checkbox('remember', true, ['class' => 'form-check-input', 'id' => 'remember']); ?>
+                  <label class="form-check-label text-secondary small" for="remember">
+                    <?= $this->translate('Keep me signed in'); ?>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Captcha Block (Optional) -->
+              <?php if ($captcha === true): ?>
+              <div class="captcha-container mb-4">
+                <span class="badge bg-danger mb-2"><?= $this->translate('Please confirm that you are not a bot'); ?></span>
+
+                <div class="mb-2">
+                  <a href="#" title="<?= $this->translate('Click to refresh'); ?>" data-captcha="button-refresh">
+                    <img data-captcha="image" src="<?= $this->url('Site:Main@captchaAction', null); ?>" />
+                  </a>
+                </div>
+
+                <div class="mb-3">
+                  <input type="text" class="form-control" name="captcha" placeholder="<?= $this->translate('Type here'); ?>" />
+                </div>
+              </div>
+              <?php endif; ?>
+
+              <!-- Submit Button -->
+              <button disabled type="submit" class="btn btn-primary w-100 py-3 px-4 fs-6"><?= $this->translate('Sign In'); ?></button>
+            </form>
+
+            <p class="text-center text-muted small mt-4 mb-0">
+              <?= $this->translate('Authorized personnel only. Contact system support if you forgot your access details.'); ?>
+            </p>
+          </div>
         </div>
     </div>
-</section>
+
+    <!-- Image Side -->
+    <div class="col-12 col-xl-6 order-1 order-xl-2 p-0 min-vh-50 min-vh-xl-100">
+        <img src="<?= $this->moduleAsset('images/login.jpg'); ?>" alt="Background Image" class="w-100 vh-100 object-fit-cover">
+    </div>
+  </div>
+</div>
 
 <?php $this->loadPartial('ajax'); ?>
 
 <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
-<script src="<?php echo $script; ?>"></script>
+<script src="<?= $script; ?>"></script>
 <?php endforeach; ?>  
 
 </body>
