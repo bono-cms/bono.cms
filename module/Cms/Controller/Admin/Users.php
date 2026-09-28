@@ -11,8 +11,8 @@
 
 namespace Cms\Controller\Admin;
 
-use Krystal\Validate\Pattern;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Validation\Validator;
 
 final class Users extends AbstractController
 {
@@ -48,14 +48,14 @@ final class Users extends AbstractController
         $this->view->getBreadcrumbBag()
                    ->addOne($title);
 
-        return $this->view->render('users/user.form', array(
+        return $this->view->render('users/user.form', [
             'user' => $user,
-            'roles' => array(
+            'roles' => [
                 'user' => 'User',
                 'dev' => 'Developer',
                 'guest' => 'Guest'
-            )
-        ));
+            ]
+        ]);
     }
 
     /**
@@ -80,10 +80,10 @@ final class Users extends AbstractController
 
         if ($user !== false) {
             // Save old attributes
-            $this->formAttribute->setOldAttributes(array(
+            $this->formAttribute->setOldAttributes([
                 'email' => $user->getEmail(),
                 'login' => $user->getLogin()
-            ));
+            ]);
 
             return $this->createForm($user, $this->translator->translate('Edit the user "%s"', $user->getLogin()));
         } else {
@@ -101,10 +101,10 @@ final class Users extends AbstractController
         $this->view->getBreadcrumbBag()
                    ->addOne('Users');
 
-        return $this->view->render('users/index', array(
+        return $this->view->render('users/index', [
             'users' => $this->getUserManager()->fetchAll(),
             'currentUserId' => $this->getAuthService()->getId() // Current ID of logged in user
-        ));
+        ]);
     }
 
     /**
@@ -121,7 +121,10 @@ final class Users extends AbstractController
             $service->deleteById($id);
 
             $this->flashBag->set('success', 'Selected element has been removed successfully');
-            return '1';
+
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 
@@ -138,7 +141,10 @@ final class Users extends AbstractController
         // Try removing...
         if ($this->getModuleService('userManager')->wipe($id)) {
             $this->flashBag->set('success', 'All users except yourself have been removed permanently');
-            return '1';
+
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 
@@ -155,40 +161,56 @@ final class Users extends AbstractController
         $this->formAttribute->setNewAttributes($input);
 
         // Check attributes for change
-        $emailChanged = $this->formAttribute->hasChanged('email') ? $this->getUserManager()->emailExists($input['email']) : false;
-        $loginChanged = $this->formAttribute->hasChanged('login') ? $this->getUserManager()->loginExists($input['login']) : false;
+        $isEdit = !empty($input['id']);
 
-        $formValidator = $this->createValidator(array(
-            'input' => array(
-                'source' => $input,
-                'definition' => array(
-                    'login' => new Pattern\Login($loginChanged),
-                    'password' => new Pattern\Password(),
-                    'password_confirm' => new Pattern\PasswordConfirmation($input['password'], array('required' => !$input['id'])),
-                    'email' => new Pattern\Email($emailChanged),
-                    'name' => new Pattern\Name()
-                )
-            )
-        ));
+        $emailChanged = $isEdit && $this->formAttribute->hasChanged('email');
+        $loginChanged = $isEdit && $this->formAttribute->hasChanged('login');
 
-        if ($formValidator->isValid()) {
+        $validator = new Validator($this->request->getPost());
+
+        $validator->field('user.login', 'Login')
+                  ->required(null, !$isEdit || ($loginChanged && $this->getUserManager()->loginExists($input['login'])));
+
+        $validator->field('user.password', 'Password')
+                  ->required(null, !$isEdit);
+
+        $validator->field('user.password_confirm', 'Confirm Password')
+                  ->required(null, !$isEdit)
+                  ->addRule('identity', null, ['value' => $input['password']]);
+
+        $validator->field('user.email', 'Email')
+                  ->required(null, !$isEdit || ($emailChanged && $this->getUserManager()->emailExists($input['email'])))
+                  ->addRule('email');
+
+        $validator->field('user.name', 'Name')
+                  ->required();
+
+        if ($validator->isPassed()) {
             $service = $this->getModuleService('userManager');
 
             if (!empty($input['id'])) {
                 if ($service->update($input)) {
                     $this->flashBag->set('success', 'The element has been updated successfully');
-                    return '1';
+
+                    return $this->json([
+                        'refresh' => true
+                    ]);
                 }
 
             } else {
                 if ($service->add($input)) {
                     $this->flashBag->set('success', 'The element has been created successfully');
-                    return $service->getLastId();
+
+                    return $this->json([
+                        'redirect' => $this->createUrl('Cms:Admin:Users@editAction', [$service->getLastId()]),
+                    ]);
                 }
             }
 
         } else {
-            return $formValidator->getErrors();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 }
