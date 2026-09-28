@@ -34,10 +34,10 @@ final class Themes extends AbstractController
     {
         $this->view->getBreadcrumbBag()->addOne('Themes');
 
-        return $this->view->render('themes', array(
+        return $this->view->render('themes', [
             'themes' => $this->createThemeService()->getThemes(),
             'current' => $this->config->get('Cms', 'theme')
-        ));
+        ]);
     }
 
     /**
@@ -54,7 +54,10 @@ final class Themes extends AbstractController
 
         // Update view
         $this->flashBag->set('success', 'Selected theme has been set as default');
-        return '1';
+
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -71,7 +74,9 @@ final class Themes extends AbstractController
             $this->flashBag->set('warning', 'An error occured during theme removal');
         }
 
-        return '1';
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -93,6 +98,8 @@ final class Themes extends AbstractController
             $this->flashBag->set('warning', 'Select at least one theme to remove');
         }
 
-        return '1';
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 }
