@@ -25,7 +25,7 @@ defined('KRYSTAL') or die;
             <h3 class="fw-bold mb-3"><?= $this->translate('Bono CMS'); ?></h3>
             <p class="text-black-50 fw-light mb-4"><?= $this->translate('Please log in to continue.'); ?></p>
 
-            <form autocomplete="off" role="form" data-success-url="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>" data-submit-url="<?= $this->url('Cms:Admin:Auth@loginAction'); ?>">
+            <form autocomplete="off" role="form" data-submit-url="<?= $this->url('Cms:Admin:Auth@loginAction'); ?>">
               <div class="border rounded-3 mb-4">
                 <!-- Login Input -->
                 <div class="p-3 border-bottom">

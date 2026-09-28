@@ -23,12 +23,16 @@ $(function(){
             url : $self.data('submit-url'),
             data : data,
             success : function(response){
-                if (response == "1") {
-                    window.location = $self.data('success-url');
-                } else if (response == "-1"){
+                if (response.refresh == true){
                     window.location.reload();
-                } else {
-                    $.showErrors(response);
+                }
+
+                if (response.redirect){
+                    window.location = response.redirect;
+                }
+
+                if (response.errors){
+                    $.showErrors(response.errors);
                 }
             }
         });

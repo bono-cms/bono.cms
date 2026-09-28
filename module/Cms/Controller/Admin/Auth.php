@@ -12,7 +12,7 @@
 namespace Cms\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
-use Krystal\Validate\Pattern;
+use Krystal\Validation\Validator;
 
 final class Auth extends AbstractController
 {
@@ -32,12 +32,14 @@ final class Auth extends AbstractController
         if ($this->getAuthService()->isLoggedIn()) {
             $this->redirectToRoute('Cms:Admin:Dashboard@indexAction');
         } else {
-            $this->view->getPluginBag()->appendScript('@Cms/admin/login.js');
 
-            $vars = array(
+            $this->view->getPluginBag()
+                       ->appendScript('@Cms/admin/login.js');
+
+            $vars = [
                 'captcha' => $this->authAttemptLimit->isReachedLimit(),
                 'login' => $this->authAttemptLimit->getLastLogin()
-            );
+            ];
 
             return $this->view->disableLayout()
                               ->render('login', $vars);
@@ -51,10 +53,22 @@ final class Auth extends AbstractController
      */
     public function loginAction()
     {
-        $formValidator = $this->getValidator($this->request->getPost());
+        $validator = new Validator($this->request->getPost());
 
-        if ($formValidator->isValid()) {
+        $validator->field('login')
+                  ->required();
 
+        $validator->field('password')
+                  ->required();
+
+        // Append CAPTCHA rule in case received more than defined failure attempt
+        if ($this->authAttemptLimit->isReachedLimit()) {
+            $validator->field('captcha')
+                      ->required()
+                      ->addRule('captcha', null, ['expected' => $this->captcha->getAnswer()]);
+        }
+
+        if ($validator->isPassed()) {
             // Grab request data
             $login = $this->request->getPost('login');
             $password = $this->request->getPost('password');
@@ -62,21 +76,35 @@ final class Auth extends AbstractController
 
             if ($this->getAuthService()->authenticate($login, $password, $remember)) {
                 $this->authAttemptLimit->reset();
-                return '1';
+
+                return $this->json([
+                    'redirect' => $this->createUrl('Cms:Admin:Dashboard@indexAction')
+                ]);
+
             } else {
                 $this->authAttemptLimit->incrementFailAttempt()
                                        ->persistLastLogin($login);
 
                 if ($this->authAttemptLimit->isReachedLimit()) {
-                    return '-1';
+                    return $this->json([
+                        'refresh' => true
+                    ]);
                 }
 
-                // Return raw string indicating failure
-                return $this->translator->translate('Invalid login or password');
+                // Invalid login or password
+                $this->response->setStatusCode(403);
+
+                return $this->json([
+                    'errors' => [
+                        $this->translator->translate('Invalid login or password')
+                    ]
+                ]);
             }
 
         } else {
-            return $formValidator->getErrors();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 
@@ -89,32 +117,5 @@ final class Auth extends AbstractController
     {
         $this->getAuthService()->logout();
         $this->redirectToRoute('Cms:Admin:Auth@indexAction');
-    }
-
-    /**
-     * Returns prepared form validator
-     * 
-     * @param array $input Raw input data
-     * @return \Krystal\Validate\ValidatorChain
-     */
-    private function getValidator(array $input)
-    {
-        // Default rules
-        $rules = array(
-            'login' => new Pattern\Login(),
-            'password' => new Pattern\Password()
-        );
-
-        // Append CAPTCHA rule in case received more than defined failure attempt
-        if ($this->authAttemptLimit->isReachedLimit()) {
-            $rules['captcha'] = new Pattern\Captcha($this->captcha);
-        }
-
-        return $this->createValidator(array(
-            'input' => array(
-                'source' => $input,
-                'definition' => $rules
-            )
-        ));
     }
 }
