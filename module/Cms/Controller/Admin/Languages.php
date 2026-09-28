@@ -12,7 +12,7 @@
 namespace Cms\Controller\Admin;
 
 use Krystal\Stdlib\VirtualEntity;
-use Krystal\Validate\Pattern;
+use Krystal\Validation\Validator;
 
 final class Languages extends AbstractController
 {
@@ -35,10 +35,10 @@ final class Languages extends AbstractController
         $this->view->getBreadcrumbBag()
                    ->addOne('Languages');
 
-        return $this->view->render('languages/index', array(
+        return $this->view->render('languages/index', [
             // We can't define an array which is called "languages", because that name is already in template's global scope
             'langs' => $this->getService('Cms', 'languageManager')->fetchAll(false)
-        ));
+        ]);
     }
 
     /**
@@ -58,10 +58,10 @@ final class Languages extends AbstractController
         $this->view->getBreadcrumbBag()->addOne('Languages', 'Cms:Admin:Languages@indexAction')
                                        ->addOne($title);
 
-        return $this->view->render('languages/language.form', array(
+        return $this->view->render('languages/language.form', [
             'countries' => $this->getModuleService('languageManager')->getCountries(),
             'language' => $language
-        ));
+        ]);
     }
 
     /**
@@ -107,7 +107,10 @@ final class Languages extends AbstractController
         $service->deleteById($id);
 
         $this->flashBag->set('success', 'Selected element has been removed successfully');
-        return '1';
+
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -121,7 +124,10 @@ final class Languages extends AbstractController
             $id = $this->request->getPost('id');
 
             $this->getService('Cms', 'languageManager')->setCurrentId($id);
-            return '1';
+
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 
@@ -153,7 +159,10 @@ final class Languages extends AbstractController
             }
 
             $this->flashBag->set('success', 'Settings have been updated successfully');
-            return '1';
+
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 
@@ -164,37 +173,44 @@ final class Languages extends AbstractController
      */
     public function saveAction()
     {
-        $input = $this->request->getPost('language');
+        $validator = new Validator($this->request->getPost());
 
-        $formValidator = $this->createValidator(array(
-            'input' => array(
-                'source' => $input,
-                'definition' => array(
-                    'name' => new Pattern\Name(),
-                    'code' => new Pattern\LanguageCode(),
-                    'order' => new Pattern\Order()
-                )
-            )
-        ));
+        $validator->field('language.name')
+                  ->required()
+                  ->addRule('minlength', null, ['min' => 2, 'max' => 20]);
 
-        if ($formValidator->isValid()) {
+        $validator->field('language.code')
+                  ->required()
+                  ->addRule('minlength', null, ['min' => 2])
+                  ->addRule('alpha');
+
+        if ($validator->isPassed()) {
             $service = $this->getModuleService('languageManager');
+            $input = $this->request->getPost('language');
 
             if (!empty($input['id'])) {
                 if ($service->update($input)) {
                     $this->flashBag->set('success', 'The element has been updated successfully');
-                    return '1';
+
+                    return $this->json([
+                        'refresh' => true
+                    ]);
                 }
 
             } else {
                 if ($service->add($input)) {
                     $this->flashBag->set('success', 'The element has been created successfully');
-                    return $service->getLastId();
+
+                    return $this->json([
+                        'redirect' => $this->createUrl('Cms:Admin:Languages@editAction', [$service->getLastId()]),
+                    ]);
                 }
             }
 
         } else {
-            return $formValidator->getErrors();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 }
