@@ -28,12 +28,12 @@ final class SitemapLinks extends AbstractController
         $this->view->getBreadcrumbBag()
                    ->addOne('Sitemap links');
 
-        return $this->view->render('sitemap-links', array(
+        return $this->view->render('sitemap-links', [
             'priorities' => SitemapTool::getPriorities(),
             'changefreqs' => SitemapTool::getChangefreqs(),            
             'priority' => $config->getSitemapPriority(),
             'changefreq' => $config->getSitemapFrequency()
-        ));
+        ]);
     }
 
     /**
@@ -46,7 +46,9 @@ final class SitemapLinks extends AbstractController
         $this->flashBag->set('success', 'Sitemap confuguration has been successfully updated!');
         $this->getModuleService('configManager')->storeMany($this->request->getPost());
 
-        return '1';
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -56,7 +58,7 @@ final class SitemapLinks extends AbstractController
      */
     public function robotsAction()
     {
-        $url = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', array(), 0);
+        $url = $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', [], 0);
 
         if (SitemapTool::syncRobots($url)) {
             $this->flashBag->set('success', 'Robots file has been synchronized successfully');
@@ -64,6 +66,8 @@ final class SitemapLinks extends AbstractController
             $this->flashBag->set('warning', 'An error occurred during synchronization');
         }
 
-        return 1;
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 }
