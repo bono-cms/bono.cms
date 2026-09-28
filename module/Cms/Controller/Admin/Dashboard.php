@@ -33,14 +33,14 @@ final class Dashboard extends AbstractController
     private function getSystemInfo()
     {
         // The keys will be translated in template
-        return array(
+        return [
             'Bono version' => '1.3',
             'Krystal Framework version' => '1.3',
             'PHP version' => PHP_VERSION,
             'Web-server OS' => PHP_OS,
             'Web-server' => $this->request->getServerSoftware(),
             'MySQL version' => $this->db['mysql']->getVersion()
-        );
+        ];
     }
 
     /**
@@ -54,12 +54,12 @@ final class Dashboard extends AbstractController
         $this->view->getBreadcrumbBag()
                    ->clear();
 
-        return $this->view->render('dashboard', array(
+        return $this->view->render('dashboard', [
             'title' => 'Control panel',
             'activity' => $this->getService('Cms', 'historyManager')->fetchLatest(),
             'bookmarks' => $this->createBookmarks(),
             'systemInfo' => $this->getSystemInfo()
-        ));
+        ]);
     }
 
     /**
@@ -89,7 +89,9 @@ final class Dashboard extends AbstractController
                 $this->flashBag->set('warning', 'Failed to install a module');
             }
 
-            return '1';
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 
@@ -115,7 +117,9 @@ final class Dashboard extends AbstractController
             break;
         }
 
-        return '1';
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -126,9 +130,13 @@ final class Dashboard extends AbstractController
     public function itemsPerPageChangeAction()
     {
         $count = $this->request->getPost('count');
-        
+
         $this->getPerPageCountGadget()->setPerPageCount($count);
-        return '1';
+
+        return $this->json([
+            'refresh' => true
+        ]);
+        
     }
 
     /**
