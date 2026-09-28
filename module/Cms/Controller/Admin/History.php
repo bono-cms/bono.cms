@@ -28,14 +28,14 @@ final class History extends AbstractController
         $userManager = $this->getService('Cms', 'userManager');
 
         $paginator = $historyManager->getPaginator();
-        $paginator->setUrl($this->createUrl('Cms:Admin:History@indexAction', array(), 1));
+        $paginator->setUrl($this->createUrl('Cms:Admin:History@indexAction', [], 1));
 
-        return $this->view->render('history', array(
+        return $this->view->render('history', [
             'title' => 'History',
             'paginator' => $historyManager->getPaginator(),
             'records'   => $historyManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
             'userManager' => $userManager
-        ));
+        ]);
     }
 
     /**
@@ -49,7 +49,10 @@ final class History extends AbstractController
 
         if ($historyManager->clear()) {
             $this->flashBag->set('success', 'History has been cleared successfully');
-            return '1';
+
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 }
