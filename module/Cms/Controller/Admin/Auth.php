@@ -55,11 +55,21 @@ final class Auth extends AbstractController
     {
         $validator = new Validator($this->request->getPost());
 
+        $login = $this->request->getPost('login');
+        $password = $this->request->getPost('password');
+        $remember = (bool) $this->request->getPost('remember');
+
+        // Register a custom field rule to verify credentials during validation
+        $validator->setFieldRule('auth', function($password, array $options, $field, array $data) use ($login, $remember) {
+            return $this->getAuthService()->authenticate($login, $password, $remember);
+        }, $this->translator->translate('Invalid login or password'));
+        
         $validator->field('login')
                   ->required();
 
         $validator->field('password')
-                  ->required();
+                  ->required()
+                  ->addRule('auth');
 
         // Append CAPTCHA rule in case received more than defined failure attempt
         if ($this->authAttemptLimit->isReachedLimit()) {
@@ -69,39 +79,23 @@ final class Auth extends AbstractController
         }
 
         if ($validator->isPassed()) {
-            // Grab request data
-            $login = $this->request->getPost('login');
-            $password = $this->request->getPost('password');
-            $remember = (bool) $this->request->getPost('remember');
+            $this->authAttemptLimit->reset();
 
-            if ($this->getAuthService()->authenticate($login, $password, $remember)) {
-                $this->authAttemptLimit->reset();
+            return $this->json([
+                'redirect' => $this->createUrl('Cms:Admin:Dashboard@indexAction')
+            ]);
+        } else {
+            $this->response->setStatusCode(403);
 
+            $this->authAttemptLimit->incrementFailAttempt()
+                                   ->persistLastLogin($login);
+
+            if ($this->authAttemptLimit->isReachedLimit()) {
                 return $this->json([
-                    'redirect' => $this->createUrl('Cms:Admin:Dashboard@indexAction')
-                ]);
-
-            } else {
-                $this->authAttemptLimit->incrementFailAttempt()
-                                       ->persistLastLogin($login);
-
-                if ($this->authAttemptLimit->isReachedLimit()) {
-                    return $this->json([
-                        'refresh' => true
-                    ]);
-                }
-
-                // Invalid login or password
-                $this->response->setStatusCode(403);
-
-                return $this->json([
-                    'errors' => [
-                        $this->translator->translate('Invalid login or password')
-                    ]
+                    'refresh' => true
                 ]);
             }
 
-        } else {
             return $this->json([
                 'errors' => $validator->getErrors()
             ]);
