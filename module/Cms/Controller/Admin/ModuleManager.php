@@ -23,10 +23,10 @@ final class ModuleManager extends AbstractController
         $this->view->getBreadcrumbBag()
                    ->addOne('Module manager');
 
-        return $this->view->render('module-manager', array(
+        return $this->view->render('module-manager', [
             'modules' => $this->getModules(),
             'moduleManager' => $this->moduleManager
-        ));
+        ]);
     }
 
     /**
@@ -36,9 +36,9 @@ final class ModuleManager extends AbstractController
      */
     private function getModules()
     {
-        $modules = array();
+        $modules = [];
         $current = $this->moduleManager->getLoadedModules();
-        $ignored = array('Cms');
+        $ignored = ['Cms'];
 
         foreach ($current as $name => $module) {
             // Don't take into account ignored modules
@@ -68,7 +68,7 @@ final class ModuleManager extends AbstractController
 
         if (class_exists($ns)) {
             $dropper = $this->createMapper($ns);
-            $dropper->dropAll();
+            return $dropper->dropAll();
         } else {
             return false;
         }
@@ -132,7 +132,11 @@ final class ModuleManager extends AbstractController
 
         // Always assume success
         $this->flashBag->set('success', 'Selected module has been successfully removed');
-        return '1';
+
+        return $this->json([
+            'refresh' => true
+        ]);
+        
     }
 
     /**
@@ -150,11 +154,12 @@ final class ModuleManager extends AbstractController
             }
 
             $this->flashBag->set('success', 'Selected modules have been successfully removed');
-
         } else {
             $this->flashBag->set('warning', 'No modules were selected for removal');
         }
 
-        return '1';
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 }
