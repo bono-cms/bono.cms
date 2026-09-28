@@ -14,6 +14,16 @@ namespace Cms\Controller\Admin;
 final class Notifications extends AbstractController
 {
     /**
+     * Returns notification manager
+     * 
+     * @return \Admin\Service\NotificationManager
+     */
+    private function getNotificationManager()
+    {
+        return $this->getService('Cms', 'notificationManager');
+    }
+
+    /**
      * Shows notification's grid
      * 
      * @param integer $page Current page
@@ -27,28 +37,18 @@ final class Notifications extends AbstractController
         $notificationManager = $this->getNotificationManager();
 
         $paginator = $notificationManager->getPaginator();
-        $paginator->setUrl($this->createUrl('Cms:Admin:Notifications@indexAction', array(), 1));
+        $paginator->setUrl($this->createUrl('Cms:Admin:Notifications@indexAction', [], 1));
 
         // This is a very special case, so it needs to be rendered like this
-        $response = $this->view->render('notifications', array(
+        $response = $this->view->render('notifications', [
             'title' => 'Notifications',
             'dateFormat' => 'd.m.y H:i:s',
             'notifications' => $notificationManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
             'paginator' => $paginator,
-        ));
+        ]);
 
         $notificationManager->nullify();
         return $response;
-    }
-
-    /**
-     * Returns notification manager
-     * 
-     * @return \Admin\Service\NotificationManager
-     */
-    private function getNotificationManager()
-    {
-        return $this->getService('Cms', 'notificationManager');
     }
 
     /**
@@ -61,7 +61,10 @@ final class Notifications extends AbstractController
     {
         if ($this->getNotificationManager()->deleteById($id)) {
             $this->flashBag->set('success', 'Selected notification has been removed successfully');
-            return '1';
+
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 
@@ -74,7 +77,10 @@ final class Notifications extends AbstractController
     {
         if ($this->getNotificationManager()->clearAll()) {
             $this->flashBag->set('success', 'All notifications have been removed');
-            return '1';
+
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 }
