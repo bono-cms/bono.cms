@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -82,7 +80,7 @@ final class Module extends AbstractCmsModule
         return [
             'mailer' => new Mailer($notificationManager, $config->getEntity()),
             'configManager' => $config,
-            'webPageManager' =>  new WebPageManager($webPageMapper, $languageMapper, new SlugGenerator(), $baseUrl),
+            'webPageManager' => new WebPageManager($webPageMapper, $languageMapper, new SlugGenerator(), $baseUrl),
             'mode' => $this->getModeService(),
             'userManager'    => new UserManager($userMapper, $authManager),
             'historyManager' => new HistoryManager($historyMapper),

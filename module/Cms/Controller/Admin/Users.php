@@ -12,7 +12,6 @@
 namespace Cms\Controller\Admin;
 
 use Krystal\Stdlib\VirtualEntity;
-use Krystal\Validation\Validator;
 
 final class Users extends AbstractController
 {
@@ -166,7 +165,7 @@ final class Users extends AbstractController
         $emailChanged = $isEdit && $this->formAttribute->hasChanged('email');
         $loginChanged = $isEdit && $this->formAttribute->hasChanged('login');
 
-        $validator = new Validator($this->request->getPost());
+        $validator = $this->createValidation();
 
         $validator->field('user.login', 'Login')
                   ->required(null, !$isEdit || ($loginChanged && $this->getUserManager()->loginExists($input['login'])));

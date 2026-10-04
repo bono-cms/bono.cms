@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -63,7 +61,7 @@ abstract class AbstractCmsModule extends AbstractModule
         // Build qualified manager's class name
         $ns = sprintf('\%s\Service\ConfigManager', $this->getCurrentModuleName());
 
-        // Make sure the manager class exists, before processing
+        // Make sure the manager class exists before processing
         if (!class_exists($ns)) {
             throw new RuntimeException(sprintf('Module %s does not have ConfigManager service', $this->getCurrentModuleName()));
         }
@@ -80,7 +78,7 @@ abstract class AbstractCmsModule extends AbstractModule
      */
     private function createDynamicRoutes(array $routes, $segment)
     {
-        $result = array();
+        $result = [];
 
         foreach ($routes as $key => $value) {
             if (strpos($key, '%s') !== false) {

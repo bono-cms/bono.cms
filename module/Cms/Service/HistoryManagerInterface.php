@@ -14,7 +14,7 @@ namespace Cms\Service;
 interface HistoryManagerInterface
 {
     /**
-     * Defines user's id that make changes
+     * Defines user's id that makes changes
      * 
      * @param string $userId
      * @return void
@@ -33,7 +33,7 @@ interface HistoryManagerInterface
      * Adds a record
      * 
      * @param string $module A target module
-     * @param string $comment What have been done
+     * @param string $comment What has been done
      * @param string $placeholder
      * @return boolean
      */

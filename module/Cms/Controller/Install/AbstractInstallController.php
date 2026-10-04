@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -42,12 +40,12 @@ abstract class AbstractInstallController extends AbstractController
         $this->view->setLayout('__layout__', 'Cms')
                    ->setTheme('install');
 
-        $this->view->getPluginBag()->load(array(
+        $this->view->getPluginBag()->load([
             'jquery',
             'bootstrap.core',
             'bootstrap.cosmo',
             'admin'
-        ));
+        ]);
     }
 
     /**

@@ -32,7 +32,7 @@ final class HistoryManager extends AbstractManager implements HistoryManagerInte
     private $enabled;
 
     /**
-     * Target user's id who make changes
+     * Target user's id who makes changes
      * 
      * @var string
      */
@@ -50,7 +50,7 @@ final class HistoryManager extends AbstractManager implements HistoryManagerInte
     }
 
     /**
-     * Defines user's id that make changes
+     * Defines user's id that makes changes
      * 
      * @param string $userId
      * @return void
@@ -75,7 +75,7 @@ final class HistoryManager extends AbstractManager implements HistoryManagerInte
      * Adds a record
      * 
      * @param string $module A target module
-     * @param string $comment What have been done
+     * @param string $comment What has been done
      * @param string $placeholder
      * @return boolean
      */
@@ -83,13 +83,13 @@ final class HistoryManager extends AbstractManager implements HistoryManagerInte
     {
         // Do write in case enabled, otherwise ignore
         if ($this->isEnabled()) {
-            return $this->historyMapper->insert(array(
+            return $this->historyMapper->insert([
                 'timestamp' => time(),
                 'user_id' => (int) $this->userId,
                 'module' => $module,
                 'comment' => $comment,
                 'placeholder' => $placeholder
-            ));
+            ]);
         } else {
             return true;
         }

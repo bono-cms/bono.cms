@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -89,7 +87,7 @@ final class ThemeService implements ThemeServiceInterface
      */
     public function getThemes()
     {
-        $result = array();
+        $result = [];
 
         foreach ($this->getThemeConfigData() as $theme => $data) {
             // Ignore themes that do not have meta section
@@ -136,13 +134,13 @@ final class ThemeService implements ThemeServiceInterface
     }
 
     /**
-     * Reads data from available theme directores, then reads their associated config files
+     * Reads data from available theme directories, then reads their associated config files
      * 
      * @return array
      */
     private function getThemeConfigData()
     {
-        $result = array();
+        $result = [];
 
         foreach ($this->getThemeDirs() as $theme) {
             // Create path to configuration file
@@ -161,7 +159,7 @@ final class ThemeService implements ThemeServiceInterface
     }
 
     /**
-     * Returns available theme directores
+     * Returns available theme directories
      * 
      * @return array
      */
@@ -170,5 +168,4 @@ final class ThemeService implements ThemeServiceInterface
         $path = $this->appConfig->getModuleTemplateDir(self::THEME_PARAM_MODULE);
         return FileManager::getFirstLevelDirs($path);
     }
-    
 }

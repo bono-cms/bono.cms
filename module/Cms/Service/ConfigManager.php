@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -34,11 +32,11 @@ final class ConfigManager extends ConfigModuleService
                ->setDomain($this->get('domain', $_SERVER['HTTP_HOST']), VirtualEntity::FILTER_TAGS);
 
         // SMTP Secure layers
-        $entity->setSmtpSecureLayers(array(
+        $entity->setSmtpSecureLayers([
             '0'   => 'None',
             'ssl' => 'SSL',
             'tls' => 'TLS'
-        ));
+        ]);
 
         // The rest
         $entity->setNotificationEmail($this->get('notification_email'), VirtualEntity::FILTER_TAGS)

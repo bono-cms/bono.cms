@@ -3,15 +3,12 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
 
 namespace Cms\Storage\MySQL;
 
-use Cms\Storage\MySQL\AbstractMapper;
 use Cms\Storage\NotificationMapperInterface;
 
 final class NotificationMapper extends AbstractMapper implements NotificationMapperInterface
@@ -53,13 +50,13 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
     }
 
     /**
-     * Makes all notifications as read
+     * Marks all notifications as read
      * 
      * @return boolean
      */
     public function nullify()
     {
-        return $this->db->update(self::getTableName(), array('viewed' => '1'))
+        return $this->db->update(self::getTableName(), ['viewed' => '1'])
                         ->execute();
     }
 
@@ -87,11 +84,11 @@ final class NotificationMapper extends AbstractMapper implements NotificationMap
      */
     public function insert($timestamp, $viewed, $message)
     {
-        return $this->db->insert(self::getTableName(), array(
+        return $this->db->insert(self::getTableName(), [
             'timestamp' => $timestamp,
             'viewed'    => $viewed,
             'message'   => $message
-        ))->execute();
+        ])->execute();
     }
 
     /**

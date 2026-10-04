@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -103,7 +101,7 @@ abstract class AbstractController extends AbstractAuthAwareController
     protected function createBookmarks()
     {
         // Prepared output to be returned
-        $output = array();
+        $output = [];
 
         $bookmarks = $this->getParamFromModules('bookmarks');
 
@@ -134,7 +132,7 @@ abstract class AbstractController extends AbstractAuthAwareController
      */
     private function getParamFromModules($key)
     {
-        $output = array();
+        $output = [];
 
         foreach ($this->getModulesConfiguration() as $module) {
             if (isset($module[$key])) {
@@ -156,7 +154,7 @@ abstract class AbstractController extends AbstractAuthAwareController
 
         // Cache method calls
         if (is_null($configurations)) {
-            $modules = array();
+            $modules = [];
             $current = $this->moduleManager->getLoadedModules();
 
             foreach ($current as $module) {
@@ -243,12 +241,12 @@ abstract class AbstractController extends AbstractAuthAwareController
             // Inform view about module partials
             $this->view->getPartialBag()->addPartialDir($this->view->createThemePath('Block', 'partials'));
 
-            $this->view->addVariables(array(
+            $this->view->addVariables([
                 // Extra fields
                 'blockCategories' => $this->getService('Block', 'categoryService')->fetchList(),
-                'activeBlockCategoryIds' => !$new ? $this->getModuleService(self::FIELD_SERVICE_NAME)->getAttachedCategories($id) : array(),
-                'fields' => !$new ? $this->getModuleService(self::FIELD_SERVICE_NAME)->getFields($id) : array()
-            ));
+                'activeBlockCategoryIds' => !$new ? $this->getModuleService(self::FIELD_SERVICE_NAME)->getAttachedCategories($id) : [],
+                'fields' => !$new ? $this->getModuleService(self::FIELD_SERVICE_NAME)->getFields($id) : []
+            ]);
         }
     }
 
@@ -325,7 +323,7 @@ abstract class AbstractController extends AbstractAuthAwareController
     private function roleCheck($mode)
     {
         // Regular users that have no extra privileges
-        $regular = array('guest', 'user');
+        $regular = ['guest', 'user'];
 
         if (in_array($this->getAuthService()->getRole(), $regular)) {
             $mode->setSimple();
@@ -356,7 +354,7 @@ abstract class AbstractController extends AbstractAuthAwareController
         $priorCol = new PriorityCollection();
 
         // Shared variables for all templates
-        $this->view->addVariables(array(
+        $this->view->addVariables([
             'changeFreqs' => $changeFreqCol->getAll(),
             'priorities' => $priorCol->getAll(),
             'appConfig' => $this->appConfig,
@@ -369,9 +367,9 @@ abstract class AbstractController extends AbstractAuthAwareController
             'queryLogger' => $this->db['mysql']->getQueryLogger(),
             'sidebar' => $this->createSidebarMenu(),
             'loadedModules' => $this->moduleManager->getLoadedModuleNames()
-        ));
+        ]);
 
-        $this->view->getPluginBag()->load(array(
+        $this->view->getPluginBag()->load([
             'jquery',
             'bootstrap',
             'famfam-flag',
@@ -380,7 +378,7 @@ abstract class AbstractController extends AbstractAuthAwareController
             'jquery.mCustomScrollbar',
             'admin',
             'to-top'
-        ));
+        ]);
 
         // Make sure application handler is always last
         $this->view->getPluginBag()->appendLastScript('@Cms/admin/app.js');

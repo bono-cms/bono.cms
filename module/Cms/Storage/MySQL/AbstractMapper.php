@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -82,7 +80,7 @@ abstract class AbstractMapper extends BaseMapper
     private function getUniqueSlug($slug)
     {
         $generator = new SlugGenerator;
-        return $generator->getUniqueSlug(array($this, 'slugExists'), $slug);
+        return $generator->getUniqueSlug([$this, 'slugExists'], $slug);
     }
 
     /**
@@ -143,7 +141,7 @@ abstract class AbstractMapper extends BaseMapper
      * @param array $extra Extra condition when joining translation table
      * @return \Krystal\Db\Db
      */
-    final protected function createEntitySelect(array $columns, $table = null, array $extraCondition = array())
+    final protected function createEntitySelect(array $columns, $table = null, array $extraCondition = [])
     {
         // By default, handle current table
         if ($table === null) {
@@ -151,9 +149,9 @@ abstract class AbstractMapper extends BaseMapper
         }
 
         // Merge main condition with extra one
-        $condition = array_merge(array(
+        $condition = array_merge([
             static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
-        ), $extraCondition);
+        ], $extraCondition);
 
         $db = $this->db->select($columns, true)
                        ->from($table)
@@ -209,7 +207,7 @@ abstract class AbstractMapper extends BaseMapper
     final public function deleteEntity($id)
     {
         if (!is_array($id)) {
-            $id = array($id);
+            $id = [$id];
         }
 
         // Prevent removing all, if no keys specified
@@ -217,20 +215,20 @@ abstract class AbstractMapper extends BaseMapper
             return false;
         }
 
-        $tables = array(
+        $tables = [
             static::getTableName(),
             static::getTranslationTable()
-        );
+        ];
 
         // Delete entity with all its relational data
         $db = $this->db->delete($tables)
                        ->from(static::getTableName())
                        // Translation relation
-                       ->leftJoin(static::getTranslationTable(), array(
+                       ->leftJoin(static::getTranslationTable(), [
                            static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
-                       ))
+                       ])
                        // Current ID
-                      ->whereIn(static::column(self::PARAM_COLUMN_ID), $id);
+                       ->whereIn(static::column(self::PARAM_COLUMN_ID), $id);
 
         return $db->execute();
     }
@@ -287,10 +285,10 @@ abstract class AbstractMapper extends BaseMapper
 
         return $this->createEntitySelect($columns, $table)
                     // Web page relation
-                    ->leftJoin(WebPageMapper::getTableName(), array(
+                    ->leftJoin(WebPageMapper::getTableName(), [
                         WebPageMapper::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable())),
                         WebPageMapper::column(self::PARAM_COLUMN_LANG_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()))
-                    ));
+                    ]);
     }
 
     /**
@@ -303,7 +301,7 @@ abstract class AbstractMapper extends BaseMapper
      */
     final public function createSwitchUrls($id, $module, $controller)
     {
-        $output = array();
+        $output = [];
 
         $urls  = $this->findSwitchUrls($id, $module, $controller);
         $count = count($urls);
@@ -339,25 +337,25 @@ abstract class AbstractMapper extends BaseMapper
     private function findSwitchUrls($id, $module, $controller)
     {
         // Columns to be selected
-        $columns = array(
+        $columns = [
             LanguageMapper::column(self::PARAM_COLUMN_ID),
             LanguageMapper::column(self::PARAM_COLUMN_NAME),
             LanguageMapper::column('code'),
             LanguageMapper::column('flag'),
             WebPageMapper::column(self::PARAM_COLUMN_SLUG)
-        );
+        ];
 
         return $this->db->select($columns)
                         ->from(WebPageMapper::getTableName())
-                        ->innerJoin(LanguageMapper::getTableName(), array(
+                        ->innerJoin(LanguageMapper::getTableName(), [
                             LanguageMapper::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(WebPageMapper::column(self::PARAM_COLUMN_LANG_ID))
-                        ))
+                        ])
                         // Filter by these constraints
                         ->whereEquals(self::PARAM_COLUMN_TARGET_ID, $id)
                         ->andWhereEquals(self::PARAM_COLUMN_MODULE, $module)
                         ->andWhereEquals(self::PARAM_COLUMN_CONTROLLER, $controller)
                         ->andWhereEquals(LanguageMapper::column('published'), new RawSqlFragment('1'))
-						->orderBy(new RawSqlFragment(sprintf('`order`, CASE WHEN `order` = 0 THEN %s END DESC', LanguageMapper::column('id'))))
+                        ->orderBy(new RawSqlFragment(sprintf('`order`, CASE WHEN `order` = 0 THEN %s END DESC', LanguageMapper::column('id'))))
                         ->queryAll();
     }
 
@@ -428,7 +426,7 @@ abstract class AbstractMapper extends BaseMapper
         $translation[self::PARAM_COLUMN_SLUG] = $this->getUniqueSlug($translation[self::PARAM_COLUMN_SLUG]);
 
         // Web page data
-        $webPage = array(
+        $webPage = [
             self::PARAM_COLUMN_LANG_ID => (int) $translation[self::PARAM_COLUMN_LANG_ID],
             self::PARAM_COLUMN_TARGET_ID => (int) $translation[self::PARAM_COLUMN_ID],
             self::PARAM_COLUMN_MODULE => $module,
@@ -437,7 +435,7 @@ abstract class AbstractMapper extends BaseMapper
             self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow(),
             self::PARAM_COLUMN_CHANGEFREQ => $translation[self::PARAM_COLUMN_CHANGEFREQ],
             self::PARAM_COLUMN_PRIORITY => $translation[self::PARAM_COLUMN_PRIORITY]
-        );
+        ];
 
         // Add web page entry
         $this->db->insert(WebPageMapper::getTableName(), $webPage)
@@ -471,14 +469,14 @@ abstract class AbstractMapper extends BaseMapper
         }
 
         // Web page data to be updated
-        $webPage = array(
+        $webPage = [
             self::PARAM_COLUMN_SLUG => $translation[self::PARAM_COLUMN_SLUG],
             self::PARAM_COLUMN_LASTMOD => TimeHelper::getNow(),
             self::PARAM_COLUMN_CHANGEFREQ => $translation[self::PARAM_COLUMN_CHANGEFREQ],
             self::PARAM_COLUMN_PRIORITY => $translation[self::PARAM_COLUMN_PRIORITY]
-        );
+        ];
 
-        // Update controller if explicit provided
+        // Update controller if explicitly provided
         if ($controller !== null) {
             $webPage[self::PARAM_COLUMN_CONTROLLER] = $controller;
         }
@@ -526,7 +524,7 @@ abstract class AbstractMapper extends BaseMapper
     final public function deletePage($id)
     {
         if (!is_array($id)) {
-            $id = array($id);
+            $id = [$id];
         }
 
         // Prevent removing all, if no keys specified
@@ -534,23 +532,23 @@ abstract class AbstractMapper extends BaseMapper
             return false;
         }
 
-        $tables = array(
+        $tables = [
             static::getTableName(),
             static::getTranslationTable(),
             WebPageMapper::getTableName()
-        );
+        ];
 
         // Delete entity with all its relational data
         return $this->db->delete($tables)
                      ->from(static::getTableName())
                      // Translation relation
-                     ->innerJoin(static::getTranslationTable(), array(
+                     ->innerJoin(static::getTranslationTable(), [
                         static::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
-                     ))
+                     ])
                      // Web page relation (optional)
-                     ->leftJoin(WebPageMapper::getTableName(), array(
+                     ->leftJoin(WebPageMapper::getTableName(), [
                         WebPageMapper::column(self::PARAM_COLUMN_ID) => new RawSqlFragment(static::column(self::PARAM_COLUMN_WEB_PAGE_ID, static::getTranslationTable()))
-                     ))
+                     ])
                      // Current ID
                      ->whereIn(static::column(self::PARAM_COLUMN_ID), $id)
                      ->execute();
@@ -649,7 +647,7 @@ abstract class AbstractMapper extends BaseMapper
      */
     final protected function getWithLang(array $data)
     {
-        return array_merge(array('lang_id' => $this->getLangId()), $data);
+        return array_merge(['lang_id' => $this->getLangId()], $data);
     }
 
     /**
@@ -675,7 +673,7 @@ abstract class AbstractMapper extends BaseMapper
     }
 
     /**
-     * Returns last id
+     * Returns language id
      * 
      * @throws \RuntimeException If no language key provided
      * @return string

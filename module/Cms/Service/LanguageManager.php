@@ -84,7 +84,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
      */
     public static function toHashList(array $languages)
     {
-        $output = array();
+        $output = [];
 
         foreach ($languages as $language) {
             if ($language instanceof VirtualEntity) {
@@ -109,7 +109,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
     }
 
     /**
-     * Generates selector for arrbitary input
+     * Generates selector for arbitrary input
      * 
      * @param int $languageId
      * @param string $key Input name
@@ -416,7 +416,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
      */
     public function add(array $input)
     {
-        if ($this->languageMapper->insert(ArrayUtils::arrayWithout($input, array('default')))) {
+        if ($this->languageMapper->insert(ArrayUtils::arrayWithout($input, ['default']))) {
             if ($input['default'] == '1') {
                 $this->makeDefault($this->getLastId());
             }
@@ -435,7 +435,7 @@ final class LanguageManager extends AbstractManager implements LanguageManagerIn
      */
     public function update(array $input)
     {
-        return $this->languageMapper->update(ArrayUtils::arrayWithout($input, array('default')));
+        return $this->languageMapper->update(ArrayUtils::arrayWithout($input, ['default']));
     }
 
     /**

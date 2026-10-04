@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -44,10 +42,10 @@ abstract class AbstractConfigController extends AbstractController
     {
         $this->loadPlugins();
 
-        return $this->view->render('config', array(
+        return $this->view->render('config', [
             'title' => 'Configuration',
             'config' => $this->getConfigManager()->getEntity()
-        ));
+        ]);
     }
 
     /**
@@ -59,12 +57,12 @@ abstract class AbstractConfigController extends AbstractController
     {
         // Grab POST request data
         $input = $this->request->getPost('config');
-        $formValidator = $this->createValidator(array(
-            'input' => array(
+        $formValidator = $this->createValidator([
+            'input' => [
                 'source' => $input,
                 'definition' => $this->getValidationRules()
-            )
-        ));
+            ]
+        ]);
 
         if ($formValidator->isValid()) {
             // Grab history manager service
@@ -73,8 +71,10 @@ abstract class AbstractConfigController extends AbstractController
             if ($this->getConfigManager()->storeMany($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')) {
                 $this->flashBag->set('success', 'Configuration has been updated successfully');
             }
-
-            return '1';
+            
+            return $this->json([
+                'refresh' => true
+            ]);
 
         } else {
             return $formValidator->getErrors();

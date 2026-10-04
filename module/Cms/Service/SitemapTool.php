@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -69,7 +67,7 @@ final class SitemapTool
      */
     public static function getPriorities()
     {
-        return ArrayUtils::valuefy(array(
+        return ArrayUtils::valuefy([
             '0.0',
             '0.1',
             '0.2',
@@ -81,6 +79,6 @@ final class SitemapTool
             '0.8',
             '0.9',
             '1.0'
-        ));
+        ]);
     }
 }

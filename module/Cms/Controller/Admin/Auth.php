@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -12,7 +10,6 @@
 namespace Cms\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
-use Krystal\Validation\Validator;
 
 final class Auth extends AbstractController
 {
@@ -53,7 +50,7 @@ final class Auth extends AbstractController
      */
     public function loginAction()
     {
-        $validator = new Validator($this->request->getPost());
+        $validator = $this->createValidation();
 
         $login = $this->request->getPost('login');
         $password = $this->request->getPost('password');
@@ -63,7 +60,7 @@ final class Auth extends AbstractController
         $validator->setFieldRule('auth', function($password, array $options, $field, array $data) use ($login, $remember) {
             return $this->getAuthService()->authenticate($login, $password, $remember);
         }, $this->translator->translate('Invalid login or password'));
-        
+
         $validator->field('login')
                   ->required();
 

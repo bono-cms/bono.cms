@@ -109,7 +109,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface
      */
     public function fetchNameById($id)
     {
-        static $cache = array();
+        static $cache = [];
 
         if (isset($cache[$id])) {
             return $cache[$id];
@@ -222,7 +222,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface
         $input['password_hash'] = $this->createHash($input['password']);
         $input['remember_token_version'] = 1;
 
-        return $this->userMapper->insert(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
+        return $this->userMapper->insert(ArrayUtils::arrayWithout($input, ['password', 'password_confirm']));
     }
 
     /**
@@ -245,7 +245,7 @@ final class UserManager extends AbstractManager implements UserManagerInterface
             }
         }
 
-        return $this->userMapper->update(ArrayUtils::arrayWithout($input, array('password', 'password_confirm')));
+        return $this->userMapper->update(ArrayUtils::arrayWithout($input, ['password', 'password_confirm']));
     }
 
     /**

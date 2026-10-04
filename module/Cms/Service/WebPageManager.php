@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -72,7 +70,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
      * @param array $vars Optional query string variables
      * @return string
      */
-    public function createUrl($targetId, $module, array $vars = array())
+    public function createUrl($targetId, $module, array $vars = [])
     {
         $row = $this->webPageMapper->findSlug($targetId, $module);
 
@@ -97,7 +95,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
      */
     public function createPrettyLinks(array $namespaces)
     {
-        $collection = array();
+        $collection = [];
 
         // Filter by loaded mappers
         foreach ($namespaces as $namespace => $caption) {
@@ -121,13 +119,13 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     {
         // Visitor
         $callback = function($row){
-            $output = array();
+            $output = [];
 
             foreach ($row as $column => $value) {
                 // Append only if non-empty value found
                 if (!empty($value)) {
                     // Normalize column name
-                    if (!in_array($column, array('id', 'module'))) {
+                    if (!in_array($column, ['id', 'module'])) {
                         $column = 'title';
                     }
 
@@ -217,22 +215,22 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
             return false;
         }
 
-        $rows = $this->webPageMapper->fetchAll(array(), $langId);
-        $output = array();
+        $rows = $this->webPageMapper->fetchAll([], $langId);
+        $output = [];
 
         foreach ($rows as $row) {
             $module = $this->cleanModuleName($row['module']);
 
             // Append only from active (loaded) modules
             if ($moduleManager->isLoaded($module)) {
-                $output[] = array(
+                $output[] = [
                     'id' => $row['target_id'],
                     'module' => $row['module'],
                     'loc' => $this->surround($row['slug'], $row['lang_id']),
                     'lastmod' => $row['lastmod'],
                     'changefreq' => SitemapTool::createChangeFreq($row['changefreq']),
                     'priority' => $row['priority']
-                );
+                ];
             }
         }
 
@@ -350,7 +348,7 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
     public function findPksByModule($module)
     {
         $module = $this->cleanModuleName($module);
-        $result = array();
+        $result = [];
 
         foreach ($this->webPageMapper->fetchAll() as $record) {
             if ($this->cleanModuleName($record['module']) == $module) {
@@ -392,12 +390,12 @@ final class WebPageManager extends AbstractManager implements WebPageManagerInte
         // Ensure the slug is unique
         $slug = $this->getUniqueSlug($slug);
 
-        $this->webPageMapper->insert(array(
+        $this->webPageMapper->insert([
             'target_id'     => $targetId,
             'slug'          => $slug,
             'module'        => $module,
             'controller'    => $controller,
-        ));
+        ]);
 
         return $childMapper->updateWebPageIdById($targetId, $this->webPageMapper->getLastId());
     }

@@ -1,230 +1,230 @@
 <?php
 
-return array(
+return [
 
-    '/install' => array(
+    '/install' => [
         'controller' => 'Install:Install@indexAction'
-    ),
+    ],
     
-    '/install.ajax' => array(
+    '/install.ajax' => [
         'controller' => 'Install:Install@installAction'
-    ),
+    ],
     
-    '/install/ready' => array(
+    '/install/ready' => [
         'controller' => 'Install:Install@readyAction'
-    ),
+    ],
     
-    '/%s'=> array(
+    '/%s'=> [
         'controller' => 'Admin:Dashboard@indexAction',
-    ),
+    ],
     
-    '/%s/kernel/install-module.ajax' => array(
+    '/%s/kernel/install-module.ajax' => [
         'controller' => 'Admin:Dashboard@installModuleAction'
-    ),
+    ],
     
-    '/%s/kernel/generate-slug' => array(
+    '/%s/kernel/generate-slug' => [
         'controller' => 'Admin:Dashboard@slugAction'
-    ),
+    ],
     
-    '/%s/kernel/mode-change' => array(
+    '/%s/kernel/mode-change' => [
         'controller' => 'Admin:Dashboard@changeModeAction'
-    ),
+    ],
     
-    '/%s/kernel/theme-change' => array(
+    '/%s/kernel/theme-change' => [
         'controller' => 'Admin:Dashboard@changeThemeAction'
-    ),
+    ],
     
-    '/%s/kernel/items-per-page'  => array(
+    '/%s/kernel/items-per-page'  => [
         'controller' => 'Admin:Dashboard@itemsPerPageChangeAction'
-    ),
+    ],
     
-    '/%s/login' => array(
+    '/%s/login' => [
         'controller' => 'Admin:Auth@indexAction'
-    ),
+    ],
     
-    '/%s/login.ajax' => array(
+    '/%s/login.ajax' => [
         'controller' => 'Admin:Auth@loginAction'
-    ),
+    ],
     
-    '/%s/logout' =>  array(
+    '/%s/logout' =>  [
         'controller' => 'Admin:Auth@logoutAction'
-    ),
+    ],
     
     // Tweaks
-    '/%s/tweaks' => array(
+    '/%s/tweaks' => [
         'controller' => 'Admin:Tweaks@indexAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/tweaks.ajax' => array(
+    '/%s/tweaks.ajax' => [
         'controller' => 'Admin:Tweaks@saveAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
     
     // Users
-    '/%s/users' => array(
+    '/%s/users' => [
         'controller' => 'Admin:Users@indexAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/users/add' => array(
+    '/%s/users/add' => [
         'controller' => 'Admin:Users@addAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/users/edit/(:var)' => array(
+    '/%s/users/edit/(:var)' => [
         'controller'    => 'Admin:Users@editAction',
-        'disallow' => array('guest')
-    ),
+        'disallow' => ['guest']
+    ],
     
-    '/%s/users/save' => array(
+    '/%s/users/save' => [
         'controller'    => 'Admin:Users@saveAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/users/delete/(:var)' => array(
+    '/%s/users/delete/(:var)' => [
         'controller' => 'Admin:Users@deleteAction',
         'ajax' => true,
         'method' => 'POST'
-    ),
+    ],
 
-    '/%s/users/wipe' => array(
+    '/%s/users/wipe' => [
         'controller' => 'Admin:Users@wipeAction',
-    ),
+    ],
 
     // Languages
-    '/%s/languages' => array(
+    '/%s/languages' => [
         'controller' => 'Admin:Languages@indexAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/languages/add' => array(
+    '/%s/languages/add' => [
         'controller' => 'Admin:Languages@addAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
 
-    '/%s/languages/edit/(:var)' => array(
+    '/%s/languages/edit/(:var)' => [
         'controller' => 'Admin:Languages@editAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
 
-    '/%s/languages/save' => array(
+    '/%s/languages/save' => [
         'controller' => 'Admin:Languages@saveAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/languages/delete/(:var)' => array(
+    '/%s/languages/delete/(:var)' => [
         'controller' => 'Admin:Languages@deleteAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/languages/tweak' => array(
+    '/%s/languages/tweak' => [
         'controller' => 'Admin:Languages@tweakAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/languages/change.ajax' => array(
+    '/%s/languages/change.ajax' => [
         'controller' => 'Admin:Languages@changeAction'
-    ),
+    ],
     
     // Notifications
-    '/%s/notifications' => array(
+    '/%s/notifications' => [
         'controller' => 'Admin:Notifications@indexAction'
-    ),
+    ],
     
-    '/%s/notifications/page/(:var)' => array(
+    '/%s/notifications/page/(:var)' => [
         'controller' => 'Admin:Notifications@indexAction'
-    ),
+    ],
     
-    '/%s/notifications/delete/(:var)' => array(
+    '/%s/notifications/delete/(:var)' => [
         'controller' => 'Admin:Notifications@deleteAction'
-    ),
+    ],
     
-    '/%s/notifications/clear' => array(
+    '/%s/notifications/clear' => [
         'controller' => 'Admin:Notifications@clearAction'
-    ),
+    ],
 
     // Info
-    '/%s/sitemap-links' => array(
+    '/%s/sitemap-links' => [
         'controller' => 'Admin:SitemapLinks@indexAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
 
-    '/%s/sitemap-links/save' => array(
+    '/%s/sitemap-links/save' => [
         'controller' => 'Admin:SitemapLinks@saveAction',
-        'disallow' => array('guest')
-    ),
+        'disallow' => ['guest']
+    ],
     
-    '/%s/sitemap-links/robots' => array(
+    '/%s/sitemap-links/robots' => [
         'controller' => 'Admin:SitemapLinks@robotsAction',
-        'disallow' => array('guest')
-    ),
+        'disallow' => ['guest']
+    ],
     
     // Info
-    '/%s/info' => array(
+    '/%s/info' => [
         'controller' => 'Admin:Info@indexAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
     // History
-    '/%s/history/clear' => array(
+    '/%s/history/clear' => [
         'controller' => 'Admin:History@clearAction',
-        'disallow' => array('user')
-    ),
+        'disallow' => ['user']
+    ],
     
-    '/%s/history' => array(
+    '/%s/history' => [
         'controller' => 'Admin:History@indexAction'
-    ),
+    ],
     
-    '/%s/history/view/page/(:var)' => array(
+    '/%s/history/view/page/(:var)' => [
         'controller' => 'Admin:History@indexAction'
-    ),
+    ],
     
     // Notepad
-    '/%s/notepad' => array(
+    '/%s/notepad' => [
         'controller' => 'Admin:Notepad@indexAction'
-    ),
+    ],
     
-    '/%s/notepad/save' => array(
+    '/%s/notepad/save' => [
         'controller' => 'Admin:Notepad@saveAction',
-        'disallow' => array('guest')
-    ),
+        'disallow' => ['guest']
+    ],
     
     // Module manager
-    '/%s/module-manager' => array(
+    '/%s/module-manager' => [
         'controller' => 'Admin:ModuleManager@indexAction',
-        'disallow' => array('guest')
-    ),
+        'disallow' => ['guest']
+    ],
     
-    '/%s/module-manager/delete/(:var)' => array(
+    '/%s/module-manager/delete/(:var)' => [
         'controller' => 'Admin:ModuleManager@deleteAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
 
-    '/%s/module-manager/delete-many' => array(
+    '/%s/module-manager/delete-many' => [
         'controller' => 'Admin:ModuleManager@deleteManyAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
     // Themes
-    '/%s/themes' => array(
+    '/%s/themes' => [
         'controller' => 'Admin:Themes@indexAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/themes/tweak' => array(
+    '/%s/themes/tweak' => [
         'controller' => 'Admin:Themes@tweakAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/themes/delete/(:var)' => array(
+    '/%s/themes/delete/(:var)' => [
         'controller' => 'Admin:Themes@deleteAction',
-        'disallow' => array('guest', 'user')
-    ),
+        'disallow' => ['guest', 'user']
+    ],
     
-    '/%s/themes/delete-many' => array(
+    '/%s/themes/delete-many' => [
         'controller' => 'Admin:Themes@deleteManyAction',
-        'disallow' => array('guest', 'user')
-    )
-);
+        'disallow' => ['guest', 'user']
+    ]
+];

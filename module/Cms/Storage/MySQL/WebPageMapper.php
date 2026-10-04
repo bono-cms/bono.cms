@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -37,7 +35,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
         // @TODO: This is a temporary and dirty fix
         $langId = isset($_COOKIE['lang_id']) ? $_COOKIE['lang_id'] : 1;
 
-        return $this->db->select(array('slug', 'lang_id'))
+        return $this->db->select(['slug', 'lang_id'])
                         ->from(self::getTableName())
                         ->whereEquals('target_id', $targetId)
                         ->andWhereEquals('module', $module)
@@ -54,12 +52,12 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
     public function findAllLinks(array $target)
     {
         // Default columns to be selected
-        $defaults = array(
+        $defaults = [
             self::column('id'),
             self::column('module')
-        );
+        ];
 
-        $columns = array();
+        $columns = [];
 
         // Append static column name
         foreach ($target as $table => $alias) {
@@ -71,10 +69,10 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
 
         // Append relations from dynamic tables
         foreach (array_keys($target) as $table) {
-            $db->leftJoin($table, array(
+            $db->leftJoin($table, [
                 sprintf('%s.web_page_id', $table) => new RawSqlFragment(self::column('id')),
                 sprintf('%s.lang_id', $table) => new RawSqlFragment(self::column('lang_id')),
-            ));
+            ]);
         }
 
         // Filter by language ID
@@ -130,7 +128,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
      * @param string $langId Optional language id
      * @return array
      */
-    public function fetchAll(array $excludedModules = array(), $langId = null)
+    public function fetchAll(array $excludedModules = [], $langId = null)
     {
         if (is_null($langId)) {
             $langId = $this->getLangId();
@@ -152,18 +150,18 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
      * 
      * @param string $id Web page identification
      * @param string $slug Web page's new slug
-     * @param string $controller Optionally controller can be updated too
+     * @param string $controller Optionally, the controller can be updated too
      * @return boolean
      */
     public function update($id, $slug, $controller = null)
     {
-        $data = array(
+        $data = [
             'id' => $id,
             'slug' => $slug
-        );
+        ];
 
         if ($controller !== null) {
-            $data = array_merge($data, array('controller' => $controller));
+            $data = array_merge($data, ['controller' => $controller]);
         }
 
         return $this->persist($data);
@@ -193,7 +191,7 @@ final class WebPageMapper extends AbstractMapper implements WebPageMapperInterfa
             return $this->fetchByColumn('slug', $slug);
         }
 
-        // Columns to selected
+        // Columns to select
         $columns = [
             self::column('id'),
             self::column('lang_id'),

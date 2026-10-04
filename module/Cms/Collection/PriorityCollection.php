@@ -18,7 +18,7 @@ final class PriorityCollection extends ArrayCollection
     /**
      * {@inheritDoc}
      */
-    protected $collection = array(
+    protected $collection = [
         '0.0' => '0.0',
         '0.1' => '0.1',
         '0.2' => '0.2',
@@ -30,5 +30,5 @@ final class PriorityCollection extends ArrayCollection
         '0.8' => '0.8',
         '0.9' => '0.9',
         '1.0' => '1.0'
-    );
+    ];
 }
