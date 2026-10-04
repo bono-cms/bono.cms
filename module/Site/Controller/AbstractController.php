@@ -44,7 +44,7 @@ abstract class AbstractController extends BaseController
     private function bootstrapSiteServices()
     {
         foreach ($this->moduleManager->getLoadedModuleNames() as $module) {
-            // Build PSR-0 compliant class name
+            // Build PSR-4 compliant class name
             $class = sprintf('\%s\Service\SiteBootstrapper', $module);
             if (class_exists($class)) {
                 $bootstrapper = new $class($this->moduleManager, $this->view);
@@ -89,7 +89,7 @@ abstract class AbstractController extends BaseController
             $file = $this->view->getWithThemePath('theme.config.php');
 
             // Initial state
-            $config = array();
+            $config = [];
 
             // Do include only in case, if config file exists
             if (is_file($file)) {
@@ -149,13 +149,13 @@ abstract class AbstractController extends BaseController
             }
         }
 
-        $this->view->addVariables(array(
+        $this->view->addVariables([
             'locale' => $this->appConfig->getLanguage(),
             'currentUrl' => $this->request->getCurrentUrl(),
             'baseUrl' => $this->request->getBaseUrl(),
             // Inject parameter bag service
             'paramBag' => $this->paramBag
-        ));
+        ]);
 
         $this->bootstrapSiteServices();
         $this->loadThemeTranslations();
@@ -237,18 +237,18 @@ abstract class AbstractController extends BaseController
 
         // Append blocks
         $this->view->getPartialBag()
-                   ->addPartialDirs(array(
+                   ->addPartialDirs([
                                     $this->getCurrentThemePath().'/partials/',
                                     $this->view->createThemePath('Site', 'shared')
-                                 ));
+                                 ]);
 
         // Tweak breadcrumbs
         $this->view->getBreadcrumbBag()
                    ->removeFirst()
-                   ->add(array(array(
+                   ->add([[
                         'link' => '/',
                         'name' => $this->translator->translate('Home page')
-                    ))
+                    ]]
         );
 
         // Get core configuration entity of the system itself
@@ -256,9 +256,9 @@ abstract class AbstractController extends BaseController
 
         // If site isn't enabled, then its down for maintenance
         if ($config->getSiteEnabled()) {
-            $response = $this->view->renderRaw('Cms', 'down', 'main', array(
+            $response = $this->view->renderRaw('Cms', 'down', 'main', [
                 'reason' => $config->getSiteDownReason()
-            ));
+            ]);
 
             die($response);
         }

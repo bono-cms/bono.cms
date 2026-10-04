@@ -11,7 +11,7 @@ namespace Site\Service;
 
 use Cms\Service\WebPageManagerInterface;
 
-final class SiteService implements SiteServiceInterface
+final class SiteService
 {
     /**
      * Web page manager service
@@ -39,7 +39,7 @@ final class SiteService implements SiteServiceInterface
      * @param array $vars Optional query string variables
      * @return string
      */
-    public function createUrl($targetId, $module, array $vars = array())
+    public function createUrl($targetId, $module, array $vars = [])
     {
         return $this->webPageManager->createUrl($targetId, $module, $vars);
     }

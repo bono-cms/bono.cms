@@ -67,7 +67,7 @@ final class Main extends AbstractController
     }
 
     /**
-     * This action is executed when user requested not-existing page
+     * This action is executed when a user requested a non-existing page
      * 
      * @return string
      */
@@ -81,13 +81,13 @@ final class Main extends AbstractController
             http_response_code(404);
 
             // Passing null will trigger 404's action
-            return $this->forward($controller, array(null));
+            return $this->forward($controller, [null]);
         }
     }
 
     /**
      * This action exists for testing purposes only
-     * Sometimes we need to test stuff on live system without breaking it
+     * Sometimes we need to test stuff on a live system without breaking it
      * 
      * @return string
      */
@@ -112,10 +112,10 @@ final class Main extends AbstractController
         $webPageManager = $this->getService('Cms', 'webPageManager');
         $webPage = $webPageManager->fetchBySlug($slug, $code);
 
-        // Not empty means that existing slug is supplied
+        // Not empty means that an existing slug is supplied
         if (!empty($webPage)) {
             // Data to be passed to a controller
-            $args = array($webPage['target_id'], $pageNumber, $code, $slug);
+            $args = [$webPage['target_id'], $pageNumber, $code, $slug];
 
             // Now we have a controller, action, params and page params
             return $this->forward($webPage['controller'], $args);
@@ -126,7 +126,7 @@ final class Main extends AbstractController
     }
 
     /**
-     * This invoked instead of slugAction() when we have more than one language
+     * This is invoked instead of slugAction() when we have more than one language
      * 
      * @param string $code Language code
      * @param string $slug Web page slug

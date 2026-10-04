@@ -114,16 +114,16 @@ final class Sitemap extends AbstractController
         // Is this URL for default page being generated?
         if ($languageManager->getDefaultCode() == $locale || $languageCount == 1) {
             // If so, we don't need to direct it to switch URL
-            return array(
+            return [
                 'loc' => sprintf('%s/', $baseUrl)
-            );
+            ];
         }
 
         // For another cases
         if ($languageCount > 1) {
-            return array(
-                'loc' => $baseUrl . $this->createUrl('Site:Main@changeLanguageAction', array($locale))
-            );
+            return [
+                'loc' => $baseUrl . $this->createUrl('Site:Main@changeLanguageAction', [$locale])
+            ];
         }
     }
 
@@ -141,7 +141,7 @@ final class Sitemap extends AbstractController
 
         // Stop, if home page is not defined
         if ($page == false) {
-            return array();
+            return [];
         }
 
         // Process URLs
@@ -173,12 +173,12 @@ final class Sitemap extends AbstractController
     private function createGroupLinks(array $codes)
     {
         // To be returned
-        $output = array();
+        $output = [];
 
         foreach ($codes as $code) {
-            $output[] = array(
-                'loc' => $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', array($code), 1)
-            );
+            $output[] = [
+                'loc' => $this->request->getBaseUrl() . $this->createUrl('Site:Sitemap@indexAction', [$code], 1)
+            ];
         }
 
         return $output;

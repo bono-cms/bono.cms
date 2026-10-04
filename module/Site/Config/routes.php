@@ -7,46 +7,46 @@
  * the license file that was distributed with this source code.
  */
 
-return array(
-    '/captcha/render/(:var)' => array(
+return [
+    '/captcha/render/(:var)' => [
         'controller' => 'Main@captchaAction'
-    ),
+    ],
     
     // For changing language
-    '/lang/(:var)' => array(
+    '/lang/(:var)' => [
         'controller' => 'Main@changeLanguageAction'
-    ),
+    ],
     
-    '/(:var)/' => array(
+    '/(:var)/' => [
         'controller' => 'Main@slugAction'
-    ),
+    ],
 
-    '/(:var)/page/(:var)' => array(
+    '/(:var)/page/(:var)' => [
         'controller' => 'Main@slugAction'
-    ),
+    ],
     
-    '/' => array(
+    '/' => [
         'controller' => 'Main@homeAction'
-    ),
+    ],
 
-    '/(:var)/(:var)/' => array(
+    '/(:var)/(:var)/' => [
         'controller' => 'Main@slugLanguageAwareAction'
-    ),
+    ],
     
-    '/(:var)/(:var)/page/(:var)' => array(
+    '/(:var)/(:var)/page/(:var)' => [
         'controller' => 'Main@slugLanguageAwareAction'
-    ),
+    ],
 
     // Sitemap
-    '/sitemap' => array(
+    '/sitemap' => [
         'controller' => 'Sitemap@indexAction'
-    ),
+    ],
     
-    '/sitemap/lang/(:var)' => array(
+    '/sitemap/lang/(:var)' => [
         'controller' => 'Sitemap@indexAction'
-    ),
+    ],
 
-    '/test' => array(
+    '/test' => [
         'controller' => 'Main@testAction'
-    )
-);
+    ]
+];
