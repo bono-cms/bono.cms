@@ -1,200 +1,85 @@
 <?php
 
-return array(
+return [
 	'production' => false,
 	'timezone' => $_ENV['timezone'],
 	/**
 	 * Framework components configuration
 	 */
-	'components' => array(
+	'components' => [
         'auth_manager' => [
             'secret_key' => $_ENV['auth_secret']
         ],
         
         // Module Manager configuration
-        'module_manager' => array(
-            'core_modules' => array(
+        'module_manager' => [
+            'core_modules' => [
                 'Cms', 
                 'Pages', 
-            )
-        ),
+            ]
+        ],
         
         /**
          * Configuration service
          */
-        'config' => array(
+        'config' => [
             'adapter' => 'sql',
-            'options' => array(
+            'options' => [
                 'connection' => 'mysql',
                 'table' => 'bono_config'
-            )
-        ),
+            ]
+        ],
 
 		/**
 		 * CAPTCHA configuration
 		 */
-		'captcha' => array(
+		'captcha' => [
 			'type' => 'standard',
-			'options' => array(
+			'options' => [
 				'text' => 'math'
-			)
-		),
+			]
+		],
 
 		/**
 		 * Router configuration
 		 */
-        'router' => array(
+        'router' => [
 			'default' => 'Site:Main@notFoundAction',
             'ssl' => false
-		),
+		],
 
         /**
 		 * Configuration for view manager
 		 */
-		'view' => array(
-            'theme' => 'welcome', // Default theme if non defined
-            'obfuscate' => $_ENV['obfuscate'],
-
-            // Global template plugins
-            'plugins' => array(
-                // Global plugins for all site templates
-                'site' => array(
-                    'scripts' => array(
-                        '@Site/global.js',
-                    )
-                ),
-                // Improved plugin for dropdowns
-                'chosen' => array(
-                    'stylesheets' => array(
-                        'https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.min.css',
-                    ),
-                    'scripts' => array(
-                        'https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.jquery.min.js'
-                    )
-                ),
-                'lightbox' => array(
-                    'stylesheets' => array(
-                        'https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css',
-                    ),
-                    'scripts' => array(
-                        'https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js'
-                    )
-                ),
-                'to-top' => array(
-                    'stylesheets' => array(
-                        '@Cms/plugins/to-top/to-top.min.css'
-                    ),
-                    'scripts' => array(
-                        '@Cms/plugins/to-top/to-top.min.js'
-                    )
-                ),
-                'preview' => array(
-                    'scripts' => array(
-                        '@Cms/plugins/preview/jquery.preview.js'
-                    ),
-                    'stylesheets' => array(
-                        '@Cms/plugins/preview/jquery.preview.css'
-                    )
-                ),
-                'datetimepicker' => array(
-                    'scripts' => array(
-                        '@Cms/plugins/datetimepicker/js/moment.min.js',
-                        '@Cms/plugins/datetimepicker/js/jquery.datetimepicker.full.min.js'
-                    ),
-                    'stylesheets' => array(
-                        '@Cms/plugins/datetimepicker/css/jquery.datetimepicker.min.css'
-                    )
-                ),
-                'datepicker' => array(
-                    'scripts' => array(
-                        '@Cms/plugins/datepicker/js/bootstrap-datepicker.min.js'
-                    ),
-                    'stylesheets' => array(
-                        '@Cms/plugins/datepicker/css/datepicker.min.css'
-                    )
-                ),
-                'jquery' =>	array(
-                    'scripts' => array(
-                        'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js'
-                    )
-                ),
-                'ckeditor' => array(
-                    'scripts' => array(
-                        '@Cms/plugins/ckeditor/ckeditor.js'
-                    )
-                ),
-                'admin' => array(
-                    'scripts' => array(
-                        '@Cms/plugins/jquery.form.js',
-                    ),
-
-                    'stylesheets' => array(
-                        '@Cms/css/style.css'
-                    )
-                ),
-                'zoom' => array(
-                    'scripts' => array(
-                        '@Site/plugins/elevatezoom/jquery.elevateZoom-3.0.8.min.js'
-                    )
-                ),
-                'famfam-flag' => array(
-                    'stylesheets' => array(
-                        '@Site/plugins/famfam-flag/famfamfam-flags.min.css'
-                    ),
-                ),
-                'bootstrap' => array(
-                    'stylesheets' => array(
-                        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css',
-                        'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css'
-                    ),
-                    'scripts' => array(
-                        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'
-                    )
-                ),
-                'font-awesome-5' => array(
-                    'stylesheets' => array(
-                        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'
-                    )
-                ),
-                'jquery.mCustomScrollbar' => array(
-                    'stylesheets' => array(
-                        '@Cms/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.min.css'
-                    ),
-
-                    'scripts' => array(
-                        '@Cms/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js'
-                    )
-                )
-            )
-        ),
+		'view' => include __DIR__ . '/view.config.php',
 
 		/**
 		 * Translator configuration
 		 */
-		'translator' => array(
+		'translator' => [
 			// Default site language
 			'default' => null
-		),
+		],
 
 		/**
 		 * Param bag which holds application-level parameters
-		 * This values can be accessed in controllers, like $this->paramBag->get(..key..)
+		 * These values can be accessed in controllers, like $this->paramBag->get(..key..)
 		 */
-		'paramBag' => array(
+		'paramBag' => [
 			'version' => '1.3', // Current CMS version
 			'wysiwyg' => 'ckeditor',
-			'site' => 'http://bono-cms.com', // Vendor website
+			'site' => 'http://bono-cms.dev', // Vendor website
             'admin_language' => $_ENV['admin_language'], // Administration language
             'admin_segment' => 'admin', // The identification segment to be used to enter administration area
             'home_controller' => null // Can be overridden, for example to "Blog:Home@indexAction"
-		),
+		],
 
 		/**
 		 * Form validation component. It has two options only
 		 */
-		'validator' => array(
+		'validator' => [
 			'render' => 'JsonCollection',
-		),
+		],
 
 		/**
 		 * Database component provider
@@ -202,25 +87,25 @@ return array(
 		 * 
 		 * Like this: $this->db->...
 		 */
-		'db' => array(
+		'db' => [
 			'mysql' => $_ENV['mysql']
-		),
+		],
 
 		/**
 		 * MapperFactory which relies on previous db section
 		 */
-		'mapperFactory' => array(
+		'mapperFactory' => [
 			'connection' => 'mysql',
             'prefix' => ''
-		),
+		],
 		
 		/**
 		 * Pagination component used in data mappers. 
 		 * It's completely independent from a storage layer (be it SQL, or No-SQL, or pure array)
 		 * and can be used as a standalone component as well.
 		 */
-		'paginator' => array(
+		'paginator' => [
 			'style' => 'Digg',
-		)
-	)
-);
+		]
+	]
+];
