@@ -11,7 +11,6 @@ namespace Site\Controller;
 
 use Krystal\Application\Controller\AbstractController as BaseController;
 use Krystal\Paginate\Paginator;
-use Krystal\Validate\Renderer;
 use RuntimeException;
 
 abstract class AbstractController extends BaseController
@@ -224,8 +223,6 @@ abstract class AbstractController extends BaseController
         $this->loadSiteTheme();
         $this->validateRequest();
         $this->validateInstallationState();
-
-        $this->validatorFactory->setRenderer(new Renderer\StandardJson());
 
         // Load translations
         $language = $this->getService('Cms', 'languageManager')->getInterfaceLangCode();

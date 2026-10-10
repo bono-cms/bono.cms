@@ -24,13 +24,13 @@ final class Icon
      * @param array $extras Extra attributes
      * @return string
      */
-    public static function button($icon, $url, $hint, $extras = array())
+    public static function button($icon, $url, $hint, $extras = [])
     {
-        $attributes = array(
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'left',
-            'data-original-title' => $hint,
-        );
+        $attributes = [
+            'data-bs-toggle' => 'tooltip',
+            'data-bs-placement' => 'left',
+            'data-bs-original-title' => $hint,
+        ];
 
         // Append extras, if any
         $attributes = array_replace($attributes, $extras);
@@ -47,10 +47,10 @@ final class Icon
      */
     public static function approve($url, $hint)
     {
-        return self::button('far fa-check-square', '#', $hint, array(
+        return self::button('far fa-check-square', '#', $hint, [
             'data-button' => 'save-changes',
             'data-url' => $url
-        ));
+        ]);
     }
 
     /**
@@ -61,12 +61,12 @@ final class Icon
      * @param array $attributes Extra attributes
      * @return string
      */
-    public static function details($url, $hint, array $attributes = array())
+    public static function details($url, $hint, array $attributes = [])
     {
-        $attributes = array_merge(array(
+        $attributes = array_merge([
             'data-button' => 'details',
             'data-url' => $url
-        ), $attributes);
+        ], $attributes);
 
         return self::button('fas fa-receipt', $url, $hint, $attributes);
     }
@@ -92,9 +92,9 @@ final class Icon
      */
     public static function edit($url, $hint)
     {
-        return self::button('fas fa-edit', $url, $hint, array(
+        return self::button('fas fa-edit', $url, $hint, [
             'data-button' => 'edit'
-        ));
+        ]);
     }
 
     /**
@@ -107,10 +107,10 @@ final class Icon
      */
     public static function view($url, $hint, $new = true)
     {
-        return self::button('fas fa-search', $url, $hint, array(
+        return self::button('fas fa-search', $url, $hint, [
             'data-button' => 'view',
             'target' => $new ? '_blank' : '_self'
-        ));
+        ]);
     }
 
     /**
@@ -124,10 +124,10 @@ final class Icon
      */
     public static function reset($url, $hint, $message = null, $backUrl = null)
     {
-        $attrs = array(
+        $attrs = [
             'data-button' => 'delete',
             'data-url' => $url
-        );
+        ];
 
         // Append back URl if present
         if ($backUrl !== null){
@@ -152,10 +152,10 @@ final class Icon
      */
     public static function remove($url, $hint, $message = null, $backUrl = null)
     {
-        $attrs = array(
+        $attrs = [
             'data-button' => 'delete',
             'data-url' => $url
-        );
+        ];
 
         if ($message !== null) {
             $attrs['data-message'] = $message;

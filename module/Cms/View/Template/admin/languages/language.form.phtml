@@ -2,29 +2,25 @@
 
 use Krystal\Form\Element;
 
-defined('KRYSTAL') or die;
-
 ?>
 
-<form class="card" data-group="language" autocomplete="off">
+<form class="card" autocomplete="off">
     <div class="card-body">
         <?= Element::hidden('language[id]', $language->getId()); ?>
 
-        <div class="form-group">
-            <label><?= $this->translate('Name'); ?></label>
+        <div class="mb-3">
+            <label class="form-label"><?= $this->translate('Name'); ?></label>
             <div class="input-group">
-                <?= Element::text('language[name]', $language->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('The name of the language to be created'))); ?>
-                <div class="input-group-append">
-                    <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
-                </div>
+                <?= Element::text('language[name]', $language->getName(), ['class' => 'form-control', 'placeholder' => $this->translate('The name of the language to be created')]); ?>
+                <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-6">
-                <div class="form-group">
-                    <label><?= $this->translate('Country'); ?> <i data-container="flag" class="fas fa-flag"></i></label>
-                    <?= Element::select('language[flag]', $countries, $language->getFlag(), ['class' => 'form-control'], null, function($code, $name){
+                <div class="mb-3">
+                    <label class="form-label"><?= $this->translate('Country'); ?> <i data-container="flag" class="fas fa-flag"></i></label>
+                    <?= Element::select('language[flag]', $countries, $language->getFlag(), ['class' => 'form-select'], null, function($code, $name){
                         return [
                             'data-flag' => sprintf('famfamfam-flag-%s', strtolower($code))
                         ];
@@ -33,16 +29,16 @@ defined('KRYSTAL') or die;
             </div>
 
             <div class="col-lg-6">
-                <div class="form-group">
-                    <label><?= $this->translate('Code'); ?></label>
-                    <?= Element::text('language[code]', $language->getCode(), array('class' => 'form-control', 'placeholder' => $this->translate('Unique language identifier'))); ?>
+                <div class="mb-3">
+                    <label class="form-label"><?= $this->translate('Code'); ?></label>
+                    <?= Element::text('language[code]', $language->getCode(), ['class' => 'form-control', 'placeholder' => $this->translate('Unique language identifier')]); ?>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <label><?= $this->translate('Order'); ?></label>
-            <?= Element::number('language[order]', $language->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Language sort order in a list'))); ?>
+        <div class="mb-3">
+            <label class="form-label"><?= $this->translate('Order'); ?></label>
+            <?= Element::number('language[order]', $language->getOrder(), ['class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Language sort order in a list')]); ?>
         </div>
 
         <div class="form-check mb-3">
@@ -62,11 +58,11 @@ defined('KRYSTAL') or die;
         <?php endif; ?>
     </div>
 
-    <?php $this->loadPartial('actions', array(
+    <?php $this->loadPartial('actions', [
         'new' => !$language->getId(),
         'add' => 'Cms:Admin:Languages@addAction',
         'edit' => 'Cms:Admin:Languages@editAction',
         'save' => 'Cms:Admin:Languages@saveAction',
         'cancel' => 'Cms:Admin:Languages@indexAction'
-    )); ?>
+    ]); ?>
 </form>

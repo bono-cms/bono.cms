@@ -93,11 +93,11 @@ return [
         ],
         'bootstrap' => [
             'stylesheets' => [
-                'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css',
+                'https://bootswatch.com/5/lux/bootstrap.min.css',
                 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css'
             ],
             'scripts' => [
-                'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'
+                'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js'
             ]
         ],
         'font-awesome-5' => [

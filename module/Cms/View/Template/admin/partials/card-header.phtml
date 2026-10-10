@@ -1,11 +1,10 @@
-
 <div class="card-header">
     <h4 class="card-title">
         <?php if (isset($icon)): ?>
-        <i class="<?= $icon; ?> mr-2"></i> 
+        <i class="<?= $icon; ?> me-2"></i> 
         <?php endif; ?>
         
-        <?php $this->show($title); ?>
+        <?= $this->translate($title); ?>
         <?php if (isset($rows)): ?>
         <small> (<?= count($rows); ?>) </small>
         <?php endif; ?>

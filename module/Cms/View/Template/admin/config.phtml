@@ -1,51 +1,54 @@
 <?php
 
 use Krystal\Form\Element;
-defined('KRYSTAL') or die;
 
 ?>
 
-<form class="card" data-group="config" autocomplete="off">
+<form class="card" autocomplete="off">
 	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="nav-item active"><a class="nav-link" href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
-		<li role="presentation" class="nav-item"><a class="nav-link" href="#maintenance" role="tab" data-toggle="tab"><i class="fa fa-life-ring"></i> <?php $this->show('Maintenance'); ?></a></li>
-		<li role="presentation" class="nav-item"><a class="nav-link" href="#mail" role="tab" data-toggle="tab"><i class="fa fa-envelope"></i> <?php $this->show('Mail'); ?></a></li>
+		<li role="presentation" class="nav-item"><a class="nav-link active" href="#common" role="tab" data-bs-toggle="tab"><i class="fas fa-home fa-fw"></i> <?= $this->translate('Common'); ?></a></li>
+		<li role="presentation" class="nav-item"><a class="nav-link" href="#maintenance" role="tab" data-bs-toggle="tab"><i class="fas fa-life-ring"></i> <?= $this->translate('Maintenance'); ?></a></li>
+		<li role="presentation" class="nav-item"><a class="nav-link" href="#mail" role="tab" data-bs-toggle="tab"><i class="fas fa-envelope"></i> <?= $this->translate('Mail'); ?></a></li>
 	</ul>
 
-	<div class="tab-content">
-		<div class="tab-pane fade in active" id="common" role="tabpanel">
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Keep the track of latest activity'); ?></label>
+	<div class="tab-content pt-3">
+		<div class="tab-pane fade show active" id="common" role="tabpanel">
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Keep the track of latest activity'); ?></label>
                 <div class="col-lg-10">
-                    <?php echo Element::checkbox('config[keep_track]', $config->getKeepTrack(), array('class' => 'form-control')); ?>
+                    <div class="form-check">
+                        <?= Element::checkbox('config[keep_track]', $config->getKeepTrack(), ['class' => 'form-check-input']); ?>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Email for notifications'); ?></label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Email for notifications'); ?></label>
                 <div class="col-lg-10">
                     <div class="input-group">
-                        <?php echo Element::text('config[notification_email]', $config->getNotificationEmail(), array('class' => 'form-control')); ?>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <?= Element::text('config[notification_email]', $config->getNotificationEmail(), ['class' => 'form-control']); ?>
+                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                     </div>
-                    <span class="help-block"><?php $this->show('This email is used as an address for sending notifications'); ?></span>
+                    <div class="form-text"><?= $this->translate('This email is used as an address for sending notifications'); ?></div>
                 </div>
             </div>
 		</div>
 		
 		<!--Maintenance tab-->
 		<div class="tab-pane fade" id="maintenance" role="tabpanel">
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Site is down for maintenance'); ?></label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Site is down for maintenance'); ?></label>
                 <div class="col-lg-10">
-                    <?php echo Element::checkbox('config[site_enabled]', $config->getSiteEnabled(), array('class' => 'form-control')); ?>
+                    <div class="form-check">
+                        <?= Element::checkbox('config[site_enabled]', $config->getSiteEnabled(), ['class' => 'form-check-input']); ?>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Message'); ?></label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Message'); ?></label>
                 <div class="col-lg-10">
-                    <?php echo Element::textarea('config[site_down_reason]', $config->getSiteDownReason(), array('data-wysiwyg' => 'true')); ?>
+                    <?= Element::textarea('config[site_down_reason]', $config->getSiteDownReason(), ['data-wysiwyg' => 'true']); ?>
                 </div>
             </div>
 		</div>
@@ -53,81 +56,83 @@ defined('KRYSTAL') or die;
 		
 		<!--Mail-->
 		<div class="tab-pane fade" id="mail" role="tabpanel">
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show("Try using server's native mailer"); ?></label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate("Try using server's native mailer"); ?></label>
                 <div class="col-lg-10">
-                    <?php echo Element::checkbox('config[use_smtp_driver]', $config->getUseSmtpDriver(), array('class' => 'form-control')); ?>
+                    <div class="form-check">
+                        <?= Element::checkbox('config[use_smtp_driver]', $config->getUseSmtpDriver(), ['class' => 'form-check-input']); ?>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Domain'); ?></label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Domain'); ?></label>
                 <div class="col-lg-10">
                     <div class="input-group">
-                        <?php echo Element::text('config[domain]', $config->getDomain(), array('class' => 'form-control')); ?>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <?= Element::text('config[domain]', $config->getDomain(), ['class' => 'form-control']); ?>
+                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                     </div>
-                    <span class="help-block"><?php $this->show('Default domain can be overriden if neccesary'); ?></span>
+                    <div class="form-text"><?= $this->translate('Default domain can be overriden if neccesary'); ?></div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Secure layer'); ?> (SSL/TLS)</label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Secure layer'); ?> (SSL/TLS)</label>
                 <div class="col-lg-10">
-                    <?php echo Element::select('config[smtp_secure_layer]', $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), array('class' => 'form-control')); ?>
-                    <span class="help-block"><?php $this->show('If your provided requires secure layer, choice required one here'); ?></span>
+                    <?= Element::select('config[smtp_secure_layer]', $config->getSmtpSecureLayers(), $config->getSmtpSecureLayer(), ['class' => 'form-select']); ?>
+                    <div class="form-text"><?= $this->translate('If your provided requires secure layer, choice required one here'); ?></div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Host'); ?></label>
-                <div class="col-lg-10">
-                    <div class="input-group">
-                        <?php echo Element::text('config[smtp_host]', $config->getSmtpHost(), array('class' => 'form-control')); ?>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                    </div>
-                    <span class="help-block"><?php $this->show('STMP host might look like as smtp.yourserver.com'); ?></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Username'); ?></label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Host'); ?></label>
                 <div class="col-lg-10">
                     <div class="input-group">
-                        <?php echo Element::text('config[smtp_username]', $config->getSmtpUsername(), array('class' => 'form-control')); ?>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <?= Element::text('config[smtp_host]', $config->getSmtpHost(), ['class' => 'form-control']); ?>
+                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                     </div>
-                    <span class="help-block"><?php $this->show("Account's username, which usually represents your login"); ?></span>
+                    <div class="form-text"><?= $this->translate('STMP host might look like as smtp.yourserver.com'); ?></div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Username'); ?></label>
                 <div class="col-lg-10">
                     <div class="input-group">
-                        <?php echo Element::text('config[smtp_password]', $config->getSmtpPassword(), array('class' => 'form-control')); ?>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <?= Element::text('config[smtp_username]', $config->getSmtpUsername(), ['class' => 'form-control']); ?>
+                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                     </div>
-                    <span class="help-block"><?php $this->show("Account's password"); ?></span>
+                    <div class="form-text"><?= $this->translate("Account's username, which usually represents your login"); ?></div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-lg-2 control-label"><?php $this->show('Port'); ?></label>
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Password'); ?></label>
                 <div class="col-lg-10">
                     <div class="input-group">
-                        <?php echo Element::number('config[smtp_port]', $config->getSmtpPort(), array('class' => 'form-control')); ?>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <?= Element::text('config[smtp_password]', $config->getSmtpPassword(), ['class' => 'form-control']); ?>
+                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                     </div>
-                    <span class="help-block"><?php $this->show("SMTP server's port. In most cases its 25"); ?></span>
+                    <div class="form-text"><?= $this->translate("Account's password"); ?></div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Port'); ?></label>
+                <div class="col-lg-10">
+                    <div class="input-group">
+                        <?= Element::number('config[smtp_port]', $config->getSmtpPort(), ['class' => 'form-control']); ?>
+                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
+                    </div>
+                    <div class="form-text"><?= $this->translate("SMTP server's port. In most cases its 25"); ?></div>
                 </div>
             </div>
 		</div>
 		<!--/Mail-->
 	</div>
 
-    <div class="actions">
-        <button data-button="save" data-url="<?php echo $this->url('Cms:Admin:Tweaks@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
-        <button data-button="cancel" data-url="<?php echo $this->url('Cms:Admin:Dashboard@indexAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+    <div class="actions mt-3">
+        <button data-button="save" data-url="<?= $this->url('Cms:Admin:Tweaks@saveAction'); ?>" class="btn btn-primary"><i class="bi bi-save"></i> <?= $this->translate('Save'); ?></button>
+        <button data-button="cancel" data-url="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>" class="btn btn-secondary"><i class="bi bi-folder2-open"></i> <?= $this->translate('Cancel'); ?></button>
     </div>
 </form>

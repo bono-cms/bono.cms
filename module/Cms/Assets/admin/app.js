@@ -1,10 +1,15 @@
 // Global AJAX handler
-$(function() {
+$(function () {
     const $loader = $("#loader");
 
     if (!$loader.length) {
         console.warn("#loader does not exist in the DOM.");
         return; // Exit if loader is missing
+    }
+
+    // Bootstrap 5 modal instance helper (created lazily, reused)
+    function getLoaderModal() {
+        return bootstrap.Modal.getOrCreateInstance($loader[0]);
     }
 
     $.ajaxSetup({
@@ -15,32 +20,35 @@ $(function() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         },
         beforeSend: function () {
-            $loader.modal("show");
+            getLoaderModal().show();
         },
         complete: function () {
-            setTimeout(() => $loader.modal("hide"), 500);
+            setTimeout(() => getLoaderModal().hide(), 500);
         },
         error: function (response) {
             console.error("AJAX Error:", response);
         }
     });
 
-    $(document).ajaxStop(() => $loader.modal("hide"));
+    $(document).ajaxStop(() => getLoaderModal().hide());
 });
 
 
-// Tab state persist for Bootstrap 4
-(function(){
+// Tab state persist for Bootstrap 5
+(function () {
     var storageKey = 'currentTab';
 
-    $('a[data-toggle="tab"]').on('click', function (e) {
+    // BS5: data-toggle="tab" -> data-bs-toggle="tab"
+    $(document).on('click', 'a[data-bs-toggle="tab"]', function (e) {
         var currentTab = $(this).attr('href');
-        var activeTabs = (window.localStorage.getItem(storageKey) ? window.localStorage.getItem(storageKey).split(',') : []);
-        var $children = $(e.target).parents('.nav-tabs').find('[data-toggle="tab"]');
+        var activeTabs = (window.localStorage.getItem(storageKey)
+            ? window.localStorage.getItem(storageKey).split(',')
+            : []);
+        var $children = $(e.target).parents('.nav-tabs').find('[data-bs-toggle="tab"]');
 
-        $.each($children, function(index, element){
+        $.each($children, function (index, element) {
             var tabId = $(element).attr('href');
-            if(currentTab != tabId && activeTabs.indexOf(tabId) !== -1) {
+            if (currentTab != tabId && activeTabs.indexOf(tabId) !== -1) {
                 activeTabs.splice(activeTabs.indexOf(tabId), 1);
             }
         });
@@ -55,15 +63,21 @@ $(function() {
     var activeTabs = window.localStorage.getItem(storageKey);
 
     if (activeTabs) {
-        var activeTabs = (window.localStorage.getItem(storageKey) ? window.localStorage.getItem(storageKey).split(',') : []);
+        var activeTabs = (window.localStorage.getItem(storageKey)
+            ? window.localStorage.getItem(storageKey).split(',')
+            : []);
         $.each(activeTabs, function (index, element) {
-            $('[data-toggle="tab"][href="' + element + '"]').tab('show');
+            // BS5: use bootstrap.Tab via vanilla API instead of jQuery .tab('show')
+            var tabTrigger = document.querySelector('[data-bs-toggle="tab"][href="' + element + '"]');
+            if (tabTrigger) {
+                bootstrap.Tab.getOrCreateInstance(tabTrigger).show();
+            }
         });
     }
 })();
 
 // Clipboard module
-$(function(){
+$(function () {
     /**
      * Copy string to clipboard
      * Credits: https://techoverflow.net/2018/03/30/copying-strings-to-the-clipboard-using-pure-javascript/
@@ -71,54 +85,57 @@ $(function(){
      * @param string str Target string
      * @return void
      */
-    function copyStringToClipboard(str){
-        // Create new element
+    function copyStringToClipboard(str) {
+        // Prefer modern Clipboard API when available
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(str);
+            return;
+        }
+
+        // Fallback: legacy execCommand approach
         var el = document.createElement('textarea');
-        // Set value (string to be copied)
         el.value = str;
-        // Set non-editable to avoid focus and move outside of view
         el.setAttribute('readonly', '');
-        el.style = {position: 'absolute', left: '-9999px'};
-        
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+
         document.body.appendChild(el);
-        // Select text inside element
         el.select();
 
-        // Copy text to clipboard
         document.execCommand('copy');
 
-        // Remove temporary element
         document.body.removeChild(el);
     }
 
-    $("[data-button='clipboard']").click(function(event){
+    $("[data-button='clipboard']").click(function (event) {
         event.preventDefault();
 
         var value = $(this).data('value');
 
         if (value) {
-            copyStringToClipboard(value)
+            copyStringToClipboard(value);
         }
     });
 });
 
 // Select-group plugin implementation
-$(function(){
+$(function () {
     // Default configuration
     var config = {
-        hiddenClass: 'hidden',
+        // BS5 renamed .hidden -> .d-none
+        hiddenClass: 'd-none',
         containerSelector: "[data-plugin='group']",
         attachedEntity: 'data-attached-entity',
         entityGroup: 'data-entity-group'
     };
 
     // Payment handler for ready and change
-    $(config.containerSelector).change(function(){
+    $(config.containerSelector).change(function () {
         // Find the selected type
         var entity = $(config.containerSelector).find(':selected').attr(config.attachedEntity);
 
         // Now process hiding
-        $("[data-entity-group]").addClass(config.hiddenClass).each(function(){
+        $("[data-entity-group]").addClass(config.hiddenClass).each(function () {
             // Find attached groups
             var group = $(this).attr(config.entityGroup);
             var groups = group.split(', ');
@@ -132,13 +149,11 @@ $(function(){
                 }
             }
         });
-
-        // And trigger immediately
     }).change();
 });
 
 // Application
-$(function(){
+$(function () {
     $("#sidebar").mCustomScrollbar({
         theme: "minimal"
     });
@@ -155,8 +170,7 @@ $(function(){
 
         $.datetimepicker.setDateFormatter('moment');
 
-        $('[data-plugin="datetimepicker"]').each(function(){
-
+        $('[data-plugin="datetimepicker"]').each(function () {
             // Override if present
             if ($(this).data('format')) {
                 format = $(this).data('format');
@@ -171,7 +185,7 @@ $(function(){
 
     // Run datepicker if loaded
     if (jQuery().datepicker) {
-        $('[data-plugin="datepicker"]').each(function(){
+        $('[data-plugin="datepicker"]').each(function () {
             // Default date format
             var format = 'yyyy-mm-dd';
 
@@ -188,74 +202,71 @@ $(function(){
 
     // Simple WYSIWYG wrapper
     $.wysiwyg = {
-        // Indicated whether a WYSIWYG editor is initialized
-        started : false,
-        isStarted : function(){
+        started: false,
+        isStarted: function () {
             return this.started;
         },
-        // This method should be invoked on each AJAX request
-        update : function(){
-            if (!this.isStarted()){
+        update: function () {
+            if (!this.isStarted()) {
                 return false;
             }
-            
-            if (typeof(CKEDITOR) != 'undefined'){
-                for (instance in CKEDITOR.instances){
+
+            if (typeof (CKEDITOR) != 'undefined') {
+                for (instance in CKEDITOR.instances) {
                     CKEDITOR.instances[instance].updateElement();
                 }
-            } else if (typeof(tinyMCE) != 'undefined'){
+            } else if (typeof (tinyMCE) != 'undefined') {
                 tinyMCE.triggerSave();
             } else {
                 // add more later
             }
         },
-        // The array of elements to be replaced
-        init : function(elements){
-            // Interface language
+        init: function (elements) {
             var language = $("input[name='language']").val();
 
-            if (typeof(CKEDITOR) != 'undefined'){
+            if (typeof (CKEDITOR) != 'undefined') {
                 for (key in elements) {
                     var value = elements[key];
                     CKEDITOR.replace(value, {
-                        language : language
+                        language: language
                     });
                 }
-                
+
                 this.started = true;
 
-            } else if ((typeof tinyMCE != 'undefined')){
+            } else if ((typeof tinyMCE != 'undefined')) {
                 $.tinyMCE({
-                    elements : elements.join(', ')
+                    elements: elements.join(', ')
                 });
 
                 this.started = true;
             }
         }
     };
-    
+
     var errorHandler = {
-        displayModal : function(messages){
+        displayModal: function (messages) {
             var $modal = $("#errors-modal");
 
-            if ($.isArray(messages)){
+            if ($.isArray(messages)) {
                 var text = this.createUl(messages);
             } else {
                 var text = messages;
             }
 
             $modal.find(".modal-body").empty().html(text);
-            $modal.modal("show");
+
+            // BS5: use bootstrap.Modal instead of jQuery .modal("show")
+            bootstrap.Modal.getOrCreateInstance($modal[0]).show();
         },
 
-        handleResponse : function(response){
+        handleResponse: function (response) {
             console.log(response);
-            this.resetAll(); // Clears previous highlights and error messages
+            this.resetAll();
 
             try {
                 var data = (typeof response === 'object') ? response : $.parseJSON(response);
 
-                // Determine if data is a direct array of errors, or an object containing .errors
                 var errorList = null;
                 if (Array.isArray(data)) {
                     errorList = data;
@@ -266,23 +277,20 @@ $(function(){
                 if (errorList) {
                     var modalMessages = [];
 
-                    // Directly loop through the flat error list
                     for (var i = 0; i < errorList.length; i++) {
                         var errorItem = errorList[i];
-                        var fieldName = errorItem.input;     // Matches: "translation[1][name]"
-                        var errorMessage = errorItem.message; // Matches: "Поле..."
+                        var fieldName = errorItem.input;
+                        var errorMessage = errorItem.message;
 
                         modalMessages.push(errorMessage);
 
-                        // Pass the clean key directly to highlight the form control
                         this.highlightField(fieldName, errorMessage);
                     }
 
-                    // Display fallback modal with aggregated lines
                     if (modalMessages.length > 0) {
                         this.displayModal(modalMessages.join('<br>'));
                     }
-                    
+
                     if (!Array.isArray(data)) {
                         this.render(data);
                     }
@@ -291,88 +299,87 @@ $(function(){
                     this.displayModal(data.messages);
                 }
 
-            } catch(e) {
+            } catch (e) {
                 this.displayModal(response);
             }
         },
 
-        // Adds Bootstrap 4 error states directly to the matching element markup
-        highlightField : function(fieldName, message) {
-            // Escape brackets [ ] so jQuery can safely select name attributes containing array maps
+        // Bootstrap 5 error state highlight (is-invalid + invalid-feedback still valid in BS5)
+        highlightField: function (fieldName, message) {
             var safeSelector = fieldName.replace(/(:|\.|\[|\]|,|=)/g, "\\$1");
             var $input = $('[name="' + safeSelector + '"]');
 
             if ($input.length) {
-                // Add Bootstrap 4 error style modifier
+                // is-invalid works the same in BS5
                 $input.addClass('is-invalid');
 
-                // Append the feedback element safely inside the .input-group wrapper layout block
+                // BS5: .invalid-feedback must be a sibling AFTER .input-group, not nested inside it.
+                // Add .has-validation to the .input-group so it doesn't collapse the border-radius.
                 var $inputGroup = $input.closest('.input-group');
                 if ($inputGroup.length) {
-                    $inputGroup.append('<div class="invalid-feedback">' + message + '</div>');
+                    $inputGroup.addClass('has-validation');
+                    $inputGroup.after('<div class="invalid-feedback d-block">' + message + '</div>');
                 } else {
-                    $input.after('<div class="invalid-feedback">' + message + '</div>');
+                    $input.after('<div class="invalid-feedback d-block">' + message + '</div>');
                 }
             }
         },
 
-        // Cleans up the form state completely before executing a new cycle
-        resetAll : function() {
-            $('.form-control').removeClass('is-invalid');
+        resetAll: function () {
+            // BS5: .form-control, .form-select and .form-check-input all use is-invalid
+            $('.form-control, .form-select, .form-check-input').removeClass('is-invalid');
             $('.invalid-feedback').remove();
+            $('.input-group').removeClass('has-validation');
         }
     };
-    
-    $.setFormGroup = function(group){
+
+    $.setFormGroup = function (group) {
         $.group = group;
     };
 
-    $.showErrors = function(response){
+    $.showErrors = function (response) {
         errorHandler.handleResponse(response);
         $("#scroller").click();
-    }
+    };
 
     // Shared chosen plugin
-    if ($.fn.chosen){
+    if ($.fn.chosen) {
         $("[data-plugin='chosen']").chosen({
             disable_search_threshold: 5,
             width: "100%"
         });
     }
-    
+
     // Automatic initialization based on element attribute
-    $("[data-wysiwyg='true']").each(function(){
+    $("[data-wysiwyg='true']").each(function () {
         var name = $(this).attr('name');
         $.wysiwyg.init([name]);
     });
-    
-    $("[data-button='upload']").click(function(event){
+
+    $("[data-button='upload']").click(function (event) {
         event.preventDefault();
 
-        // Grab the attached selector
         var selector = $(this).data('target');
 
-        // And trigger clicking
         $(selector).click();
     });
 
-    $("[data-button='generate']").click(function(event){
+    $("[data-button='generate']").click(function (event) {
         event.preventDefault();
 
         var url = $(this).data('url');
-        var output = $(this).data('output'); // Output selector
+        var output = $(this).data('output');
 
         $.ajax({
             url: url,
-            success: function(response){
+            success: function (response) {
                 $(output).text(response);
             }
         });
     });
 
     // Shared response handler
-    function handleResponse(response)
-    {
+    function handleResponse(response) {
         console.log(response);
 
         // 1. Modern structured object responses
@@ -390,20 +397,20 @@ $(function(){
                 return false;
             }
         }
-        
+
         // 2. Standard legacy check
         if (response == "1") {
             window.location.reload();
-            return false; // Handled
+            return false;
         } else {
             $.showErrors(response);
-            return false; // Handled
+            return false;
         }
     }
-    
-    $('[data-button="module-install"]').click(function(event){
+
+    $('[data-button="module-install"]').click(function (event) {
         event.preventDefault();
-        $('[name="module"]').click().change(function(){
+        $('[name="module"]').click().change(function () {
 
             var formData = new FormData();
             formData.append('module', $(this)[0].files[0]);
@@ -411,145 +418,145 @@ $(function(){
             $.ajax({
                 contentType: false,
                 processData: false,
-                url : $(this).data('url'),
-                data : formData,
-                success : function(response){
+                url: $(this).data('url'),
+                data: formData,
+                success: function (response) {
                     handleResponse(response);
                 }
             });
         });
     });
-    
-    $("[data-button='mode']").click(function(event){
+
+    $("[data-button='mode']").click(function (event) {
         event.preventDefault();
         var mode = $(this).data('mode-id');
-        
+
         $.ajax({
-            url : $(this).data('url'),
-            data : {
-                mode : mode
+            url: $(this).data('url'),
+            data: {
+                mode: mode
             },
-            success : function(response) {
+            success: function (response) {
                 handleResponse(response);
             }
         });
     });
-    
-    
-    $("[data-button='cancel']").click(function(event){
+
+
+    $("[data-button='cancel']").click(function (event) {
         event.preventDefault();
-        
+
         var url = $(this).data('url');
         window.location = url;
     });
-    
-    
-    $("[data-button='refresh']").click(function(event){
+
+
+    $("[data-button='refresh']").click(function (event) {
         event.preventDefault();
         window.location.reload();
     });
-    
-    $("[data-button='change-content-language']").click(function(event){
+
+    $("[data-button='change-content-language']").click(function (event) {
         event.preventDefault();
-        // Get selected language id
         var id = $(this).data('language-id');
-        
+
         $.ajax({
-            url : $(this).data('url'),
-            data : {
-                id : id
+            url: $(this).data('url'),
+            data: {
+                id: id
             },
-            success : function(response) {
+            success: function (response) {
                 handleResponse(response);
             }
         });
     });
 
-    $("[data-toggle='tooltip']").tooltip();
+    // BS5: tooltips initialized via bootstrap.Tooltip. Iterate manually.
+    document.querySelectorAll("[data-bs-toggle='tooltip']").forEach(function (el) {
+        bootstrap.Tooltip.getOrCreateInstance(el);
+    });
 
     // Run slug update on click
-    $("[data-slug-selector]").click(function(event){
+    $("[data-slug-selector]").click(function (event) {
         event.preventDefault();
 
-        // Value container
-        var $input = $(this).parentsUntil(".form-group").find("input"); // Assume, there must be only one input per unique selector
+        // BS5: form-group is gone; find the closest wrapper by utility class only
+        var $input = $(this).closest('.mb-3, .row').find("input");
 
-        // Make sure input with provided selector really exist, first
         if ($input.length == 0) {
             throw new Error('Could not find closest input element that contains slug');
         }
 
-        var selector = $(this).attr('data-slug-selector');  // Target selector
-        var raw = $(selector).val(); // Raw value from selector
-        var url = $("[name='slug-refresh-url']").val(); // This input is available in layout globally
+        var selector = $(this).attr('data-slug-selector');
+        var raw = $(selector).val();
+        var url = $("[name='slug-refresh-url']").val();
 
         $.ajax({
             method: "GET",
-            url : url, 
-            data : {
-                raw : raw
+            url: url,
+            data: {
+                raw: raw
             },
-            beforeSend : function(){
+            beforeSend: function () {
                 // Cancel global beforeSend() with this empty function
             },
-            success : function(response){
-                // Update selector's value
+            success: function (response) {
                 $input.val(response);
             }
         });
     });
 
     // Refactored
-    $("[data-button='per-page-changer']").change(function(event){
+    $("[data-button='per-page-changer']").change(function (event) {
         var value = $(this).val();
         $.ajax({
-            url : $(this).data('url'),
-            data : {
-                count : value,
+            url: $(this).data('url'),
+            data: {
+                count: value,
             },
-            success : function(response) {
+            success: function (response) {
                 handleResponse(response);
             }
         });
     });
-    
-    $("[data-button='options']").click(function(event) {
+
+    $("[data-button='options']").click(function (event) {
         event.preventDefault();
         $("div.options").slideToggle(1000);
     });
 
 
     // Refactored
-    $("[data-button='save-changes']").click(function(event){
+    $("[data-button='save-changes']").click(function (event) {
         event.preventDefault();
         var url = $(this).data('url');
-        
+
         $.ajax({
-            url : url,
-            data : $("form").serialize(),
-            success : function(response) {
+            url: url,
+            data: $("form").serialize(),
+            success: function (response) {
                 handleResponse(response);
             }
         });
     });
-    
+
     // Refactored.
-    $("[data-button='remove-selected']").click(function(event){
+    $("[data-button='remove-selected']").click(function (event) {
         event.preventDefault();
         var data = $("form").serialize();
         var url = $(this).data('url');
 
         $.ajax({
-            url : url,
-            data : data,
-            success : function(response) {
+            url: url,
+            data: data,
+            success: function (response) {
                 handleResponse(response);
             }
         });
     });
-    
+
     // Refactored.
-    $(document).on('click', "[data-button]", function(event) {
+    $(document).on('click', "[data-button]", function (event) {
         var $btn = $(this);
         var action = $btn.data('button');
         var url = $btn.data('url');
@@ -557,10 +564,10 @@ $(function(){
 
         $("form").send({
             url: url,
-            before: function() {
+            before: function () {
                 $.wysiwyg.update();
             },
-            success: function(response) {
+            success: function (response) {
                 // 1. Modern response handling (structured objects)
                 if (typeof response === 'object' && response !== null) {
                     if (response.errors) {
@@ -579,7 +586,9 @@ $(function(){
                 }
 
                 // 2. Legacy response validation (inlined)
-                var isSuccess = (action === 'add' || action === 'add-create') ? $.isNumeric(response) : (response == "1");
+                var isSuccess = (action === 'add' || action === 'add-create')
+                    ? $.isNumeric(response)
+                    : (response == "1");
 
                 if (!isSuccess) {
                     $.showErrors(response);
@@ -605,9 +614,9 @@ $(function(){
         });
     });
 
-    
+
     // Removal buttons
-    $('[data-button="delete"], [data-button="remove"]').click(function(event){
+    $('[data-button="delete"], [data-button="remove"]').click(function (event) {
         event.preventDefault();
 
         var url = $(this).data('url') || $(this).attr('href');
@@ -618,21 +627,21 @@ $(function(){
         if (!url) {
             throw new Error('URL for delete button is not provided');
         }
-        
+
         // If there's a custom message, then display it instead of default one
-        if (message){
+        if (message) {
             $modal.find('.modal-body').html(message);
         }
 
-        // Then show the modal box
-        $modal.modal();
+        // BS5: show modal via bootstrap.Modal API
+        bootstrap.Modal.getOrCreateInstance($modal[0]).show();
 
-        $("[data-button='confirm-removal']").off('click').click(function(event){
+        $("[data-button='confirm-removal']").off('click').click(function (event) {
             $.ajax({
-                url : url,
-                success : function(response) {
+                url: url,
+                success: function (response) {
                     handleResponse(response);
-                    
+
                     if (response == "1") {
                         if ($self.data('back-url')) {
                             window.location = $self.data('back-url');
@@ -643,10 +652,10 @@ $(function(){
                             window.location = $self.data('success-url');
                             return false;
                         }
-                        
+
                         // By default
                         window.location.reload();
-                        
+
                     } else {
                         $.showErrors(response);
                     }
@@ -655,30 +664,37 @@ $(function(){
         });
     });
 
-    $("[data-button='ajax-view']").click(function(event){
+    $("[data-button='ajax-view']").click(function (event) {
         event.preventDefault();
 
         $.ajax({
             url: $(this).attr('href'),
-            success: function(response){
+            success: function (response) {
                 var $modal = $("#errors-modal");
 
                 $modal.find(".modal-body").empty().html(response);
-                $modal.modal("show");
+
+                // BS5 modal show
+                bootstrap.Modal.getOrCreateInstance($modal[0]).show();
             }
         });
     });
 
     // Table rows
-    (function(){
-        // Counter of checked items
-        var counter = 0;
+    (function () {
         var outputSelector = ".selected-counter";
         var headCheckboxSelector = "table > thead > tr > td > input[type='checkbox']";
+        var rowCheckboxSelector = "table > tbody > tr > td > input[type='checkbox']";
+
+        // Recompute the total selected count from actual DOM state to avoid stale counters
+        function updateCounter() {
+            var total = $(rowCheckboxSelector + ":checked").length;
+            $(outputSelector).text(total > 0 ? '(' + total + ')' : null);
+        }
 
         // Highlight a row on selecting
-        $("table > tbody > tr > td > input[type='checkbox']").change(function(){
-            // Bootstap class
+        $(rowCheckboxSelector).change(function () {
+            // BS5: table-danger remains the correct contextual class
             var hg = 'table-danger';
             var $row = $(this).parent().parent();
 
@@ -688,55 +704,38 @@ $(function(){
                 $row.removeClass(hg);
             }
 
-            // Depending on state, increment or decrement the counter
-            if ($(this).is(':checked')) {
-                counter++;
-            } else {
-                counter--;
-            }
-
-            if (counter < 0) {
-                counter = 0;
-            }
-
-            // Format output
-            if (counter > 0) {
-                var text = '(' + counter + ')';
-            } else {
-                var text = null;
-            }
-
-            // Update value
-            $(outputSelector).text(text);
+            updateCounter();
         });
 
-        $(headCheckboxSelector).change(function(){
+        $(headCheckboxSelector).change(function () {
             var $self = $(this);
-            var $children = $(this).parent().parent().parent().parent().find("tbody > tr > td:first-child > input[type='checkbox']");
+            var $children = $(this).parent().parent().parent().parent()
+                .find("tbody > tr > td:first-child > input[type='checkbox']");
             var state = $self.prop('checked');
 
             $children.prop('checked', state);
             $self.prop('checked', state);
 
-            // Update state
-            $("table > tbody > tr > td > input[type='checkbox']").change();
+            $(rowCheckboxSelector).change();
+            updateCounter();
         });
     })();
-    
-    $("td > a.view").click(function(event) {
+
+    $("td > a.view").click(function (event) {
         event.preventDefault();
     });
-    
+
     $form = $("form");
-    
+
+    // BS5: data-group may have been removed from forms; guard against undefined
     if ($form.attr('data-group')) {
         $.setFormGroup($form.data('group'));
     }
 
     // If preview plugin is loaded
-	if (jQuery().preview){
-        $("[data-plugin='preview']").each(function(){
-            $(this).preview(function(data) {
+    if (jQuery().preview) {
+        $("[data-plugin='preview']").each(function () {
+            $(this).preview(function (data) {
                 $("[data-image='preview']").fadeIn(1000).attr('src', data);
             });
         });

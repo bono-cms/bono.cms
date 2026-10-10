@@ -82,8 +82,6 @@ final class Auth extends AbstractController
                 'redirect' => $this->createUrl('Cms:Admin:Dashboard@indexAction')
             ]);
         } else {
-            $this->response->setStatusCode(403);
-
             $this->authAttemptLimit->incrementFailAttempt()
                                    ->persistLastLogin($login);
 

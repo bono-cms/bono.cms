@@ -9,18 +9,18 @@
 
 namespace Cms\Controller\Admin;
 
-use Krystal\Validate\Pattern;
+use Krystal\Validation\Validator;
 
 final class Tweaks extends AbstractConfigController
 {
     /**
      * {@inheritDoc}
      */
-    protected function getValidationRules()
+    protected function configureValidator(Validator $validator)
     {
-        return [
-            'notification_email' => new Pattern\Email()
-        ];
+        $validator->field('config.notification_email', 'Notification Email')
+                  ->required()
+                  ->addRule('email');
     }
 
     /**

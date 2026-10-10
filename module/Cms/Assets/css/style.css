@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
@@ -62,16 +61,20 @@ a:focus {
     margin: 40px 0;
 }
 
-.form-control {
+/* BS5: .form-control and .form-select share the same visual treatment */
+.form-control,
+.form-select {
     background-color: #f3f3f3;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
     box-shadow: 0 0 0 0.2rem rgb(228, 228, 228);
     border: none;
 }
 
-a[data-toggle="collapse"] {
+/* BS5: data-toggle -> data-bs-toggle */
+a[data-bs-toggle="collapse"] {
     position: relative;
 }
 
@@ -99,6 +102,8 @@ a.article:hover {
 }
 
 
+/* BS5: navbar-dark is deprecated in favor of data-bs-theme="dark" on .navbar,
+   but the class still works in 5.x. Kept for compatibility. */
 .navbar-dark .navbar-nav .nav-link {
     color: #fff;
     text-transform: uppercase;
@@ -128,11 +133,8 @@ a.article:hover {
     background: #fff;
 }
 
-.tab-pane h2, .actions {
-    margin-left: 12px;
-}
-
-.options, .hidden {
+/* BS5: .hidden -> .d-none (kept .hidden for any legacy markup still using it) */
+.options, .hidden, .d-none {
     display: none;
 }
 
@@ -145,6 +147,8 @@ a.article:hover {
     margin-bottom: 16px;
 }
 
+/* BS5: .table-sm still exists but padding is applied differently;
+   the explicit override below keeps the exact 6px used previously. */
 .table-sm th, .table-sm td {
     padding: 6px;
 }
@@ -225,6 +229,8 @@ a.article:hover {
     background: #6d7fcc;
 }
 
+/* BS5: .dropdown-toggle::after is still the same caret pseudo-element;
+   no change needed. Position is preserved. */
 #sidebar .dropdown-toggle::after {
     display: block;
     position: absolute;
@@ -251,6 +257,9 @@ a.article:hover {
     background: #e8e8e8;
 }
 
+/* BS5: .card no longer has implicit padding; the custom padding here
+   is intentional and preserved. Note that adding padding directly to
+   .card changes its look vs. BS5 defaults — that's the app's choice. */
 .card {
     padding: 23px;
     box-shadow: 11px 14px 36px 1px rgba(0,0,0,.15);

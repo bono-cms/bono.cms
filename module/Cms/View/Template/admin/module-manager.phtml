@@ -5,74 +5,74 @@ use Krystal\Form\Element;
 use Cms\View\Icon;
 use Cms\Service\ThemeService;
 
-defined('KRYSTAL') or die;
-
 ?>
 
 <div class="btn-toolbar">
 	<div class="dropdown">
-	  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
+	  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+		<i class="bi bi-list-ul"></i> <?= $this->translate('Menu'); ?>
 	  </button>
 
 	  <div class="dropdown-menu">
-        <a class="dropdown-item" href="#" data-button="module-install" data-url="<?php echo $this->url('Cms:Admin:Themes@tweakAction'); ?>" title="<?php $this->show('Click to Install a module from ZIP archive'); ?>"><i class="glyphicon glyphicon-wrench"></i> <?php $this->show('Install a module');?></a>
-		<a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url('Cms:Admin:ModuleManager@deleteManyAction'); ?>"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>
+        <a class="dropdown-item" href="#" data-button="module-install" data-url="<?= $this->url('Cms:Admin:Themes@tweakAction'); ?>" title="<?= $this->translate('Click to Install a module from ZIP archive'); ?>"><i class="bi bi-wrench"></i> <?= $this->translate('Install a module');?></a>
+		<a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?= $this->url('Cms:Admin:ModuleManager@deleteManyAction'); ?>"><i class="bi bi-x-circle"></i> <?= $this->translate('Remove selected'); ?></a>
 	  </div>
 
-      <input type="file" name="module" accept=".zip" class="hidden" />
+      <input type="file" name="module" accept=".zip" class="d-none" />
 	</div>
 </div>
 
 <div class="card">
-    <h2 class="page-header"><?php $this->show('Modules'); ?> <span class="text-muted">(<?php echo count($modules); ?>)</span></h2>
+    <div class="card-body">
+        <h2 class="page-header"><?= $this->translate('Modules'); ?> <span class="text-muted">(<?= count($modules); ?>)</span></h2>
 
-    <form>
-        <div class="table-responsive">
-            <?= $this->widget(new GridViewWidget($modules, array(
-                'tableClass' => 'table table-hover table-bordered table-striped',
-                'pk' => 'name',
-                'batch' => true,
-                'batchCallback' => function($module) use ($moduleManager){
-                    return isset($module['name']) ? !$moduleManager->isCoreModule($module['name']) : false;
-                },
-                'columns' => array(
-                    array(
-                        'column' => 'name',
-                        'translateable' => true,
-                        'attributes' => array(
-                            'class' => null
-                        )
-                    ),
+        <form>
+            <div class="table-responsive">
+                <?= $this->widget(new GridViewWidget($modules, [
+                    'tableClass' => 'table table-hover table-bordered table-striped',
+                    'pk' => 'name',
+                    'batch' => true,
+                    'batchCallback' => function($module) use ($moduleManager){
+                        return isset($module['name']) ? !$moduleManager->isCoreModule($module['name']) : false;
+                    },
+                    'columns' => [
+                        [
+                            'column' => 'name',
+                            'translateable' => true,
+                            'attributes' => [
+                                'class' => null
+                            ]
+                        ],
 
-                    array(
-                        'column' => 'description',
-                        'translateable' => true,
-                        'attributes' => array(
-                            'class' => null
-                        )
-                    )
-                ),
+                        [
+                            'column' => 'description',
+                            'translateable' => true,
+                            'attributes' => [
+                                'class' => null
+                            ]
+                        ]
+                    ],
 
-                'actions' => array(
-                    function($module) use ($moduleManager){
-                        if (!$moduleManager->isCoreModule($module['name'])) {
-                            return Icon::remove(
-                                $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']),
-                                $this->translate('Remove this module')
-                            );
-                        } else {
-                            return null;
+                    'actions' => [
+                        function($module) use ($moduleManager){
+                            if (!$moduleManager->isCoreModule($module['name'])) {
+                                return Icon::remove(
+                                    $this->url('Cms:Admin:ModuleManager@deleteAction', $module['name']),
+                                    $this->translate('Remove this module')
+                                );
+                            } else {
+                                return null;
+                            }
                         }
-                    }
-                )
-            ))); ?>
+                    ]
+                ])); ?>
 
-            <?php if (empty($modules)): ?>
-            <div class="center-block">
-                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No modules'); ?></h2>
+                <?php if (empty($modules)): ?>
+                <div class="center-block">
+                    <h2 class="text-center text-muted"><i class="bi bi-x-circle"></i> <?= $this->translate('No modules'); ?></h2>
+                </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

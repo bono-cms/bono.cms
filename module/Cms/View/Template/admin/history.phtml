@@ -4,57 +4,55 @@ use Krystal\Widget\GridView\GridViewWidget;
 use Krystal\Form\Element;
 use Cms\View\Icon;
 
-defined('KRYSTAL') or die;
-
 ?>
 
 <?php if (!empty($records) && $extendedMode): ?>
 <div class="btn-toolbar">
-    <div class="btn-group mr-2">
-        <button data-message="<?php $this->show('Do you really want to clear the history?'); ?>" data-button="remove" data-url="<?php echo $this->url('Cms:Admin:History@clearAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-fire"></i> <?php $this->show('Clear all'); ?></button>
+    <div class="btn-group me-2">
+        <button data-message="<?= $this->translate('Do you really want to clear the history?'); ?>" data-button="remove" data-url="<?= $this->url('Cms:Admin:History@clearAction'); ?>" class="btn btn-primary"><i class="bi bi-fire"></i> <?= $this->translate('Clear all'); ?></button>
     </div>
 </div>
 <?php endif; ?>
 
 <div class="card">
-    <?php $this->loadPartial('items-per-page', array('caption' => 'History')); ?>
+    <?php $this->loadPartial('items-per-page', ['caption' => 'History']); ?>
 
     <div class="table-responsive">
-        <?= $this->widget(new GridViewWidget($records, array(
+        <?= $this->widget(new GridViewWidget($records, [
             'tableClass' => 'table table-hover table-bordered table-striped',
-            'columns' => array(
-                array(
+            'columns' => [
+                [
                     'column' => 'id',
                     'label' => '#',
-                    'attributes' => array(
+                    'attributes' => [
                         'class' => 'text-muted text-center'
-                    )
-                ),
+                    ]
+                ],
 
-                array(
+                [
                     'column' => 'timestamp',
                     'label' => 'Date and time',
                     'value' => function($record){
                         return date('d.m.y H:i:s', $record->getTimestamp());
                     }
-                ),
+                ],
 
-                array(
+                [
                     'column' => 'comment',
-                    'attributes' => array(
+                    'attributes' => [
                         'class' => null
-                    ),
+                    ],
                     'value' => function($record){
                         return $this->translate($record->getComment(), $record->getPlaceholder());
                     }
-                ),
+                ],
 
-                array(
+                [
                     'column' => 'module',
                     'translateable' => true
-                ),
+                ],
 
-                array(
+                [
                     'column' => 'user_id',
                     'label' => 'User',
                     'translateable' => true,
@@ -67,13 +65,13 @@ defined('KRYSTAL') or die;
                             return 'User no longer exists';
                         }
                     }
-                )
-            )
-        ))); ?>
+                ]
+            ]
+        ])); ?>
 
         <?php if (empty($records)): ?>
         <div class="center-block">
-            <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No records'); ?></h2>
+            <h2 class="text-center text-muted"><i class="bi bi-x-circle"></i> <?= $this->translate('No records'); ?></h2>
         </div>
         <?php endif; ?>
     </div>

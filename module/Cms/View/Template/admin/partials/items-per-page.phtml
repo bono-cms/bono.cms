@@ -1,7 +1,6 @@
 <?php
 
 use Krystal\Form\Element;
-defined('KRYSTAL') or die;
 
 ?>
 
@@ -11,10 +10,10 @@ defined('KRYSTAL') or die;
     <div class="row align-items-center">
         <div class="col-lg-6">
             <span class="d-inline-block">
-                <i class="bi bi-list-ul"></i> <?= $this->translate($caption); ?> 
+                <i class="bi bi-list-ul"></i> <?= $this->translate($caption) ?> 
                 <?php if ($paginator->getSummary() != 0): ?>
                 <small class="text-muted"> 
-                    (<?= $this->translate('Displayed'); ?> <?= $paginator->getSummary(); ?> <?= $this->translate('of'); ?> <?= $paginator->getTotalAmount(); ?>) 
+                    (<?= $this->translate('Displayed') ?> <?= $paginator->getSummary() ?> <?= $this->translate('of') ?> <?= $paginator->getTotalAmount() ?>) 
                 </small>
                 <?php endif; ?>
             </span>
@@ -22,12 +21,12 @@ defined('KRYSTAL') or die;
         
         <div class="col-lg-6">
             <div class="d-flex justify-content-end align-items-center">
-                <span class="text-muted me-2 small"><?= $this->translate('Items per page'); ?>: </span>
+                <span class="text-muted me-2 small"><?= $this->translate('Items per page') ?>: </span>
                 <?= Element::select(null, $ppc->getPerPageCountValues(), $ppc->getPerPageCount(), [
                     'class' => 'form-select form-select-sm w-auto',
                     'data-button' => 'per-page-changer', 
                     'data-url' => $this->url('Cms:Admin:Dashboard@itemsPerPageChangeAction')
-                ]); ?>
+                ]) ?>
             </div>
         </div>
     </div>

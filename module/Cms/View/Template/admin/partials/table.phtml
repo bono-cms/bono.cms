@@ -5,14 +5,13 @@
  */
 
 use Krystal\Widget\GridView\GridViewWidget;
-defined('KRYSTAL') or die;
 
 $responsive = true; // By default assume responsive
 
 ?>
 
 <?php if (isset($caption)): ?>
-<?php $this->loadPartial('items-per-page', array('caption' => $caption)); ?>
+<?php $this->loadPartial('items-per-page', ['caption' => $caption]); ?>
 <?php endif; ?>
 
 <?php if (isset($batch)): ?>
@@ -22,18 +21,18 @@ $responsive = true; // By default assume responsive
     <?php if ($responsive): ?>
     <div class="table-responsive">
     <?php endif; ?>
-        <?= $this->widget(new GridViewWidget($rows, array(
+        <?= $this->widget(new GridViewWidget($rows, [
             'batch' => isset($batch) && $batch === true,
             'pk' => 'id',
             'tableClass' => 'table table-hover table-bordered',
             'columns' => $columns,
             'actions' => $actions,
             'rowAttributes' => isset($rowAttributes) ? $rowAttributes : []
-        ))); ?>
+        ])); ?>
 
         <?php if (empty($rows)): ?>
         <div class="center-block">
-            <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No data'); ?></h2>
+            <h2 class="text-center text-muted"><i class="bi bi-x-circle"></i> <?= $this->translate('No data'); ?></h2>
         </div>
         <?php endif; ?>
 

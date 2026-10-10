@@ -1,34 +1,33 @@
-<?php defined('KRYSTAL') or die; ?>
 <!DOCTYPE html>
 <html>
 <head>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="csrf-token" content="<?= $csrfToken; ?>" />
- <title><?php $this->show(isset($title) ? $title : $this->getBreadcrumbBag()->getLastName()); ?></title>
+ <meta name="csrf-token" content="<?= $csrfToken ?>" />
+ <title><?= $this->translate(isset($title) ? $title : $this->getBreadcrumbBag()->getLastName()) ?></title>
 
  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
- <link rel="stylesheet" media="screen" href="<?= $stylesheet; ?>"  />
+ <link rel="stylesheet" media="screen" href="<?= $stylesheet ?>"  />
  <?php endforeach; ?>
 </head>
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>Bono CMS</h3>
-                <small class="text-muted"><?php $this->show('Fast and lightweight system for your site'); ?></small>
+            <div class="sidebar-header text-white">
+                <h4 class="text-white">Bono CMS</h4>
+                <small><?= $this->translate('Fast and lightweight system for your site') ?></small>
             </div>
 
             <ul class="list-unstyled components">
-                <li><a href="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fas fa-chess-board"></i> <?php $this->show('Dashboard'); ?></a></li>
+                <li><a href="<?= $this->url('Cms:Admin:Dashboard@indexAction') ?>"><i class="fas fa-chess-board"></i> <?= $this->translate('Dashboard') ?></a></li>
                 <?php foreach ($sidebar as $parent): ?>
                 <?php $uniq = 'item-' . md5($parent['name']); ?>
                 <li>
-                    <a href="#<?= $uniq; ?>" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="<?= $parent['icon']; ?>"></i> <?= $this->translate($parent['name']); ?></a>
-                    <ul class="collapse list-unstyled" id="<?= $uniq; ?>">
+                    <a href="#<?= $uniq ?>" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="<?= $parent['icon'] ?>"></i> <?= $this->translate($parent['name']) ?></a>
+                    <ul class="collapse list-unstyled" id="<?= $uniq ?>">
                         <?php foreach ($parent['items'] as $child): ?>
-                        <li><a href="<?= $this->url($child['route']); ?>"><?= $this->translate($child['name']); ?></a></li>
+                        <li><a href="<?= $this->url($child['route']) ?>"><?= $this->translate($child['name']) ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </li>
@@ -39,37 +38,37 @@
         <!-- Page Content  -->
         <div id="content">
             <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-              <ul class="navbar-nav ml-auto">
+              <ul class="navbar-nav ms-auto">
                 <?php if ($extendedMode): ?>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                    <?php $this->show('Debug'); ?>
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    <?= $this->translate('Debug') ?>
                   </a>
                   <div class="dropdown-menu">
-                     <span class="dropdown-item"><i class="fas fa-microchip"></i> <?php $this->show('Memory usage'); ?> / RAM: <?= $profiler->getMemoryUsage(); ?></span>
-                     <span class="dropdown-item"><i class="fas fa-hourglass-half"></i> <?php $this->show('Taken time'); ?>: <?= $profiler->getTakenTime(); ?> <?php $this->show('seconds'); ?></span>
-                     <span class="dropdown-item"><i class="fa fa-database" aria-hidden="true"></i> <?php $this->show('Database queries'); ?>: <?= $queryLogger->getCount(); ?></span>
-                     <div class="dropdown-header"><?php $this->show('Web-server'); ?></div>
-                     <span class="dropdown-item dropdown-item-text"><i class="fab fa-php"></i> <?php $this->show('PHP Version'); ?>: <?= PHP_VERSION; ?></span>
-                     <span class="dropdown-item dropdown-item-text"><i class="fab fa-linux"></i> <?php $this->show('OS'); ?>: <?= PHP_OS; ?></span>
+                     <span class="dropdown-item"><i class="fas fa-microchip"></i> <?= $this->translate('Memory usage') ?> / RAM: <?= $profiler->getMemoryUsage() ?></span>
+                     <span class="dropdown-item"><i class="fas fa-hourglass-half"></i> <?= $this->translate('Taken time') ?>: <?= $profiler->getTakenTime() ?> <?= $this->translate('seconds') ?></span>
+                     <span class="dropdown-item"><i class="fas fa-database" aria-hidden="true"></i> <?= $this->translate('Database queries') ?>: <?= $queryLogger->getCount() ?></span>
+                     <div class="dropdown-header"><?= $this->translate('Web-server') ?></div>
+                     <span class="dropdown-item dropdown-item-text"><i class="fab fa-php"></i> <?= $this->translate('PHP Version') ?>: <?= PHP_VERSION ?></span>
+                     <span class="dropdown-item dropdown-item-text"><i class="fab fa-linux"></i> <?= $this->translate('OS') ?>: <?= PHP_OS ?></span>
                   </div>
                 </li>
                 <?php endif; ?>
 
                 <?php if (count($languages) > 1): ?>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                    <i class="<?php printf('famfamfam-flag-%s',$currentLanguage->getFlag()); ?>"></i> <?php $this->show('Content'); ?>
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    <i class="<?php printf('famfamfam-flag-%s', $currentLanguage->getFlag()); ?>"></i> <?= $this->translate('Content') ?>
                   </a>
 
                   <div class="dropdown-menu">
                     <?php foreach ($languages as $language): ?>
-                    <a class="dropdown-item" data-url="<?= $this->url('Cms:Admin:Languages@changeAction'); ?>" data-button="change-content-language" data-language-id="<?= $language->getId(); ?>" href="#">
+                    <a class="dropdown-item" data-url="<?= $this->url('Cms:Admin:Languages@changeAction') ?>" data-button="change-content-language" data-language-id="<?= $language->getId() ?>" href="#">
                         <i class="<?php printf('famfamfam-flag-%s', $language->getFlag()); ?>"></i> 
                         <?php if ($language->getId() == $currentLanguage->getId()): ?>
-                        <strong> <?= $language->getName(); ?></strong>
+                        <strong> <?= $language->getName() ?></strong>
                         <?php else: ?>
-                        <span> <?= $language->getName(); ?></span>
+                        <span> <?= $language->getName() ?></span>
                         <?php endif; ?>
                     </a>
                     <?php endforeach; ?>
@@ -77,26 +76,26 @@
                 </li>
                 <?php endif; ?>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                    <?php $this->show('System'); ?>
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    <?= $this->translate('System') ?>
                   </a>
 
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/" target="_blank"><i class="glyphicon glyphicon-folder-open"></i> <?php $this->show('Open a site'); ?></a>
-                    <a class="dropdown-item" href="#" data-button="refresh"><i class="glyphicon glyphicon-refresh"></i> <?php $this->show('Refresh'); ?></a>
+                    <a class="dropdown-item" href="/" target="_blank"><i class="bi bi-folder2-open"></i> <?= $this->translate('Open a site') ?></a>
+                    <a class="dropdown-item" href="#" data-button="refresh"><i class="bi bi-arrow-clockwise"></i> <?= $this->translate('Refresh') ?></a>
                     <?php if (!$role->isGuest()): ?>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<?= $this->url('Cms:Admin:Users@editAction', $role->getId()); ?>"><i class="fas fa-user-check"></i> <?php $this->show('Change the password'); ?></a>
+                    <a class="dropdown-item" href="<?= $this->url('Cms:Admin:Users@editAction', $role->getId()) ?>"><i class="fas fa-user-check"></i> <?= $this->translate('Change the password') ?></a>
                     <?php endif; ?>
 
                     <?php if ($role->isDeveloper()): ?>
 
-                    <div class="dropdown-header"><?php $this->show('Mode'); ?></div>
+                    <div class="dropdown-header"><?= $this->translate('Mode') ?></div>
                     <?php foreach ($mode->getModes() as $id => $name): ?>
                     <?php if ($mode->isCurrent($id)): ?>
-                    <a class="dropdown-item" data-button="mode" data-mode-id="<?= $id; ?>" data-url="<?= $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"><i class="fas fa-check"></i> <?php $this->show($name); ?></a>
+                    <a class="dropdown-item" data-button="mode" data-mode-id="<?= $id ?>" data-url="<?= $this->url('Cms:Admin:Dashboard@changeModeAction') ?>" href="#"><i class="fas fa-check"></i> <?= $this->translate($name) ?></a>
                     <?php else: ?>
-                    <a class="dropdown-item" data-button="mode" data-mode-id="<?= $id; ?>" data-url="<?= $this->url('Cms:Admin:Dashboard@changeModeAction'); ?>" href="#"> <?php $this->show($name); ?></a>
+                    <a class="dropdown-item" data-button="mode" data-mode-id="<?= $id ?>" data-url="<?= $this->url('Cms:Admin:Dashboard@changeModeAction') ?>" href="#"> <?= $this->translate($name) ?></a>
                     <?php endif; ?>
                     <?php endforeach; ?>
 
@@ -104,65 +103,65 @@
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-button="logout" href="<?= $this->url('Cms:Admin:Auth@logoutAction'); ?>"><i class="fas fa-door-open"></i> <?php $this->show('Logout'); ?></a>
+                  <a class="nav-link" data-button="logout" href="<?= $this->url('Cms:Admin:Auth@logoutAction') ?>"><i class="fas fa-door-open"></i> <?= $this->translate('Logout') ?></a>
                 </li>
               </ul>
             </nav>
 
             <section class="page">
                 <?php if ($this->getBreadcrumbBag()->has()): ?>
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="<?= $this->url('Cms:Admin:Dashboard@indexAction'); ?>"><i class="fa fa-home"></i> <?php $this->show('Dashboard'); ?></a></li>
+                <ol class="breadcrumb p-3">
+                  <li class="breadcrumb-item"><a href="<?= $this->url('Cms:Admin:Dashboard@indexAction') ?>"><i class="fas fa-home"></i> <?= $this->translate('Dashboard') ?></a></li>
                   <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $breadcrumb): ?>
                   <?php if ($breadcrumb->isActive()): ?>
-                  <li class="breadcrumb-item active"><?php $this->show($breadcrumb->getName()); ?></li>
+                  <li class="breadcrumb-item active" aria-current="page"><?= $this->translate($breadcrumb->getName()) ?></li>
                   <?php else: ?>
-                  <li class="breadcrumb-item"><a href="<?= strpos($breadcrumb->getLink(), ':') !== false ? $this->url($breadcrumb->getLink()) : $breadcrumb->getLink(); ?>"><?php $this->show($breadcrumb->getName()); ?></a></li>
+                  <li class="breadcrumb-item"><a href="<?= strpos($breadcrumb->getLink(), ':') !== false ? $this->url($breadcrumb->getLink()) : $breadcrumb->getLink() ?>"><?= $this->translate($breadcrumb->getName()) ?></a></li>
                   <?php endif; ?>
                   <?php endforeach; ?>
                 </ol>
                 <?php endif; ?>
 
                 <?php if ($flashBag->has('success')):?>
-                <div class="alert alert-dismissable alert-success">
-                    <button type="button" class="close" data-dismiss="alert">x</button>
-                    <i class="fas fa-check-double"></i> <?php $this->show($flashBag->get('success')); ?>
+                <div class="alert alert-success alert-dismissible fade show">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <i class="fas fa-check-double"></i> <?= $this->translate($flashBag->get('success')) ?>
                 </div>
                 <?php endif; ?>
 
                 <?php if ($flashBag->has('warning')): ?>
-                <div class="alert alert-dismissable alert-warning">
-                    <button type="button" class="close" data-dismiss="alert">x</button>
-                    <h4><?php $this->show('Warning!'); ?></h4>
-                    <i class="fas fa-exclamation-triangle"></i> <?php $this->show($flashBag->get('warning')); ?>
+                <div class="alert alert-warning alert-dismissible fade show">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <h4><?= $this->translate('Warning!') ?></h4>
+                    <i class="fas fa-exclamation-triangle"></i> <?= $this->translate($flashBag->get('warning')) ?>
                 </div>
                 <?php endif; ?>
 
                 <?php if ($flashBag->has('info')): ?>
-                <div class="alert alert-dismissable alert-info">
-                    <button type="button" class="close" data-dismiss="alert">x</button>
-                    <i class="fas fa-info"></i> <?php $this->show($flashBag->get('info')); ?>
+                <div class="alert alert-info alert-dismissible fade show">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <i class="fas fa-info"></i> <?= $this->translate($flashBag->get('info')) ?>
                 </div>
                 <?php endif; ?>
 
-                <?= $fragment; ?>
+                <?= $fragment ?>
             </section>
         </div>
     </div>
 
-    <div class="modal fade" id="confirmation-modal">
+    <div class="modal fade" id="confirmation-modal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title"><?php $this->show('Are you sure?'); ?></h4>
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php $this->show('Close'); ?></span></button>
+            <h4 class="modal-title"><?= $this->translate('Are you sure?') ?></h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p><?php $this->show('Do you really want to delete this permanently?'); ?></p>
+            <p><?= $this->translate('Do you really want to delete this permanently?') ?></p>
           </div>
           <div class="modal-footer">
-            <button type="button" data-button="confirm-removal" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> <?php $this->show('Yes'); ?></button>
-            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> <?php $this->show('No'); ?></button>
+            <button type="button" data-button="confirm-removal" class="btn btn-primary" data-bs-dismiss="modal"><i class="bi bi-check-lg"></i> <?= $this->translate('Yes') ?></button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> <?= $this->translate('No') ?></button>
           </div>
         </div>
       </div>
@@ -171,11 +170,11 @@
     <?php $this->loadPartial('ajax'); ?>
 
     <!-- This value represents application language, which comes from application's configuration array -->
-    <input type="hidden" name="language" value="<?= $appConfig->getLanguage(); ?>" />
-    <input type="hidden" name="slug-refresh-url" value="<?= $this->url('Cms:Admin:Dashboard@slugAction'); ?>" />
+    <input type="hidden" name="language" value="<?= $appConfig->getLanguage() ?>" />
+    <input type="hidden" name="slug-refresh-url" value="<?= $this->url('Cms:Admin:Dashboard@slugAction') ?>" />
 
     <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
-    <script src="<?= $script; ?>"></script>
+    <script src="<?= $script ?>"></script>
     <?php endforeach; ?>
 </body>
 </html>
