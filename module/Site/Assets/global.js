@@ -1,298 +1,235 @@
-/**
-* Global options for the whole site must be defined here
-*/
-
-// Make sure Jquery is available
-if (!(window.jQuery)){
+// Make sure jQuery is available
+if (!(window.jQuery)) {
     throw new Error('jQuery is not loaded. Halting execution');
 }
 
-$(function(){
+$(function () {
     /**
-     * Validator class constructor
-     * 
-     * @param $form Jquey form object
+     * Validator constructor
+     *
+     * @param object $form jQuery form object
      * @return void
      */
-    function Validator($form){
+    function Validator($form) {
         this.$form = $form;
     }
 
     Validator.prototype = {
         /**
-         * Builds a selector for a target element
-         * 
-         * @param string name Element's name
-         * @return string Built selector
-         */
-        buildElementSelector : function(name){
-            return selector = '[name="' + name + '"]';
-        },
-
-        /**
-         * Finds container element by a child's name inside it
-         * 
-         * @param string name Child element's name
-         * @return object
-         */
-        getContainerElementByClosestName : function(name){
-            var selector = this.buildElementSelector(name);
-            return this.$form.find(selector).closest('div.form-group');
-        },
-
-        /**
-         * Returns parent element's container
-         * 
-         * @param string name Child element's name
-         * @return object
-         */
-        getParentContainer : function(name){
-            var selector = this.buildElementSelector(name);
-            return $(selector).parent();
-        },
-
-        /**
-         * Creates message block
-         * 
-         * @param string text Text to be appeared within container
-         * @return object
-         */
-        createMessageElement : function(text){
-            var element = document.createElement('span');
-
-            // Configure element for bootstrap
-            $span = $(element).attr('class', 'form-text')
-                              .text(text);
-
-            return $span;
-        },
-
-        /**
-         * Checks whether parent element has a helper block
-         * 
-         * @param object $container
-         * @return boolean
-         */
-        hasHelpBlock : function($container){
-            return $container.length > 0;
-        },
-
-        /**
-         * Checks whether element represents a collection of values
-         * 
+         * Builds a scoped name-selector for a target element
+         *
          * @param string name Element name
-         * @return boolean
+         * @return string
          */
-        isArrayElement: function(name){
-            // Notation to be looked up
-            var arrayNotation = '[]';
-
-            // Try to build an element appending array notation first
-            var $element = $(this.buildElementSelector(name + arrayNotation));
-
-            if ($element.length) {
-                return $element.attr('name').indexOf(arrayNotation) !== -1;
-            } else {
-                // Not array element
-                return false;
-            }
+        selector: function (name) {
+            return '[name="' + name + '"]';
         },
 
         /**
-         * Checks whether element is radio by its type
-         * 
-         * @param string name Element name
+         * All inputs matching a name inside the form
+         *
+         * @param string name
+         * @return object
+         */
+        inputsOf: function (name) {
+            return this.$form.find(this.selector(name));
+        },
+
+        /**
+         * Whether the name refers to an array input (name[])
+         *
+         * @param string name
          * @return boolean
          */
-        isRadioElement: function(name){
-            var $element = $(this.buildElementSelector(name));
-            var type = $element.attr('type');
-
-            return type === 'radio';
+        isArray: function (name) {
+            var $el = this.inputsOf(name + '[]');
+            return $el.length > 0 && $el.attr('name').indexOf('[]') !== -1;
         },
-        
+
         /**
-         * Shows an error which belongs to a field
-         * 
-         * @param string name Element's name
-         * @param string message To be appended
+         * Whether the name refers to a radio input
+         *
+         * @param string name
+         * @return boolean
+         */
+        isRadio: function (name) {
+            return this.inputsOf(name).attr('type') === 'radio';
+        },
+
+        /**
+         * Applies an error onto the matching field
+         *
+         * Bootstrap 5 notes:
+         *   - .is-invalid must be placed on the <input> itself
+         *   - .invalid-feedback is only revealed via the sibling selector
+         *     (input.is-invalid ~ .invalid-feedback), so the message must
+         *     be appended to a shared parent of the input.
+         *
+         * @param string name    HTML bracket name, e.g. field[3]
+         * @param string message Error text to display
+         * @param string rule    Optional rule identifier
          * @return void
          */
-        showErrorOn : function(name, message){
-            var isArrayElement = this.isArrayElement(name);
-            var isRadioElement = this.isRadioElement(name);
+        showErrorOn: function (name, message, rule) {
+            var isArray = this.isArray(name);
+            var isRadio = this.isRadio(name);
 
-            // If this one looks as a collection input, then append array notation to its name
-            if (isArrayElement) {
+            // Collection inputs carry a [] suffix
+            if (isArray) {
                 name += '[]';
             }
 
-            $container = this.getContainerElementByClosestName(name);
+            var $inputs = this.inputsOf(name);
 
-            if ($container.hasClass('has-success')) {
-                $container.removeClass('has-success');
+            if (!$inputs.length) {
+                return;
             }
 
-            $container.addClass('has-danger');
+            // Tag every input so Bootstrap renders the red border
+            $inputs.removeClass('is-valid')
+                   .addClass('is-invalid');
 
-            // Don't show errors on radio and array elements
-            if (!isRadioElement && !isArrayElement) {
-                $span = this.createMessageElement(message);
-
-                $parent = this.getParentContainer(name);
-                $parent.append($span);
+            if (rule) {
+                $inputs.attr('data-error-rule', rule);
             }
+
+            // Radios and arrays: highlight only, no message block
+            if (isRadio || isArray) {
+                return;
+            }
+
+            // Remove any stale message before appending a fresh one
+            $inputs.siblings('.invalid-feedback').remove();
+
+            var $span = $('<span>').addClass('invalid-feedback').text(message);
+
+            if (rule) {
+                $span.attr('data-rule', rule);
+            }
+
+            $inputs.last().after($span);
         },
 
         /**
-         * Resets control elements to their initial state
-         * 
+         * Renders a batch of error objects from the server
+         *
+         * @param array errors Collection of {input, label, rule, message, value, params}
          * @return void
          */
-        resetAll : function(){
-            // Classes we'd like to remove when resetting all
-            var classes = ['has-danger', 'has-warning', 'has-success'];
-
-            this.$form.find('div.form-group').each(function(){
-                for (var key in classes) {
-                    // Value represents class name
-                    var value = classes[key];
-
-                    if ($(this).hasClass(value)) {
-                        $(this).removeClass(value);
-                    }
+        renderErrors: function (errors) {
+            for (var i = 0; i < errors.length; i++) {
+                var e = errors[i];
+                if (e && e.input && e.message) {
+                    this.showErrorOn(e.input, e.message, e.rule);
                 }
-            });
-
-            // Now we'd assume that everything is okay, and later remove this class on demand
-            this.$form.find('div.form-group').addClass('has-success');
-
-            // Remove all helper spans
-            this.$form.find("span.form-text").remove();
+            }
         },
 
         /**
-         * Shows error messages
-         * 
-         * @param string response Server's response
-         * @param object $form
+         * Clears all previous error state
+         *
          * @return void
          */
-        handleAll : function(response, $form){
-            var backUrl = $form.data('back-url');
-            var processForm = $form.data('submit') == '1'
-            
-            // Clear all previous messages and added classes
+        resetAll: function () {
+            this.$form.find('.is-invalid, .is-valid')
+                      .removeClass('is-invalid is-valid')
+                      .removeAttr('data-error-rule');
+
+            this.$form.find('.invalid-feedback').remove();
+        },
+
+        /**
+         * Dispatches the server response onto the form
+         *
+         * Supported payloads:
+         *   - { refresh: true }                                  -> reload
+         *   - { redirect: url } | { backUrl: url }               -> navigate
+         *   - { errors: [ {input, label, rule, message, ...} ] } -> render errors
+         *
+         * @param object response JSON-parsed server response
+         * @param object $form    jQuery form object
+         * @return void
+         */
+        handleAll: function (response, $form) {
             this.resetAll();
 
-            // if its not JSON, but "1" then we'd assume success
-            if (response == "1") {
-                // If its provided, then do redirect to that URL
-                if (backUrl){
-                    window.location = backUrl;
-                } else {
-                    // Otherwise, just reload the page
+            if (response && typeof response === 'object' && !Array.isArray(response)) {
+                if (response.redirect) {
+                    window.location = response.redirect;
+                    return;
+                }
+
+                if (response.refresh) {
                     window.location.reload();
+                    return;
+                }
+
+                if (Array.isArray(response.errors)) {
+                    this.renderErrors(response.errors);
+                    return;
                 }
             }
 
-            try {
-                var data = $.parseJSON(response);
+            console.log(response);
 
-                // Response back URL
-                if (data.backUrl) {
-                    window.location = response.backUrl;
-                }
-                
-                for (var name in data) {
-                    var message = data[name];
-                    this.showErrorOn(name, message);
-                }
-
-            } catch(e) {
-                // Otherwise we'd assume that something went wrong
-                console.log(response);
-
-                // Submit form natively
-                if (processForm) {
-                    $form.off('submit').submit();
-                    return false;
-                }
+            if ($form.data('submit') == '1') {
+                $form.off('submit').submit();
             }
         }
     };
 
-    /**
-     * Global factory for form validator
-     * 
-     * @param object $form Jquery form object
-     * @return Validator
-     */
-    $.getValidator = function($form){
-        return new Validator($form);
-    };
-    
     // Setup global AJAX settings
     $.ajaxSetup({
-        cache : false,
-        charset : "UTF-8",
+        cache: false,
+        charset: 'UTF-8',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        beforeSend : function(){
-            // Ensure bootstrap modal is loaded
+        beforeSend: function () {
             if ($.isFunction($.fn.modal)) {
-                $("#ajax-modal").modal('show');
+                $('#ajax-modal').modal('show');
             }
         },
-        complete : function(){
-            // Ensure bootstrap modal is loaded
+        complete: function () {
             if ($.isFunction($.fn.modal)) {
-                $("#ajax-modal").modal('hide');
+                $('#ajax-modal').modal('hide');
             }
         }
     });
 
-    // CAPTCHA's button
-    $("[data-captcha='button-refresh']").click(function(event){
+    // CAPTCHA refresh button
+    $("[data-captcha='button-refresh']").click(function (event) {
         event.preventDefault();
 
-        // Grab image's element
         var $image = $("[data-captcha='image']");
-        var link = $image.attr('src');
-
-        $image.attr('src', link + Math.random());
+        $image.attr('src', $image.attr('src') + Math.random());
     });
 
-    // For forms that send data
-    $("[data-button='submit']").click(function(){
-        // Find its parent form
+    // AJAX form submission
+    $("[data-button='submit']").click(function () {
         var $form = $(this).closest('form');
         var $button = $(this);
 
-        $form.off('submit').submit(function(event){
+        $form.off('submit').submit(function (event) {
             event.preventDefault();
 
             var $self = $(this);
-            var url = $self.attr('action') ? $self.attr('action') : '';
-            var method = $self.attr('method') ? $self.attr('method') : 'POST';
 
             $.ajax({
-                url: url,
+                url: $self.attr('action') || '',
+                type: $self.attr('method') || 'POST',
                 contentType: false,
                 processData: false,
-                data: new FormData($(this)[0]),
-                type: method,
-                beforeSend: function(){
-                    // Disable while sending request
+                data: new FormData(this),
+                beforeSend: function () {
                     $button.addClass('disabled').prop('disabled', true);
                 },
-                complete: function(){
-                    // Enable as soon as AJAX-request is finished
+                complete: function () {
                     $button.removeClass('disabled').prop('disabled', false);
                 },
-                success: function(response){
-                    $.getValidator($form).handleAll(response, $self);
+                success: function (response) {
+                    var validator = new Validator($self);
+                    validator.handleAll(response, $self);
                 }
             });
         });
@@ -300,8 +237,8 @@ $(function(){
 
     // Work flawlessly with <BASE> tag, if one exists
     if ($("base").length) {
-        $("a[href^='\#']").each(function(){ 
-            this.href = location.href.split("#")[0] + '#' + this.href.substr(this.href.indexOf('#') + 1);
+        $("a[href^='\#']").each(function () {
+            this.href = location.href.split('#')[0] + '#' + this.href.substr(this.href.indexOf('#') + 1);
         });
     }
 });
