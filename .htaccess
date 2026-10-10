@@ -1,4 +1,3 @@
-
 # Warning: If your Apache server doesn't support php.ini directives, then it might cause 500 Internal Server Error
 
 # Better performance
@@ -10,8 +9,8 @@ php_value realpath_cache_size 2M
 php_value memory_limit 512M
 
 # php.ini configuration for better file uploading
-php_value max_input_time 90000000000
-php_value max_execution_time 90000000000
+php_value max_input_time 9000
+php_value max_execution_time 9000
 
 # To upload large files, post_max_size value must be larger than upload_max_filesize
 php_value post_max_size 100M
@@ -21,12 +20,22 @@ php_value max_file_uploads 10
 # We don't want this var to be readable
 ServerSignature Off
 
-# Force Apache to use UTF-8 by default
+# Force web-server to use UTF-8 by default
 AddDefaultCharset UTF-8
 
 # Prevent direct directory listing
 Options -Indexes
 IndexIgnore *.*
+
+# Block direct access to template and raw PHP files
+<FilesMatch "\.(phtml|php)$">
+    Require all denied
+</FilesMatch>
+
+# Allow only the front controller at the document root
+<Files "index.php">
+    Require all granted
+</Files>
 
 # Make sure index is set as a front handler
 <IfModule dir_module>
