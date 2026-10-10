@@ -9,13 +9,14 @@
 
 namespace Cms\Controller\Admin;
 
+use Krystal\Validation\Validator;
+
 /**
  * Configuration controllers in modules aren't different, 
  * the only part that differs is grabbing services and validation rules.
  * 
  * So in order to reduce duplication, it would be nice to wrap all related functionality
  * into one abstract configuration controller.
- * 
  */
 abstract class AbstractConfigController extends AbstractController
 {
@@ -27,11 +28,16 @@ abstract class AbstractConfigController extends AbstractController
     protected $parent = null;
 
     /**
-     * Returns validation rules for target form input
+     * Applies validation rules to the supplied validator
      * 
-     * @return array
+     * Each module must implement this to declare the rules for its
+     * configuration form. The validator is pre-bound to the module's
+     * `config` POST payload, so only rule declarations are needed here.
+     * 
+     * @param \Krystal\Validation\Validator $validator
+     * @return void
      */
-    abstract protected function getValidationRules();
+    abstract protected function configureValidator(Validator $validator);
 
     /**
      * Shows configuration form
@@ -55,36 +61,33 @@ abstract class AbstractConfigController extends AbstractController
      */
     public function saveAction()
     {
-        // Grab POST request data
-        $input = $this->request->getPost('config');
-        $formValidator = $this->createValidator([
-            'input' => [
-                'source' => $input,
-                'definition' => $this->getValidationRules()
-            ]
-        ]);
+        $validator = $this->createValidation();
 
-        if ($formValidator->isValid()) {
+        $this->configureValidator($validator);
+
+        if ($validator->isPassed()) {
             // Grab history manager service
             $historyManager = $this->getService('Cms', 'historyManager');
+            $config = $this->request->getPost('config');
 
-            if ($this->getConfigManager()->storeMany($input) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')) {
+            if ($this->getConfigManager()->storeMany($config) && $historyManager->write($this->moduleName, 'Configuration has been updated', '')) {
                 $this->flashBag->set('success', 'Configuration has been updated successfully');
             }
-            
+
             return $this->json([
                 'refresh' => true
             ]);
-
-        } else {
-            return $formValidator->getErrors();
         }
+
+        return $this->json([
+            'errors' => $validator->getErrors()
+        ]);
     }
 
     /**
      * Returns configuration for the module being executed
      * 
-     * @return \Krystal\Config\ConfigMangaer
+     * @return \Krystal\Config\ConfigManager
      */
     protected function getConfigManager()
     {
