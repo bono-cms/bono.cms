@@ -19,6 +19,15 @@ use Cms\Collection\PriorityCollection;
 abstract class AbstractController extends AbstractAuthAwareController
 {
     /**
+     * Middleware applied to every action in this controller.
+     * 
+     * @var array<int, string>
+     */
+    protected $middlewares = [
+        \Cms\Middleware\RequestValidationMiddleware::class,
+    ];
+
+    /**
      * Indicates whether user browses in extended mode
      * 
      * @var boolean
@@ -289,8 +298,6 @@ abstract class AbstractController extends AbstractAuthAwareController
             $this->loadTranslations($this->paramBag->get('admin_language'));
         }
 
-        $this->validateRequest();
-
         $this->view->setTheme('admin');
         $this->view->getPartialBag()->addPartialDir($this->view->createThemePath('Cms', 'admin') . '/partials/');
 
@@ -384,32 +391,6 @@ abstract class AbstractController extends AbstractAuthAwareController
         $this->view->getPluginBag()->appendLastScript('@Cms/admin/app.js');
 
         $this->tweakInternalServices();
-    }
-
-   /**
-     * Validates the request
-     * 
-     * @return void
-     */
-    private function validateRequest()
-    {
-        // Must support only POST and GET requests
-        if (!$this->request->isIntended()) {
-            $this->response->setStatusCode(400);
-            die('Invalid request');
-        }
-
-        // Do validate only for POST requests for now
-        if ($this->request->isPost()) {
-
-            // This is general for all forms
-            $valid = $this->csrfProtector->isValid($this->request->getMetaCsrfToken());
-
-            if (!$valid) {
-                $this->response->setStatusCode(400);
-                die('Invalid CSRF token');
-            }
-        }
     }
 
     /**
