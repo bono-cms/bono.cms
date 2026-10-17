@@ -64,7 +64,9 @@ final class RequestValidationMiddleware implements MiddlewareInterface
         if ($request->isPost()) {
             $csrfProtector = $sl->get('csrfProtector');
 
-            if (!$csrfProtector->isValid($request->getMetaCsrfToken())) {
+            $token = $request->hasPost('token') ? $request->getPost('token') : $request->getMetaCsrfToken();
+
+            if (!$csrfProtector->isValid($token)) {
                 $response->setStatusCode(400);
                 $response->send('Bad Request: invalid or missing CSRF token.');
                 return false;
