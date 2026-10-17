@@ -3,7 +3,7 @@
 <head>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="csrf-token" content="<?= $csrfToken ?>" />
+ <meta name="csrf-token" content="<?= $csrfToken ?>">
  <title><?= $this->translate(isset($title) ? $title : $this->getBreadcrumbBag()->getLastName()) ?></title>
 
  <?php foreach ($this->getPluginBag()->getStylesheets() as $stylesheet): ?>
