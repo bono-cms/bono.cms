@@ -7,33 +7,43 @@ use Krystal\Form\Element;
 <?php if (isset($paginator)): ?>
 
 <div class="per-page-container mb-3">
-    <div class="row align-items-center">
-        <div class="col-lg-6">
-            <span class="d-inline-block">
-                <i class="bi bi-list-ul"></i> <?= $this->translate($caption) ?> 
-                <?php if ($paginator->getSummary() != 0): ?>
-                <small class="text-muted"> 
-                    (<?= $this->translate('Displayed') ?> <?= $paginator->getSummary() ?> <?= $this->translate('of') ?> <?= $paginator->getTotalAmount() ?>) 
-                </small>
-                <?php endif; ?>
-            </span>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <!-- Left side: caption & summary -->
+        <div class="d-flex align-items-center text-nowrap">
+            <span class="fw-medium"><?= $this->translate($caption) ?></span>
+
+            <?php if ($paginator->getSummary() != 0): ?>
+                <span class="text-muted small ms-2">
+                    (<?= $this->translate('Displayed') ?>
+                    <strong><?= $paginator->getSummary() ?></strong>
+                    <?= $this->translate('of') ?>
+                    <strong><?= $paginator->getTotalAmount() ?></strong>)
+                </span>
+            <?php endif; ?>
         </div>
-        
-        <div class="col-lg-6">
-            <div class="d-flex justify-content-end align-items-center">
-                <span class="text-muted me-2 small"><?= $this->translate('Items per page') ?>: </span>
-                <?= Element::select(null, $ppc->getPerPageCountValues(), $ppc->getPerPageCount(), [
-                    'class' => 'form-select form-select-sm w-auto',
-                    'data-button' => 'per-page-changer', 
-                    'data-url' => $this->url('Cms:Admin:Dashboard@itemsPerPageChangeAction')
-                ]) ?>
-            </div>
+
+        <!-- Right side: per-page selector -->
+        <div class="d-flex align-items-center">
+            <?php
+                $selectId = 'per-page-selector';
+            ?>
+            <label for="<?= $selectId ?>" class="form-label text-muted small mb-0 me-2 text-nowrap">
+                <?= $this->translate('Items per page') ?>
+            </label>
+            <?= Element::select(null, $ppc->getPerPageCountValues(), $ppc->getPerPageCount(), [
+                'id'            => $selectId,
+                'class'         => 'form-select form-select-sm',
+                'style'         => 'width: auto; min-width: 4.5rem;',
+                'data-button'   => 'per-page-changer',
+                'data-url'      => $this->url('Cms:Admin:Dashboard@itemsPerPageChangeAction'),
+                'aria-label'    => $this->translate('Items per page'),
+            ]) ?>
         </div>
     </div>
 </div>
 
 <?php else: ?>
 
-<div class="my-3"></div>
+<div class="mb-3"></div>
 
 <?php endif; ?>
