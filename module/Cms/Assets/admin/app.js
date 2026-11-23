@@ -578,8 +578,9 @@ $(function () {
                         window.location = response.redirect;
                         return;
                     }
+                    
                     if (response.refresh) {
-                        window.location.reload();
+                        window.location = backUrl || window.location.href;
                         return;
                     }
                     return;
