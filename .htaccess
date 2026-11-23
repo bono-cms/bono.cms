@@ -1,70 +1,85 @@
-# Warning: If your Apache server doesn't support php.ini directives, then it might cause 500 Internal Server Error
+# ---------------------------------------------------------------
+# CMS .htaccess — Portable (Apache 2.2/2.4, LiteSpeed, PHP-FPM)
+# ---------------------------------------------------------------
 
-# Better performance
-php_value realpath_cache_size 2M
+# Disable directory listing
+Options -Indexes
 
-# Configuration for file uploading
-
-# memory_limit should be larger than post_max_size
-php_value memory_limit 512M
-
-# php.ini configuration for better file uploading
-php_value max_input_time 9000
-php_value max_execution_time 9000
-
-# To upload large files, post_max_size value must be larger than upload_max_filesize
-php_value post_max_size 100M
-php_value upload_max_filesize 50M
-php_value max_file_uploads 10
-
-# We don't want this var to be readable
+# Hide server version
 ServerSignature Off
 
-# Force web-server to use UTF-8 by default
+# Default charset
 AddDefaultCharset UTF-8
 
-# Prevent direct directory listing
-Options -Indexes
-IndexIgnore *.*
+# Front controller
+<IfModule dir_module>
+    DirectoryIndex index.php
+</IfModule>
 
-# Block direct access to template and raw PHP files
-<FilesMatch "\.(phtml|php)$">
-    Require all denied
+# ---------------------------------------------------------------
+# 1. BLOCK SENSITIVE FILES (Composer, Git, Configs, Readme)
+# ---------------------------------------------------------------
+<FilesMatch "^(composer\.(json|lock)|README\.md|nginx\.conf|\.user\.ini|\.git(ignore|attributes))$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
-# Allow only the front controller at the document root
-<Files "index.php">
-    Require all granted
-</Files>
+# ---------------------------------------------------------------
+# 2. ALLOW ONLY FRONT CONTROLLER, BLOCK OTHER PHP FILES
+# ---------------------------------------------------------------
+<IfModule mod_authz_core.c>
+    # Apache 2.4+
+    <FilesMatch "\.(php|phtml)$">
+        Require all denied
+    </FilesMatch>
+    <Files "index.php">
+        Require all granted
+    </Files>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    # Apache 2.2
+    <FilesMatch "\.(php|phtml)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    <Files "index.php">
+        Order allow,deny
+        Allow from all
+    </Files>
+</IfModule>
 
-# Make sure index is set as a front handler
-<IfModule dir_module>
- DirectoryIndex index.php
+# ---------------------------------------------------------------
+# 3. PASS AUTHORIZATION HEADER TO PHP (JWT / Bearer Tokens)
+# ---------------------------------------------------------------
+<IfModule mod_setenvif.c>
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </IfModule>
 
 <IfModule mod_rewrite.c>
- 
- RewriteEngine On
- 
- # Send all www-prefixed requests to non-www
- RewriteCond %{HTTPS} off
- RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
- RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
- 
- # Case when requesting via HTTPS
- RewriteCond %{HTTPS} on
- RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
- RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
- 
- # Done there, now finally send everything to a front controller, except real files and directories
- RewriteBase /
- RewriteCond %{REQUEST_FILENAME} !-d
- RewriteCond %{REQUEST_FILENAME} !-f
- RewriteRule . index.php
- 
+    RewriteEngine On
+
+    # Pass Authorization header to PHP
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+
+    # Redirect www → non-www (Always force HTTPS to prevent loops)
+    RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+    # Send everything else to the front controller (except real files/dirs)
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule . index.php [L]
+    
 </IfModule>
 
-# And if we don't have mod_rewrite installed, we can still emulate its functionality by sending back to Front Controller
+# Fallback when mod_rewrite is not available
 <IfModule !mod_rewrite.c>
- ErrorDocument 404 /index.php
+    ErrorDocument 404 /index.php
 </IfModule>
